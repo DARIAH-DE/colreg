@@ -42,6 +42,6 @@
 			<property name="initService" ref="initService" />
 		</bean>
 	</mvc:interceptors>
-		
+	
 	<context:component-scan base-package="eu.dariah.de.colreg.controller" />
 </beans>

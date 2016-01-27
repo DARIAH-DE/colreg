@@ -52,7 +52,6 @@
 			<add-attribute type="string" value="collection.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="collection/edit" template="/WEB-INF/view/jsp/collection/edit.jsp" />
-	
+	<definition name="collection/edit" template="/WEB-INF/view/jsp/collection/edit.jsp" />	
 	
 </tiles-definitions>
