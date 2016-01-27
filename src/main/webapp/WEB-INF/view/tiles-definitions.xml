@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">        
+<tiles-definitions>  
+	<definition name="template_simple" template="/WEB-INF/view/jsp/templates/simple.jsp">
+		<put-attribute name="title" cascade="true" value="DARIAH-DE Schema Registry" />
+		<put-attribute name="navbarInverse" cascade="true" value="false" />
+		<put-attribute name="sideNav" cascade="true" value="false" />
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+		<put-list-attribute name="styles">
+			<add-attribute type="string" value="bootstrap/bootstrap.min.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap-theme.min.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap-customization.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap-modal-bs3patch.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap-modal.css" />
+			<add-attribute type="string" value="application.css" />
+        </put-list-attribute>
+		<put-list-attribute name="scripts">
+			<add-attribute type="string" value="jquery/jquery.js" />
+			<add-attribute type="string" value="bootstrap/bootstrap.js" />
+			<add-attribute type="string" value="bootstrap/bootbox.min.js" />
+			<add-attribute type="string" value="bootstrap/bootstrap-modalmanager.js" />
+			<add-attribute type="string" value="bootstrap/bootstrap-modal.js" />
+			<add-attribute type="string" value="_common/appProperties.js" />
+			<add-attribute type="string" value="_common/translator.js" />
+			<add-attribute type="string" value="_common/util.js" />
+        </put-list-attribute>
+	</definition>
+	<definition name="template_main" extends="template_simple" template="/WEB-INF/view/jsp/templates/main.jsp">
+		<put-attribute name="navbarInverse" cascade="true" value="true" />
+		<put-attribute name="sideNav" cascade="true" value="true" />
+		<put-attribute name="fluidLayout" cascade="true" value="true" />
+	</definition>
+	
+	
+	<!-- Test views -->
+	<definition name="test/simple" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/test/simple.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+	</definition>
+	<definition name="test/simpleFluid" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/test/simple.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="true" />
+	</definition>
+	<definition name="test/jumbo" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/test/jumbo.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+	</definition>
+	<definition name="test/jumboFluid" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/test/jumbo.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="true" />
+	</definition>
+	<definition name="test/main" extends="template_main">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/test/main.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+	</definition>
+	<definition name="test/mainFluid" extends="template_main">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/test/main.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="true" />
+	</definition>
+	
+	
+</tiles-definitions>

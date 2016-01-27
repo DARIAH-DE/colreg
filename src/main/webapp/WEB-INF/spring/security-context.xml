@@ -1,0 +1,40 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			 xmlns:context="http://www.springframework.org/schema/context"
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			 					 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+								 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+				
+	<!-- <context:component-scan base-package="de.dariah.samlsp.orm.dao"/>
+	<context:component-scan base-package="de.dariah.samlsp.orm.service" /> -->		
+	
+	<http security="none" pattern="/resources/**"/>
+		
+	<http auto-config="true" access-decision-manager-ref="accessDecisionManager" >
+		<intercept-url pattern="/test/jumboFluid" requires-channel="http" access="IS_AUTHENTICATED_FULLY" />
+
+		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/" />
+	</http>
+		
+  	<beans:bean id="ajaxEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
+	</beans:bean>
+	
+	<authentication-manager>
+	  <authentication-provider>
+	    <user-service>
+			<user name="tgradl" password="hairad" authorities="ROLE_ADMINISTRATOR, ROLE_CONTRIBUTOR" />
+			<user name="ahenrich" password="hairad" authorities="ROLE_CONTRIBUTOR" />
+	    </user-service>
+	  </authentication-provider>
+	</authentication-manager>
+		
+	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<beans:constructor-arg name="decisionVoters">
+			<beans:list>
+				<beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+				<beans:bean class="org.springframework.security.access.vote.RoleVoter" />
+			</beans:list>
+		</beans:constructor-arg>
+		<beans:property name="allowIfAllAbstainDecisions" value="false" />
+	</beans:bean>
+	
+</beans:beans>
