@@ -31,33 +31,28 @@
 		<put-attribute name="sideNav" cascade="true" value="true" />
 		<put-attribute name="fluidLayout" cascade="true" value="true" />
 	</definition>
+		<definition name="template_tables" extends="template_simple">
+		<put-attribute name="fluidLayout" cascade="true" value="true" />
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute type="string" value="dataTables/datatables.css" />
+        </put-list-attribute>
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="dataTables/dataTables.js" />
+			<add-attribute type="string" value="dataTables/dataTables.fnReloadAjax.js" />
+			<add-attribute type="string" value="dataTables/dataTables.i18n.js" />
+			<add-attribute type="string" value="_common/baseTable.js" />
+        </put-list-attribute>
+    </definition>
 	
 	
-	<!-- Test views -->
-	<definition name="test/simple" extends="template_simple">
-		<put-attribute name="content" value="/WEB-INF/view/jsp/test/simple.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="false" />
+	<!-- Collection -->
+	<definition name="collection/list" extends="template_tables">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/list.jsp" />
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="collection.js" />
+		</put-list-attribute>
 	</definition>
-	<definition name="test/simpleFluid" extends="template_simple">
-		<put-attribute name="content" value="/WEB-INF/view/jsp/test/simple.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="true" />
-	</definition>
-	<definition name="test/jumbo" extends="template_simple">
-		<put-attribute name="content" value="/WEB-INF/view/jsp/test/jumbo.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="false" />
-	</definition>
-	<definition name="test/jumboFluid" extends="template_simple">
-		<put-attribute name="content" value="/WEB-INF/view/jsp/test/jumbo.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="true" />
-	</definition>
-	<definition name="test/main" extends="template_main">
-		<put-attribute name="content" value="/WEB-INF/view/jsp/test/main.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="false" />
-	</definition>
-	<definition name="test/mainFluid" extends="template_main">
-		<put-attribute name="content" value="/WEB-INF/view/jsp/test/main.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="true" />
-	</definition>
+	<definition name="collection/edit" template="/WEB-INF/view/jsp/collection/edit.jsp" />
 	
 	
 </tiles-definitions>
