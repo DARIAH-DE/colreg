@@ -2,9 +2,38 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
 
-
+	<import resource="common-config.xml"/>
+	
+	<mongo:mongo host="${db.host}" port="${db.port}" />
+	<mongo:db-factory dbname="${db.database}" />
+ 
+ 
+	<bean id="mongoMoxydomainConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg index="0" ref="mongoDbFactory" />
+        <constructor-arg index="1">
+            <bean class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
+        </constructor-arg>
+        <property name="mapKeyDotReplacement" value="~"/>
+	</bean>
+ 
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		<constructor-arg name="mongoConverter" ref="mongoMoxydomainConverter" />
+	</bean>
+	
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<bean id="validatingMongoEventListener" class="org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener">
+		<constructor-arg name="validator" ref="validator" />
+	</bean>
+	
+	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>
+	<context:component-scan base-package="eu.dariah.de.colreg.service"/>
 </beans>
