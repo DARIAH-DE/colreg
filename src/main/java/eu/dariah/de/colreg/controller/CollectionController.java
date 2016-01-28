@@ -23,22 +23,20 @@ public class CollectionController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
+		model.addAttribute("collections", collectionService.findAllCurrent());
+		
 		return "collection/list";
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editCollection(@PathVariable String id, Model model, Locale locale) {
 		Collection c;
-		boolean isNew;
 		if (id.toLowerCase().equals("new")) {
 			c = collectionService.createCollection();
-			isNew = true;
 		} else {
 			c = collectionService.findCurrentByCollectionId(id);
-			isNew = false;
 		}
 		
-		model.addAttribute("isNew", isNew);
 		model.addAttribute("c", c);
 		
 		return "collection/edit";
@@ -49,7 +47,6 @@ public class CollectionController {
 	public String saveCollection(@Valid Collection c, Model model, Locale locale) {
 		collectionService.save(c);
 		
-		model.addAttribute("isNew", true);
 		model.addAttribute("c", c);
 		
 		return "collection/edit";

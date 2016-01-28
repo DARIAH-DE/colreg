@@ -12,7 +12,7 @@
 	<li><a href='<s:url value="/collections/" />' target="_self">~Collections</a></li>
 	<li class="active">
 		<c:choose>
-			<c:when test="${isNew}">~New Collection</c:when>
+			<c:when test="${c.id=='new'}">~New Collection</c:when>
 			<c:otherwise>Collection Id: ${c.collectionId}</c:otherwise>
 		</c:choose>
 	</li>
@@ -33,36 +33,23 @@
 		
 		<!-- lang, title, description, audience, provenance -->
 		
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label">~Language</label>
-			<div class="col-sm-9">
-				<input type="text" class="form-control" id="langs0.lang" name="langs[0].lang" placeholder="~Language">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label">~Title</label>
-			<div class="col-sm-9">
-				<input type="text" class="form-control" id="langs0.title" name="langs[0].title" placeholder="~Title">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label">~Description</label>
-			<div class="col-sm-9">
-				<textarea class="form-control" rows="3" id="langs0.description" name="langs[0].description" placeholder="~Description"></textarea>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="audience" class="col-sm-3 control-label">~Audience</label>
-			<div class="col-sm-9">
-				<input type="text" class="form-control" id="langs0.audience" name="langs[0].audience" placeholder="~Audience">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="provenance" class="col-sm-3 control-label">~Provenance</label>
-			<div class="col-sm-9">
-				<input type="text" class="form-control" id="langs0.provenance" name="langs[0].provenance" placeholder="~Provenance">
-			</div>
-		</div>
+		<table id="collection-table">
+			<tr>
+				<th>Title</th>
+				<th>Lang</th>
+			</tr>
+			<c:forEach items="${c.langs}" var="lang" varStatus="status" >
+				<c:set var="currLang" value="${lang}" scope="request" />
+				<c:set var="currIndex" value="${status.index}" scope="request" />
+				<jsp:include page="incl/edit_lang.jsp" />
+			</c:forEach>
+			<c:remove var="currLang" />
+			<c:set var="currIndex" value="${currIndex+1}" scope="request" />
+			<jsp:include page="incl/edit_lang.jsp" />
+			
+		</table>
+		
+		
 		
 		
 		

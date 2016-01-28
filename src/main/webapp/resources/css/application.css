@@ -322,3 +322,28 @@ body .modal.modal450 {
 	width: 450px;
 	margin-left: -225px;
 }
+
+/*!
+ *	Table for (lang, accrual etc.)
+ */
+#collection-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#collection-table tr td, #collection-table th {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 6px 10px;
+}
+
+#collection-table tr:nth-child(4n+0){background-color: #f2f2f2}
+
+#collection-table tr.list:hover {background-color: #ddd;}
+
+#collection-table th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #6B6483;
+    color: white;
+}

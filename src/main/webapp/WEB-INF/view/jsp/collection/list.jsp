@@ -28,6 +28,13 @@
 			<div id="main-content">
 				<div class="row">
 					<div class="col-md-12">
+						<h2>~Collections</h2>
+						<ul>
+							<c:forEach items="${collections}" var="c">
+								<li><a href='<s:url value="${c.collectionId}" />'>${c.collectionId}</a></li>
+							</c:forEach>
+						</ul>
+						<!-- 
 						<h2 class="pull-left">~Collections</h2>
 						<div class="pull-right">
 							<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
@@ -50,9 +57,9 @@
 							<table id="schema-table" class="table table-striped table-bordered table-condensed">
 								<thead>
 									<tr>
-										<th></th> <!-- Status -->
+										<th></th> 
 										<th>~Label</th>
-										<th></th> <!-- Actions -->
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -62,7 +69,7 @@
 								</tbody>
 							</table>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>

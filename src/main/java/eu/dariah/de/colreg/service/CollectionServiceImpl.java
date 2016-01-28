@@ -1,5 +1,7 @@
 package eu.dariah.de.colreg.service;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,25 @@ public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public void save(Collection c) {
-		c.setId("");
+		Collection prev = this.findCurrentByCollectionId(c.getCollectionId());
+		
+		c.setId(null);
+		c.setSucceedingVersionId(null);
 		collectionDao.save(c);
+		
+		if (prev!=null) {
+			prev.setSucceedingVersionId(c.getId());
+			collectionDao.save(prev);
+		}		
 	}
 
 	@Override
 	public Collection findCurrentByCollectionId(String id) {
 		return collectionDao.findCurrentById(id);
+	}
+
+	@Override
+	public List<Collection> findAllCurrent() {
+		return collectionDao.findAllCurrent();
 	}
 }
