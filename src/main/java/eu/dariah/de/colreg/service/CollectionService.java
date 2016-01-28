@@ -1,5 +1,7 @@
 package eu.dariah.de.colreg.service;
 
-public interface CollectionService {
+import eu.dariah.de.colreg.model.Collection;
 
+public interface CollectionService {
+	public Collection createCollection();
 }
