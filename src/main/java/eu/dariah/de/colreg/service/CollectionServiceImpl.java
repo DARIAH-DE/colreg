@@ -14,6 +14,7 @@ public class CollectionServiceImpl implements CollectionService {
 	@Override
 	public Collection createCollection() {
 		Collection c = new Collection();
+		c.setId("new");
 		c.setCollectionId(new ObjectId().toString());
 		
 		return c;

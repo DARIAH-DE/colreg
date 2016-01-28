@@ -49,9 +49,15 @@
 	<definition name="collection/list" extends="template_tables">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/list.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="collection.js" />
+			<add-attribute type="string" value="collections/list.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="collection/edit" template="/WEB-INF/view/jsp/collection/edit.jsp" />	
+	<definition name="collection/edit" extends="template_main">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/edit.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="collections/edit.js" />
+		</put-list-attribute>
+	</definition>
 	
 </tiles-definitions>

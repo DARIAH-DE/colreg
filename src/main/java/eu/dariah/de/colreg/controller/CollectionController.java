@@ -2,6 +2,8 @@ package eu.dariah.de.colreg.controller;
 
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +28,24 @@ public class CollectionController {
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editCollection(@PathVariable String id, Model model, Locale locale) {
 		Collection c;
+		boolean isNew;
 		if (id.toLowerCase().equals("new")) {
-			c = collectionService.createCollection();	
+			c = collectionService.createCollection();
+			isNew = true;
 		} else {
 			c = null; //load collection
+			isNew = false;
 		}
 		
-		model.addAttribute("collection", c);
+		model.addAttribute("isNew", isNew);
+		model.addAttribute("c", c);
 		
+		return "collection/edit";
+	}
+	
+	// TODO Implement as POST-REDIRECT-GET Pattern
+	@RequestMapping(value="{id}", method=RequestMethod.POST)
+	public String saveCollection(@Valid Collection c, Model model, Locale locale) {
 		return "collection/edit";
 	}
 }
