@@ -9,6 +9,7 @@ public class Collection extends BaseIdentifiable {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
 	private String collectionId;		// Persistent identifier of the collection (id is for the version) 
+	private String previousVersionId;
 	private String providedIdentifier;
 	private String webPage;
 	private String collectionType;
@@ -32,6 +33,9 @@ public class Collection extends BaseIdentifiable {
 	
 	public String getCollectionId() { return collectionId; }
 	public void setCollectionId(String collectionId) { this.collectionId = collectionId; }
+	
+	public String getPreviousVersionId() { return previousVersionId; }
+	public void setPreviousVersionId(String previousVersionId) { this.previousVersionId = previousVersionId; }
 	
 	public String getProvidedIdentifier() { return providedIdentifier; }
 	public void setProvidedIdentifier(String providedIdentifier) { this.providedIdentifier = providedIdentifier; }

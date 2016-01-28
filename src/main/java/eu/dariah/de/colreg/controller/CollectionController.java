@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ public class CollectionController {
 	
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String getList(Model model, Locale locale) {
+	public String getList(Model model, Locale locale) {		
 		return "collection/list";
 	}
 	
@@ -33,7 +34,7 @@ public class CollectionController {
 			c = collectionService.createCollection();
 			isNew = true;
 		} else {
-			c = null; //load collection
+			c = collectionService.findCurrentByCollectionId(id);
 			isNew = false;
 		}
 		
@@ -46,6 +47,11 @@ public class CollectionController {
 	// TODO Implement as POST-REDIRECT-GET Pattern
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
 	public String saveCollection(@Valid Collection c, Model model, Locale locale) {
+		collectionService.save(c);
+		
+		model.addAttribute("isNew", true);
+		model.addAttribute("c", c);
+		
 		return "collection/edit";
 	}
 }

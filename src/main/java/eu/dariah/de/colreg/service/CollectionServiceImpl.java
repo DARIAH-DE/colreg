@@ -19,4 +19,15 @@ public class CollectionServiceImpl implements CollectionService {
 		
 		return c;
 	}
+
+	@Override
+	public void save(Collection c) {
+		c.setId("");
+		collectionDao.save(c);
+	}
+
+	@Override
+	public Collection findCurrentByCollectionId(String id) {
+		return collectionDao.findCurrentById(id);
+	}
 }
