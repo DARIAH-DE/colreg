@@ -3,14 +3,14 @@ package eu.dariah.de.colreg.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CollectionAgentRelation {
-	private String type;
+	private String typeId;
 	private String annotation;
 	private String agentId;
 	@JsonIgnore private Agent agent;
 
 	
-	public String getType() { return type; }
-	public void setType(String type) { this.type = type; }
+	public String getTypeId() { return typeId; }
+	public void setTypeId(String typeId) { this.typeId = typeId; }
  
 	public String getAnnotation() { return annotation; }
 	public void setAnnotation(String annotation) { this.annotation = annotation; }

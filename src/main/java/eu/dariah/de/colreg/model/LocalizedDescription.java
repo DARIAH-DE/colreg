@@ -1,7 +1,7 @@
 package eu.dariah.de.colreg.model;
 
 public class LocalizedDescription {
-	private String lang;
+	private String languageId;
 	private String title;
 	private String description;
 	private String audience;
@@ -10,8 +10,8 @@ public class LocalizedDescription {
 	private boolean collectionNative;
 	
 	
-	public String getLang() { return lang; }
-	public void setLang(String lang) { this.lang = lang; }
+	public String getLanguageId() { return languageId; }
+	public void setLanguageId(String languageId) { this.languageId = languageId; }
 	
 	public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
