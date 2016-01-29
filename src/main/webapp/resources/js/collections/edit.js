@@ -40,6 +40,10 @@ CollectionEditor.prototype.editEntry = function(btn) {
 CollectionEditor.prototype.removeEntry = function(btn) {
 	$(btn).closest("tr").next().remove();
 	$(btn).closest("tr").remove();
+	
+	if ($("#tbl-collection-description-sets tbody tr").size()==1) {
+		$("#tbl-collection-description-sets .collection-editor-table-empty-placeholder").show();
+	}
 };
 
 CollectionEditor.prototype.submit = function(event) {

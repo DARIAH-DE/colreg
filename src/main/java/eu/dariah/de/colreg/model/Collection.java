@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import eu.dariah.de.colreg.model.base.BaseIdentifiable;
 
 public class Collection extends BaseIdentifiable {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
 	/* Identification */
-	private String collectionId;		// Persistent identifier of the collection (id is for the version) 
+	@Indexed private String collectionId;		// Persistent identifier of the collection (id is for the version) 
 	private String succeedingVersionId;	// The versionId is actually the id of an object 
 	private List<String> providedIdentifier;
 	
