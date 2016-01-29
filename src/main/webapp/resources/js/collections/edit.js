@@ -2,9 +2,9 @@ var editor;
 $(document).ready(function() {
 	editor = new CollectionEditor();
 	$("#btn-add-description").click(function() { editor.triggerAddTableElement(); return false;});
+	
+	$("form").submit(function(event) { editor.submit(event); });
 });
-
-
 
 var CollectionEditor = function() {};
 
@@ -40,4 +40,10 @@ CollectionEditor.prototype.editEntry = function(btn) {
 CollectionEditor.prototype.removeEntry = function(btn) {
 	$(btn).closest("tr").next().remove();
 	$(btn).closest("tr").remove();
+};
+
+CollectionEditor.prototype.submit = function(event) {
+	
+	event.preventDefault();	// Assume error for now
+	return false; 
 };
