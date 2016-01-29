@@ -1,6 +1,7 @@
 package eu.dariah.de.colreg.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import eu.dariah.de.colreg.model.base.BaseIdentifiable;
@@ -15,9 +16,9 @@ public class Collection extends BaseIdentifiable {
 	
 	// Collection description
 	private List<LocalizedDescription> localizedDescriptions;
-	private String type;
+	private String typeId;
 	private String webPage;
-	private List<String> itemLanguages; // of the items
+	private Map<Byte, String> itemLanguages; // of the items
 	private Long size;
 	
 	// Legal information
@@ -48,14 +49,14 @@ public class Collection extends BaseIdentifiable {
 	public List<LocalizedDescription> getLocalizedDescriptions() { return localizedDescriptions; }
 	public void setLocalizedDescriptions(List<LocalizedDescription> localizedDescriptions) { this.localizedDescriptions = localizedDescriptions; }
 	
-	public String getType() { return type; }
-	public void setType(String type) { this.type = type; }
+	public String getTypeId() { return typeId; }
+	public void setTypeId(String typeId) { this.typeId = typeId; }
 	
 	public String getWebPage() { return webPage; }
 	public void setWebPage(String webPage) { this.webPage = webPage; }
 	
-	public List<String> getItemLanguages() { return itemLanguages; }
-	public void setItemLanguages(List<String> itemLanguages) { this.itemLanguages = itemLanguages; }
+	public Map<Byte, String> getItemLanguages() { return itemLanguages; }
+	public void setItemLanguages(Map<Byte, String> itemLanguages) { this.itemLanguages = itemLanguages; }
 	
 	public Long getSize() { return size; }
 	public void setSize(Long size) { this.size = size; }
