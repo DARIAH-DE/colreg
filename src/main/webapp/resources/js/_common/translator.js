@@ -1,6 +1,6 @@
 var Translator = function() {
 	this.translations = [];
-	this.translationsUrlSuffix = "/ajax/getTranslations";
+	this.translationsUrlSuffix = "async/getTranslations";
 };
 
 Translator.prototype.addTranslations = function(codes) {

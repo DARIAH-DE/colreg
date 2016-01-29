@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<tr class="list">
+<tr class="list" onclick="editor.editEntry(this); return false;">
 	<c:choose>
 		<c:when test="${currDesc!=null}">
 			<td>${currDesc.title}</td>
@@ -11,9 +11,12 @@
 			<td colspan="3">~ New entry</td>
 		</c:otherwise>
 	</c:choose>
+	<td>
+		<button onclick="editor.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+	</td>
 </tr>
-<tr>
-	<td colspan="3">
+<tr class="edit">
+	<td colspan="4">
 		<div class="form-group">
 			<label for="title" class="col-sm-3 control-label">~Language</label>
 			<div class="col-sm-9">

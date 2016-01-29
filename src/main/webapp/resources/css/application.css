@@ -327,8 +327,12 @@ body .modal.modal450 {
  *	Table for (lang, accrual etc.)
  */
 .collection-editor-table {
-    border-collapse: collapse;
+    border-collapse: collapse;    
     width: 100%;
+}
+
+.collection-editor-table tr.list {
+	cursor: pointer;
 }
 
 .collection-editor-table tr td, .collection-editor-table th {

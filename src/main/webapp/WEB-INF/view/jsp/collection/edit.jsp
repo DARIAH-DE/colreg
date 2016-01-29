@@ -33,34 +33,34 @@
 		</div>
 				
 		<legend>~Collection description</legend>
-		
-		<!-- lang, title, description, audience, provenance -->
-		
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Localized description sets</label>
 			<div class="col-sm-9">
-				<table class="collection-editor-table">
-					<tr>
-						<th>~Lang</th>
-						<th>~Title</th>
-						<th>~Other elements</th>
-					</tr>
-					<c:choose>
-						<c:when test="${fn:length(c.localizedDescriptions)==0}">
-							<td colspan="3">~ Please provide at least one description set</td>
-						</c:when>
-						<c:otherwise>
+				<table id="tbl-collection-description-sets" class="collection-editor-table">
+					<thead>
+						<tr>
+							<th>~Lang</th>
+							<th>~Title</th>
+							<th>~Other elements</th>
+							<th>~</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="collection-editor-table-empty-placeholder">
+							<td colspan="4"<c:if test="${fn:length(c.localizedDescriptions)>0}"> style="display: none;"</c:if>>~ Please provide at least one description set</td>
+						</tr>
+						<c:if test="${fn:length(c.localizedDescriptions)>0}">
 							<c:forEach items="${c.localizedDescriptions}" var="desc" varStatus="status" >
 								<c:set var="currDesc" value="${desc}" scope="request" />
 								<c:set var="currIndex" value="${status.index}" scope="request" />
 								<jsp:include page="incl/edit_description.jsp" />
 							</c:forEach>
 							<c:remove var="currDesc" />	
-						</c:otherwise>
-					</c:choose>
+						</c:if>
+					</tbody>
 				</table>
 				<div class="collection-editor-buttons">
-					<button class="btn btn-sm btn-primary cancel" onclick="return false;">~ Add description</button>
+					<button id="btn-add-description" class="btn btn-sm btn-primary cancel">~ Add description</button>
 				</div>
 			</div>
 		</div>

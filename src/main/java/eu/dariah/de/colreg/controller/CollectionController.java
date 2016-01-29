@@ -1,10 +1,11 @@
 package eu.dariah.de.colreg.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 import java.util.Locale;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,5 +51,10 @@ public class CollectionController {
 		model.addAttribute("c", c);
 		
 		return "collection/edit";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editDescription"})
+	public String getEditDescriptionForm() {
+		return "collection/edit/incl/edit_description";
 	}
 }
