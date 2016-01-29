@@ -1,11 +1,13 @@
 package eu.dariah.de.colreg.model;
 
-public class Lang {
+public class LocalizedDescription {
 	private String lang;
 	private String title;
 	private String description;
 	private String audience;
 	private String provenance;
+	private String acronym;
+	private boolean collectionNative;
 	
 	
 	public String getLang() { return lang; }
@@ -22,4 +24,10 @@ public class Lang {
 	
 	public String getProvenance() { return provenance; }
 	public void setProvenance(String provenance) { this.provenance = provenance; }
+	
+	public String getAcronym() { return acronym; }
+	public void setAcronym(String acronym) { this.acronym = acronym; }
+	
+	public boolean isCollectionNative() { return collectionNative; }
+	public void setCollectionNative(boolean collectionNative) { this.collectionNative = collectionNative; }
 }

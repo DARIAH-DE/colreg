@@ -31,7 +31,7 @@
 			</div>
 		</div>
 				
-		<legend>~Basic collection description</legend>
+		<legend>~Collection description</legend>
 		
 		<!-- lang, title, description, audience, provenance -->
 		
@@ -56,9 +56,6 @@
 				<sf:input path="collectionType" class="form-control" placeholder="~Collection Type" />
 			</div>
 		</div>
-		
-		
-		<legend>~Extended collection description</legend>
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Web Page</label>
 			<div class="col-sm-9">
@@ -66,9 +63,12 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label">~ Item Language</label>
+			<label for="description" class="col-sm-3 control-label">~ Item Languages</label>
 			<div class="col-sm-9">
-				<sf:input path="language" class="form-control" placeholder="~Item Language" />
+				<ul>
+					<li>Language 1</li>
+					<li>Language 2</li>
+				</ul>
 			</div>
 		</div>
 		<div class="form-group">
