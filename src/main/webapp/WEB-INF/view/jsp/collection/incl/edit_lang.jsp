@@ -11,7 +11,7 @@
 		</c:otherwise>
 	</c:choose>
 </tr>
-<tr>
+<tr style="display: none;">
 	<td colspan="2">
 		<div class="form-group">
 			<label for="title" class="col-sm-3 control-label">~Language</label>

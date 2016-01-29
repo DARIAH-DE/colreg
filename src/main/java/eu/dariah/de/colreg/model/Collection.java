@@ -10,20 +10,29 @@ public class Collection extends BaseIdentifiable {
 	
 	private String collectionId;		// Persistent identifier of the collection (id is for the version) 
 	private String succeedingVersionId;
-	private String providedIdentifier;
-	private String webPage;
+	private String parentCollectionId;
+	
 	private String collectionType;
+	private String collectionDescriptionRights;
+	private String accessRights;
+	private String itemRights;
+	
+	private String webPage;
+	
 	private String acronym;
 	private Long size;
-	private String language;
-	private String collectionDescriptionRights;
-	private String itemRights;
+	
+	
 	private String associatedProject;
-	private String accessRights;
+	
 	private String accrualPeriodicity;
 	private String reproductionPossibilities;
 	private String itemEncodingScheme;
-	private String status;
+	
+	
+	/* List required */
+	private String providedIdentifier;
+	private String language; // of the items
 	
 	private List<CollectionAgentRelation> agentRelations;
 	private List<Lang> langs;
@@ -36,6 +45,9 @@ public class Collection extends BaseIdentifiable {
 	
 	public String getSucceedingVersionId() { return succeedingVersionId; }
 	public void setSucceedingVersionId(String succeedingVersionId) { this.succeedingVersionId = succeedingVersionId; }
+	
+	public String getParentCollectionId() { return parentCollectionId; }
+	public void setParentCollectionId(String parentCollectionId) { this.parentCollectionId = parentCollectionId; }
 	
 	public String getProvidedIdentifier() { return providedIdentifier; }
 	public void setProvidedIdentifier(String providedIdentifier) { this.providedIdentifier = providedIdentifier; }
