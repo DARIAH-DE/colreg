@@ -14,15 +14,12 @@ CollectionEditor.prototype.triggerAddTableElement = function() {
         type: "GET",
         dataType: "html",
         success: function(data) {
-        	
-        	// Hide placeholder row
-        	$("#tbl-collection-description-sets .collection-editor-table-empty-placeholder").hide();
-        	
         	// Hide all existing form-rows
         	$("#tbl-collection-description-sets tr.edit").hide();
         	
-        	$("#tbl-collection-description-sets tbody").append(data);
+        	$("#tbl-collection-description-sets .collection-editor-table-empty-placeholder").before(data);
         	editor.sort();
+        	editor.expandLast();
         },
         error: function(textStatus) { }
 	});
@@ -61,6 +58,10 @@ CollectionEditor.prototype.sort = function() {
 		
 		index++;
 	});
+}
+
+CollectionEditor.prototype.expandLast = function() {
+	$("#tbl-collection-description-sets tr.edit").last().css("display","");
 }
 
 CollectionEditor.prototype.submit = function(event) {

@@ -3,18 +3,18 @@
 
 <tr class="list" onclick="editor.editEntry(this); return false;">
 	<c:choose>
-		<c:when test="${fn:length(currDesc.title)>0}">
+		<c:when test="${currDesc!=null}">
 			<td>${currDesc.title}</td>
 			<td>${currDesc.languageId}</td>
 			<td>?</td>
+			<td>
+				<button onclick="editor.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+			</td>
 		</c:when>
 		<c:otherwise>
-			<td colspan="3">~ New entry</td>
+			<td colspan="4">~ New entry</td>
 		</c:otherwise>
 	</c:choose>
-	<td>
-		<button onclick="editor.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-	</td>
 </tr>
 <tr class="edit" style="display: none;">
 	<td colspan="4">
@@ -27,7 +27,7 @@
 			<div class="col-sm-6">
 				<div class="checkbox">
 					<span class="attribute-name-helper">localizedDescriptions{}.collectionDefault</span>				
-					<input type="checkbox" id="localizedDescriptions${currIndex}.collectionDefault" name="localizedDescriptions[${currIndex}].collectionDefault"<c:if test="${currDesc.collectionDefault}"> checked="checked"</c:if> /> ~Collection Default
+					<input type="checkbox" id="localizedDescriptions${currIndex}.collectionDefault" name="localizedDescriptions[${currIndex}].collectionDefault"<c:if test="${currDesc!=null && currDesc.collectionDefault}"> checked="checked"</c:if> /> ~Collection Default
 				</div>
 			</div>
 		</div>

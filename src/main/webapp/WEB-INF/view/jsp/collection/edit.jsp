@@ -46,9 +46,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="collection-editor-table-empty-placeholder">
-							<td colspan="4"<c:if test="${fn:length(c.localizedDescriptions)>0}"> style="display: none;"</c:if>>~ Please provide at least one description set</td>
-						</tr>
 						<c:if test="${fn:length(c.localizedDescriptions)>0}">
 							<c:forEach items="${c.localizedDescriptions}" var="desc" varStatus="status" >
 								<c:set var="currDesc" value="${desc}" scope="request" />
@@ -57,11 +54,13 @@
 							</c:forEach>
 							<c:remove var="currDesc" />	
 						</c:if>
+						<tr class="collection-editor-table-empty-placeholder">
+							<td colspan="4" style="text-align: right;">
+								<button id="btn-add-description" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add entry</button>
+							</td>
+						</tr>
 					</tbody>
 				</table>
-				<div class="collection-editor-buttons">
-					<button id="btn-add-description" class="btn btn-sm btn-primary cancel">~ Add description</button>
-				</div>
 			</div>
 		</div>
 		<div class="form-group">
