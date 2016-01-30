@@ -378,13 +378,14 @@ body .modal.modal450 {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    margin: 12px 0;
+    margin: 6px 0;
     padding: 8px 0;
-    width: 422px;
+    width: 400px;
 }
-.tt-suggestion {
-    font-size: 18px;
-    line-height: 24px;
+.tt-suggestion,
+.tt-empty-message {
+    font-size: 14px;
+    line-height: 16px;
     padding: 3px 20px;
 }
 .tt-suggestion:hover {
@@ -396,6 +397,6 @@ body .modal.modal450 {
     background-color: #0097cf;
     color: #fff;
 }
-.tt-suggestion p {
+p.tt-suggestion {
     margin: 0;
-}s
+}

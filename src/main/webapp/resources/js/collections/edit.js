@@ -20,10 +20,11 @@ $(document).ready(function() {
 	  hint: false,
 	  display: 'code',
 	  source: languages,
+	  limit: 12,
 	  templates: {
 		    empty: [
-		      '<div class="empty-message">',
-		        'unable to find any Best Picture winners that match the current query',
+		      '<div class="tt-empty-message">',
+		        '~No match found',
 		      '</div>'
 		    ].join('\n'),
 		    suggestion: function(data) {
