@@ -4,6 +4,33 @@ $(document).ready(function() {
 	$("#btn-add-description").click(function() { editor.triggerAddTableElement(); return false;});
 	
 	$("form").submit(function(event) { editor.submit(event); });
+	
+	var languages = new Bloodhound({
+		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		  //prefetch: '../data/films/post_1960.json',
+		  remote: {
+		    url: __util.getBaseUrl() + 'languages/query/%QUERY',
+		    wildcard: '%QUERY'
+		  }
+	});
+
+	$('.typeahead').typeahead(null, {
+	  name: 'language',
+	  hint: false,
+	  display: 'code',
+	  source: languages,
+	  templates: {
+		    empty: [
+		      '<div class="empty-message">',
+		        'unable to find any Best Picture winners that match the current query',
+		      '</div>'
+		    ].join('\n'),
+		    suggestion: function(data) {
+		        return '<p><strong>' + data.code + '</strong> – ' + data.name + '</p>';
+		    }
+		  }
+	});
 });
 
 var CollectionEditor = function() {};

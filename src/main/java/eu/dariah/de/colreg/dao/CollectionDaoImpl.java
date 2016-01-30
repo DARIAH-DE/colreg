@@ -12,7 +12,7 @@ import eu.dariah.de.colreg.model.Collection;
 @Repository
 public class CollectionDaoImpl extends BaseDaoImpl<Collection> implements CollectionDao {
 	public CollectionDaoImpl() {
-		super(Collection.class, "cols");
+		super(Collection.class);
 	}
 
 	@Override

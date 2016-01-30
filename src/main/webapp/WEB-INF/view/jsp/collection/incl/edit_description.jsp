@@ -22,7 +22,7 @@
 			<label for="title" class="col-sm-3 control-label">~Language</label>
 			<div class="col-sm-3">
 				<span class="attribute-name-helper">localizedDescriptions{}.languageId</span>
-				<input type="text" class="form-control" id="localizedDescriptions${currIndex}.languageId" name="localizedDescriptions[${currIndex}].languageId" value="<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>" placeholder="~Language">
+				<input type="text" class="form-control typeahead" id="localizedDescriptions${currIndex}.languageId" name="localizedDescriptions[${currIndex}].languageId" value="<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>" placeholder="~Language">
 			</div>
 			<div class="col-sm-6">
 				<div class="checkbox">
