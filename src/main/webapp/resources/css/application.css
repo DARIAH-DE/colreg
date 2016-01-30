@@ -356,3 +356,10 @@ body .modal.modal450 {
 	float: right;
 	margin-top: 5px;
 }
+
+.attribute-name-helper {
+	display: none;
+	position: absolute; 
+	height: 0;
+	width: 0;
+}

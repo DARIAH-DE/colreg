@@ -22,6 +22,7 @@ CollectionEditor.prototype.triggerAddTableElement = function() {
         	$("#tbl-collection-description-sets tr.edit").hide();
         	
         	$("#tbl-collection-description-sets tbody").append(data);
+        	editor.sort();
         },
         error: function(textStatus) { }
 	});
@@ -44,10 +45,27 @@ CollectionEditor.prototype.removeEntry = function(btn) {
 	if ($("#tbl-collection-description-sets tbody tr").size()==1) {
 		$("#tbl-collection-description-sets .collection-editor-table-empty-placeholder").show();
 	}
+	this.sort();
 };
 
-CollectionEditor.prototype.submit = function(event) {
+CollectionEditor.prototype.sort = function() {
 	
-	event.preventDefault();	// Assume error for now
-	return false; 
+	var index = 0;
+	$("#tbl-collection-description-sets tbody tr.edit").each(function() {
+		$(this).find(".attribute-name-helper").each(function() {
+			var name = $(this).text().replace("{}", "[" + index + "]");
+			var id = $(this).text().replace("{}", index);
+			
+			$(this).next().prop("id", id).prop("name", name);
+		});
+		
+		index++;
+	});
+}
+
+CollectionEditor.prototype.submit = function(event) {
+	this.sort();
+	
+	//event.preventDefault();	// Assume error for now
+	//return false; 
 };

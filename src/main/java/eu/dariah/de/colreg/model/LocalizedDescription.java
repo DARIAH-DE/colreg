@@ -7,7 +7,7 @@ public class LocalizedDescription {
 	private String audience;
 	private String provenance;
 	private String acronym;
-	private boolean collectionNative;
+	private boolean collectionDefault;
 	
 	
 	public String getLanguageId() { return languageId; }
@@ -28,6 +28,6 @@ public class LocalizedDescription {
 	public String getAcronym() { return acronym; }
 	public void setAcronym(String acronym) { this.acronym = acronym; }
 	
-	public boolean isCollectionNative() { return collectionNative; }
-	public void setCollectionNative(boolean collectionNative) { this.collectionNative = collectionNative; }
+	public boolean isCollectionDefault() { return collectionDefault; }
+	public void setCollectionDefault(boolean collectionDefault) { this.collectionDefault = collectionDefault; }
 }
