@@ -2,16 +2,18 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <tr class="list">
-	<c:choose>
-		<c:when test="${currDesc!=null}">
-			<td onclick="editor.descriptionTable.editEntry(this); return false;">${currDesc.title}</td>
-			<td onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">${currDesc.languageId}</td>
-			<td onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">?</td>
-		</c:when>
-		<c:otherwise>
-			<td colspan="3" onclick="editor.descriptionTable.editEntry(this); return false;">~ New entry</td>
-		</c:otherwise>
-	</c:choose>
+	<td onclick="editor.descriptionTable.editEntry(this); return false;">
+		<c:choose>
+			<c:when test="${currDesc!=null}">${currDesc.title}</c:when>
+			<c:otherwise>~ New entry</c:otherwise>
+		</c:choose>
+	</td>
+	<td onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">
+		<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>
+	</td>
+	<td onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">
+		<c:if test="${currDesc!=null}">?</c:if>
+	</td>
 	<td class="nowrap">
 		<button onclick="editor.descriptionTable.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
 		<button onclick="editor.descriptionTable.pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>

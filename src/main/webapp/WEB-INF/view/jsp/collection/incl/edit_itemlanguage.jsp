@@ -1,14 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <tr class="list">
-	<c:choose>
-		<c:when test="${currLang!=null}">
-			<td onclick="editor.itemLanguageTable.editEntry(this); return false;">${currLang}</td>
-		</c:when>
-		<c:otherwise>
-			<td onclick="editor.itemLanguageTable.editEntry(this); return false;">~ New entry</td>
-		</c:otherwise>
-	</c:choose>
+	<td onclick="editor.itemLanguageTable.editEntry(this); return false;">
+		<c:choose>
+			<c:when test="${currLang!=null}">${currLang}</c:when>
+			<c:otherwise>~ New entry</c:otherwise>
+		</c:choose>
+	</td>
 	<td class="nowrap">
 		<button onclick="editor.itemLanguageTable.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
 		<button onclick="editor.itemLanguageTable.pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
