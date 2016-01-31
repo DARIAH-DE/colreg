@@ -364,6 +364,15 @@ body .modal.modal450 {
     color: white;
 }
 
+.collection-editor-table th.nowrap, 
+.collection-editor-table td.nowrap {
+	white-space: nowrap;
+}
+
+.collection-editor-table th.explode {
+	width: 100%;
+} 
+
 .collection-editor-buttons {
 	float: right;
 	margin-top: 5px;

@@ -38,6 +38,11 @@ var CollectionEditor = function() {
 		tableSelector: "#tbl-collection-description-sets",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editDescription"
 	});
+	
+	this.itemLanguageTable = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-item-languages",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editItemLanguage"
+	});
 };
 
 

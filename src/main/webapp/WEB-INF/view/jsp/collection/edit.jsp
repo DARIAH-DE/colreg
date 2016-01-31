@@ -39,10 +39,10 @@
 				<table id="tbl-collection-description-sets" class="collection-editor-table">
 					<thead>
 						<tr>
-							<th>~Lang</th>
-							<th>~Title</th>
-							<th>~Other elements</th>
-							<th>~</th>
+							<th class="explode">~Title</th>
+							<th class="nowrap">~Lang</th>
+							<th class="nowrap">~Other elements</th>
+							<th class="nowrap">~</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -81,8 +81,8 @@
 				<table id="tbl-collection-item-languages" class="collection-editor-table">
 					<thead>
 						<tr>
-							<th>~Lang</th>
-							<th>~</th>
+							<th class="explode">~Lang</th>
+							<th class="nowrap">~</th>
 						</tr>
 					</thead>
 					<tbody>
