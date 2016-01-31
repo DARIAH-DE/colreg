@@ -1,14 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<tr class="list" onclick="editor.editEntry(this); return false;">
+<tr class="list" onclick="editor.descriptionTable.editEntry(this); return false;">
 	<c:choose>
 		<c:when test="${currDesc!=null}">
 			<td>${currDesc.title}</td>
 			<td>${currDesc.languageId}</td>
 			<td>?</td>
 			<td>
-				<button onclick="editor.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+				<button onclick="editor.descriptionTable.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 			</td>
 		</c:when>
 		<c:otherwise>
@@ -20,15 +20,9 @@
 	<td colspan="4">
 		<div class="form-group">
 			<label for="title" class="col-sm-3 control-label">~Language</label>
-			<div class="col-sm-3">
+			<div class="col-sm-4">
 				<span class="attribute-name-helper">localizedDescriptions{}.languageId</span>
 				<input type="text" class="form-control typeahead" id="localizedDescriptions${currIndex}.languageId" name="localizedDescriptions[${currIndex}].languageId" value="<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>" placeholder="~Language">
-			</div>
-			<div class="col-sm-6">
-				<div class="checkbox">
-					<span class="attribute-name-helper">localizedDescriptions{}.collectionDefault</span>				
-					<input type="checkbox" id="localizedDescriptions${currIndex}.collectionDefault" name="localizedDescriptions[${currIndex}].collectionDefault"<c:if test="${currDesc!=null && currDesc.collectionDefault}"> checked="checked"</c:if> /> ~Collection Default
-				</div>
 			</div>
 		</div>
 		<div class="form-group">

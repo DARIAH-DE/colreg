@@ -53,8 +53,28 @@ public class CollectionController {
 		return "collection/edit";
 	}
 	
+	@RequestMapping(method=GET, value={"/includes/editAccess"})
+	public String getEditAccessForm() {
+		return "collection/edit/incl/edit_access";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editAccrual"})
+	public String getEditAccrualForm() {
+		return "collection/edit/incl/edit_accrual";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editAgent"})
+	public String getEditAgentForm() {
+		return "collection/edit/incl/edit_agent";
+	}
+	
 	@RequestMapping(method=GET, value={"/includes/editDescription"})
 	public String getEditDescriptionForm() {
 		return "collection/edit/incl/edit_description";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editItemLanguage"})
+	public String getEditItemLanguageForm() {
+		return "collection/edit/incl/edit_itemlanguage";
 	}
 }

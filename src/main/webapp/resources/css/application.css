@@ -327,7 +327,8 @@ body .modal.modal450 {
  *	Table for (lang, accrual etc.)
  */
 .collection-editor-table {
-    border-collapse: collapse;    
+    border-collapse: collapse;
+    border-bottom: 1px solid #ddd;
     width: 100%;
 }
 
@@ -341,7 +342,18 @@ body .modal.modal450 {
     padding: 4px 8px;
 }
 
-.collection-editor-table tr:nth-child(4n+0){background-color: #f2f2f2}
+.collection-editor-table tr:nth-child(4n+1),
+.collection-editor-table tr:nth-child(4n+2) { 
+	background-color: #f2f2f2
+}
+
+.collection-editor-table tr:nth-child(2n+1) td { 
+	border-bottom: 0px;
+}
+
+.collection-editor-table tr:nth-child(2n+2) td { 
+	border-top: 1px dashed #ddd;
+}
 
 .collection-editor-table tr.list:hover {background-color: #ddd;}
 

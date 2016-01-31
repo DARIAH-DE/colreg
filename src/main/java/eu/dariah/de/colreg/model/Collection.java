@@ -26,7 +26,7 @@ public class Collection extends BaseIdentifiable {
 	private List<LocalizedDescription> localizedDescriptions;
 	private String typeId;
 	private String webPage;
-	private Map<Byte, String> itemLanguages; // of the items
+	private List<String> itemLanguages; // of the items
 	private Long size;
 	
 	// Legal information
@@ -63,8 +63,8 @@ public class Collection extends BaseIdentifiable {
 	public String getWebPage() { return webPage; }
 	public void setWebPage(String webPage) { this.webPage = webPage; }
 	
-	public Map<Byte, String> getItemLanguages() { return itemLanguages; }
-	public void setItemLanguages(Map<Byte, String> itemLanguages) { this.itemLanguages = itemLanguages; }
+	public List<String> getItemLanguages() { return itemLanguages; }
+	public void setItemLanguages(List<String> itemLanguages) { this.itemLanguages = itemLanguages; }
 	
 	public Long getSize() { return size; }
 	public void setSize(Long size) { this.size = size; }

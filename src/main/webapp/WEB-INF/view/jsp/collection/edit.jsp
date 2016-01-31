@@ -54,9 +54,9 @@
 							</c:forEach>
 							<c:remove var="currDesc" />	
 						</c:if>
-						<tr class="collection-editor-table-empty-placeholder">
+						<tr class="collection-editor-table-buttons">
 							<td colspan="4" style="text-align: right;">
-								<button id="btn-add-description" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add entry</button>
+								<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add description set</button>
 							</td>
 						</tr>
 					</tbody>
@@ -78,10 +78,29 @@
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~ Item Languages</label>
 			<div class="col-sm-9">
-				<ul>
-					<li>Language 1</li>
-					<li>Language 2</li>
-				</ul>
+				<table id="tbl-collection-item-languages" class="collection-editor-table">
+					<thead>
+						<tr>
+							<th>~Lang</th>
+							<th>~</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${fn:length(c.itemLanguages)>0}">
+							<c:forEach items="${c.itemLanguages}" var="lang" varStatus="status" >
+								<c:set var="currLang" value="${lang}" scope="request" />
+								<c:set var="currIndex" value="${status.index}" scope="request" />
+								<jsp:include page="incl/edit_itemlanguage.jsp" />
+							</c:forEach>
+							<c:remove var="currDesc" />	
+						</c:if>
+						<tr class="collection-editor-table-buttons">
+							<td colspan="4" style="text-align: right;">
+								<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="form-group">
