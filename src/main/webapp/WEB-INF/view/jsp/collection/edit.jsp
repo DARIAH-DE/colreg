@@ -133,12 +133,6 @@
 		
 		<legend>~Collection context</legend>
 		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label">~Parent/Containing collection:</label>
-			<div class="col-sm-9">
-				<sf:input path="parentCollectionId" class="form-control" placeholder="~Parent/Containing" />
-			</div>
-		</div>
-		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Associated Agents</label>
 			<div class="col-sm-9">
 				
@@ -151,12 +145,17 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="description" class="col-sm-3 control-label">~Parent/Containing collection:</label>
+			<div class="col-sm-9">
+				<sf:input path="parentCollectionId" class="form-control" placeholder="~Parent/Containing" />
+			</div>
+		</div>
+		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Provenance information</label>
 			<div class="col-sm-9">
 				<sf:input path="provenanceInfo" class="form-control" placeholder="~Provenance information" />
 			</div>
 		</div>
-		
 
 		<legend>~Collection identification</legend>
 		<div class="form-group">
