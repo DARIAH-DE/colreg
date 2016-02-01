@@ -13,7 +13,7 @@ public abstract class DaoImpl<T extends Identifiable> implements Dao {
 	protected final Class<T> clazz;
 	protected final String collectionName;
 	
-	@Autowired protected MongoTemplate mongoTemplate;
+	@Autowired public MongoTemplate mongoTemplate;
 	
 	@Override public Class<?> getClazz() { return clazz; }
 	@Override public String getCollectionName() { return collectionName; }

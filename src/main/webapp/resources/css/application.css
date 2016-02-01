@@ -388,6 +388,10 @@ body .modal.modal450 {
 /*!
  *	Typeahead
  */
+.twitter-typeahead {
+	width: 100%;
+}
+ 
 .tt-query {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }

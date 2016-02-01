@@ -14,6 +14,7 @@ import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
+import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
@@ -55,7 +56,14 @@ public class VocabularyServiceImpl implements VocabularyService {
 			innerResult = languageDao.find(q);
 			if (innerResult!=null && innerResult.size()>0) {
 				for (Language l : innerResult) {
-					if (!result.contains(l)) {
+					boolean contains = false;
+					for (Language lX : result) {
+						if (l.getId().equals(lX.getId())) {
+							contains = true;
+							break;
+						}
+					}
+					if (!contains) {
 						result.add(l);
 					}
 				}

@@ -1,5 +1,6 @@
 package eu.dariah.de.colreg.controller;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -12,10 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.VocabularyService;
 
@@ -48,6 +52,8 @@ public class AgentController {
 		model.addAttribute("a", a);
 		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
 		
+		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
+		
 		return "agent/edit";
 	}
 	
@@ -59,5 +65,10 @@ public class AgentController {
 		redirectAttributes.addFlashAttribute("a", a);
 						
 		return "redirect:/agents/" + a.getEntityId();
+	}
+	
+	@RequestMapping(value="query/{query}", method=RequestMethod.GET)
+	public @ResponseBody List<Agent> queryAgents(@PathVariable String query, @RequestParam(required=false) List<String> excl) {
+		return agentService.queryAgents(query, excl);
 	}
 }

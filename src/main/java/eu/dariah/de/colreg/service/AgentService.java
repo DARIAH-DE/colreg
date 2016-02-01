@@ -9,4 +9,5 @@ public interface AgentService {
 	public Agent createAgent();
 	public Agent findCurrentByAgentId(String id);
 	public void save(Agent a);
+	public List<Agent> queryAgents(String query, List<String> excl);
 }

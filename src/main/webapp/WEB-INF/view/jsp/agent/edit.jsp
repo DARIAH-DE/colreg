@@ -20,7 +20,7 @@
 </ul>
 <div id="main-content">
 	<h1>~Agent Editor</h1>
-	<sf:form method="POST" action="${actionPath}" modelAttribute="a" class="form-horizontal">
+	<sf:form method="POST" action="${actionPath}" modelAttribute="a" class="form-horizontal" autocomplete="off">
 		
 		<div class="form-group">
 			<div class="col-sm-12">
@@ -89,9 +89,26 @@
 		<legend>~Contextual information</legend>
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Parent/containing agent</label>
-			<div class="col-sm-9">
-				<sf:input path="parentAgentId" class="form-control" placeholder="~Phone" />
+			<div class="col-sm-5">
+				<input type="text" id="parentAgentIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
+				<sf:hidden path="parentAgentId" />
 			</div>
+			<div class="col-sm-6 sol-sm-offset-3">
+				<div id="parentAgent-display" class="alert alert-info alert-dismissible <c:if test="${parentAgent==null}">hide</c:if>">
+					<button id="parentAgentIdReset" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+						<p>
+					<c:if test="${parentAgent!=null}">
+						<strong>${parentAgent.name}  ${parentAgent.foreName}</strong><br />
+						<small><em>ID: ${parentAgent.id}</em></small><br />
+						${parentAgent.address}
+					</c:if>	
+					</p>
+				</div>
+				<div id="parentAgent-display-null" class="well well-sm <c:if test="${parentAgent!=null}">hide</c:if>">
+					~ No parent agent set
+				</div>
+			</div>
+			
 		</div>
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Collection Identifier</label>

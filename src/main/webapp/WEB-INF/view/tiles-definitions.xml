@@ -78,6 +78,7 @@
 		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/edit.jsp" />
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
 			<add-attribute type="string" value="agent/edit.js" />
 		</put-list-attribute>
 	</definition>

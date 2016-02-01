@@ -20,7 +20,7 @@
 </ul>
 <div id="main-content">
 	<h1>~Collection Editor</h1>
-	<sf:form method="POST" action="${actionPath}" modelAttribute="c" class="form-horizontal">
+	<sf:form method="POST" action="${actionPath}" modelAttribute="c" class="form-horizontal" autocomplete="off">
 		
 		<div class="form-group">
 			<div class="col-sm-12">

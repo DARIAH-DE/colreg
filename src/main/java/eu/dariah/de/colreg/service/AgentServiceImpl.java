@@ -1,6 +1,8 @@
 package eu.dariah.de.colreg.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Service;
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.model.Agent;
-import eu.dariah.de.colreg.model.Collection;
 
 @Service
 public class AgentServiceImpl implements AgentService {
@@ -50,5 +51,52 @@ public class AgentServiceImpl implements AgentService {
 			prev.setSucceedingVersionId(a.getId());
 			agentDao.save(prev);
 		}	
+	}
+
+	@Override
+	public List<Agent> queryAgents(String query, List<String> excl) {
+		Query q;
+		List<Agent> result = new ArrayList<Agent>();
+		List<Agent> innerResult;
+		
+		int maxTotalResults = 10;
+				
+		Criteria[] queryCriteria = new Criteria[] {
+				// ID match
+				Criteria.where("id").is(query),
+				
+				// Name starts with
+				Criteria.where("name").regex(Pattern.compile("^" + query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
+				
+				// Name likeness
+				Criteria.where("name").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE))
+		};
+		
+		for (Criteria c : queryCriteria) {
+			q = new Query();
+			q.addCriteria(c);
+			q.addCriteria(Criteria.where("succeedingVersionId").is(null));
+			q.limit(result.size() + maxTotalResults); // Could overlap
+			innerResult = agentDao.find(q);
+			if (innerResult!=null && innerResult.size()>0) {
+				for (Agent a : innerResult) {
+					boolean contains = false;
+					for (Agent aX : result) {
+						if (a.getId().equals(aX.getId())) {
+							contains = true;
+							break;
+						}
+					}
+					if (!contains) {
+						result.add(a);
+					}
+				}
+				if (result.size()>=maxTotalResults) {
+					return result.subList(0, maxTotalResults-1);
+				}
+			}
+			
+		}
+		return result;
 	}
 }
