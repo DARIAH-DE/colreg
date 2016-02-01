@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <tr class="list">
-	<td onclick="editor.itemLanguageTable.editEntry(this); return false;">
+	<td class="itemLanguageTable_itemLanguage" onclick="editor.itemLanguageTable.editEntry(this); return false;">
 		<c:choose>
 			<c:when test="${currLang!=null}">${currLang}</c:when>
 			<c:otherwise>~ New entry</c:otherwise>
@@ -19,7 +19,11 @@
 			<label for="title" class="col-sm-4 control-label">~Item Language</label>
 			<div class="col-sm-4">
 				<span class="attribute-name-helper">itemLanguages{}</span>
-				<input type="text" class="form-control typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" value="<c:if test="${currDesc!=null}">${currLang}</c:if>" placeholder="~Language">
+				<input type="text" 
+					onchange="editor.itemLanguageTable.handleInputChange(this, 'itemLanguageTable_itemLanguage');" 
+					onkeyup="editor.itemLanguageTable.handleInputChange(this, 'itemLanguageTable_itemLanguage');" 
+					class="form-control typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" 
+					value="<c:if test="${currDesc!=null}">${currLang}</c:if>" placeholder="~Language">
 			</div>
 		</div>
 	</td>

@@ -40,8 +40,8 @@
 					<thead>
 						<tr>
 							<th class="explode">~Title</th>
-							<th class="nowrap">~Lang</th>
-							<th class="nowrap">~Other elements</th>
+							<th class="nowrap">~Acronym</th>
+							<th class="nowrap">~Language</th>
 							<th class="nowrap">~</th>
 						</tr>
 					</thead>

@@ -2,17 +2,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <tr class="list">
-	<td onclick="editor.descriptionTable.editEntry(this); return false;">
+	<td class="description_title" onclick="editor.descriptionTable.editEntry(this); return false;">
 		<c:choose>
 			<c:when test="${currDesc!=null}">${currDesc.title}</c:when>
 			<c:otherwise>~ New entry</c:otherwise>
 		</c:choose>
 	</td>
-	<td onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">
-		<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>
+	<td class="description_acronym" onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">
+		<c:if test="${currDesc!=null}">${currDesc.acronym}</c:if>
 	</td>
-	<td onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">
-		<c:if test="${currDesc!=null}">?</c:if>
+	<td class="description_language" onclick="editor.descriptionTable.editEntry(this); return false;" class="nowrap">
+		<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>
 	</td>
 	<td class="nowrap">
 		<button onclick="editor.descriptionTable.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
@@ -26,21 +26,33 @@
 			<label for="title" class="col-sm-3 control-label">~Language</label>
 			<div class="col-sm-4">
 				<span class="attribute-name-helper">localizedDescriptions{}.languageId</span>
-				<input type="text" class="form-control typeahead" id="localizedDescriptions${currIndex}.languageId" name="localizedDescriptions[${currIndex}].languageId" value="<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>" placeholder="~Language">
+				<input type="text" class="form-control typeahead" 
+					onchange="editor.descriptionTable.handleInputChange(this, 'description_language');" 
+					onkeyup="editor.descriptionTable.handleInputChange(this, 'description_language');" 
+					id="localizedDescriptions${currIndex}.languageId" name="localizedDescriptions[${currIndex}].languageId" 
+					value="<c:if test="${currDesc!=null}">${currDesc.languageId}</c:if>" placeholder="~Language">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="title" class="col-sm-3 control-label">~Title</label>
 			<div class="col-sm-9">
 				<span class="attribute-name-helper">localizedDescriptions{}.title</span>
-				<input type="text" class="form-control"  id="localizedDescriptions${currIndex}.title" name="localizedDescriptions[${currIndex}].title" value="<c:if test="${currDesc!=null}">${currDesc.title}</c:if>" placeholder="~Title">
+				<input type="text" class="form-control" 
+					onchange="editor.descriptionTable.handleInputChange(this, 'description_title');" 
+					onkeyup="editor.descriptionTable.handleInputChange(this, 'description_title');"
+					id="localizedDescriptions${currIndex}.title" name="localizedDescriptions[${currIndex}].title" 
+					value="<c:if test="${currDesc!=null}">${currDesc.title}</c:if>" placeholder="~Title">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="title" class="col-sm-3 control-label">~Acronym</label>
 			<div class="col-sm-9">
 				<span class="attribute-name-helper">localizedDescriptions{}.acronym</span>
-				<input type="text" class="form-control"  id="localizedDescriptions${currIndex}.acronym" name="localizedDescriptions[${currIndex}].acronym" value="<c:if test="${currDesc!=null}">${currDesc.acronym}</c:if>" placeholder="~Title">
+				<input type="text" class="form-control"
+					onchange="editor.descriptionTable.handleInputChange(this, 'description_acronym');" 
+					onkeyup="editor.descriptionTable.handleInputChange(this, 'description_acronym');" 
+					id="localizedDescriptions${currIndex}.acronym" name="localizedDescriptions[${currIndex}].acronym" 
+					value="<c:if test="${currDesc!=null}">${currDesc.acronym}</c:if>" placeholder="~Title">
 			</div>
 		</div>
 		<div class="form-group">
