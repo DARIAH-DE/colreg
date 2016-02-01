@@ -8,4 +8,5 @@ public interface AgentService {
 	public List<Agent> findAllCurrent();
 	public Agent createAgent();
 	public Agent findCurrentByAgentId(String id);
+	public void save(Agent a);
 }

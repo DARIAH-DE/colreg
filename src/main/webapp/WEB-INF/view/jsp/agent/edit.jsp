@@ -14,7 +14,7 @@
 	<li class="active">
 		<c:choose>
 			<c:when test="${a.id=='new'}">~New Agent</c:when>
-			<c:otherwise>Agent Id: ${a.agentId}</c:otherwise>
+			<c:otherwise>Agent Id: ${a.entityId}</c:otherwise>
 		</c:choose>
 	</li>
 </ul>
@@ -42,7 +42,7 @@
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Type</label>
 			<div class="col-sm-9">
-				<sf:input path="agentType" class="form-control" placeholder="~Agent type" />
+				<sf:input path="agentTypeId" class="form-control" placeholder="~Agent type" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -73,12 +73,6 @@
 			<label for="description" class="col-sm-3 control-label">~Phone</label>
 			<div class="col-sm-9">
 				<sf:input path="phone" class="form-control" placeholder="~Phone" />
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label">~Date</label>
-			<div class="col-sm-9">
-				<sf:input path="date" class="form-control" placeholder="~Date" />
 			</div>
 		</div>
 		

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.Collection;
 
 @Service
 public class AgentServiceImpl implements AgentService {
@@ -30,5 +31,19 @@ public class AgentServiceImpl implements AgentService {
 	@Override
 	public Agent findCurrentByAgentId(String id) {
 		return agentDao.findCurrentById(id);
+	}
+
+	@Override
+	public void save(Agent a) {
+		Agent prev = this.findCurrentByAgentId(a.getEntityId());
+		
+		a.setId(null);
+		a.setSucceedingVersionId(null);
+		agentDao.save(a);
+		
+		if (prev!=null) {
+			prev.setSucceedingVersionId(a.getId());
+			agentDao.save(prev);
+		}	
 	}
 }

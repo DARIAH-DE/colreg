@@ -1,0 +1,13 @@
+{ 
+    "_id" : ObjectId("56af5610e4b02def795a1340"), 
+    "identifier" : "organization", 
+    "label" : "Organization", 
+    "description" : "Agent is an organization"
+}
+{ 
+    "_id" : ObjectId("56af5610e4b02def795a1341"), 
+    "identifier" : "person", 
+    "label" : "Person", 
+    "description" : "Agent is a person", 
+    "naturalPerson" : true
+}

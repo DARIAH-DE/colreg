@@ -1,5 +1,7 @@
 package eu.dariah.de.colreg.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -11,21 +13,21 @@ import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 public class Agent extends VersionedEntityImpl {
 	private static final long serialVersionUID = 5452333501609638317L;
 	
+	private String agentTypeId;
 	private String name;
-	private String agentType;
 	private String foreName;
 	private String address;
 	private String eMail;
 	private String webPage;
 	private String phone;
-	private String date;
-	
-	
+	private List<String> providedIdentifier;
+	private String parentAgentId;
+
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
 	
-	public String getAgentType() { return agentType; }
-	public void setAgentType(String agentType) { this.agentType = agentType; }
+	public String getAgentTypeId() { return agentTypeId; }
+	public void setAgentTypeId(String agentTypeId) { this.agentTypeId = agentTypeId; }
 	
 	public String getForeName() { return foreName; }
 	public void setForeName(String foreName) { this.foreName = foreName; }
@@ -42,6 +44,9 @@ public class Agent extends VersionedEntityImpl {
 	public String getPhone() { return phone; }
 	public void setPhone(String phone) { this.phone = phone; }
 	
-	public String getDate() { return date; }
-	public void setDate(String date) { this.date = date; }
+	public List<String> getProvidedIdentifier() { return providedIdentifier; }
+	public void setProvidedIdentifier(List<String> providedIdentifier) { this.providedIdentifier = providedIdentifier; }
+	
+	public String getParentAgentId() { return parentAgentId; }
+	public void setParentAgentId(String parentAgentId) { this.parentAgentId = parentAgentId; }
 }

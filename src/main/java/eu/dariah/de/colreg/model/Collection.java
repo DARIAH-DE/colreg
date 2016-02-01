@@ -15,7 +15,6 @@ public class Collection extends VersionedEntityImpl {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
 	/* Identification */
-
 	private List<String> providedIdentifier;
 	
 	// Collection description

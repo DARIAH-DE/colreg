@@ -43,11 +43,15 @@ public class AgentController {
 			a = agentService.findCurrentByAgentId(id);
 		}
 		
+		model.addAttribute("a", a);
+		
 		return "agent/edit";
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
 	public String saveAgent(@Valid Agent a, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		agentService.save(a);
+		
 		// Flash attribute only required on error / otherwise load by id in GET
 		redirectAttributes.addFlashAttribute("a", a);
 						
