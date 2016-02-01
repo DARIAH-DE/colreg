@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.model;
+package eu.dariah.de.colreg.model.vocabulary;
 
 import eu.dariah.de.colreg.model.base.BaseIdentifiable;
 

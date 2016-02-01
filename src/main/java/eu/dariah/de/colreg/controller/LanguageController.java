@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import eu.dariah.de.colreg.model.Language;
-import eu.dariah.de.colreg.service.LanguageService;
+import eu.dariah.de.colreg.model.vocabulary.Language;
+import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/languages/")
 public class LanguageController {
-	@Autowired private LanguageService languageService;
+	@Autowired private VocabularyService vocabularyService;
 	
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)
 	public @ResponseBody List<Language> queryLanguages(@PathVariable String query) {
-		return languageService.queryLanguages(query);
+		return vocabularyService.queryLanguages(query);
 	}
 }

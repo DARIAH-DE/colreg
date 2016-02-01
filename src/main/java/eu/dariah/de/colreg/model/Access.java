@@ -1,6 +1,8 @@
 package eu.dariah.de.colreg.model;
 
-public class AccessMethod {
+import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
+
+public class Access {
 	private String type;
 	private String uri;
 	private EncodingScheme scheme;

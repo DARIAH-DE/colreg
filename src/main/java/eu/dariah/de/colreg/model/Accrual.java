@@ -1,6 +1,6 @@
 package eu.dariah.de.colreg.model;
 
-public class AccrualMethod {
+public class Accrual {
 	private String accrualMethod;
 	private String accrualPolicy;
 	

@@ -5,17 +5,26 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import eu.dariah.de.colreg.dao.LanguageDao;
-import eu.dariah.de.colreg.model.Language;
+import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
+import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
+import eu.dariah.de.colreg.model.vocabulary.AccessType;
+import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
+import eu.dariah.de.colreg.model.vocabulary.Language;
 
 @Service
-public class LanguageServiceImpl implements LanguageService {
+public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private LanguageDao languageDao;
+	
+	@Autowired private AccessTypeDao accessTypeDao;
+	@Autowired private AccrualMethodDao accrualMethodDao;
+	@Autowired private AccrualPolicyDao accrualPolicyDao;
 
 	@Override
 	public List<Language> queryLanguages(String query) {
@@ -54,5 +63,20 @@ public class LanguageServiceImpl implements LanguageService {
 			
 		}
 		return result;
+	}
+
+	@Override
+	public List<AccrualMethod> findAllAccrualMethods() {
+		return accrualMethodDao.findAll();
+	}
+
+	@Override
+	public List<AccrualPolicy> findAllAccrualPolicies() {
+		return accrualPolicyDao.findAll();
+	}
+
+	@Override
+	public List<AccessType> findAllAccessTypes() {
+		return accessTypeDao.findAll();
 	}
 }

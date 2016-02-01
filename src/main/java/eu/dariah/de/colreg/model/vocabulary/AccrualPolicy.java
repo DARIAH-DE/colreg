@@ -1,8 +1,8 @@
-package eu.dariah.de.colreg.model;
+package eu.dariah.de.colreg.model.vocabulary;
 
 import eu.dariah.de.colreg.model.base.BaseIdentifiable;
 
-public class AccrualType extends BaseIdentifiable {
+public class AccrualPolicy extends BaseIdentifiable {
 	private static final long serialVersionUID = -2581962798973602812L;
 	
 	private String label;

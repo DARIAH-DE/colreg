@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.model;
+package eu.dariah.de.colreg.model.vocabulary;
 
 public class EncodingScheme {
 	private String name;

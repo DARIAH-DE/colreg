@@ -41,8 +41,8 @@ public class Collection extends BaseIdentifiable {
 	private String provenanceInfo;
 	
 	// Access and accrual
-	private Set<AccessMethod> accessMethods;
-	private Set<AccrualMethod> accruals;
+	private Set<Access> accessMethods;
+	private Set<Accrual> accruals;
 	
 	
 	public String getCollectionId() { return collectionId; }
@@ -90,9 +90,9 @@ public class Collection extends BaseIdentifiable {
 	public String getProvenanceInfo() { return provenanceInfo; }
 	public void setProvenanceInfo(String provenanceInfo) { this.provenanceInfo = provenanceInfo; }
 	
-	public Set<AccessMethod> getAccessMethods() { return accessMethods; }
-	public void setAccessMethods(Set<AccessMethod> accessMethods) { this.accessMethods = accessMethods; }
+	public Set<Access> getAccessMethods() { return accessMethods; }
+	public void setAccessMethods(Set<Access> accessMethods) { this.accessMethods = accessMethods; }
 	
-	public Set<AccrualMethod> getAccruals() { return accruals; }
-	public void setAccruals(Set<AccrualMethod> accruals) { this.accruals = accruals; }
+	public Set<Accrual> getAccruals() { return accruals; }
+	public void setAccruals(Set<Accrual> accruals) { this.accruals = accruals; }
 }
