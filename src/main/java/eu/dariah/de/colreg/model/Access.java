@@ -1,11 +1,13 @@
 package eu.dariah.de.colreg.model;
 
+import java.util.List;
+
 import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
 
 public class Access {
 	private String type;
 	private String uri;
-	private EncodingScheme scheme;
+	private List<EncodingScheme> schemes;
 	
 	
 	public String getType() { return type; }
@@ -14,6 +16,6 @@ public class Access {
 	public String getUri() { return uri; }
 	public void setUri(String uri) { this.uri = uri; }
 	
-	public EncodingScheme getScheme() { return scheme; }
-	public void setScheme(EncodingScheme scheme) { this.scheme = scheme; }
+	public List<EncodingScheme> getSchemes() { return schemes; }
+	public void setSchemes(List<EncodingScheme> schemes) { this.schemes = schemes; }
 }
