@@ -191,7 +191,7 @@
 			</div>
 		</div>
 		
-		<sf:hidden path="collectionId" />
+		<sf:hidden path="entityId" />
 		
 	</sf:form>
 </div>

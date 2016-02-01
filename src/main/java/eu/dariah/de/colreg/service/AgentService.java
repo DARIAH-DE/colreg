@@ -1,5 +1,11 @@
 package eu.dariah.de.colreg.service;
 
-public interface AgentService {
+import java.util.List;
 
+import eu.dariah.de.colreg.model.Agent;
+
+public interface AgentService {
+	public List<Agent> findAllCurrent();
+	public Agent createAgent();
+	public Agent findCurrentByAgentId(String id);
 }

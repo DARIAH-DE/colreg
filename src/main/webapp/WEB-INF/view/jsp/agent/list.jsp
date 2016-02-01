@@ -13,7 +13,7 @@
 				<div class="pull-right dariah-flower-white-45">~Collection Registry</div>
 			</div>
 			<div class="col-sm-6 col-lg-7 col-sm-offset-1">
-				<h1>~Collections</h1>
+				<h1>~Agents</h1>
 			</div>
 		</div>
 	</div>
@@ -23,15 +23,15 @@
 		<div id="main-content-wrapper" class="col-sm-10 col-sm-offset-1">
 			<ul class="breadcrumb">
 				<li><a href='<s:url value="/" />' target="_self">~Collection Registry</a></li>
-				<li class="active">~Collections</li>
+				<li class="active">~Agents</li>
 			</ul>
 			<div id="main-content">
 				<div class="row">
 					<div class="col-md-12">
-						<h2>~Collections</h2>
+						<h2>~Agents</h2>
 						<ul>
-							<c:forEach items="${collections}" var="c">
-								<li><a href='<s:url value="${c.entityId}" />'>${c.entityId}</a></li>
+							<c:forEach items="${agents}" var="a">
+								<li><a href='<s:url value="${a.entityId}" />'>${c.entityId}</a></li>
 							</c:forEach>
 						</ul>
 						<!-- 

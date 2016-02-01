@@ -17,14 +17,14 @@ public class CollectionServiceImpl implements CollectionService {
 	public Collection createCollection() {
 		Collection c = new Collection();
 		c.setId("new");
-		c.setCollectionId(new ObjectId().toString());
+		c.setEntityId(new ObjectId().toString());
 		
 		return c;
 	}
 
 	@Override
 	public void save(Collection c) {
-		Collection prev = this.findCurrentByCollectionId(c.getCollectionId());
+		Collection prev = this.findCurrentByCollectionId(c.getEntityId());
 		
 		c.setId(null);
 		c.setSucceedingVersionId(null);

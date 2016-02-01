@@ -67,4 +67,19 @@
 	<definition name="collection/edit/incl/edit_description" template="/WEB-INF/view/jsp/collection/incl/edit_description.jsp" />
 	<definition name="collection/edit/incl/edit_itemlanguage" template="/WEB-INF/view/jsp/collection/incl/edit_itemlanguage.jsp" />
 
+	<!-- Agent -->
+	<definition name="agent/list" extends="template_tables">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/list.jsp" />
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="agents/list.js" />
+		</put-list-attribute>
+	</definition>
+	<definition name="agent/edit" extends="template_main">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/edit.jsp" />
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="agents/edit.js" />
+		</put-list-attribute>
+	</definition>
+
 </tiles-definitions>

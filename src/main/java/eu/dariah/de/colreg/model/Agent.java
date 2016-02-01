@@ -1,7 +1,13 @@
 package eu.dariah.de.colreg.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
 public class Agent extends VersionedEntityImpl {
 	private static final long serialVersionUID = 5452333501609638317L;
 	

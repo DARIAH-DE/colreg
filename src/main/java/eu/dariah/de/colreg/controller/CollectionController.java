@@ -60,7 +60,6 @@ public class CollectionController {
 		return "collection/edit";
 	}
 	
-	// TODO Implement as POST-REDIRECT-GET Pattern
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
 	public String saveCollection(@Valid Collection c, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
 		collectionService.save(c);
@@ -68,7 +67,7 @@ public class CollectionController {
 		// Flash attribute only required on error / otherwise load by id in GET
 		redirectAttributes.addFlashAttribute("c", c);
 		
-		return "redirect:/collections/" + c.getCollectionId();
+		return "redirect:/collections/" + c.getEntityId();
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAccess"})

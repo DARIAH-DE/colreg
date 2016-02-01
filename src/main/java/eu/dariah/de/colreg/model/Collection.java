@@ -3,8 +3,6 @@ package eu.dariah.de.colreg.model;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -17,8 +15,7 @@ public class Collection extends VersionedEntityImpl {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
 	/* Identification */
-	@Indexed private String collectionId;		// Persistent identifier of the collection (id is for the version) 
-	private String succeedingVersionId;	// The versionId is actually the id of an object 
+
 	private List<String> providedIdentifier;
 	
 	// Collection description
@@ -43,13 +40,7 @@ public class Collection extends VersionedEntityImpl {
 	private Set<Access> accessMethods;
 	private Set<Accrual> accruals;
 	
-	
-	public String getCollectionId() { return collectionId; }
-	public void setCollectionId(String collectionId) { this.collectionId = collectionId; }
-	
-	public String getSucceedingVersionId() { return succeedingVersionId; }
-	public void setSucceedingVersionId(String succeedingVersionId) { this.succeedingVersionId = succeedingVersionId; }
-	
+		
 	public List<String> getProvidedIdentifier() { return providedIdentifier; }
 	public void setProvidedIdentifier(List<String> providedIdentifier) { this.providedIdentifier = providedIdentifier; }
 	
