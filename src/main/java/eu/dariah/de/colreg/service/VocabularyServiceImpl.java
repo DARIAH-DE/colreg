@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
+import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
+import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
 @Service
@@ -25,7 +27,8 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private AccessTypeDao accessTypeDao;
 	@Autowired private AccrualMethodDao accrualMethodDao;
 	@Autowired private AccrualPolicyDao accrualPolicyDao;
-
+	@Autowired private AgentTypeDao agentTypeDao;
+	
 	@Override
 	public List<Language> queryLanguages(String query) {
 		Query q;
@@ -78,5 +81,10 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Override
 	public List<AccessType> findAllAccessTypes() {
 		return accessTypeDao.findAll();
+	}
+	
+	@Override
+	public List<AgentType> findAllAgentTypes() {
+		return agentTypeDao.findAll();
 	}
 }

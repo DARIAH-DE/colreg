@@ -17,11 +17,13 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.service.AgentService;
+import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/agents/")
 public class AgentController {
 	@Autowired private AgentService agentService;
+	@Autowired private VocabularyService vocabularyService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -44,6 +46,7 @@ public class AgentController {
 		}
 		
 		model.addAttribute("a", a);
+		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
 		
 		return "agent/edit";
 	}

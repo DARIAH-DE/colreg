@@ -18,4 +18,10 @@ public class HomeController {
 		response.sendRedirect("collections/");
 		return null;
 	}
+	
+	@RequestMapping(value = "/agents", method = RequestMethod.GET)
+	public String redirectAgents(HttpServletResponse response) throws IOException  {
+		response.sendRedirect("agents/");
+		return null;
+	}
 }

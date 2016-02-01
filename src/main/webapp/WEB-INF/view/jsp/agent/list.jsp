@@ -31,7 +31,7 @@
 						<h2>~Agents</h2>
 						<ul>
 							<c:forEach items="${agents}" var="a">
-								<li><a href='<s:url value="${a.entityId}" />'>${c.entityId}</a></li>
+								<li><a href='<s:url value="${a.entityId}" />'>${a.entityId}</a></li>
 							</c:forEach>
 						</ul>
 						<!-- 

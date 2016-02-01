@@ -49,7 +49,7 @@
 	<definition name="collection/list" extends="template_tables">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/list.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="collections/list.js" />
+			<add-attribute type="string" value="collection/list.js" />
 		</put-list-attribute>
 	</definition>
 	<definition name="collection/edit" extends="template_main">
@@ -57,8 +57,8 @@
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
-			<add-attribute type="string" value="collections/edit.editorTable.js" />
-			<add-attribute type="string" value="collections/edit.js" />
+			<add-attribute type="string" value="collection/edit.editorTable.js" />
+			<add-attribute type="string" value="collection/edit.js" />
 		</put-list-attribute>
 	</definition>
 	<definition name="collection/edit/incl/edit_access" template="/WEB-INF/view/jsp/collection/incl/edit_access.jsp" />
@@ -71,14 +71,14 @@
 	<definition name="agent/list" extends="template_tables">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/list.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="agents/list.js" />
+			<add-attribute type="string" value="agent/list.js" />
 		</put-list-attribute>
 	</definition>
 	<definition name="agent/edit" extends="template_main">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/edit.jsp" />
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="agents/edit.js" />
+			<add-attribute type="string" value="agent/edit.js" />
 		</put-list-attribute>
 	</definition>
 
