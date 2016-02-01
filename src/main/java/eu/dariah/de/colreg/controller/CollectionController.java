@@ -2,6 +2,7 @@ package eu.dariah.de.colreg.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -18,13 +19,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.vocabulary.AccessType;
+import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/collections/")
 public class CollectionController {
 	@Autowired private CollectionService collectionService;
-	
+	@Autowired private VocabularyService vocabularyService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -45,6 +50,10 @@ public class CollectionController {
 		} else {
 			c = collectionService.findCurrentByCollectionId(id);
 		}
+		
+		List<AccrualPolicy> policies = vocabularyService.findAllAccrualPolicies();
+		List<AccessType> types = vocabularyService.findAllAccessTypes();
+		List<AccrualMethod> method = vocabularyService.findAllAccrualMethods();
 		
 		model.addAttribute("c", c);
 		

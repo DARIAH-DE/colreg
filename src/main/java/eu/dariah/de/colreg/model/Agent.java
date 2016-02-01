@@ -1,8 +1,8 @@
 package eu.dariah.de.colreg.model;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 
-public class Agent extends BaseIdentifiable {
+public class Agent extends VersionedEntityImpl {
 	private static final long serialVersionUID = 5452333501609638317L;
 	
 	private String name;

@@ -1,7 +1,6 @@
 package eu.dariah.de.colreg.model;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,11 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
-public class Collection extends BaseIdentifiable {
+public class Collection extends VersionedEntityImpl {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
 	/* Identification */
