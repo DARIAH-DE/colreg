@@ -4,6 +4,7 @@ var CollectionEditorTable = function(options) {
 				// Should be overriden
 				tableSelector: ".collection-editor-table",
 				newRowUrl: "?",
+				newRowCallback: null,
 				
 				// Defaults should be ok
 				attributeNameHelperSelector: ".attribute-name-helper",
@@ -29,7 +30,14 @@ CollectionEditorTable.prototype.triggerAddTableElement = function() {
         url: _this.options.newRowUrl,
         type: "GET",
         dataType: "html",
-        success: function(data) { _this.addNewEntry(data); },
+        success: function(data) {
+        	var r = $(data);
+        	_this.addNewEntry(r);
+        	if (_this.options.newRowCallback!==null && _this.options.newRowCallback!==undefined & 
+        			typeof _this.options.newRowCallback==='function') {
+        		_this.options.newRowCallback(r);
+        	}
+        },
         error: function(textStatus) { }
 	});
 };

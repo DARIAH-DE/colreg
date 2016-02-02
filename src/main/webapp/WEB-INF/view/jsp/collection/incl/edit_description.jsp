@@ -26,7 +26,7 @@
 			<label for="title" class="col-sm-3 control-label">~Language</label>
 			<div class="col-sm-4">
 				<span class="attribute-name-helper">localizedDescriptions{}.languageId</span>
-				<input type="text" class="form-control typeahead" 
+				<input type="text" class="form-control typeahead language-typeahead" 
 					onchange="editor.descriptionTable.handleInputChange(this, 'description_language');" 
 					onkeyup="editor.descriptionTable.handleInputChange(this, 'description_language');" 
 					id="localizedDescriptions${currIndex}.languageId" name="localizedDescriptions[${currIndex}].languageId" 

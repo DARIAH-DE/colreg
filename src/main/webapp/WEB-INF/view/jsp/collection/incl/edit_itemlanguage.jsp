@@ -22,7 +22,7 @@
 				<input type="text" 
 					onchange="editor.itemLanguageTable.handleInputChange(this, 'itemLanguageTable_itemLanguage');" 
 					onkeyup="editor.itemLanguageTable.handleInputChange(this, 'itemLanguageTable_itemLanguage');" 
-					class="form-control typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" 
+					class="form-control typeahead language-typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" 
 					value="<c:if test="${currDesc!=null}">${currLang}</c:if>" placeholder="~Language">
 			</div>
 		</div>
