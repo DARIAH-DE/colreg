@@ -55,6 +55,7 @@
 	<definition name="collection/edit" extends="template_main">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/edit.jsp" />
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
+		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/collection/incl/nav_editor.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
 			<add-attribute type="string" value="_common/editorTable.js" />
