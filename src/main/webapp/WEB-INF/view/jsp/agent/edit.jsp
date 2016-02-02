@@ -34,7 +34,7 @@
 		<legend>~Agent type</legend>
 		<c:set var="agentIsNatural" value="${agentTypes[0].naturalPerson}" scope="request" />		
 		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label">~Type</label>
+			<label for="description" class="col-sm-3 control-label mandatory">~Type</label>
 			<div class="col-sm-4">
 				<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
 					<c:forEach items="${agentTypes}" var="type">
@@ -49,8 +49,8 @@
 		
 		<legend>~Agent description</legend>
 		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>>~Name</label>
-			<label for="description" class="col-sm-3 control-label agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>~Last Name</label>
+			<label for="description" class="col-sm-3 control-label mandatory agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>>~Name</label>
+			<label for="description" class="col-sm-3 control-label mandatory agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>~Last Name</label>
 			<div class="col-sm-9">
 				<sf:input path="name" class="form-control" placeholder="~Agent name" />
 			</div>
@@ -113,13 +113,13 @@
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Collection Identifier</label>
 			<div class="col-sm-9">
-				<sf:label path="entityId" class="form-control" placeholder="~Identifier" />
+				<sf:input path="entityId" class="form-control" placeholder="~Identifier" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Current description version</label>
 			<div class="col-sm-9">
-				<sf:label path="id" class="form-control" placeholder="~Identifier" />
+				<sf:input path="id" class="form-control" placeholder="~Identifier" readonly="true" />
 			</div>
 		</div>
 		<div class="form-group">

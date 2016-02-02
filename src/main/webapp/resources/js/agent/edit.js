@@ -53,6 +53,22 @@ var AgentEditor = function() {
 		tableSelector: "#tbl-agent-identifier",
 		newRowUrl: __util.getBaseUrl() + "agents/includes/editIdentifier"
 	});
+	
+	$(".nav-form-controls a").on('click', function(e) {
+		$($(this).attr("href")).focus();
+		e.stopPropagation(); 
+		return false;
+	});
+	
+	$("input").focus(function() {		
+		$(".nav-form-controls li").removeClass("active");
+		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
+	});
+	
+	$("select").focus(function() {		
+		$(".nav-form-controls li").removeClass("active");
+		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
+	});
 };
 	
 AgentEditor.prototype.renderAgentSuggestion = function(agent) {

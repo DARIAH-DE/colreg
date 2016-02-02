@@ -425,3 +425,91 @@ body .modal.modal450 {
 p.tt-suggestion {
     margin: 0;
 }
+
+/*
+ *  Playing with sidenav...
+ */ 
+.sidebar {
+	position: fixed;
+    top: 100px;
+    margin-left: 30px;
+}
+
+.sidebar .nav-form-controls {
+	background: #fff none repeat scroll 0 0 padding-box;
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: -20px;
+}
+
+.sidebar nav {
+	padding-left: 20px;
+}
+
+.sidebar .nav > li.mandatory > a {
+	font-weight: bold;
+}
+
+.sidebar .nav > li {
+    /*border-top: 1px solid #CCC;*/
+}
+
+.sidebar .nav > li > a {
+    color: #555;
+    display: block;
+    font-size: 15px;
+    padding: 4px 20px 4px 10px;
+}
+.sidebar .nav > li > a:focus, 
+.sidebar .nav > li > a:hover {
+    background-color: transparent;
+    border-left: 1px solid #563d7c;
+    color: #563d7c;
+    padding-left: 9px;
+    text-decoration: none;
+}
+.sidebar .nav > .active:focus > a, 
+.sidebar .nav > .active:hover > a, 
+.sidebar .nav > .active > a {
+    background-color: transparent;
+    border-left: 2px solid #563d7c;
+    color: #563d7c;
+    
+    padding-left: 18px;
+}
+.sidebar .nav .nav {
+    /*display: none;*/
+    padding-bottom: 10px;
+}
+.sidebar .nav .nav > li > a {
+    font-size: 12px;
+    
+    padding-bottom: 1px;
+    padding-left: 30px;
+    padding-top: 1px;
+}
+
+.sidebar .nav .nav > li {
+	border: none;
+} 
+
+.sidebar .nav .nav > li > a:focus, 
+.sidebar .nav .nav > li > a:hover {
+    padding-left: 29px;
+}
+.sidebar .nav .nav > .active:focus > a, 
+.sidebar .nav .nav > .active:hover > a, 
+.sidebar .nav .nav > .active > a {
+    
+    padding-left: 28px;
+}
+
+label.control-label {
+	font-weight: normal;
+}
+
+label.control-label.mandatory {
+	font-weight: bold;
+}
