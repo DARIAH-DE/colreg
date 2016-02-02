@@ -57,7 +57,7 @@
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
-			<add-attribute type="string" value="collection/edit.editorTable.js" />
+			<add-attribute type="string" value="_common/editorTable.js" />
 			<add-attribute type="string" value="collection/edit.js" />
 		</put-list-attribute>
 	</definition>
@@ -79,8 +79,11 @@
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
+			<add-attribute type="string" value="_common/editorTable.js" />
 			<add-attribute type="string" value="agent/edit.js" />
 		</put-list-attribute>
 	</definition>
+	<definition name="agent/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/agent/incl/edit_identifier.jsp" />
+	
 
 </tiles-definitions>

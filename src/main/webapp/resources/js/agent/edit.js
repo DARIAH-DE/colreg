@@ -48,6 +48,11 @@ var AgentEditor = function() {
 		$("#parentAgent-display").addClass("hide");
 		$("#parentAgent-display-null").removeClass("hide");
 	});
+	
+	this.identifierTable = new CollectionEditorTable({
+		tableSelector: "#tbl-agent-identifier",
+		newRowUrl: __util.getBaseUrl() + "agents/includes/editIdentifier"
+	});
 };
 	
 AgentEditor.prototype.renderAgentSuggestion = function(agent) {

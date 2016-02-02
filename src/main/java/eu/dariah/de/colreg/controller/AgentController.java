@@ -1,5 +1,7 @@
 package eu.dariah.de.colreg.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -70,5 +72,10 @@ public class AgentController {
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)
 	public @ResponseBody List<Agent> queryAgents(@PathVariable String query, @RequestParam(required=false) List<String> excl) {
 		return agentService.queryAgents(query, excl);
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editIdentifier"})
+	public String getEditAccessForm() {
+		return "agent/edit/incl/edit_identifier";
 	}
 }

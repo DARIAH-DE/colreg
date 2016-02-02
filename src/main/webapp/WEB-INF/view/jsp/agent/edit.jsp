@@ -123,9 +123,31 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="description" class="col-sm-3 control-label">~External identifier</label>
+			<label for="description" class="col-sm-3 control-label">~ Provided identifier</label>
 			<div class="col-sm-9">
-				<sf:input path="providedIdentifier" class="form-control" placeholder="~External identifier" />
+				<table id="tbl-agent-identifier" class="collection-editor-table">
+					<thead>
+						<tr>
+							<th class="explode">~Identifier</th>
+							<th class="nowrap">~</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${fn:length(a.providedIdentifier)>0}">
+							<c:forEach items="${a.providedIdentifier}" var="identifier" varStatus="status" >
+								<c:set var="currIdentifier" value="${identifier}" scope="request" />
+								<c:set var="currIndex" value="${status.index}" scope="request" />
+								<jsp:include page="incl/edit_identifier.jsp" />
+							</c:forEach>
+							<c:remove var="currIdentifier" />	
+						</c:if>
+						<tr class="collection-editor-table-buttons">
+							<td colspan="4" style="text-align: right;">
+								<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add identifier</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		
