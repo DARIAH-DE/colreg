@@ -96,6 +96,35 @@
 		
 		<div class="editor-section">
 			<div class="editor-section-heading">
+				<h4>~Agent hierarchy</h4>
+			</div>
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Parent or containing agent</label>
+				<div class="col-sm-5">
+					<input type="text" id="parentAgentIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
+					<sf:hidden path="parentAgentId" />
+				</div>
+				<div class="col-sm-6 sol-sm-offset-3">
+					<div id="parentAgent-display" class="alert alert-info alert-dismissible <c:if test="${parentAgent==null}">hide</c:if>">
+						<button id="parentAgentIdReset" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+							<p>
+						<c:if test="${parentAgent!=null}">
+							<strong>${parentAgent.name}  ${parentAgent.foreName}</strong><br />
+							<small><em>ID: ${parentAgent.id}</em></small><br />
+							${parentAgent.address}
+						</c:if>	
+						</p>
+					</div>
+					<div id="parentAgent-display-null" class="well well-sm <c:if test="${parentAgent!=null}">hide</c:if>">
+						~ No parent agent set
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
 				<h4>~Agent identification</h4>
 			</div>
 			<div class="form-group">
@@ -138,36 +167,6 @@
 					</table>
 				</div>
 			</div>
-			
-			<div class="editor-section">
-				<div class="editor-section-heading">
-					<h4>~Agent hierarchy</h4>
-				</div>
-				<div class="form-group">
-					<label for="description" class="col-sm-3 control-label">~Parent or containing agent</label>
-					<div class="col-sm-5">
-						<input type="text" id="parentAgentIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
-						<sf:hidden path="parentAgentId" />
-					</div>
-					<div class="col-sm-6 sol-sm-offset-3">
-						<div id="parentAgent-display" class="alert alert-info alert-dismissible <c:if test="${parentAgent==null}">hide</c:if>">
-							<button id="parentAgentIdReset" type="button" class="close"><span aria-hidden="true">&times;</span></button>
-								<p>
-							<c:if test="${parentAgent!=null}">
-								<strong>${parentAgent.name}  ${parentAgent.foreName}</strong><br />
-								<small><em>ID: ${parentAgent.id}</em></small><br />
-								${parentAgent.address}
-							</c:if>	
-							</p>
-						</div>
-						<div id="parentAgent-display-null" class="well well-sm <c:if test="${parentAgent!=null}">hide</c:if>">
-							~ No parent agent set
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			
 			<sf:hidden path="entityId" />
 		</div>
 	</sf:form>
