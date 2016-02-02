@@ -19,34 +19,8 @@
 		    	<nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
 		    		<!-- Main top navigation built from configuration -->
 		    		<ul class="nav navbar-nav">
-		    			<c:forEach items="${_nav.rootItems}" var="_navItem">
-		    				<c:choose>
-				    			<c:when test="${_navItem.subItems!=null && fn:length(_navItem.subItems)>0}">
-					    			<li class="dropdown <c:if test="${_navItem.active || _navItem.childActive}"> active</c:if>">					    			
-					    				<a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
-											<c:if test="${_navItem.glyphicon!=null && fn:length(_navItem.glyphicon)>0}">
-												<span class="${_navItem.glyphicon}"></span>&nbsp;
-											</c:if>
-											<s:message code="${_navItem.displayCode}" />
-											<span class="caret"></span>
-										</a>
-										<ul role="menu" class="dropdown-menu">
-											<tpl:topNav navItem="${_navItem}" />
-										</ul>
-					    			</li>
-				    			</c:when>
-				    			<c:otherwise>
-				    				<li>
-				    					<a href="<s:url value='${_navItem.linkUrl}'/>">
-				    						<c:if test="${_navItem.glyphicon!=null && fn:length(_navItem.glyphicon)>0}">
-												<span class="${_navItem.glyphicon}"></span>&nbsp;
-											</c:if>
-				    						<s:message code="${_navItem.displayCode}" />
-				    					</a>
-				    				</li>
-				    			</c:otherwise>
-			    			</c:choose>
-						</c:forEach>
+		    			<li><a href="<s:url value='/collections/' />">Collections</a></li>
+		    			<li><a href="<s:url value='/agents/' />">Agents</a></li>
 		    		</ul>
 		    
 		    		<!-- Elements for language selection and login/logout -->
