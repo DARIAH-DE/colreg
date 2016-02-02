@@ -14,7 +14,7 @@
 	<li class="active">
 		<c:choose>
 			<c:when test="${c.id=='new'}">~New Collection</c:when>
-			<c:otherwise>Collection Id: ${c.collectionId}</c:otherwise>
+			<c:otherwise>Collection Id: ${c.entityId}</c:otherwise>
 		</c:choose>
 	</li>
 </ul>
@@ -161,7 +161,7 @@
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">~Collection Identifier</label>
 			<div class="col-sm-9">
-				<sf:label path="collectionId" class="form-control" placeholder="~Identifier" />
+				<sf:label path="entityId" class="form-control" placeholder="~Identifier" />
 			</div>
 		</div>
 		<div class="form-group">
