@@ -21,8 +21,8 @@
 <div id="main-content">
 	<h1>~Collection Editor</h1>
 	<sf:form method="POST" action="${actionPath}" modelAttribute="c" class="form-horizontal" autocomplete="off">
-		
-		<div class="form-group">
+
+		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
@@ -234,6 +234,15 @@
 		</div>
 		
 		<sf:hidden path="entityId" />
-		
+				<div class="form-group editor-buttonbar">
+			<div class="col-sm-12">
+				<div class="pull-right">
+					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
+					<button class="btn btn-primary start form-btn-submit" type="submit">~ Save as draft</button>
+					<button class="btn btn-primary start form-btn-submit" type="submit">~ Publish</button>
+				</div>
+			</div>
+		</div>
+				
 	</sf:form>
 </div>
