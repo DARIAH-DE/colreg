@@ -534,3 +534,9 @@ label.control-label.mandatory {
 	margin-bottom: 10px;
 	border-bottom: 1px solid #ccc;
 }
+
+.alert-default {
+    background-image: linear-gradient(to bottom, #e8e8e8 0px, #f5f5f5 100%);
+    background-repeat: repeat-x;
+    border-color: #dcdcdc;
+}

@@ -104,18 +104,18 @@
 					<input type="text" id="parentAgentIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
 					<sf:hidden path="parentAgentId" />
 				</div>
-				<div class="col-sm-6 sol-sm-offset-3">
-					<div id="parentAgent-display" class="alert alert-info alert-dismissible <c:if test="${parentAgent==null}">hide</c:if>">
-						<button id="parentAgentIdReset" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+				<div class="col-sm-9">
+					<div id="parentAgent-display" class="alert alert-default <c:if test="${parentAgent==null}">hide</c:if>">
+						<button id="parentAgentIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 							<p>
 						<c:if test="${parentAgent!=null}">
-							<strong>${parentAgent.name}  ${parentAgent.foreName}</strong><br />
-							<small><em>ID: ${parentAgent.id}</em></small><br />
-							${parentAgent.address}
+							<a href="<s:url value="${parentAgent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentAgent.name} ${parentAgent.foreName}</strong><br />
+							<small><em>ID: ${parentAgent.entityId}</em></small><br />
+							${parentAgent.address}</a>
 						</c:if>	
 						</p>
 					</div>
-					<div id="parentAgent-display-null" class="well well-sm <c:if test="${parentAgent!=null}">hide</c:if>">
+					<div id="parentAgent-display-null" class="alert alert-default <c:if test="${parentAgent!=null}">hide</c:if>">
 						~ No parent agent set
 					</div>
 				</div>
@@ -126,29 +126,21 @@
 				<div class="col-sm-9">
 					<c:choose>
 						<c:when test="${childAgents!=null && fn:length(childAgents)>0}">
-							<table class="collection-editor-table">
-								<thead>
-									<tr>
-										<th class="explode">~Agent</th>
-										<th class="nowrap">~Type</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:if test="${childAgents!=null && fn:length(childAgents)>0}">
-										<c:forEach items="${childAgents}" var="child" varStatus="status" >
-											<tr class="list">
-												<td>${child.name} ${child.foreName}</td>
-												<td><c:forEach items="${agentTypes}" var="type">
-													<c:if test="${child.agentTypeId==type.id}">${type.label}</c:if>
-												</c:forEach></td>
-											</tr>
-											<tr class="edit" style="display: none;"></tr>
-										</c:forEach>
-									</c:if>
-								</tbody>
-							</table>
+							<c:forEach items="${childAgents}" var="child" varStatus="status" >
+								<div class="alert alert-default">
+									<p>
+										<a href="<s:url value="${child.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${child.name} ${child.foreName}</strong><br />
+										<small><em>ID: ${child.entityId}</em></small><br />
+										${child.address}</a>	
+									</p>
+								</div>
+							</c:forEach>		
 						</c:when>
-						<c:otherwise><label class="control-label">~ No agents have been assigned</label></c:otherwise>
+						<c:otherwise>
+							<div class="col-sm-9">
+								<label class="control-label">~ No agents have been assigned</label>
+							</div>
+						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>

@@ -36,7 +36,11 @@ var AgentEditor = function() {
 		
 	$('#parentAgentIdSelector').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
 		$("#parentAgentId").val(suggestion.entityId);
-		$("#parentAgent-display p").html(_this.renderAgentSuggestion(suggestion));
+		$("#parentAgent-display p").html(
+				"<a href='" + suggestion.entityId + "'>" +
+						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
+							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
+						"</button>" + _this.renderAgentSuggestion(suggestion) + "</a>");
 		$("#parentAgent-display").removeClass("hide");
 		$("#parentAgent-display-null").addClass("hide");
 	});
@@ -73,7 +77,7 @@ var AgentEditor = function() {
 	
 AgentEditor.prototype.renderAgentSuggestion = function(agent) {
 	return  "<strong>" + agent.name + " " + agent.foreName + "</strong><br />" +
-			"<small><em>ID:" + agent.id + "</em></small>" +
+			"<small><em>ID:" + agent.entityId + "</em></small>" +
 			(agent.address!=null && agent.address!="" ? "<br />" + agent.address : "");
 };
 
