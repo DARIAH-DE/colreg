@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
@@ -49,12 +50,14 @@ public class CollectionController {
 			c = collectionService.createCollection();
 		} else {
 			c = collectionService.findCurrentByCollectionId(id);
+			collectionService.initializeAgentRelations(c);
 		}
 		
 		List<AccrualPolicy> policies = vocabularyService.findAllAccrualPolicies();
 		List<AccessType> types = vocabularyService.findAllAccessTypes();
 		List<AccrualMethod> method = vocabularyService.findAllAccrualMethods();
 		
+		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
 		model.addAttribute("c", c);
 		
 		return "collection/edit";
@@ -81,7 +84,8 @@ public class CollectionController {
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAgent"})
-	public String getEditAgentForm() {
+	public String getEditAgentForm(Model model) {
+		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
 		return "collection/edit/incl/edit_agent";
 	}
 	

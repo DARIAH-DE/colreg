@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
+import eu.dariah.de.colreg.dao.vocabulary.AgentRelationTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
+import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
@@ -29,6 +31,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private AccrualMethodDao accrualMethodDao;
 	@Autowired private AccrualPolicyDao accrualPolicyDao;
 	@Autowired private AgentTypeDao agentTypeDao;
+	@Autowired private AgentRelationTypeDao agentRelationTypeDao;
 	
 	@Override
 	public List<Language> queryLanguages(String query) {
@@ -94,6 +97,11 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Override
 	public List<AgentType> findAllAgentTypes() {
 		return agentTypeDao.findAll();
+	}
+	
+	@Override
+	public List<AgentRelationType> findAllAgentRelationTypes() {
+		return agentRelationTypeDao.findAll();
 	}
 
 	@Override

@@ -1,17 +1,19 @@
 package eu.dariah.de.colreg.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CollectionAgentRelation {
-	private String typeId;
+	private List<String> typeIds;
 	private String annotation;
 	private String agentId;
 	@JsonIgnore private Agent agent;
 
 	
-	public String getTypeId() { return typeId; }
-	public void setTypeId(String typeId) { this.typeId = typeId; }
- 
+	public List<String> getTypeIds() { return typeIds; }
+	public void setTypeIds(List<String> typeIds) { this.typeIds = typeIds; }
+	
 	public String getAnnotation() { return annotation; }
 	public void setAnnotation(String annotation) { this.annotation = annotation; }
 

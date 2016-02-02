@@ -145,7 +145,30 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Associated Agents</label>
 				<div class="col-sm-9">
-					
+					<table id="tbl-collection-agents" class="collection-editor-table">
+						<thead>
+							<tr>
+								<th class="explode">~Agent name</th>
+								<th class="explode">~Relation</th>
+								<th class="nowrap">~</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${fn:length(c.agentRelations)>0}">
+								<c:forEach items="${c.agentRelations}" var="agentRelation" varStatus="status" >
+									<c:set var="currAgentRelation" value="${agentRelation}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_agent.jsp" />
+								</c:forEach>
+								<c:remove var="currAgentRelation" />	
+							</c:if>
+							<tr class="collection-editor-table-buttons">
+								<td colspan="4" style="text-align: right;">
+									<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add agent relation</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="form-group">

@@ -5,6 +5,7 @@ import java.util.List;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
+import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
@@ -15,6 +16,7 @@ public interface VocabularyService {
 	public List<AccrualPolicy> findAllAccrualPolicies();
 	public List<AccessType> findAllAccessTypes();
 	public List<AgentType> findAllAgentTypes();
+	public List<AgentRelationType> findAllAgentRelationTypes();
 
 	public Language findLanguageById(String id);
 	public Language findLanguageByCode(String id);

@@ -6,12 +6,15 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.CollectionAgentRelation;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
 	@Autowired private CollectionDao collectionDao;
+	@Autowired private AgentDao agentDao;
 
 	@Override
 	public Collection createCollection() {
@@ -44,5 +47,16 @@ public class CollectionServiceImpl implements CollectionService {
 	@Override
 	public List<Collection> findAllCurrent() {
 		return collectionDao.findAllCurrent();
+	}
+
+	@Override
+	public void initializeAgentRelations(Collection c) {
+		if (c.getAgentRelations()!=null) {
+			for (CollectionAgentRelation ar : c.getAgentRelations()) {
+				if (ar.getAgentId()!=null) {
+					ar.setAgent(agentDao.findCurrentById(ar.getAgentId()));
+				}
+			}
+		}
 	}
 }

@@ -9,4 +9,5 @@ public interface CollectionService {
 	public void save(Collection c);
 	public Collection findCurrentByCollectionId(String id);
 	public List<Collection> findAllCurrent();
+	public void initializeAgentRelations(Collection c);
 }
