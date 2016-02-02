@@ -121,6 +121,37 @@
 				</div>
 				
 			</div>
+			<div class="form-group">
+				<label for="child-agents" class="col-sm-3 control-label">~ Subordinate agents</label>
+				<div class="col-sm-9">
+					<c:choose>
+						<c:when test="${childAgents!=null && fn:length(childAgents)>0}">
+							<table class="collection-editor-table">
+								<thead>
+									<tr>
+										<th class="explode">~Agent</th>
+										<th class="nowrap">~Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${childAgents!=null && fn:length(childAgents)>0}">
+										<c:forEach items="${childAgents}" var="child" varStatus="status" >
+											<tr class="list">
+												<td>${child.name} ${child.foreName}</td>
+												<td><c:forEach items="${agentTypes}" var="type">
+													<c:if test="${child.agentTypeId==type.id}">${type.label}</c:if>
+												</c:forEach></td>
+											</tr>
+											<tr class="edit" style="display: none;"></tr>
+										</c:forEach>
+									</c:if>
+								</tbody>
+							</table>
+						</c:when>
+						<c:otherwise><label class="control-label">~ No agents have been assigned</label></c:otherwise>
+					</c:choose>
+				</div>
+			</div>
 		</div>
 		
 		<div class="editor-section">
@@ -167,7 +198,6 @@
 					</table>
 				</div>
 			</div>
-			<sf:hidden path="entityId" />
 		</div>
 	</sf:form>
 </div>

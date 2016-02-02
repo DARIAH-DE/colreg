@@ -40,6 +40,11 @@ public class AgentServiceImpl implements AgentService {
 	}
 
 	@Override
+	public List<Agent> findCurrentByParentAgentId(String id) {
+		return agentDao.findCurrentByParentAgentId(id);
+	}
+	
+	@Override
 	public void save(Agent a) {
 		Agent prev = this.findCurrentByAgentId(a.getEntityId());
 		
@@ -60,7 +65,8 @@ public class AgentServiceImpl implements AgentService {
 		List<Agent> innerResult;
 		
 		int maxTotalResults = 10;
-				
+		
+		// TODO: Include foreName for query
 		Criteria[] queryCriteria = new Criteria[] {
 				// ID match
 				Criteria.where("id").is(query),

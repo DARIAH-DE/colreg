@@ -10,4 +10,5 @@ public interface AgentService {
 	public Agent findCurrentByAgentId(String id);
 	public void save(Agent a);
 	public List<Agent> queryAgents(String query, List<String> excl);
+	public List<Agent> findCurrentByParentAgentId(String id);
 }

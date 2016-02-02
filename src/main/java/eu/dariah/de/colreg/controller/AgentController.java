@@ -53,8 +53,9 @@ public class AgentController {
 		
 		model.addAttribute("a", a);
 		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
-		
 		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
+		
+		model.addAttribute("childAgents", agentService.findCurrentByParentAgentId(id));
 		
 		return "agent/edit";
 	}
