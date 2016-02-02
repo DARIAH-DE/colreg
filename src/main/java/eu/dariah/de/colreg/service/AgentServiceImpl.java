@@ -73,7 +73,7 @@ public class AgentServiceImpl implements AgentService {
 				
 				// Name starts with
 				Criteria.where("name").regex(Pattern.compile("^" + query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
-				
+			
 				// Name likeness
 				Criteria.where("name").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE))
 		};
@@ -82,6 +82,15 @@ public class AgentServiceImpl implements AgentService {
 			q = new Query();
 			q.addCriteria(c);
 			q.addCriteria(Criteria.where("succeedingVersionId").is(null));
+			
+			if (excl!=null) {
+				if (excl.size()>1) {
+					q.addCriteria(Criteria.where("entityId").nin(excl));
+				} else {
+					q.addCriteria(Criteria.where("entityId").ne(excl.get(0)));
+				}
+			}
+			
 			q.limit(result.size() + maxTotalResults); // Could overlap
 			innerResult = agentDao.find(q);
 			if (innerResult!=null && innerResult.size()>0) {
