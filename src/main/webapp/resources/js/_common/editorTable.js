@@ -129,7 +129,9 @@ CollectionEditorTable.prototype.sort = function() {
 CollectionEditorTable.prototype.handleInputChange = function(input, field) {
 	var listRow = $(input).closest("tr").prev();
 	
-	listRow.find("." + field).each(function() { $(this).text($(input).val()) });
+	listRow.find("." + field).each(function() { 
+		$(this).text($(input).val());
+	});
 	
 };
 

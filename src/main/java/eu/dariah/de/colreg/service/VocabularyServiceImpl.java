@@ -95,4 +95,14 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public List<AgentType> findAllAgentTypes() {
 		return agentTypeDao.findAll();
 	}
+
+	@Override
+	public Language findLanguageById(String id) {
+		return languageDao.findById(id);
+	}
+
+	@Override
+	public Language findLanguageByCode(String id) {
+		return languageDao.findOne(Query.query(Criteria.where("code").is(id)));
+	}
 }

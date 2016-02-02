@@ -58,9 +58,33 @@ CollectionEditor.prototype.registerLanguageTypeahead = function(elements) {
 			        return '<p><strong>' + data.code + '</strong> – ' + data.name + '</p>';
 			    }
 			  }
-		});
+	});
+	
+	$(elements).bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
+		// Suggestion accepted -> input must be ok
+		$(this).closest(".form-group").removeClass("has-error");
+	});
+	
+	$(elements).bind('change', function() {
+		// Whatever input -> need to validate
+		_this.validateLanguage(this);
+	});
 };
 
+CollectionEditor.prototype.validateLanguage = function(element) {
+	var _this = this;
+	$.ajax({
+        url: __util.getBaseUrl() + 'languages/' + $(element).val(),
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+        	$(element).closest(".form-group").removeClass("has-error");
+        },
+        error: function(textStatus) { 
+        	$(element).closest(".form-group").addClass("has-error");
+        }
+	});
+};
 
 CollectionEditor.prototype.submit = function(event) {
 	this.sort();

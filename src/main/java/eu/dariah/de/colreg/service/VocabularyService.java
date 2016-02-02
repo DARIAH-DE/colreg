@@ -15,4 +15,7 @@ public interface VocabularyService {
 	public List<AccrualPolicy> findAllAccrualPolicies();
 	public List<AccessType> findAllAccessTypes();
 	public List<AgentType> findAllAgentTypes();
+
+	public Language findLanguageById(String id);
+	public Language findLanguageByCode(String id);
 }

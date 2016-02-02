@@ -21,4 +21,13 @@ public class LanguageController {
 	public @ResponseBody List<Language> queryLanguages(@PathVariable String query) {
 		return vocabularyService.queryLanguages(query);
 	}
+	
+	@RequestMapping(value="{id}", method=RequestMethod.GET)
+	public @ResponseBody Language getLanguage(@PathVariable String id) {
+		Language l = vocabularyService.findLanguageByCode(id);
+		if (l==null) {
+			l = vocabularyService.findLanguageById(id);
+		}
+		return l;
+	}
 }
