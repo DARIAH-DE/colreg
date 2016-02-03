@@ -3,13 +3,13 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <tr class="list">
-	<td class="agentRelationTable_agentName" onclick="editor.agentRelationTable.editEntry(this); return false;">
+	<td class="agentRelationTable_agentName" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">
 		<c:choose>
 			<c:when test="${currAgentRelation!=null}">${currAgentRelation.agent.name} ${currAgentRelation.agent.foreName}</c:when>
 			<c:otherwise>~ New entry</c:otherwise>
 		</c:choose>
 	</td>
-	<td class="agentRelationTable_agentType" onclick="editor.agentRelationTable.editEntry(this); return false;">
+	<td class="agentRelationTable_agentType" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">
 		<c:if test="${currAgentRelation!=null}">
 			<c:forEach items="${agentRelationTypes}" var="type">
 				<c:set var="contains" value="false" />
@@ -23,9 +23,9 @@
 		</c:if>
 	</td>
 	<td class="nowrap">
-		<button onclick="editor.agentRelationTable.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
-		<button onclick="editor.agentRelationTable.pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
-		<button onclick="editor.agentRelationTable.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+		<button onclick="editor.tables['agentRelationTable'].pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
+		<button onclick="editor.tables['agentRelationTable'].pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
+		<button onclick="editor.tables['agentRelationTable'].removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 	</td>
 </tr>
 <tr class="edit" style="display: none;">
@@ -45,7 +45,7 @@
 						<option <c:if test="${contains}">selected="selected"</c:if> value="${type.id}">${type.label}</option>
 					</c:forEach>
 				</select>
-				<input type="hidden" class="agent-type-display-helper" onchange="editor.agentRelationTable.handleInputChange(this, 'agentRelationTable_agentType');" />
+				<input type="hidden" class="agent-type-display-helper" onchange="editor.tables['agentRelationTable'].handleInputChange(this, 'agentRelationTable_agentType');" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -54,7 +54,7 @@
 				<span class="attribute-name-helper">agentRelations{}.agentId</span>
 				<input type="hidden" id="agentRelations${currIndex}.agentId" name="agentRelations[${currIndex}].agentId" 
 					value="<c:if test="${currAgentRelation!=null}">${currAgentRelation.agentId}</c:if>" />
-				<input type="hidden" class="agent-name-display-helper" onchange="editor.agentRelationTable.handleInputChange(this, 'agentRelationTable_agentName');" />
+				<input type="hidden" class="agent-name-display-helper" onchange="editor.tables['agentRelationTable'].handleInputChange(this, 'agentRelationTable_agentName');" />
 				<input type="text" class="form-control typeahead agent-typeahead" placeholder="~Search for agent">
 			</div>
 			<div class="col-sm-9 col-sm-offset-3">

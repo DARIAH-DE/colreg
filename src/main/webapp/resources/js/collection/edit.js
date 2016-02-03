@@ -10,92 +10,18 @@ $(document).ready(function() {
 	$("form").submit(function(event) { editor.submit(event); });
 });
 
-
-
 var CollectionEditor = function() {
 	var _this = this;
-	this.agentId = $("#entityId").val();
+	this.collectionId = $("#entityId").val();
 	
-	this.descriptionTable = new CollectionEditorTable({
-		tableSelector: "#tbl-collection-description-sets",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editDescription",
-		newRowCallback: function(row) {
-			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
-		}
-	});
+	this.vocabularySources = new Array();
+	this.initVocabularySources();
 	
-	this.itemLanguageList = new CollectionEditorList({
-		listSelector: "#lst-collection-item-languages",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editItemLanguage",
-		newRowCallback: function(row) {
-			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
-		}
-	});
+	this.tables = new Array();
+	this.lists = new Array();
+	this.initEditorComponents();
 	
-	this.identifierList = new CollectionEditorList({
-		listSelector: "#lst-collection-provided-identifiers",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editProvidedIdentifier",
-	});
-	
-	this.agentRelationTable = new CollectionEditorTable({
-		tableSelector: "#tbl-collection-agents",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editAgent",
-		newRowCallback: function(row) {
-			_this.registerAgentTypeahead($(row).find(".agent-typeahead"));
-		}
-	});
-	
-	this.accessMethodTable = new CollectionEditorTable({
-		tableSelector: "#tbl-collection-access",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess",
-		newRowCallback: function(row) {
-			_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
-		}
-	});
-	this.accessMethodTable.schemesList = new CollectionEditorList({
-		listSelector: ".lst-collection-access-schemes",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editEncodingScheme",
-		addButtonSelector: ".btn-collection-editor-add-scheme"
-	});
-	
-	this.accrualMethodTable = new CollectionEditorTable({
-		tableSelector: "#tbl-collection-accrual",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccrual"
-	});
-	
-	this.languages = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  remote: {
-			  url: __util.getBaseUrl() + 'languages/query/%QUERY',
-			  wildcard: '%QUERY'
-		  }
-	});
-	this.agents = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  remote: { 
-			  url: __util.getBaseUrl() + 'agents/query/%QUERY', 
-			  wildcard: '%QUERY'
-		  }
-	});
-	this.schemes = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  remote: { 
-			  url: __util.getBaseUrl() + 'schemes/query/%QUERY', 
-			  wildcard: '%QUERY'
-		  }
-	});
-	this.parentCollections = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  remote: { 
-			  url: __util.getBaseUrl() + 'collections/query/%QUERY?excl=' + _this.collectionId, 
-			  wildcard: '%QUERY'
-		  }
-	});
-	
+
 	$('.agent-typeahead').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
 		var container = $(this).closest(".form-group"); 
 		
@@ -136,7 +62,7 @@ var CollectionEditor = function() {
 		  name: 'parentCollections',
 		  hint: false,
 		  display: 'name',
-		  source: _this.parentCollections,
+		  source: _this.vocabularySources["parentCollections"],
 		  limit: 8,
 		  templates: {
 			    empty: [
@@ -174,6 +100,78 @@ var CollectionEditor = function() {
 	this.registerEncodingSchemeTypeahead(".encoding-scheme-typeahead");
 };
 
+
+
+CollectionEditor.prototype.initVocabularySources = function() {
+	this.addVocabularySource("languages", "languages/query/");
+	this.addVocabularySource("agents", "agents/query/");
+	this.addVocabularySource("schemes", "schemes/query/");
+	this.addVocabularySource("parentCollections", "collections/query/", "excl=" + this.collectionId);
+};
+
+CollectionEditor.prototype.addVocabularySource = function(name, urlSuffix, params) {
+	this.vocabularySources[name] = new Bloodhound({
+		  datumTokenizer: Bloodhound.tokenizers.whitespace,
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		  remote: {
+			  url: __util.getBaseUrl() + urlSuffix + "%QUERY" + (params!==undefined ? "?" + params : ""),
+			  wildcard: '%QUERY'
+		  }
+	});
+};
+
+CollectionEditor.prototype.initEditorComponents = function() {
+	var _this = this;
+	
+	// Editor tables
+	this.tables["descriptionTable"] = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-description-sets",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editDescription",
+		newRowCallback: function(row) {
+			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
+		}
+	});
+	this.tables["agentRelationTable"] = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-agents",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAgent",
+		newRowCallback: function(row) {
+			_this.registerAgentTypeahead($(row).find(".agent-typeahead"));
+		}
+	});
+	this.tables["accessMethodTable"] = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-access",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess",
+		newRowCallback: function(row) {
+			_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
+		},
+		initCallback: function() {
+			this.schemesList = new CollectionEditorList({
+				listSelector: ".lst-collection-access-schemes",
+				newRowUrl: __util.getBaseUrl() + "collections/includes/editEncodingScheme",
+				addButtonSelector: ".btn-collection-editor-add-scheme"
+			});
+		}
+	});
+	this.tables["accrualMethodTable"] = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-accrual",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccrual"
+	});
+	
+	// Editor lists
+	this.lists["itemLanguageList"] = new CollectionEditorList({
+		listSelector: "#lst-collection-item-languages",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editItemLanguage",
+		newRowCallback: function(row) {
+			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
+		}
+	});
+	this.lists["identifierList"] = new CollectionEditorList({
+		listSelector: "#lst-collection-provided-identifiers",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editProvidedIdentifier",
+	});
+};
+
+
 CollectionEditor.prototype.renderCollectionSuggestion = function(collection) {
 	return  "<strong>" + collection.localizedDescriptions[0].title + "</strong><br />" +
 			"<small><em>ID:" + collection.entityId + "</em></small>";
@@ -186,7 +184,7 @@ CollectionEditor.prototype.registerAgentTypeahead = function(elements) {
 		  name: 'agents',
 		  hint: false,
 		  display: 'name',
-		  source: _this.agents,
+		  source: _this.vocabularySources["agents"],
 		  limit: 8,
 		  templates: {
 			    empty: [
@@ -213,7 +211,7 @@ CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(elements) 
 	  name: 'encodingSchemes',
 	  hint: false,
 	  display: 'name',
-	  source: _this.schemes,
+	  source: _this.vocabularySources["schemes"],
 	  limit: 8,
 	  templates: {
 		    empty: [
@@ -244,7 +242,7 @@ CollectionEditor.prototype.registerLanguageTypeahead = function(elements) {
 		  name: 'language',
 		  hint: false,
 		  display: 'code',
-		  source: _this.languages,
+		  source: _this.vocabularySources["languages"],
 		  limit: 12,
 		  templates: {
 			    empty: [
@@ -300,11 +298,12 @@ CollectionEditor.prototype.validateEncodingScheme = function(element) {
 };
 
 CollectionEditor.prototype.sort = function() {
-	this.descriptionTable.sort();
-	this.itemLanguageList.sort();
-	this.agentRelationTable.sort();
-	this.accessMethodTable.sort();
-	this.accrualMethodTable.sort();
+	for (var tbl in this.tables) {
+		this.tables[tbl].sort();
+	}
+	for (var lst in this.lists) {
+		this.lists[lst].sort();
+	}
 };
 
 CollectionEditor.prototype.submit = function(event) {

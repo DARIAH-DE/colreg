@@ -93,7 +93,7 @@
 						</c:if>
 						<li class="collection-editor-list-buttons">
 							<div class="col-sm-12">
-								<button onclick="editor.itemLanguageList.triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
+								<button onclick="editor.lists['itemLanguageList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
 							</div>
 						</li>
 					</ul>
@@ -257,7 +257,7 @@
 						</c:if>
 						<li class="collection-editor-list-buttons">
 							<div class="col-sm-12">
-								<button onclick="editor.identifierList.triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add identifier</button>
+								<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add identifier</button>
 							</div>
 						</li>
 					</ul>

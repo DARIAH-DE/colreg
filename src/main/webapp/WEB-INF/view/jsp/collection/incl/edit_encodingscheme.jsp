@@ -9,8 +9,8 @@
 		</span>
 	</div>
 	<div class="collection-editor-list-item-buttons">
-		<button onclick="editor.accessMethodTable.schemesList.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
-		<button onclick="editor.accessMethodTable.schemesList.pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
-		<button onclick="editor.accessMethodTable.schemesList.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+		<button onclick="editor.tables['accessMethodTable'].schemesList.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
+		<button onclick="editor.tables['accessMethodTable'].schemesList.pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
+		<button onclick="editor.tables['accessMethodTable'].schemesList.removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 	</div>
 </li>

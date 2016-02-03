@@ -5,6 +5,7 @@ var CollectionEditorTable = function(options) {
 				tableSelector: ".collection-editor-table",
 				newRowUrl: "?",
 				newRowCallback: null,
+				initCallback: null,
 				
 				// Defaults should be ok
 				attributeNameHelperSelector: ".attribute-name-helper",
@@ -22,6 +23,10 @@ var CollectionEditorTable = function(options) {
 	var _this = this;
 	this.table.find(this.options.addButtonSelector).click(function() { _this.triggerAddTableElement(); return false;});
 	this.sort();
+	
+	if (this.options.initCallback!==null && typeof _this.options.initCallback==='function') {
+		this.options.initCallback();
+	}
 }
 
 CollectionEditorTable.prototype.triggerAddTableElement = function() {
@@ -33,8 +38,7 @@ CollectionEditorTable.prototype.triggerAddTableElement = function() {
         success: function(data) {
         	var r = $(data);
         	_this.addNewEntry(r);
-        	if (_this.options.newRowCallback!==null && _this.options.newRowCallback!==undefined & 
-        			typeof _this.options.newRowCallback==='function') {
+        	if (_this.options.newRowCallback!==null && typeof _this.options.newRowCallback==='function') {
         		_this.options.newRowCallback(r);
         	}
         },
