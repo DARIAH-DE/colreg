@@ -14,7 +14,8 @@ $(document).ready(function() {
 
 var CollectionEditor = function() {
 	var _this = this;
-		
+	this.agentId = $("#entityId").val();
+	
 	this.descriptionTable = new CollectionEditorTable({
 		tableSelector: "#tbl-collection-description-sets",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editDescription",
@@ -81,6 +82,14 @@ var CollectionEditor = function() {
 			  wildcard: '%QUERY'
 		  }
 	});
+	this.parentCollections = new Bloodhound({
+		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		  remote: { 
+			  url: __util.getBaseUrl() + 'collections/query/%QUERY?excl=' + _this.collectionId, 
+			  wildcard: '%QUERY'
+		  }
+	});
 	
 	$('.agent-typeahead').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
 		var container = $(this).closest(".form-group"); 
@@ -118,10 +127,53 @@ var CollectionEditor = function() {
 		$(this).closest(".form-group").find(".agent-type-display-helper").val(strSelected).trigger('change');
 	});
 	
+	$('#parentCollectionIdSelector').typeahead(null, {
+		  name: 'parentCollections',
+		  hint: false,
+		  display: 'name',
+		  source: _this.parentCollections,
+		  limit: 8,
+		  templates: {
+			    empty: [
+			      '<div class="tt-empty-message">',
+			        '~No match found',
+			      '</div>'
+			    ].join('\n'),
+			    suggestion: function(data) {
+			    	return "<p>" + _this.renderCollectionSuggestion(data) + "</p>";
+			    }
+			  }
+		});
+		
+	$('#parentCollectionIdSelector').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
+		$("#parentCollectionId").val(suggestion.entityId);
+		$("#parentCollection-display p").html(
+				"<a href='" + suggestion.entityId + "'>" +
+						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
+							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
+						"</button>" + _this.renderCollectionSuggestion(suggestion) + "</a>");
+		$("#parentCollection-display").removeClass("hide");
+		$("#parentCollection-display-null").addClass("hide");
+	});
+	
+	$("#parentCollectionIdReset").on("click", function() {
+		$("#parentCollectionId").val("");
+		
+		$("#parentCollection-display p").text("");
+		$("#parentCollection-display").addClass("hide");
+		$("#parentCollection-display-null").removeClass("hide");
+	});
+	
 	this.registerLanguageTypeahead(".language-typeahead");
 	this.registerAgentTypeahead(".agent-typeahead");
 	this.registerEncodingSchemeTypeahead(".encoding-scheme-typeahead");
 };
+
+CollectionEditor.prototype.renderCollectionSuggestion = function(collection) {
+	return  "<strong>" + collection.localizedDescriptions[0].title + "</strong><br />" +
+			"<small><em>ID:" + collection.entityId + "</em></small>";
+};
+
 
 CollectionEditor.prototype.registerAgentTypeahead = function(elements) {
 	var _this = this;

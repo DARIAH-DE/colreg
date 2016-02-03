@@ -172,8 +172,23 @@
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Parent/Containing collection:</label>
+				<div class="col-sm-5">
+					<input type="text" id="parentCollectionIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
+					<sf:hidden path="parentCollectionId" />
+				</div>
 				<div class="col-sm-9">
-					<sf:input path="parentCollectionId" class="form-control" placeholder="~Parent/Containing" />
+					<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
+						<button id="parentCollectionIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+							<p>
+						<c:if test="${parentCollection!=null}">
+							<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
+							<small><em>ID: ${parentCollection.entityId}</em></small></a>
+						</c:if>	
+						</p>
+					</div>
+					<div id="parentCollection-display-null" class="alert alert-default <c:if test="${parentCollection!=null}">hide</c:if>">
+						~ No parent collection set
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
@@ -191,13 +206,13 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Collection Identifier</label>
 				<div class="col-sm-9">
-					<sf:label path="entityId" class="form-control" placeholder="~Identifier" />
+					<sf:input path="entityId" class="form-control" placeholder="~Identifier" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Current description version</label>
 				<div class="col-sm-9">
-					<sf:label path="id" class="form-control" placeholder="~Identifier" />
+					<sf:input path="id" class="form-control" placeholder="~Identifier" readonly="true" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -272,7 +287,7 @@
 			</div>
 		</div>
 		
-		<sf:hidden path="entityId" />
+		
 				<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">

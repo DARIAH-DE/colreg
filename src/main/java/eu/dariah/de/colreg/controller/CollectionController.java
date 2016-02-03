@@ -15,9 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
@@ -58,6 +61,10 @@ public class CollectionController {
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
 		
+		if (c.getParentCollectionId()!=null) {
+			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
+		}
+		
 		model.addAttribute("c", c);
 		
 		return "collection/edit";
@@ -71,6 +78,11 @@ public class CollectionController {
 		redirectAttributes.addFlashAttribute("c", c);
 		
 		return "redirect:/collections/" + c.getEntityId();
+	}
+	
+	@RequestMapping(value="query/{query}", method=RequestMethod.GET)
+	public @ResponseBody List<Collection> queryCollections(@PathVariable String query, @RequestParam(required=false) List<String> excl) {
+		return collectionService.queryCollections(query, excl);
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAccess"})
