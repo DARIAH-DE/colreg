@@ -3,8 +3,10 @@
 <li class="collection-editor-list-item">
 	<div class="collection-editor-list-input col-sm-5">
 		<span class="attribute-name-helper">itemLanguages{}</span>
-		<input type="text" class="form-control typeahead language-typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" 
-			value="<c:if test="${currLang!=null}">${currLang}</c:if>" placeholder="~Language">
+		<span style="display: inline-block;">
+			<input type="text" class="form-control typeahead language-typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" 
+				value="<c:if test="${currLang!=null}">${currLang}</c:if>" placeholder="~Language">
+		</span>
 	</div>
 	<div class="collection-editor-list-item-buttons">
 		<button onclick="editor.itemLanguageList.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>

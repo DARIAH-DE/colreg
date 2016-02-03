@@ -216,9 +216,23 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~External identifier</label>
+				<label for="description" class="col-sm-3 control-label">~External identifiers</label>
 				<div class="col-sm-9">
-					<sf:input path="providedIdentifier" class="form-control" placeholder="~External identifier" />
+					<ul id="lst-collection-provided-identifiers" class="collection-editor-list">
+						<c:if test="${fn:length(c.providedIdentifier)>0}">
+							<c:forEach items="${c.providedIdentifier}" var="identifier" varStatus="status" >
+								<c:set var="currIdentifier" value="${identifier}" scope="request" />
+								<c:set var="currIndex" value="${status.index}" scope="request" />
+								<jsp:include page="incl/edit_identifier.jsp" />
+							</c:forEach>
+							<c:remove var="currIdentifier" />	
+						</c:if>
+						<li class="collection-editor-list-buttons">
+							<div class="col-sm-12">
+								<button onclick="editor.identifierList.triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add identifier</button>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

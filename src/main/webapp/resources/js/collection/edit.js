@@ -32,6 +32,11 @@ var CollectionEditor = function() {
 		}
 	});
 	
+	this.identifierList = new CollectionEditorList({
+		listSelector: "#lst-collection-provided-identifiers",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editProvidedIdentifier",
+	});
+	
 	this.agentRelationTable = new CollectionEditorTable({
 		tableSelector: "#tbl-collection-agents",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAgent",

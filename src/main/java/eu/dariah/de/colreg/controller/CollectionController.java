@@ -114,6 +114,11 @@ public class CollectionController {
 		return "collection/edit/incl/edit_itemlanguage";
 	}
 	
+	@RequestMapping(method=GET, value={"/includes/editProvidedIdentifier"})
+	public String getEditProvidedIdentifierForm() {
+		return "collection/edit/incl/edit_identifier";
+	}
+	
 	@RequestMapping(method=GET, value={"/includes/editEncodingScheme"})
 	public String getEditEncodingSchemeForm() {
 		return "collection/edit/incl/edit_encodingscheme";

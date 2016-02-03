@@ -69,7 +69,7 @@
 	<definition name="collection/edit/incl/edit_description" template="/WEB-INF/view/jsp/collection/incl/edit_description.jsp" />
 	<definition name="collection/edit/incl/edit_itemlanguage" template="/WEB-INF/view/jsp/collection/incl/edit_itemlanguage.jsp" />
 	<definition name="collection/edit/incl/edit_encodingscheme" template="/WEB-INF/view/jsp/collection/incl/edit_encodingscheme.jsp" />
-
+	<definition name="collection/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/collection/incl/edit_identifier.jsp" />
 
 
 	<!-- Agent -->
