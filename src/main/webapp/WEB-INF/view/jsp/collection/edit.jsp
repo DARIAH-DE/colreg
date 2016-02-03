@@ -220,15 +220,61 @@
 				<h4>~Access &amp; Accrual</h4>
 			</div>
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Access version</label>
+				<label for="description" class="col-sm-3 control-label">~Data access</label>
 				<div class="col-sm-9">
-					
+					<table id="tbl-collection-access" class="collection-editor-table">
+						<thead>
+							<tr>
+								<th class="explode">~URI</th>
+								<th class="nowrap">~Type</th>
+								<th class="nowrap">~</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${fn:length(c.accessMethods)>0}">
+								<c:forEach items="${c.accessMethods}" var="method" varStatus="status" >
+									<c:set var="currMethod" value="${method}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_access.jsp" />
+								</c:forEach>
+								<c:remove var="currMethod" />	
+							</c:if>
+							<tr class="collection-editor-table-buttons">
+								<td colspan="3" style="text-align: right;">
+									<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add access method</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Accrual</label>
+				<label for="description" class="col-sm-3 control-label">~Data accrual</label>
 				<div class="col-sm-9">
-					
+					<table id="tbl-collection-accrual" class="collection-editor-table">
+						<thead>
+							<tr>
+								<th class="explode">~Method</th>
+								<th class="nowrap">~Policy</th>
+								<th class="nowrap">~</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${fn:length(c.accrualMethods)>0}">
+								<c:forEach items="${c.accrualMethods}" var="method" varStatus="status" >
+									<c:set var="currMethod" value="${method}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_accrual.jsp" />
+								</c:forEach>
+								<c:remove var="currMethod" />	
+							</c:if>
+							<tr class="collection-editor-table-buttons">
+								<td colspan="3" style="text-align: right;">
+									<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add accrual method</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

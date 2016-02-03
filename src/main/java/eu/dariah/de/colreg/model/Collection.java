@@ -37,7 +37,7 @@ public class Collection extends VersionedEntityImpl {
 	
 	// Access and accrual
 	private Set<Access> accessMethods;
-	private Set<Accrual> accruals;
+	private Set<Accrual> accrualMethods;
 	
 		
 	public List<String> getProvidedIdentifier() { return providedIdentifier; }
@@ -82,6 +82,6 @@ public class Collection extends VersionedEntityImpl {
 	public Set<Access> getAccessMethods() { return accessMethods; }
 	public void setAccessMethods(Set<Access> accessMethods) { this.accessMethods = accessMethods; }
 	
-	public Set<Accrual> getAccruals() { return accruals; }
-	public void setAccruals(Set<Accrual> accruals) { this.accruals = accruals; }
+	public Set<Accrual> getAccrualMethods() { return accrualMethods; }
+	public void setAccrualMethods(Set<Accrual> accrualMethods) { this.accrualMethods = accrualMethods; }
 }

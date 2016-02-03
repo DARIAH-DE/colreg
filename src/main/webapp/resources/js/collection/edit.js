@@ -34,6 +34,16 @@ var CollectionEditor = function() {
 		}
 	});
 	
+	this.accessMethodTable = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-access",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess"
+	});
+	
+	this.accrualMethodTable = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-accrual",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccrual"
+	});
+	
 	this.languages = new Bloodhound({
 		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,

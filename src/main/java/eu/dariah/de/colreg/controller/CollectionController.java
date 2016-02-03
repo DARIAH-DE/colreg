@@ -52,12 +52,12 @@ public class CollectionController {
 			c = collectionService.findCurrentByCollectionId(id);
 			collectionService.initializeAgentRelations(c);
 		}
-		
-		List<AccrualPolicy> policies = vocabularyService.findAllAccrualPolicies();
-		List<AccessType> types = vocabularyService.findAllAccessTypes();
-		List<AccrualMethod> method = vocabularyService.findAllAccrualMethods();
-		
+
 		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
+		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
+		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
+		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
+		
 		model.addAttribute("c", c);
 		
 		return "collection/edit";
@@ -74,12 +74,15 @@ public class CollectionController {
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAccess"})
-	public String getEditAccessForm() {
+	public String getEditAccessForm(Model model) {
+		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
 		return "collection/edit/incl/edit_access";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAccrual"})
-	public String getEditAccrualForm() {
+	public String getEditAccrualForm(Model model) {
+		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
+		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
 		return "collection/edit/incl/edit_accrual";
 	}
 	
