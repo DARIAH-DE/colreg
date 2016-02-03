@@ -36,8 +36,8 @@ public class Collection extends VersionedEntityImpl {
 	private String provenanceInfo;
 	
 	// Access and accrual
-	private Set<Access> accessMethods;
-	private Set<Accrual> accrualMethods;
+	private List<Access> accessMethods;
+	private List<Accrual> accrualMethods;
 	
 		
 	public List<String> getProvidedIdentifier() { return providedIdentifier; }
@@ -79,9 +79,9 @@ public class Collection extends VersionedEntityImpl {
 	public String getProvenanceInfo() { return provenanceInfo; }
 	public void setProvenanceInfo(String provenanceInfo) { this.provenanceInfo = provenanceInfo; }
 	
-	public Set<Access> getAccessMethods() { return accessMethods; }
-	public void setAccessMethods(Set<Access> accessMethods) { this.accessMethods = accessMethods; }
+	public List<Access> getAccessMethods() { return accessMethods; }
+	public void setAccessMethods(List<Access> accessMethods) { this.accessMethods = accessMethods; }
 	
-	public Set<Accrual> getAccrualMethods() { return accrualMethods; }
-	public void setAccrualMethods(Set<Accrual> accrualMethods) { this.accrualMethods = accrualMethods; }
+	public List<Accrual> getAccrualMethods() { return accrualMethods; }
+	public void setAccrualMethods(List<Accrual> accrualMethods) { this.accrualMethods = accrualMethods; }
 }
