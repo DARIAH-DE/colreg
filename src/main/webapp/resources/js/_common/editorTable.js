@@ -57,7 +57,9 @@ CollectionEditorTable.prototype.editEntry = function(btn) {
 	var expand = $(btn).closest("tr").next().css("display")=="none";
 	this.hideAllEdit();
 	if (expand) {
-		$(btn).closest("tr").next().show();
+		var expanded = $(btn).closest("tr");
+		expanded.addClass("row-open");
+		expanded.next().show().addClass("row-open");
 	}
 };
 
@@ -149,8 +151,11 @@ CollectionEditorTable.prototype.handleSelectChange = function(select, field) {
 
 CollectionEditorTable.prototype.hideAllEdit = function() {
 	this.table.find(this.options.editRowSelector).hide();
+	this.table.find("tr").removeClass("row-open");
 };
 
 CollectionEditorTable.prototype.expandLastEdit = function() {
-	this.table.find(this.options.editRowSelector).last().css("display","");
+	var expanded = this.table.find(this.options.editRowSelector).last();
+	expanded.css("display","").addClass("row-open");
+	expanded.prev().addClass("row-open");
 }
