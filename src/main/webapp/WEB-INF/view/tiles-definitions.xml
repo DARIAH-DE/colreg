@@ -59,6 +59,7 @@
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
 			<add-attribute type="string" value="_common/editorTable.js" />
+			<add-attribute type="string" value="_common/editorList.js" />
 			<add-attribute type="string" value="collection/edit.js" />
 		</put-list-attribute>
 	</definition>

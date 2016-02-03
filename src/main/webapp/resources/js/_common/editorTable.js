@@ -103,7 +103,12 @@ CollectionEditorTable.prototype.sort = function() {
 			var name = $(this).text().replace("{}", "[" + index + "]");
 			var id = $(this).text().replace("{}", index);
 			
-			$(this).next().prop("id", id).prop("name", name);
+			var next = $(this).next();
+			if (next.hasClass("form-control")) {
+				next.prop("id", id).prop("name", name);
+			} else {
+				next.find(".form-control").not(".tt-hint").first().prop("id", id).prop("name", name);
+			}
 		});
 		
 		index++;

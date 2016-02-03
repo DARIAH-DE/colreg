@@ -18,8 +18,8 @@ var CollectionEditor = function() {
 		}
 	});
 	
-	this.itemLanguageTable = new CollectionEditorTable({
-		tableSelector: "#tbl-collection-item-languages",
+	this.itemLanguageList = new CollectionEditorList({
+		listSelector: "#lst-collection-item-languages",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editItemLanguage",
 		newRowCallback: function(row) {
 			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));

@@ -81,29 +81,21 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~ Item Languages</label>
 				<div class="col-sm-9">
-					<table id="tbl-collection-item-languages" class="collection-editor-table">
-						<thead>
-							<tr>
-								<th class="explode">~Lang</th>
-								<th class="nowrap">~</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${fn:length(c.itemLanguages)>0}">
-								<c:forEach items="${c.itemLanguages}" var="lang" varStatus="status" >
-									<c:set var="currLang" value="${lang}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_itemlanguage.jsp" />
-								</c:forEach>
-								<c:remove var="currDesc" />	
-							</c:if>
-							<tr class="collection-editor-table-buttons">
-								<td colspan="4" style="text-align: right;">
-									<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<ul id="lst-collection-item-languages" class="collection-editor-list">
+						<c:if test="${fn:length(c.itemLanguages)>0}">
+							<c:forEach items="${c.itemLanguages}" var="lang" varStatus="status" >
+								<c:set var="currLang" value="${lang}" scope="request" />
+								<c:set var="currIndex" value="${status.index}" scope="request" />
+								<jsp:include page="incl/edit_itemlanguage.jsp" />
+							</c:forEach>
+							<c:remove var="currDesc" />	
+						</c:if>
+						<li class="collection-editor-list-buttons">
+							<div class="col-sm-12">
+								<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div class="form-group">

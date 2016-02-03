@@ -378,6 +378,28 @@ body .modal.modal450 {
 	margin-top: 5px;
 }
 
+/* List */
+.collection-editor-list {
+	list-style: none;
+	padding-left: 0;
+}
+
+.collection-editor-list-item,
+.collection-editor-list-buttons {
+	margin-left: -15px;
+    margin-right: -15px;
+    clear: both;
+}
+
+.collection-editor-list-input {
+	padding-right: 2px;
+}
+
+.collection-editor-list-item-buttons {
+	float: left !important;
+	padding-top: 5px;
+}
+
 .attribute-name-helper {
 	display: none;
 	position: absolute; 
