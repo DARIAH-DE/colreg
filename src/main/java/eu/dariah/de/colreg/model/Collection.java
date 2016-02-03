@@ -30,7 +30,7 @@ public class Collection extends VersionedEntityImpl {
 	private String accessRights;
 	private String itemRights;
 	
-	// Context
+	// Context	  
 	private String parentCollectionId;
 	private String associatedProject;
 	private String provenanceInfo;

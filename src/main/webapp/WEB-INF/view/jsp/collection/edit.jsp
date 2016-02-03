@@ -133,7 +133,56 @@
 		
 		<div class="editor-section">
 			<div class="editor-section-heading">
-				<h4>~Collection description</h4>
+				<h4>~Collection hierarchy</h4>
+			</div>
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Parent/Containing collection:</label>
+				<div class="col-sm-5">
+					<input type="text" id="parentCollectionIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
+					<sf:hidden path="parentCollectionId" />
+				</div>
+				<div class="col-sm-9">
+					<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
+						<button id="parentCollectionIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+							<p>
+						<c:if test="${parentCollection!=null}">
+							<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
+							<small><em>ID: ${parentCollection.entityId}</em></small></a>
+						</c:if>	
+						</p>
+					</div>
+					<div id="parentCollection-display-null" class="<c:if test="${parentCollection!=null}">hide</c:if>">
+						<label class="control-label">~ No parent collection set</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="child-agents" class="col-sm-3 control-label">~ Subordinate collections</label>
+				<div class="col-sm-9">
+					<c:choose>
+						<c:when test="${childCollections!=null && fn:length(childCollections)>0}">
+							<c:forEach items="${childCollections}" var="child" varStatus="status" >
+								<div class="alert alert-default">
+									<p>
+										<a href="<s:url value="${child.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${child.localizedDescriptions[0].title}</strong><br />
+										<small><em>ID: ${child.entityId}</em></small></a>	
+									</p>
+								</div>
+							</c:forEach>		
+						</c:when>
+						<c:otherwise>
+							<div class="col-sm-9">
+								<label class="control-label">~ No collections have been assigned</label>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
+				<h4>~Collection context</h4>
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Associated Agents</label>
@@ -168,27 +217,6 @@
 				<label for="description" class="col-sm-3 control-label">~Associated project</label>
 				<div class="col-sm-9">
 					<sf:input path="associatedProject" class="form-control" placeholder="~Associated project" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Parent/Containing collection:</label>
-				<div class="col-sm-5">
-					<input type="text" id="parentCollectionIdSelector" class="form-control" placeholder="~ Quick search by name/id" />
-					<sf:hidden path="parentCollectionId" />
-				</div>
-				<div class="col-sm-9">
-					<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
-						<button id="parentCollectionIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-							<p>
-						<c:if test="${parentCollection!=null}">
-							<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
-							<small><em>ID: ${parentCollection.entityId}</em></small></a>
-						</c:if>	
-						</p>
-					</div>
-					<div id="parentCollection-display-null" class="alert alert-default <c:if test="${parentCollection!=null}">hide</c:if>">
-						~ No parent collection set
-					</div>
 				</div>
 			</div>
 			<div class="form-group">

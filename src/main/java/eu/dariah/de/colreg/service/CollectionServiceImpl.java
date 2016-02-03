@@ -124,4 +124,9 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		return result;
 	}
+
+	@Override
+	public List<Collection> findCurrentByParentCollectionId(String id) {
+		return collectionDao.findCurrentByParentCollectionId(id);
+	}
 }

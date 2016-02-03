@@ -12,4 +12,5 @@ public interface CollectionService {
 	public List<Collection> findAllCurrent();
 	public void initializeAgentRelations(Collection c);
 	public List<Collection> queryCollections(String query, List<String> excl);
+	public List<Collection> findCurrentByParentCollectionId(String id);
 }

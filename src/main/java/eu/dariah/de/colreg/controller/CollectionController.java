@@ -65,6 +65,8 @@ public class CollectionController {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
 		}
 		
+		model.addAttribute("childCollections", collectionService.findCurrentByParentCollectionId(id));
+		
 		model.addAttribute("c", c);
 		
 		return "collection/edit";
