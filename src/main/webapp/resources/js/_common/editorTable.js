@@ -137,7 +137,14 @@ CollectionEditorTable.prototype.handleInputChange = function(input, field) {
 	listRow.find("." + field).each(function() { 
 		$(this).text($(input).val());
 	});
+};
+
+CollectionEditorTable.prototype.handleSelectChange = function(select, field) {
+	var listRow = $(select).closest("tr").prev();
 	
+	listRow.find("." + field).each(function() { 
+		$(this).text($(select).find("option:selected").text());
+	});
 };
 
 CollectionEditorTable.prototype.hideAllEdit = function() {

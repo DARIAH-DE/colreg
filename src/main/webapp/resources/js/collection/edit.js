@@ -43,8 +43,7 @@ var CollectionEditor = function() {
 		tableSelector: "#tbl-collection-access",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess",
 		newRowCallback: function(row) {
-			//_this.registerSchemesTypeahead($(row).find(".schemes-typeahead"));
-			
+			_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
 		}
 	});
 	this.accessMethodTable.schemesList = new CollectionEditorList({
@@ -71,6 +70,14 @@ var CollectionEditor = function() {
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
 		  remote: { 
 			  url: __util.getBaseUrl() + 'agents/query/%QUERY', 
+			  wildcard: '%QUERY'
+		  }
+	});
+	this.schemes = new Bloodhound({
+		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		  remote: { 
+			  url: __util.getBaseUrl() + 'schemes/query/%QUERY', 
 			  wildcard: '%QUERY'
 		  }
 	});
@@ -113,6 +120,7 @@ var CollectionEditor = function() {
 	
 	this.registerLanguageTypeahead(".language-typeahead");
 	this.registerAgentTypeahead(".agent-typeahead");
+	this.registerEncodingSchemeTypeahead(".encoding-scheme-typeahead");
 };
 
 CollectionEditor.prototype.registerAgentTypeahead = function(elements) {
@@ -141,6 +149,37 @@ CollectionEditor.prototype.renderAgentSuggestion = function(agent) {
 			"<small><em>ID:" + agent.entityId + "</em></small>" +
 			(agent.address!=null && agent.address!="" ? "<br />" + agent.address : "");
 };
+
+CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(elements) {
+	var _this = this;
+	$(elements).typeahead(null, {
+	  name: 'encodingSchemes',
+	  hint: false,
+	  display: 'name',
+	  source: _this.schemes,
+	  limit: 8,
+	  templates: {
+		    empty: [
+		      '<div class="tt-empty-message">',
+		        '~No match found',
+		      '</div>'
+		    ].join('\n'),
+		    suggestion: function(data) {
+		    	return "<p><strong>" + data.name + "</strong><br />" + data.url + "</p>";
+		    }
+		  }
+	});
+	
+	$(elements).bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
+		// Suggestion accepted -> input must be ok
+		$(this).closest(".form-group").removeClass("has-error");
+	});
+	
+	$(elements).bind('change', function() {
+		// Whatever input -> need to validate
+		_this.validateEncodingScheme(this);
+	});
+}
 
 CollectionEditor.prototype.registerLanguageTypeahead = function(elements) {
 	var _this = this;
@@ -177,6 +216,21 @@ CollectionEditor.prototype.validateLanguage = function(element) {
 	var _this = this;
 	$.ajax({
         url: __util.getBaseUrl() + 'languages/' + $(element).val(),
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+        	$(element).closest(".form-group").removeClass("has-error");
+        },
+        error: function(textStatus) { 
+        	$(element).closest(".form-group").addClass("has-error");
+        }
+	});
+};
+
+CollectionEditor.prototype.validateEncodingScheme = function(element) {
+	var _this = this;
+	$.ajax({
+        url: __util.getBaseUrl() + 'schemes/' + $(element).val(),
         type: "GET",
         dataType: "json",
         success: function(data) {

@@ -24,6 +24,10 @@ public class EncodingSchemeController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public @ResponseBody EncodingScheme getEncodingScheme(@PathVariable String id) {
-		return vocabularyService.findEncodingSchemeById(id);
+		EncodingScheme s = vocabularyService.findEncodingSchemeByName(id);
+		if (s==null) {
+			s = vocabularyService.findEncodingSchemeById(id);
+		}
+		return s;
 	}
 }

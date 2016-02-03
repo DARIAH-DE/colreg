@@ -557,6 +557,11 @@ label.control-label.mandatory {
 	border-bottom: 1px solid #ccc;
 }
 
+.collection-editor-list-buttons .btn-collection-editor-add,
+.collection-editor-list-buttons .btn-collection-editor-add-scheme {
+	padding-top: 8px;
+}
+
 .alert-default {
     background-image: linear-gradient(to bottom, #e8e8e8 0px, #f5f5f5 100%);
     background-repeat: repeat-x;

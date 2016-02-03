@@ -8,8 +8,12 @@
 			<c:otherwise>~ New entry</c:otherwise>
 		</c:choose>
 	</td>
-	<td class="accessMethodTable_type" onclick="editor.accessMethodTable.editEntry(this); return false;">
-		<c:if test="${currMethod!=null}">${currMethod.type}</c:if>
+	<td class="accessMethodTable_type nowrap" onclick="editor.accessMethodTable.editEntry(this); return false;">
+		<c:if test="${currMethod!=null}">
+			<c:forEach items="${accessTypes}" var="type">
+				<c:if test="${currMethod.type==type.id}">${type.label}</c:if>
+			</c:forEach>
+		</c:if>
 	</td>
 	<td class="nowrap">
 		<button onclick="editor.accessMethodTable.pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
@@ -60,6 +64,13 @@
 						</div>
 					</li>
 				</ul>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="title" class="col-sm-4 control-label">~Description</label>
+			<div class="col-sm-8">
+				<span class="attribute-name-helper">accessMethods{}.description</span>
+				<textarea class="form-control" rows="3" id="accessMethods${currIndex}.description" name="accessMethods[${currIndex}].description" placeholder="~Description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
 			</div>
 		</div>
 	</td>

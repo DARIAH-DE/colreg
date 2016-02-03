@@ -90,14 +90,14 @@ public class VocabularyServiceImpl implements VocabularyService {
 		int maxTotalResults = 15;
 		
 		Criteria[] queryCriteria = new Criteria[] {
-				// Code match
+				// Name match
 				Criteria.where("name").regex(Pattern.compile("^" + query + '$', Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
 				
 				// Name starts with
 				Criteria.where("name").regex(Pattern.compile("^" + query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
 				
 				// Name likeness
-				Criteria.where("url").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE))
+				Criteria.where("name").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE))
 		};
 		
 		for (Criteria c : queryCriteria) {
@@ -170,5 +170,10 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Override
 	public EncodingScheme findEncodingSchemeById(String id) {
 		return encodingSchemeDao.findById(id);
+	}
+
+	@Override
+	public EncodingScheme findEncodingSchemeByName(String id) {
+		return encodingSchemeDao.findOne(Query.query(Criteria.where("name").is(id)));
 	}
 }

@@ -24,4 +24,5 @@ public interface VocabularyService {
 	public Language findLanguageById(String id);
 	public Language findLanguageByCode(String id);
 	public EncodingScheme findEncodingSchemeById(String id);
+	public EncodingScheme findEncodingSchemeByName(String id);
 }
