@@ -2,6 +2,11 @@ var editor;
 $(document).ready(function() {
 	editor = new CollectionEditor();
 	
+	$(".form-btn-submit").on("click", function() {
+		$("form").attr("action", $("#js-form-action").val());
+		$("form").submit();
+	});
+	
 	$("form").submit(function(event) { editor.submit(event); });
 });
 
@@ -36,7 +41,16 @@ var CollectionEditor = function() {
 	
 	this.accessMethodTable = new CollectionEditorTable({
 		tableSelector: "#tbl-collection-access",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess"
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess",
+		newRowCallback: function(row) {
+			//_this.registerSchemesTypeahead($(row).find(".schemes-typeahead"));
+			
+		}
+	});
+	this.accessMethodTable.schemesList = new CollectionEditorList({
+		listSelector: ".lst-collection-access-schemes",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editEncodingScheme",
+		addButtonSelector: ".btn-collection-editor-add-scheme"
 	});
 	
 	this.accrualMethodTable = new CollectionEditorTable({
@@ -176,13 +190,12 @@ CollectionEditor.prototype.validateLanguage = function(element) {
 
 CollectionEditor.prototype.sort = function() {
 	this.descriptionTable.sort();
-	this.itemLanguageTable.sort();
+	this.itemLanguageList.sort();
 	this.agentRelationTable.sort();
+	this.accessMethodTable.sort();
+	this.accrualMethodTable.sort();
 };
 
 CollectionEditor.prototype.submit = function(event) {
 	this.sort();
-	
-	//event.preventDefault();	// Assume error for now
-	//return false; 
 };

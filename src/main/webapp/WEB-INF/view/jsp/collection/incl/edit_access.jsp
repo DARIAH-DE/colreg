@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <tr class="list">
 	<td class="accessMethodTable_uri" onclick="editor.accessMethodTable.editEntry(this); return false;">
@@ -43,9 +44,22 @@
 		</div>
 		<div class="form-group">
 			<label for="title" class="col-sm-4 control-label">~Encoding schemes</label>
-			<div class="col-sm-4">
-				<span class="attribute-name-helper">accessMethods{}.schemes</span>
-				
+			<div class="col-sm-8">
+				<ul class="lst-collection-access-schemes collection-editor-list">
+					<c:if test="${fn:length(currMethod.schemeIds)>0}">
+						<c:forEach items="${currMethod.schemeIds}" var="schemeId" varStatus="status" >
+							<c:set var="currSchemeId" value="${schemeId}" scope="request" />
+							<c:set var="currIndex" value="${status.index}" scope="request" />
+							<jsp:include page="edit_encodingscheme.jsp" />
+						</c:forEach>
+						<c:remove var="currScheme" />	
+					</c:if>
+					<li class="collection-editor-list-buttons">
+						<div class="col-sm-12">
+							<button onclick="editor.accessMethodTable.schemesList.triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add-scheme"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add encoding scheme</button>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</td>

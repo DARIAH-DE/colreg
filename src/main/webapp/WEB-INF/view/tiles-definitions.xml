@@ -68,6 +68,9 @@
 	<definition name="collection/edit/incl/edit_agent" template="/WEB-INF/view/jsp/collection/incl/edit_agent.jsp" />
 	<definition name="collection/edit/incl/edit_description" template="/WEB-INF/view/jsp/collection/incl/edit_description.jsp" />
 	<definition name="collection/edit/incl/edit_itemlanguage" template="/WEB-INF/view/jsp/collection/incl/edit_itemlanguage.jsp" />
+	<definition name="collection/edit/incl/edit_encodingscheme" template="/WEB-INF/view/jsp/collection/incl/edit_encodingscheme.jsp" />
+
+
 
 	<!-- Agent -->
 	<definition name="agent/list" extends="template_tables">

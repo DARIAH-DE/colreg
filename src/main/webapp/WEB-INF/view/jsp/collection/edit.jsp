@@ -20,14 +20,15 @@
 </ul>
 <div id="main-content">
 	<h1>~Collection Editor</h1>
-	<sf:form method="POST" action="${actionPath}" modelAttribute="c" class="form-horizontal" autocomplete="off">
+	<input type="hidden" id="js-form-action" value="${actionPath}" />
+	<sf:form method="POST" action="javascript:void(0);" modelAttribute="c" class="form-horizontal" autocomplete="off">
 
 		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
-					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
-					<button class="btn btn-primary start form-btn-submit" type="submit">~ Save as draft</button>
-					<button class="btn btn-primary start form-btn-submit" type="submit">~ Publish</button>
+					<button class="btn btn-default cancel form-btn-cancel">~ Cancel</button>
+					<button class="btn btn-primary start form-btn-submit">~ Save as draft</button>
+					<button class="btn btn-primary start form-btn-submit">~ Publish</button>
 				</div>
 			</div>
 		</div>
@@ -92,7 +93,7 @@
 						</c:if>
 						<li class="collection-editor-list-buttons">
 							<div class="col-sm-12">
-								<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
+								<button onclick="editor.itemLanguageList.triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add item language</button>
 							</div>
 						</li>
 					</ul>
@@ -275,9 +276,9 @@
 				<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
-					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
-					<button class="btn btn-primary start form-btn-submit" type="submit">~ Save as draft</button>
-					<button class="btn btn-primary start form-btn-submit" type="submit">~ Publish</button>
+					<button class="btn btn-default cancel form-btn-cancel">~ Cancel</button>
+					<button class="btn btn-primary start form-btn-submit">~ Save as draft</button>
+					<button class="btn btn-primary start form-btn-submit">~ Publish</button>
 				</div>
 			</div>
 		</div>

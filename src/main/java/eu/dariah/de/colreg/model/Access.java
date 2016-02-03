@@ -7,7 +7,7 @@ import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
 public class Access {
 	private String type;
 	private String uri;
-	private List<EncodingScheme> schemes;
+	private List<String> schemeIds;
 	
 	
 	public String getType() { return type; }
@@ -16,6 +16,6 @@ public class Access {
 	public String getUri() { return uri; }
 	public void setUri(String uri) { this.uri = uri; }
 	
-	public List<EncodingScheme> getSchemes() { return schemes; }
-	public void setSchemes(List<EncodingScheme> schemes) { this.schemes = schemes; }
+	public List<String> getSchemeIds() { return schemeIds; }
+	public void setSchemeIds(List<String> schemeIds) { this.schemeIds = schemeIds; }
 }

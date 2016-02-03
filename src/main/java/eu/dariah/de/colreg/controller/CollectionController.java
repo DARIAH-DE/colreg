@@ -101,4 +101,9 @@ public class CollectionController {
 	public String getEditItemLanguageForm() {
 		return "collection/edit/incl/edit_itemlanguage";
 	}
+	
+	@RequestMapping(method=GET, value={"/includes/editEncodingScheme"})
+	public String getEditEncodingSchemeForm() {
+		return "collection/edit/incl/edit_encodingscheme";
+	}
 }

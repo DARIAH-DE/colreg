@@ -1,6 +1,10 @@
 package eu.dariah.de.colreg.model.vocabulary;
 
-public class EncodingScheme {
+import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+
+public class EncodingScheme extends BaseIdentifiable {
+	private static final long serialVersionUID = 8904831004241137209L;
+	
 	private String name;
 	private String url;
 	
