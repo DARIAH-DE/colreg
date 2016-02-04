@@ -1,5 +1,6 @@
 package eu.dariah.de.colreg.dao.base;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,6 +38,39 @@ public abstract class BaseDaoImpl<T extends Identifiable> extends DaoImpl<T> imp
 		return null;
 	}*/
 
+	@Override
+	public List<T> combineQueryResults(Criteria[] criteria, int limit) {
+		Query q;
+		List<T> result = new ArrayList<T>();
+		List<T> innerResult;
+
+		for (Criteria cr : criteria) {
+			q = new Query();
+			q.addCriteria(cr);
+			
+			q.limit(result.size() + limit); // Could overlap
+			innerResult = this.find(q);
+			if (innerResult!=null && innerResult.size()>0) {
+				for (T t : innerResult) {
+					boolean contains = false;
+					for (T tX : result) {
+						if (t.getId().equals(tX.getId())) {
+							contains = true;
+							break;
+						}
+					}
+					if (!contains) {
+						result.add(t);
+					}
+				}
+				if (result.size()>=limit) {
+					return result.subList(0, limit-1);
+				}
+			}
+			
+		}
+		return result;
+	}
 	
 	
 	@Override

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import eu.dariah.de.colreg.model.base.Identifiable;
@@ -26,4 +27,6 @@ public interface BaseDao<T extends Identifiable> extends Dao {
 	public void delete(Iterable<? extends T> entities);
 	public int delete(Collection<String> id);
 	//public void upsert(Query query, Update update);
+	
+	public List<T> combineQueryResults(Criteria[] criteria, int limit);
 }

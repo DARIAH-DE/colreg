@@ -1,6 +1,5 @@
 package eu.dariah.de.colreg.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -37,11 +36,6 @@ public class VocabularyServiceImpl implements VocabularyService {
 	
 	@Override
 	public List<Language> queryLanguages(String query) {
-		Query q;
-		List<Language> result = new ArrayList<Language>();
-		List<Language> innerResult;
-		
-		int maxTotalResults = 15;
 		
 		Criteria[] queryCriteria = new Criteria[] {
 				// Code match
@@ -54,41 +48,11 @@ public class VocabularyServiceImpl implements VocabularyService {
 				Criteria.where("name").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE))
 		};
 		
-		for (Criteria c : queryCriteria) {
-			q = new Query();
-			q.addCriteria(c);
-			q.limit(result.size() + maxTotalResults); // Could overlap
-			innerResult = languageDao.find(q);
-			if (innerResult!=null && innerResult.size()>0) {
-				for (Language l : innerResult) {
-					boolean contains = false;
-					for (Language lX : result) {
-						if (l.getId().equals(lX.getId())) {
-							contains = true;
-							break;
-						}
-					}
-					if (!contains) {
-						result.add(l);
-					}
-				}
-				if (result.size()>=maxTotalResults) {
-					return result.subList(0, maxTotalResults-1);
-				}
-			}
-			
-		}
-		return result;
+		return languageDao.combineQueryResults(queryCriteria, 10);
 	}
 	
 	@Override
-	public List<EncodingScheme> queryEncodingSchemes(String query) {
-		Query q;
-		List<EncodingScheme> result = new ArrayList<EncodingScheme>();
-		List<EncodingScheme> innerResult;
-		
-		int maxTotalResults = 15;
-		
+	public List<EncodingScheme> queryEncodingSchemes(String query) {		
 		Criteria[] queryCriteria = new Criteria[] {
 				// Name match
 				Criteria.where("name").regex(Pattern.compile("^" + query + '$', Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
@@ -99,32 +63,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 				// Name likeness
 				Criteria.where("name").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE))
 		};
-		
-		for (Criteria c : queryCriteria) {
-			q = new Query();
-			q.addCriteria(c);
-			q.limit(result.size() + maxTotalResults); // Could overlap
-			innerResult = encodingSchemeDao.find(q);
-			if (innerResult!=null && innerResult.size()>0) {
-				for (EncodingScheme s : innerResult) {
-					boolean contains = false;
-					for (EncodingScheme sX : result) {
-						if (s.getId().equals(sX.getId())) {
-							contains = true;
-							break;
-						}
-					}
-					if (!contains) {
-						result.add(s);
-					}
-				}
-				if (result.size()>=maxTotalResults) {
-					return result.subList(0, maxTotalResults-1);
-				}
-			}
-			
-		}
-		return result;
+		return encodingSchemeDao.combineQueryResults(queryCriteria, 10);
 	}
 
 	@Override
