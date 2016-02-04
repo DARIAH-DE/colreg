@@ -68,11 +68,13 @@ public class CollectionServiceImpl implements CollectionService {
 		Criteria cBase = Criteria.where("succeedingVersionId").is(null);
 		if (excl!=null) {
 			if (excl.size()>1) {
-				cBase.andOperator(Criteria.where("entityId").nin(excl));
+				cBase.and("entityId").nin(excl);
 			} else {
-				cBase.andOperator(Criteria.where("entityId").ne(excl.get(0)));
+				cBase.and("entityId").ne(excl.get(0));
 			}
 		}
+		
+		cBase.orOperator(Criteria.where("draftUserId").exists(false), Criteria.where("draftUserId").is(""));
 
 		// TODO: Include foreName for query
 		Criteria[] queryCriteria = new Criteria[] {
