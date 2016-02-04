@@ -159,8 +159,8 @@
 							<c:forEach items="${collections}" var="collection" varStatus="status" >
 								<div class="alert alert-default">
 									<p>
-										<a href="<s:url value="/collections/${collections.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${collection.localizedDescription[0].title}</strong><br />
-										<small><em>ID: ${collections.entityId}</em></small><br /></a>	
+										<a href="<s:url value="/collections/${collection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${collection.localizedDescriptions[0].title}</strong><br />
+										<small><em>ID: ${collection.entityId}</em></small><br /></a>	
 									</p>
 								</div>
 							</c:forEach>		
