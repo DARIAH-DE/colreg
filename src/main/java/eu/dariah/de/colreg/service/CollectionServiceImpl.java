@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.AgentDao;
@@ -95,5 +96,15 @@ public class CollectionServiceImpl implements CollectionService {
 	@Override
 	public List<Collection> findCurrentByParentCollectionId(String id) {
 		return collectionDao.findCurrentByParentCollectionId(id);
+	}
+
+	@Override
+	public List<Collection> findCurrentByRelatedAgentId(String id) {
+		Query q = new Query();
+		q.addCriteria(Criteria
+				.where("succeedingVersionId").is(null)
+				.and("agentRelations").elemMatch(Criteria.where("agentId").is(id)));
+
+		return collectionDao.find(q);
 	}
 }

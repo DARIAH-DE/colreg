@@ -52,7 +52,7 @@
 			<label for="title" class="col-sm-3 control-label">~Related Agent</label>
 			<div class="col-sm-9">
 				<span class="attribute-name-helper">agentRelations{}.agentId</span>
-				<input type="hidden" id="agentRelations${currIndex}.agentId" name="agentRelations[${currIndex}].agentId" 
+				<input type="hidden" class="form-control" id="agentRelations${currIndex}.agentId" name="agentRelations[${currIndex}].agentId" 
 					value="<c:if test="${currAgentRelation!=null}">${currAgentRelation.agentId}</c:if>" />
 				<input type="hidden" class="agent-name-display-helper" onchange="editor.tables['agentRelationTable'].handleInputChange(this, 'agentRelationTable_agentName');" />
 				<input type="text" class="form-control typeahead agent-typeahead" placeholder="~Search for agent">

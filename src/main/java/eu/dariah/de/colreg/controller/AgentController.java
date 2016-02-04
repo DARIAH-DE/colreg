@@ -21,14 +21,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.service.AgentService;
+import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/agents/")
 public class AgentController {
 	@Autowired private AgentService agentService;
+	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
@@ -55,9 +58,14 @@ public class AgentController {
 		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
 		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
 		
-		//List<Agent> children = agentService.findCurrentByParentAgentId(id);
-		model.addAttribute("childAgents", agentService.findCurrentByParentAgentId(id));
+		List<Agent> children = agentService.findCurrentByParentAgentId(id);
+		model.addAttribute("childAgents", children);
+		model.addAttribute("activeChildAgents", children!=null && children.size()>0);
 		
+		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(id);
+		model.addAttribute("collections", collections);
+		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
+						
 		return "agent/edit";
 	}
 	

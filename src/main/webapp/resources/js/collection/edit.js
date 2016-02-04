@@ -96,7 +96,7 @@ CollectionEditor.prototype.registerLanguageTypeahead = function(element) {
 
 CollectionEditor.prototype.registerAgentTypeahead = function(element) {
 	var _this = this;
-	this.registerTypeahead(element, "agents", "name", 6, 
+	this.registerTypeahead(element, "agents", "none", 6, 
 			function(data) { return "<p>" + _this.renderAgentSuggestion(data) + "</p>"; },
 			function(t, suggestion) { _this.handleAgentSelection(true, t, suggestion); }
 	);
@@ -116,7 +116,7 @@ CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(element) {
 
 CollectionEditor.prototype.registerParentCollectionTypeahead = function(element) {
 	var _this = this;
-	this.registerTypeahead(element, "parentCollections", "name", 8, 
+	this.registerTypeahead(element, "parentCollections", "none", 8, 
 			function(data) { return "<p>" + _this.renderCollectionSuggestion(data) + "</p>"; },
 			function(t, suggestion) {
 				_this.handleParentCollectionSelection(true, suggestion.entityId,

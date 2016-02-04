@@ -328,9 +328,8 @@
 				</div>
 			</div>
 		</div>
-		
-		
-				<div class="form-group editor-buttonbar">
+
+		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<button class="btn btn-default cancel form-btn-cancel">~ Cancel</button>

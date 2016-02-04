@@ -44,7 +44,7 @@ AgentEditor.prototype = new BaseEditor();
 
 AgentEditor.prototype.registerParentAgentTypeahead = function(element) {
 	var _this = this;
-	this.registerTypeahead(element, "parentAgents", "name", 8, 
+	this.registerTypeahead(element, "parentAgents", "none", 8, 
 			function(data) { return "<p>" + _this.renderAgentSuggestion(data) + "</p>"; },
 			function(t, suggestion) {
 				_this.handleParentAgentSelection(true, suggestion.entityId,

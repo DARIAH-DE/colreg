@@ -149,6 +149,34 @@
 		
 		<div class="editor-section">
 			<div class="editor-section-heading">
+				<h4>~Assigned collections</h4>
+			</div>
+			<div class="form-group">
+				<label for="child-agents" class="col-sm-3 control-label">~ Associated collections</label>
+				<div class="col-sm-9">
+					<c:choose>
+						<c:when test="${collections!=null && fn:length(collections)>0}">
+							<c:forEach items="${collections}" var="collection" varStatus="status" >
+								<div class="alert alert-default">
+									<p>
+										<a href="<s:url value="/collections/${collections.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${collection.localizedDescription[0].title}</strong><br />
+										<small><em>ID: ${collections.entityId}</em></small><br /></a>	
+									</p>
+								</div>
+							</c:forEach>		
+						</c:when>
+						<c:otherwise>
+							<div class="col-sm-9">
+								<label class="control-label">~ No agents have been assigned</label>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
 				<h4>~Agent identification</h4>
 			</div>
 			<div class="form-group">
@@ -184,6 +212,42 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
+				<h4>~Administrative actions</h4>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<c:choose>
+						<c:when test="${activeChildAgents==false && activeCollectionRelation==false}">
+							<div class="alert alert-warning alert-sm" role="alert">
+								~ This agent has no subordinate agents and no active and assigned collections and could thus be marked as deleted. It will then no longer be shown in the list of agents but is still accessible via its permalink. 
+							</div>
+							<div>
+								<button id="btn-delete-agent" class="btn btn-sm btn-danger">~ Mark deleted</button>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${activeChildAgents}">
+								<div class="alert alert-warning alert-sm" role="alert">
+									~ This agent cannot be marked as deleted because there are non-deleted subordinate agents.   
+								</div>
+							</c:if>
+							<c:if test="${activeCollectionRelation}">
+								<div class="alert alert-warning alert-sm" role="alert">
+									~ This agent cannot be marked as deleted because there assigned non-deleted collections.   
+								</div>
+							</c:if>
+							<div>
+								<button class="btn btn-sm btn-default disabled">~ Mark deleted</button>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>
+		
 		
 		<div class="form-group">
 			<div class="col-sm-12">

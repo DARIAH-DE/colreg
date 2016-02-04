@@ -2,7 +2,6 @@ package eu.dariah.de.colreg.service;
 
 import java.util.List;
 
-import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 
 public interface CollectionService {
@@ -13,4 +12,5 @@ public interface CollectionService {
 	public void initializeAgentRelations(Collection c);
 	public List<Collection> queryCollections(String query, List<String> excl);
 	public List<Collection> findCurrentByParentCollectionId(String id);
+	public List<Collection> findCurrentByRelatedAgentId(String id);
 }
