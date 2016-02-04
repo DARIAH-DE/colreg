@@ -13,4 +13,5 @@ public interface CollectionService {
 	public List<Collection> queryCollections(String query, List<String> excl);
 	public List<Collection> findCurrentByParentCollectionId(String id);
 	public List<Collection> findCurrentByRelatedAgentId(String id);
+	public Collection findCurrentByCollectionId(String id, boolean includeDeleted);
 }

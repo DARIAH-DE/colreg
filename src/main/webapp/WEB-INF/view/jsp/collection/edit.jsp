@@ -23,6 +23,17 @@
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
 	<sf:form method="POST" action="javascript:void(0);" modelAttribute="c" class="form-horizontal" autocomplete="off">
 
+		<div class="form-group">
+			<div class="col-sm-12">
+				<c:if test="${c.deleted}">
+					<div class="alert alert-warning" role="alert">
+						~ This collection is marked deleted and is as such only accessible through its permalink   
+					</div>
+				</c:if>
+				<div id="entity-notifications-area"></div>
+			</div>
+		</div>
+
 		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
@@ -328,6 +339,37 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
+				<h4>~Administrative actions</h4>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<c:if test="${c.deleted==false}">
+						<c:choose>
+							<c:when test="${activeChildCollections==false && isDraft==false}">
+								<div class="alert alert-warning alert-sm" role="alert">
+									~ This collection has not been published and could thus be marked as deleted. 
+								</div>
+								<div>
+									<button id="btn-delete-collection" class="btn btn-sm btn-danger">~ Mark deleted</button>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${isDraft}">
+									<div class="alert alert-warning alert-sm" role="alert">
+										~ This collection has already been published and cannot be marked as deleted.   
+									</div>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</div>
+			</div>
+		</div>
+		
 
 		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">

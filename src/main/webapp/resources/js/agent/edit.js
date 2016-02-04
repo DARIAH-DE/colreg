@@ -8,7 +8,7 @@ $(document).ready(function() {
 	});
 	
 	$("#btn-delete-agent").on("click", function() {
-		editor.deleteAgent();
+		editor.deleteEntity("agents/");
 	});
 	
 	$("form").submit(function(event) { editor.submit(event); });

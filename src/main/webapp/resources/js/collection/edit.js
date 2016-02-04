@@ -7,6 +7,10 @@ $(document).ready(function() {
 		$("form").submit();
 	});
 	
+	$("#btn-delete-collection").on("click", function() {
+		editor.deleteEntity("collections/");
+	});
+	
 	$("form").submit(function(event) { editor.submit(event); });
 });
 

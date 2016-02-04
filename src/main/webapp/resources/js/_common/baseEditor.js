@@ -76,3 +76,17 @@ BaseEditor.prototype.validateInput = function(element, urlPrefix, value) {
         }
 	});
 };
+
+BaseEditor.prototype.deleteEntity = function(prefix) {
+	var _this = this;
+	$.ajax({
+        url: __util.getBaseUrl() + prefix + _this.entityId + "/delete",
+        type: "POST",
+        success: function(data) {
+        	window.location.reload();
+        },
+        error: function(textStatus) { 
+        	alert("Could not delete entity: " + textStatus);
+        }
+	});
+};

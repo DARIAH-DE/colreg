@@ -38,8 +38,9 @@ public class Collection extends VersionedEntityImpl {
 	// Access and accrual
 	private List<Access> accessMethods;
 	private List<Accrual> accrualMethods;
-	private boolean deleted;
 	
+	private boolean deleted;
+	private String draftUserId;
 		
 	public List<String> getProvidedIdentifier() { return providedIdentifier; }
 	public void setProvidedIdentifier(List<String> providedIdentifier) { this.providedIdentifier = providedIdentifier; }
@@ -88,4 +89,7 @@ public class Collection extends VersionedEntityImpl {
 	
 	public boolean isDeleted() { return deleted; }
 	public void setDeleted(boolean deleted) { this.deleted = deleted; }
+	
+	public String getDraftUserId() { return draftUserId; }
+	public void setDraftUserId(String draftUserId) { this.draftUserId = draftUserId; }
 }

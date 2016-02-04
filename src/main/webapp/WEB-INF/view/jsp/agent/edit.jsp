@@ -27,7 +27,7 @@
 			<div class="col-sm-12">
 				<c:if test="${a.deleted}">
 					<div class="alert alert-warning" role="alert">
-						~ This agent is marked deleted and as such only accessible through its permalink   
+						~ This agent is marked deleted and is as such only accessible through its permalink   
 					</div>
 				</c:if>
 				<div id="entity-notifications-area"></div>
@@ -251,9 +251,6 @@
 										~ This agent cannot be marked as deleted because there assigned non-deleted collections.   
 									</div>
 								</c:if>
-								<div>
-									<button class="btn btn-sm btn-default disabled">~ Mark deleted</button>
-								</div>
 							</c:otherwise>
 						</c:choose>
 					</c:if>

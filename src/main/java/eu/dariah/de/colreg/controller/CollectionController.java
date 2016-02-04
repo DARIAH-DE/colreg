@@ -28,6 +28,7 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
+import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
 @RequestMapping("/collections/")
@@ -52,7 +53,7 @@ public class CollectionController {
 		} else if (id.toLowerCase().equals("new")) {
 			c = collectionService.createCollection();
 		} else {
-			c = collectionService.findCurrentByCollectionId(id);
+			c = collectionService.findCurrentByCollectionId(id, true);
 			collectionService.initializeAgentRelations(c);
 		}
 
@@ -65,7 +66,10 @@ public class CollectionController {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
 		}
 		
-		model.addAttribute("childCollections", collectionService.findCurrentByParentCollectionId(id));
+		List<Collection> childCollections = collectionService.findCurrentByParentCollectionId(id);
+		model.addAttribute("childCollections", childCollections);
+		model.addAttribute("activeChildCollections", childCollections!=null && childCollections.size()>0);
+		model.addAttribute("isDraft", c.getDraftUserId()==null || c.getDraftUserId().equals(""));
 		
 		model.addAttribute("c", c);
 		
@@ -74,12 +78,34 @@ public class CollectionController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
 	public String saveCollection(@Valid Collection c, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		Collection cSaved = collectionService.findCurrentByCollectionId(c.getEntityId());
+		if (cSaved==null) {
+			// TODO: Actual user ids
+			c.setDraftUserId("system_user_id");
+		} else {
+			c.setDraftUserId(cSaved.getDraftUserId());
+		}
 		collectionService.save(c);
 		
 		// Flash attribute only required on error / otherwise load by id in GET
 		redirectAttributes.addFlashAttribute("c", c);
 		
 		return "redirect:/collections/" + c.getEntityId();
+	}
+	
+	@RequestMapping(value="{id}/delete", method=RequestMethod.POST)
+	public @ResponseBody ModelActionPojo deleteAgent(@PathVariable String id) {
+		ModelActionPojo result = new ModelActionPojo(false);
+		List<Collection> children = collectionService.findCurrentByParentCollectionId(id);
+				
+		if (children==null || children.size()==0) {
+			Collection c = collectionService.findCurrentByCollectionId(id);
+			c.setDeleted(true);
+			collectionService.save(c);
+			result.setSuccess(true);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)

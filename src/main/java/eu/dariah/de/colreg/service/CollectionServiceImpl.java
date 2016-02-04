@@ -107,4 +107,9 @@ public class CollectionServiceImpl implements CollectionService {
 
 		return collectionDao.find(q);
 	}
+
+	@Override
+	public Collection findCurrentByCollectionId(String id, boolean includeDeleted) {
+		return collectionDao.findCurrentById(id, includeDeleted);
+	}
 }
