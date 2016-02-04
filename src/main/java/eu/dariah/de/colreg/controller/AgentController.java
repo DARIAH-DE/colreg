@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +26,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
@@ -34,6 +39,13 @@ public class AgentController {
 	@Autowired private AgentService agentService;
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
+	
+	@Autowired private AgentValidator validator;
+	
+	@InitBinder
+	protected void initBinder(final WebDataBinder binder) {
+	    binder.addValidators(validator);
+	}
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -87,8 +99,12 @@ public class AgentController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveAgent(@Valid Agent a, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
-		agentService.save(a);
+	public String saveAgent(@Valid Agent a, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		if (bindingResult.hasErrors()) {
+			
+		} else {
+			agentService.save(a);
+		}
 		
 		// Flash attribute only required on error / otherwise load by id in GET
 		redirectAttributes.addFlashAttribute("a", a);

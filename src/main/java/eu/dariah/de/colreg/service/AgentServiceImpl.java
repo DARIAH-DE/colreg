@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.AgentDao;
@@ -84,5 +85,18 @@ public class AgentServiceImpl implements AgentService {
 				Criteria.where("name").regex(Pattern.compile(query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)).andOperator(cBase)
 		};
 		return agentDao.combineQueryResults(queryCriteria, 10);
+	}
+
+	@Override
+	public Agent findCurrentByName(String name, String foreName) {
+		Query q = new Query(Criteria
+				.where("succeedingVersionId").is(null)
+				.and("deleted").ne(true)
+				.and("name").is(name));
+		
+		if (foreName!=null && !foreName.trim().equals("")) {
+			q.addCriteria(Criteria.where("foreName").is(foreName.trim()));
+		}
+		return agentDao.findOne(q);
 	}
 }

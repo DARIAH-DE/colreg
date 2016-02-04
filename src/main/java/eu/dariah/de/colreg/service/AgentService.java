@@ -12,4 +12,5 @@ public interface AgentService {
 	public List<Agent> queryAgents(String query, List<String> excl);
 	public List<Agent> findCurrentByParentAgentId(String id);
 	public Agent findCurrentByAgentId(String id, boolean includeDeleted);
+	public Agent findCurrentByName(String name, String foreName);
 }

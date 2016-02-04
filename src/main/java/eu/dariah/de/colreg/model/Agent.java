@@ -2,6 +2,10 @@ package eu.dariah.de.colreg.model;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -13,11 +17,18 @@ import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 public class Agent extends VersionedEntityImpl {
 	private static final long serialVersionUID = 5452333501609638317L;
 	
+	@NotBlank
 	private String agentTypeId;
+	
+	@NotBlank
 	private String name;
 	private String foreName;
 	private String address;
+	
+	@Email
 	private String eMail;
+	
+	@URL
 	private String webPage;
 	private String phone;
 	private List<String> providedIdentifier;
