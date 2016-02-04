@@ -20,13 +20,14 @@
 </ul>
 <div id="main-content">
 	<h1>~Agent Editor</h1>
-	<sf:form method="POST" action="${actionPath}" modelAttribute="a" class="form-horizontal" autocomplete="off">
+	<input type="hidden" id="js-form-action" value="${actionPath}" />
+	<sf:form method="POST" action="javascript:void(0);" modelAttribute="a" class="form-horizontal" autocomplete="off">
 		
 		<div class="form-group">
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
-					<button class="btn btn-primary start form-btn-submit" type="submit">~ Save</button>
+					<button class="btn btn-primary start form-btn-submit">~ Save</button>
 				</div>
 			</div>
 		</div>
@@ -159,35 +160,36 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Current description version</label>
 				<div class="col-sm-9">
-					<sf:input path="id" class="form-control" placeholder="~Identifier" readonly="true" />
+					<input type="text" value="${a.id}" class="form-control" readonly />
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~ Provided identifier</label>
+				<label for="description" class="col-sm-3 control-label">~External identifiers</label>
 				<div class="col-sm-9">
-					<table id="tbl-agent-identifier" class="collection-editor-table">
-						<thead>
-							<tr>
-								<th class="explode">~Identifier</th>
-								<th class="nowrap">~</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${fn:length(a.providedIdentifier)>0}">
-								<c:forEach items="${a.providedIdentifier}" var="identifier" varStatus="status" >
-									<c:set var="currIdentifier" value="${identifier}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_identifier.jsp" />
-								</c:forEach>
-								<c:remove var="currIdentifier" />	
-							</c:if>
-							<tr class="collection-editor-table-buttons">
-								<td colspan="4" style="text-align: right;">
-									<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add identifier</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
+						<c:if test="${fn:length(a.providedIdentifier)>0}">
+							<c:forEach items="${a.providedIdentifier}" var="identifier" varStatus="status" >
+								<c:set var="currIdentifier" value="${identifier}" scope="request" />
+								<c:set var="currIndex" value="${status.index}" scope="request" />
+								<jsp:include page="incl/edit_identifier.jsp" />
+							</c:forEach>
+							<c:remove var="currIdentifier" />	
+						</c:if>
+						<li class="collection-editor-list-buttons">
+							<div class="col-sm-12">
+								<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add identifier</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-12">
+				<div class="pull-right">
+					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
+					<button class="btn btn-primary start form-btn-submit">~ Save</button>
 				</div>
 			</div>
 		</div>

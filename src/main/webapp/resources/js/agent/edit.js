@@ -1,78 +1,75 @@
 var editor;
 $(document).ready(function() {
 	editor = new AgentEditor();
+	
+	$(".form-btn-submit").on("click", function() {
+		$("form").attr("action", $("#js-form-action").val());
+		$("form").submit();
+	});
+	
+	$("form").submit(function(event) { editor.submit(event); });
 });
+
 
 var AgentEditor = function() {
 	var _this = this;
+	this.addVocabularySource("parentAgents", "agents/query/", "excl=" + this.entityId);
+
+	this.registerParentAgentTypeahead($('#parentAgentIdSelector'));
 	
-	this.agentId = $("#entityId").val();
-	this.parentAgents = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  remote: { 
-			  url: __util.getBaseUrl() + 'agents/query/%QUERY?excl=' + _this.agentId, 
-			  wildcard: '%QUERY'
-		  }
+	this.lists["identifierList"] = new CollectionEditorList({
+		listSelector: "#lst-agent-provided-identifiers",
+		newRowUrl: __util.getBaseUrl() + "agents/includes/editIdentifier",
 	});
 	
-	$('#parentAgentIdSelector').typeahead(null, {
-		  name: 'parentAgents',
-		  hint: false,
-		  display: 'name',
-		  source: _this.parentAgents,
-		  limit: 8,
-		  templates: {
-			    empty: [
-			      '<div class="tt-empty-message">',
-			        '~No match found',
-			      '</div>'
-			    ].join('\n'),
-			    suggestion: function(data) {
-			    	return "<p>" + _this.renderAgentSuggestion(data) + "</p>";
-			    }
-			  }
-		});
-		
-	$('#parentAgentIdSelector').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
-		$("#parentAgentId").val(suggestion.entityId);
-		$("#parentAgent-display p").html(
-				"<a href='" + suggestion.entityId + "'>" +
-						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
-							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
-						"</button>" + _this.renderAgentSuggestion(suggestion) + "</a>");
-		$("#parentAgent-display").removeClass("hide");
-		$("#parentAgent-display-null").addClass("hide");
-	});
-	
-	$("#parentAgentIdReset").on("click", function() {
-		$("#parentAgentId").val("");
-		
-		$("#parentAgent-display p").text("");
-		$("#parentAgent-display").addClass("hide");
-		$("#parentAgent-display-null").removeClass("hide");
-	});
-	
-	this.identifierTable = new CollectionEditorTable({
-		tableSelector: "#tbl-agent-identifier",
-		newRowUrl: __util.getBaseUrl() + "agents/includes/editIdentifier"
-	});
-	
+	/**
+	 * Side navigation interaction -> move to BaseEditor once workable
+	 */
 	$(".nav-form-controls a").on('click', function(e) {
 		$($(this).attr("href")).focus();
 		e.stopPropagation(); 
 		return false;
 	});
-	
 	$("input").focus(function() {		
 		$(".nav-form-controls li").removeClass("active");
 		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
 	});
-	
 	$("select").focus(function() {		
 		$(".nav-form-controls li").removeClass("active");
 		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
 	});
+};
+
+AgentEditor.prototype = new BaseEditor();
+
+AgentEditor.prototype.registerParentAgentTypeahead = function(element) {
+	var _this = this;
+	this.registerTypeahead(element, "parentAgents", "name", 8, 
+			function(data) { return "<p>" + _this.renderAgentSuggestion(data) + "</p>"; },
+			function(t, suggestion) {
+				_this.handleParentAgentSelection(true, suggestion.entityId,
+						"<a href='" + suggestion.entityId + "'>" +
+						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
+							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
+						"</button>" + _this.renderAgentSuggestion(suggestion) + "</a>");
+			}
+	);
+	element.closest(".form-group").find(".collection-reset").on("click", function() { 
+		_this.handleParentAgentSelection(false, "", "<span></span>"); 
+	});
+};
+
+AgentEditor.prototype.handleParentAgentSelection = function(select, entityId, html) {
+	$("#parentAgentId").val(entityId);
+	$("#parentAgent-display p").html(html);
+	
+	if (select) {
+		$("#parentAgent-display").removeClass("hide");
+		$("#parentAgent-display-null").addClass("hide");
+	} else {
+		$("#parentAgent-display").addClass("hide");
+		$("#parentAgent-display-null").removeClass("hide");
+	}
 };
 	
 AgentEditor.prototype.renderAgentSuggestion = function(agent) {

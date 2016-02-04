@@ -143,7 +143,7 @@
 				</div>
 				<div class="col-sm-9">
 					<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
-						<button id="parentCollectionIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+						<button type="button" class="btn btn-xs btn-link pull-right collection-reset"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 							<p>
 						<c:if test="${parentCollection!=null}">
 							<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
@@ -240,7 +240,7 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Current description version</label>
 				<div class="col-sm-9">
-					<sf:input path="id" class="form-control" placeholder="~Identifier" readonly="true" />
+					<input type="text" value="${c.id}" class="form-control" placeholder="~Identifier" readonly />
 				</div>
 			</div>
 			<div class="form-group">

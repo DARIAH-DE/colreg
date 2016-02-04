@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <li class="collection-editor-list-item">
-	<div class="collection-editor-list-input col-sm-5">
+	<div class="collection-editor-list-input col-sm-7">
 		<span class="attribute-name-helper">providedIdentifier{}</span>
-		<span style="display: inline-block;">
+		<span style="display: inline-block; width: 100%;">
 			<input type="text" class="form-control" id="providedIdentifier${currIndex}" name="providedIdentifier[${currIndex}]" 
 				value="<c:if test="${currIdentifier!=null}">${currIdentifier}</c:if>" placeholder="~Provided identifier">
 		</span>

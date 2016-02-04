@@ -25,7 +25,7 @@ var CollectionEditorTable = function(options) {
 	this.sort();
 	
 	if (this.options.initCallback!==null && typeof _this.options.initCallback==='function') {
-		this.options.initCallback();
+		this.options.initCallback(this);
 	}
 }
 

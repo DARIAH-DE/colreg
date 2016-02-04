@@ -11,113 +11,23 @@ $(document).ready(function() {
 });
 
 var CollectionEditor = function() {
-	var _this = this;
-	this.collectionId = $("#entityId").val();
-	
-	this.vocabularySources = new Array();
 	this.initVocabularySources();
-	
-	this.tables = new Array();
-	this.lists = new Array();
 	this.initEditorComponents();
 	
-
-	$('.agent-typeahead').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
-		var container = $(this).closest(".form-group"); 
-		
-		container.find("input[type='hidden']").val(suggestion.entityId);
-		container.find(".agent-name-display-helper").val(suggestion.name + " " + suggestion.foreName).trigger('change');
-		
-		container.find(".agent-display p").html(
-				"<a href='" + suggestion.entityId + "'>" +
-						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
-							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
-						"</button>" + _this.renderAgentSuggestion(suggestion) + "</a>");
-		container.find(".agent-display").removeClass("hide");
-		container.find(".agent-display-null").addClass("hide");
-	});
-	
-	$(".agent-reset").on("click", function() {
-		var container = $(this).closest(".form-group");
-		
-		container.find("input[type='hidden']").val("");
-		container.find(".agent-name-display-helper").val("").trigger('change');
-		
-		container.find(".agent-display p").text("");
-		container.find(".agent-display").addClass("hide");
-		container.find(".agent-display-null").removeClass("hide");
-	});
-
-	$(".select-relation-type").on("change", function() {
-		var strSelected = "";
-		
-		$(this).find(":selected").each(function(i, selected) {
-			strSelected += $(selected).text() + " ";
-		});
-		
-		$(this).closest(".form-group").find(".agent-type-display-helper").val(strSelected).trigger('change');
-	});
-	
-	$('#parentCollectionIdSelector').typeahead(null, {
-		  name: 'parentCollections',
-		  hint: false,
-		  display: 'name',
-		  source: _this.vocabularySources["parentCollections"],
-		  limit: 8,
-		  templates: {
-			    empty: [
-			      '<div class="tt-empty-message">',
-			        '~No match found',
-			      '</div>'
-			    ].join('\n'),
-			    suggestion: function(data) {
-			    	return "<p>" + _this.renderCollectionSuggestion(data) + "</p>";
-			    }
-			  }
-		});
-		
-	$('#parentCollectionIdSelector').bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
-		$("#parentCollectionId").val(suggestion.entityId);
-		$("#parentCollection-display p").html(
-				"<a href='" + suggestion.entityId + "'>" +
-						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
-							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
-						"</button>" + _this.renderCollectionSuggestion(suggestion) + "</a>");
-		$("#parentCollection-display").removeClass("hide");
-		$("#parentCollection-display-null").addClass("hide");
-	});
-	
-	$("#parentCollectionIdReset").on("click", function() {
-		$("#parentCollectionId").val("");
-		
-		$("#parentCollection-display p").text("");
-		$("#parentCollection-display").addClass("hide");
-		$("#parentCollection-display-null").removeClass("hide");
-	});
-	
-	this.registerLanguageTypeahead(".language-typeahead");
-	this.registerAgentTypeahead(".agent-typeahead");
-	this.registerEncodingSchemeTypeahead(".encoding-scheme-typeahead");
+	this.registerParentCollectionTypeahead($("#parentCollectionIdSelector"));
+	this.registerLanguageTypeahead($(".language-typeahead"));
+	this.registerEncodingSchemeTypeahead($(".encoding-scheme-typeahead"));
+	this.registerAgentTypeahead($(".agent-typeahead"));
+	this.registerAgentRelationTypeSelection($(".select-relation-type"));
 };
 
-
+CollectionEditor.prototype = new BaseEditor();
 
 CollectionEditor.prototype.initVocabularySources = function() {
 	this.addVocabularySource("languages", "languages/query/");
 	this.addVocabularySource("agents", "agents/query/");
 	this.addVocabularySource("schemes", "schemes/query/");
-	this.addVocabularySource("parentCollections", "collections/query/", "excl=" + this.collectionId);
-};
-
-CollectionEditor.prototype.addVocabularySource = function(name, urlSuffix, params) {
-	this.vocabularySources[name] = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.whitespace,
-		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  remote: {
-			  url: __util.getBaseUrl() + urlSuffix + "%QUERY" + (params!==undefined ? "?" + params : ""),
-			  wildcard: '%QUERY'
-		  }
-	});
+	this.addVocabularySource("parentCollections", "collections/query/", "excl=" + this.entityId);
 };
 
 CollectionEditor.prototype.initEditorComponents = function() {
@@ -136,6 +46,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAgent",
 		newRowCallback: function(row) {
 			_this.registerAgentTypeahead($(row).find(".agent-typeahead"));
+			_this.registerAgentRelationTypeSelection($(row).find(".select-relation-type"));
 		}
 	});
 	this.tables["accessMethodTable"] = new CollectionEditorTable({
@@ -144,10 +55,13 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowCallback: function(row) {
 			_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
 		},
-		initCallback: function() {
-			this.schemesList = new CollectionEditorList({
+		initCallback: function(table) {
+			table.schemesList = new CollectionEditorList({
 				listSelector: ".lst-collection-access-schemes",
 				newRowUrl: __util.getBaseUrl() + "collections/includes/editEncodingScheme",
+				newRowCallback: function(row) {
+					_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
+				},
 				addButtonSelector: ".btn-collection-editor-add-scheme"
 			});
 		}
@@ -171,141 +85,104 @@ CollectionEditor.prototype.initEditorComponents = function() {
 	});
 };
 
+CollectionEditor.prototype.registerLanguageTypeahead = function(element) {
+	var _this = this;
+	this.registerTypeahead(element, "languages", "code", 12, 
+			function(data) { return '<p><strong>' + data.code + '</strong> – ' + data.name + '</p>'; },
+			function(t, suggestion) { $(t).closest(".form-group").removeClass("has-error"); },
+			function(t, value) { _this.validateInput(t, "languages/", value); }
+	);
+};
+
+CollectionEditor.prototype.registerAgentTypeahead = function(element) {
+	var _this = this;
+	this.registerTypeahead(element, "agents", "name", 6, 
+			function(data) { return "<p>" + _this.renderAgentSuggestion(data) + "</p>"; },
+			function(t, suggestion) { _this.handleAgentSelection(true, t, suggestion); }
+	);
+	element.closest(".form-group").find(".agent-reset").on("click", function() { 
+		_this.handleAgentSelection(false, this, null); 
+	});
+};
+
+CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(element) {
+	var _this = this;
+	this.registerTypeahead(element, "schemes", "name", 10, 
+			function(data) { return "<p><strong>" + data.name + "</strong><br />" + data.url + "</p>"; },
+			function(t, suggestion) { $(t).closest(".form-group").removeClass("has-error"); },
+			function(t, value) { _this.validateInput(t, "schemes/", value); }
+	);
+};
+
+CollectionEditor.prototype.registerParentCollectionTypeahead = function(element) {
+	var _this = this;
+	this.registerTypeahead(element, "parentCollections", "name", 10, 
+			function(data) { return "<p>" + _this.renderCollectionSuggestion(data) + "</p>"; },
+			function(t, suggestion) {
+				_this.handleParentCollectionSelection(true, suggestion.entityId,
+						"<a href='" + suggestion.entityId + "'>" +
+							"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
+							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
+						"</button>" + _this.renderCollectionSuggestion(suggestion) + "</a>");
+			}, null
+	);
+	element.closest(".form-group").find(".collection-reset").on("click", function() { 
+		_this.handleParentCollectionSelection(false, "", "<span></span>"); 
+	});
+};
+
+CollectionEditor.prototype.registerAgentRelationTypeSelection = function(element) {
+	// Update displayed table list-row content based on AgentRelationType selection
+	$(element).on("change", function() {
+		var strSelected = "";
+		$(this).find(":selected").each(function(i, selected) {
+			strSelected += $(selected).text() + " ";
+		});
+		$(this).closest(".form-group").find(".agent-type-display-helper").val(strSelected).trigger('change');
+	});
+}
+
+CollectionEditor.prototype.handleParentCollectionSelection = function(select, entityId, html) {
+	$("#parentCollectionId").val(entityId);
+	$("#parentCollection-display p").html(html);
+	
+	if (select) {
+		$("#parentCollection-display").removeClass("hide");
+		$("#parentCollection-display-null").addClass("hide");
+	} else {
+		$("#parentCollection-display").addClass("hide");
+		$("#parentCollection-display-null").removeClass("hide");
+	}
+};
+
+CollectionEditor.prototype.handleAgentSelection = function(select, control, suggestion) {
+	var _this = this;
+	var formGroup = $(control).closest(".form-group"); 
+	formGroup.find("input[type='hidden']").val(suggestion!=null ? suggestion.entityId : "");
+	formGroup.find(".agent-name-display-helper").val(suggestion!=null ? (suggestion.name + " " + suggestion.foreName) : "").trigger('change');
+	
+	if (select) {
+		formGroup.find(".agent-display p").html(
+				"<a href='" + suggestion.entityId + "'>" +
+						"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
+							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
+						"</button>" + _this.renderAgentSuggestion(suggestion) + "</a>");
+		formGroup.find(".agent-display").removeClass("hide");
+		formGroup.find(".agent-display-null").addClass("hide");
+	} else {
+		formGroup.find(".agent-display p").text("");
+		formGroup.find(".agent-display").addClass("hide");
+		formGroup.find(".agent-display-null").removeClass("hide");
+	}
+};
 
 CollectionEditor.prototype.renderCollectionSuggestion = function(collection) {
 	return  "<strong>" + collection.localizedDescriptions[0].title + "</strong><br />" +
 			"<small><em>ID:" + collection.entityId + "</em></small>";
 };
 
-
-CollectionEditor.prototype.registerAgentTypeahead = function(elements) {
-	var _this = this;
-	$(elements).typeahead(null, {
-		  name: 'agents',
-		  hint: false,
-		  display: 'name',
-		  source: _this.vocabularySources["agents"],
-		  limit: 8,
-		  templates: {
-			    empty: [
-			      '<div class="tt-empty-message">',
-			        '~No match found',
-			      '</div>'
-			    ].join('\n'),
-			    suggestion: function(data) {
-			    	return "<p>" + _this.renderAgentSuggestion(data) + "</p>";
-			    }
-			  }
-		});
-};
-
 CollectionEditor.prototype.renderAgentSuggestion = function(agent) {
 	return  "<strong>" + agent.name + " " + agent.foreName + "</strong><br />" +
 			"<small><em>ID:" + agent.entityId + "</em></small>" +
 			(agent.address!=null && agent.address!="" ? "<br />" + agent.address : "");
-};
-
-CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(elements) {
-	var _this = this;
-	$(elements).typeahead(null, {
-	  name: 'encodingSchemes',
-	  hint: false,
-	  display: 'name',
-	  source: _this.vocabularySources["schemes"],
-	  limit: 8,
-	  templates: {
-		    empty: [
-		      '<div class="tt-empty-message">',
-		        '~No match found',
-		      '</div>'
-		    ].join('\n'),
-		    suggestion: function(data) {
-		    	return "<p><strong>" + data.name + "</strong><br />" + data.url + "</p>";
-		    }
-		  }
-	});
-	
-	$(elements).bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
-		// Suggestion accepted -> input must be ok
-		$(this).closest(".form-group").removeClass("has-error");
-	});
-	
-	$(elements).bind('change', function() {
-		// Whatever input -> need to validate
-		_this.validateEncodingScheme(this);
-	});
-}
-
-CollectionEditor.prototype.registerLanguageTypeahead = function(elements) {
-	var _this = this;
-	$(elements).typeahead(null, {
-		  name: 'language',
-		  hint: false,
-		  display: 'code',
-		  source: _this.vocabularySources["languages"],
-		  limit: 12,
-		  templates: {
-			    empty: [
-			      '<div class="tt-empty-message">',
-			        '~No match found',
-			      '</div>'
-			    ].join('\n'),
-			    suggestion: function(data) {
-			        return '<p><strong>' + data.code + '</strong> – ' + data.name + '</p>';
-			    }
-			  }
-	});
-	
-	$(elements).bind('typeahead:select typeahead:autocomplete', function(ev, suggestion) {
-		// Suggestion accepted -> input must be ok
-		$(this).closest(".form-group").removeClass("has-error");
-	});
-	
-	$(elements).bind('change', function() {
-		// Whatever input -> need to validate
-		_this.validateLanguage(this);
-	});
-};
-
-CollectionEditor.prototype.validateLanguage = function(element) {
-	var _this = this;
-	$.ajax({
-        url: __util.getBaseUrl() + 'languages/' + $(element).val(),
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-        	$(element).closest(".form-group").removeClass("has-error");
-        },
-        error: function(textStatus) { 
-        	$(element).closest(".form-group").addClass("has-error");
-        }
-	});
-};
-
-CollectionEditor.prototype.validateEncodingScheme = function(element) {
-	var _this = this;
-	$.ajax({
-        url: __util.getBaseUrl() + 'schemes/' + $(element).val(),
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-        	$(element).closest(".form-group").removeClass("has-error");
-        },
-        error: function(textStatus) { 
-        	$(element).closest(".form-group").addClass("has-error");
-        }
-	});
-};
-
-CollectionEditor.prototype.sort = function() {
-	for (var tbl in this.tables) {
-		this.tables[tbl].sort();
-	}
-	for (var lst in this.lists) {
-		this.lists[lst].sort();
-	}
-};
-
-CollectionEditor.prototype.submit = function(event) {
-	this.sort();
 };

@@ -15,6 +15,8 @@ var CollectionEditorList = function(options) {
 				pushDownButtonSelector: ".btn-push-down",
 			}, 
 			options);
+	
+	this.sort();
 }
 
 CollectionEditorList.prototype.triggerAddListElement = function(btn) {
