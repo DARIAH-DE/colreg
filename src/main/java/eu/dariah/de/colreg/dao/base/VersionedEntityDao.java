@@ -6,5 +6,8 @@ import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 
 public interface VersionedEntityDao<T extends VersionedEntityImpl> extends BaseDao<T> {
 	public T findCurrentById(String id);
+	public T findCurrentById(String id, boolean includeDeleted);
+	
 	public List<T> findAllCurrent();
+	public List<T> findAllCurrent(boolean includeDeleted);
 }

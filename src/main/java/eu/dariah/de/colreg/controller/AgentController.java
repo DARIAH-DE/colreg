@@ -26,6 +26,7 @@ import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
+import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
 @RequestMapping("/agents/")
@@ -51,7 +52,7 @@ public class AgentController {
 		} else if (id.toLowerCase().equals("new")) {
 			a = agentService.createAgent();
 		} else {
-			a = agentService.findCurrentByAgentId(id);
+			a = agentService.findCurrentByAgentId(id, true);
 		}
 		
 		model.addAttribute("a", a);
@@ -67,6 +68,22 @@ public class AgentController {
 		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
 						
 		return "agent/edit";
+	}
+	
+	@RequestMapping(value="{id}/delete", method=RequestMethod.POST)
+	public @ResponseBody ModelActionPojo deleteAgent(@PathVariable String id) {
+		ModelActionPojo result = new ModelActionPojo(false);
+		List<Agent> children = agentService.findCurrentByParentAgentId(id);
+		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(id);
+		
+		if ((children==null || children.size()==0) && (collections==null || collections.size()==0)) {
+			Agent a = agentService.findCurrentByAgentId(id);
+			a.setDeleted(true);
+			agentService.save(a);
+			result.setSuccess(true);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)

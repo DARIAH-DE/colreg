@@ -36,6 +36,11 @@ public class AgentServiceImpl implements AgentService {
 	public Agent findCurrentByAgentId(String id) {
 		return agentDao.findCurrentById(id);
 	}
+	
+	@Override
+	public Agent findCurrentByAgentId(String id, boolean includeDeleted) {
+		return agentDao.findCurrentById(id, includeDeleted);
+	}
 
 	@Override
 	public List<Agent> findCurrentByParentAgentId(String id) {

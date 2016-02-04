@@ -22,7 +22,8 @@ public class Agent extends VersionedEntityImpl {
 	private String phone;
 	private List<String> providedIdentifier;
 	private String parentAgentId;
-
+	private boolean deleted;
+	
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
 	
@@ -49,4 +50,7 @@ public class Agent extends VersionedEntityImpl {
 	
 	public String getParentAgentId() { return parentAgentId; }
 	public void setParentAgentId(String parentAgentId) { this.parentAgentId = parentAgentId; }
+	
+	public boolean isDeleted() { return deleted; }
+	public void setDeleted(boolean deleted) { this.deleted = deleted; }
 }

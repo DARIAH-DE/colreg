@@ -19,6 +19,7 @@ public class CollectionDaoImpl extends VersionedEntityDaoImpl<Collection> implem
 	public List<Collection> findCurrentByParentCollectionId(String id) {
 		return this.find(Query.query(Criteria
 				.where("parentCollectionId").is(id)
+				.and("deleted").ne(true)
 				.and("succeedingVersionId").is(null)));
 	}
 }

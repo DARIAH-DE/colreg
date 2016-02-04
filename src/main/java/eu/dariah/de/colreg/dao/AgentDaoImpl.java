@@ -19,6 +19,7 @@ public class AgentDaoImpl extends VersionedEntityDaoImpl<Agent> implements Agent
 	public List<Agent> findCurrentByParentAgentId(String id) {
 		return this.find(Query.query(Criteria
 				.where("parentAgentId").is(id)
+				.and("deleted").ne(true)
 				.and("succeedingVersionId").is(null)));
 	}
 }

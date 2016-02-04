@@ -25,6 +25,17 @@
 		
 		<div class="form-group">
 			<div class="col-sm-12">
+				<c:if test="${a.deleted}">
+					<div class="alert alert-warning" role="alert">
+						~ This agent is marked deleted and as such only accessible through its permalink   
+					</div>
+				</c:if>
+				<div id="entity-notifications-area"></div>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-12">
 				<div class="pull-right">
 					<button class="btn btn-default cancel form-btn-cancel" type="reset">~ Cancel</button>
 					<button class="btn btn-primary start form-btn-submit">~ Save</button>
@@ -219,31 +230,33 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<c:choose>
-						<c:when test="${activeChildAgents==false && activeCollectionRelation==false}">
-							<div class="alert alert-warning alert-sm" role="alert">
-								~ This agent has no subordinate agents and no active and assigned collections and could thus be marked as deleted. It will then no longer be shown in the list of agents but is still accessible via its permalink. 
-							</div>
-							<div>
-								<button id="btn-delete-agent" class="btn btn-sm btn-danger">~ Mark deleted</button>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<c:if test="${activeChildAgents}">
+					<c:if test="${a.deleted==false}">
+						<c:choose>
+							<c:when test="${activeChildAgents==false && activeCollectionRelation==false}">
 								<div class="alert alert-warning alert-sm" role="alert">
-									~ This agent cannot be marked as deleted because there are non-deleted subordinate agents.   
+									~ This agent has no subordinate agents and no active and assigned collections and could thus be marked as deleted. It will then no longer be shown in the list of agents but is still accessible via its permalink. 
 								</div>
-							</c:if>
-							<c:if test="${activeCollectionRelation}">
-								<div class="alert alert-warning alert-sm" role="alert">
-									~ This agent cannot be marked as deleted because there assigned non-deleted collections.   
+								<div>
+									<button id="btn-delete-agent" class="btn btn-sm btn-danger">~ Mark deleted</button>
 								</div>
-							</c:if>
-							<div>
-								<button class="btn btn-sm btn-default disabled">~ Mark deleted</button>
-							</div>
-						</c:otherwise>
-					</c:choose>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${activeChildAgents}">
+									<div class="alert alert-warning alert-sm" role="alert">
+										~ This agent cannot be marked as deleted because there are non-deleted subordinate agents.   
+									</div>
+								</c:if>
+								<c:if test="${activeCollectionRelation}">
+									<div class="alert alert-warning alert-sm" role="alert">
+										~ This agent cannot be marked as deleted because there assigned non-deleted collections.   
+									</div>
+								</c:if>
+								<div>
+									<button class="btn btn-sm btn-default disabled">~ Mark deleted</button>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
 				</div>
 			</div>
 		</div>

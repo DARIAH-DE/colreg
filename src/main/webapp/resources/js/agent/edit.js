@@ -7,6 +7,10 @@ $(document).ready(function() {
 		$("form").submit();
 	});
 	
+	$("#btn-delete-agent").on("click", function() {
+		editor.deleteAgent();
+	});
+	
 	$("form").submit(function(event) { editor.submit(event); });
 });
 
@@ -41,6 +45,20 @@ var AgentEditor = function() {
 };
 
 AgentEditor.prototype = new BaseEditor();
+
+AgentEditor.prototype.deleteAgent = function() {
+	var _this = this;
+	$.ajax({
+        url: __util.getBaseUrl() + "agents/" + _this.entityId + "/delete",
+        type: "POST",
+        success: function(data) {
+        	window.location.reload();
+        },
+        error: function(textStatus) { 
+        	alert("Could not delete agent: " + textStatus);
+        }
+	});
+};
 
 AgentEditor.prototype.registerParentAgentTypeahead = function(element) {
 	var _this = this;
