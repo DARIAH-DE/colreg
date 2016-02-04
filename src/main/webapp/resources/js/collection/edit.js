@@ -87,7 +87,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 
 CollectionEditor.prototype.registerLanguageTypeahead = function(element) {
 	var _this = this;
-	this.registerTypeahead(element, "languages", "code", 12, 
+	this.registerTypeahead(element, "languages", "code", 8, 
 			function(data) { return '<p><strong>' + data.code + '</strong> – ' + data.name + '</p>'; },
 			function(t, suggestion) { $(t).closest(".form-group").removeClass("has-error"); },
 			function(t, value) { _this.validateInput(t, "languages/", value); }
@@ -107,7 +107,7 @@ CollectionEditor.prototype.registerAgentTypeahead = function(element) {
 
 CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(element) {
 	var _this = this;
-	this.registerTypeahead(element, "schemes", "name", 10, 
+	this.registerTypeahead(element, "schemes", "name", 8, 
 			function(data) { return "<p><strong>" + data.name + "</strong><br />" + data.url + "</p>"; },
 			function(t, suggestion) { $(t).closest(".form-group").removeClass("has-error"); },
 			function(t, value) { _this.validateInput(t, "schemes/", value); }
@@ -116,7 +116,7 @@ CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(element) {
 
 CollectionEditor.prototype.registerParentCollectionTypeahead = function(element) {
 	var _this = this;
-	this.registerTypeahead(element, "parentCollections", "name", 10, 
+	this.registerTypeahead(element, "parentCollections", "name", 8, 
 			function(data) { return "<p>" + _this.renderCollectionSuggestion(data) + "</p>"; },
 			function(t, suggestion) {
 				_this.handleParentCollectionSelection(true, suggestion.entityId,

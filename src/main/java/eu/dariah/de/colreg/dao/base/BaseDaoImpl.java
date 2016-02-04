@@ -64,7 +64,12 @@ public abstract class BaseDaoImpl<T extends Identifiable> extends DaoImpl<T> imp
 					}
 				}
 				if (result.size()>=limit) {
-					return result.subList(0, limit-1);
+					innerResult = result;
+					result = new ArrayList<T>(limit);
+					for (int i=0; i<limit; i++) {
+						result.add(innerResult.get(i));
+					}
+					return result;
 				}
 			}
 			
