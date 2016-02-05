@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -16,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +27,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
-import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -45,7 +44,7 @@ public class AgentController {
 	@InitBinder
 	protected void initBinder(final WebDataBinder binder) {
 	    binder.addValidators(validator);
-	}
+	}	
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -56,18 +55,18 @@ public class AgentController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editAgent(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
-		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-		
 		Agent a;
-		if (inputFlashMap!=null && inputFlashMap.containsKey("a")) {
-			a = (Agent)inputFlashMap.get("a");
-		} else if (id.toLowerCase().equals("new")) {
+		if (id.toLowerCase().equals("new")) {
 			a = agentService.createAgent();
 		} else {
 			a = agentService.findCurrentByAgentId(id, true);
 		}
+		return this.fillAgentEditorModel(id, a, model);
+	}
+	
+	private String fillAgentEditorModel(String id, Agent a, Model model) {
+		model.addAttribute("agent", a);
 		
-		model.addAttribute("a", a);
 		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
 		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
 		
@@ -78,7 +77,7 @@ public class AgentController {
 		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(id);
 		model.addAttribute("collections", collections);
 		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
-						
+		
 		return "agent/edit";
 	}
 	
@@ -99,16 +98,11 @@ public class AgentController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveAgent(@Valid Agent a, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveAgent(@ModelAttribute @Valid Agent a, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			
-		} else {
-			agentService.save(a);
-		}
-		
-		// Flash attribute only required on error / otherwise load by id in GET
-		redirectAttributes.addFlashAttribute("a", a);
-						
+			return this.fillAgentEditorModel(a.getEntityId(), a, model);
+		} 
+		agentService.save(a);
 		return "redirect:/agents/" + a.getEntityId();
 	}
 	

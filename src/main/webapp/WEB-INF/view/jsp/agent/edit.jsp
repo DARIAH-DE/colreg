@@ -21,11 +21,11 @@
 <div id="main-content">
 	<h1>~Agent Editor</h1>
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
-	<sf:form method="POST" action="javascript:void(0);" modelAttribute="a" class="form-horizontal" autocomplete="off">
+	<sf:form method="POST" action="javascript:void(0);" modelAttribute="agent" class="form-horizontal" autocomplete="off">
 		
 		<div class="form-group">
 			<div class="col-sm-12">
-				<c:if test="${a.deleted}">
+				<c:if test="${agent.deleted}">
 					<div class="alert alert-warning" role="alert">
 						~ This agent is marked deleted and is as such only accessible through its permalink   
 					</div>
@@ -53,12 +53,13 @@
 				<div class="col-sm-4">
 					<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
 						<c:forEach items="${agentTypes}" var="type">
-							<option <c:if test="${a.agentTypeId==type.id}">selected="selected"</c:if> value="${type.id}" data-natural="${type.naturalPerson}">${type.label}</option>
-							<c:if test="${a.agentTypeId==type.id}">
+							<option <c:if test="${agent.agentTypeId==type.id}">selected="selected"</c:if> value="${type.id}" data-natural="${type.naturalPerson}">${type.label}</option>
+							<c:if test="${agent.agentTypeId==type.id}">
 								<c:set var="agentIsNatural" value="${type.naturalPerson}" scope="request" />
 							</c:if>
 						</c:forEach>
 					</select>
+					<sf:errors path="agentTypeId" />
 				</div>
 			</div>
 		</div>
@@ -67,13 +68,16 @@
 			<div class="editor-section-heading">
 				<h4>~Agent description</h4>
 			</div>
-			<div class="form-group">
+			<s:bind path="name">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label for="description" class="col-sm-3 control-label mandatory agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>>~Name</label>
 				<label for="description" class="col-sm-3 control-label mandatory agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>~Last Name</label>
 				<div class="col-sm-9">
 					<sf:input path="name" class="form-control" placeholder="~Agent name" />
+					<sf:errors path="*" cssClass="error" element="div" />
 				</div>
 			</div>
+			</s:bind>
 			<div class="form-group agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>
 				<label for="description" class="col-sm-3 control-label">~Fore Name</label>
 				<div class="col-sm-9">
@@ -199,15 +203,15 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Current description version</label>
 				<div class="col-sm-9">
-					<input type="text" value="${a.id}" class="form-control" readonly />
+					<input type="text" value="${agent.id}" class="form-control" readonly />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~External identifiers</label>
 				<div class="col-sm-9">
 					<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
-						<c:if test="${fn:length(a.providedIdentifier)>0}">
-							<c:forEach items="${a.providedIdentifier}" var="identifier" varStatus="status" >
+						<c:if test="${fn:length(agent.providedIdentifier)>0}">
+							<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >
 								<c:set var="currIdentifier" value="${identifier}" scope="request" />
 								<c:set var="currIndex" value="${status.index}" scope="request" />
 								<jsp:include page="incl/edit_identifier.jsp" />
@@ -230,7 +234,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<c:if test="${a.deleted==false}">
+					<c:if test="${agent.deleted==false}">
 						<c:choose>
 							<c:when test="${activeChildAgents==false && activeCollectionRelation==false}">
 								<div class="alert alert-warning alert-sm" role="alert">

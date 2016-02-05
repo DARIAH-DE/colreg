@@ -25,13 +25,12 @@ public class AgentValidator implements Validator {
 		 * 2. Cycles in hierarchy
 		 */
 		Agent agent = (Agent)obj;
-		
 		Agent compareAgent = agentService.findCurrentByName(agent.getName(), agent.getForeName());
 		
-		if (!compareAgent.getEntityId().equals(agent.getEntityId())) {
+		if (compareAgent!=null && !compareAgent.getEntityId().equals(agent.getEntityId())) {
 			errors.rejectValue("name", "nonuniqe.name");
 			errors.rejectValue("foreName", "nonuniqe.foreName");
 		}
 		
-	}	
+	}
 }
