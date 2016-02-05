@@ -6,31 +6,33 @@
 
 <tiles:importAttribute name="fluidLayout" />
 
-<s:url value="${c.id}" var="actionPath" />
+<s:url value="${collection.id}" var="actionPath" />
 
 <ul class="breadcrumb">
 	<li><a href='<s:url value="/" />' target="_self">~Collection Registry</a></li>
 	<li><a href='<s:url value="/collections/" />' target="_self">~Collections</a></li>
 	<li class="active">
 		<c:choose>
-			<c:when test="${c.id=='new'}">~New Collection</c:when>
-			<c:otherwise>Collection Id: ${c.entityId}</c:otherwise>
+			<c:when test="${collection.id=='new'}">~New Collection</c:when>
+			<c:otherwise>Collection Id: ${collection.entityId}</c:otherwise>
 		</c:choose>
 	</li>
 </ul>
 <div id="main-content">
 	<h1>~Collection Editor</h1>
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
-	<sf:form method="POST" action="javascript:void(0);" modelAttribute="c" class="form-horizontal" autocomplete="off">
+	<sf:form method="POST" action="javascript:void(0);" modelAttribute="collection" class="form-horizontal" autocomplete="off">
 
 		<div class="form-group">
 			<div class="col-sm-12">
-				<c:if test="${c.deleted}">
+				<c:if test="${collection.deleted}">
 					<div class="alert alert-warning" role="alert">
 						~ This collection is marked deleted and is as such only accessible through its permalink   
 					</div>
 				</c:if>
-				<div id="entity-notifications-area"></div>
+				<div id="entity-notifications-area">
+					<sf:errors path="*" />
+				</div>
 			</div>
 		</div>
 
@@ -61,8 +63,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${fn:length(c.localizedDescriptions)>0}">
-								<c:forEach items="${c.localizedDescriptions}" var="desc" varStatus="status" >
+							<c:if test="${fn:length(collection.localizedDescriptions)>0}">
+								<c:forEach items="${collection.localizedDescriptions}" var="desc" varStatus="status" >
 									<c:set var="currDesc" value="${desc}" scope="request" />
 									<c:set var="currIndex" value="${status.index}" scope="request" />
 									<jsp:include page="incl/edit_description.jsp" />
@@ -81,7 +83,7 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Collection Type</label>
 				<div class="col-sm-9">
-					<sf:input path="typeId" class="form-control" placeholder="~Collection Type" />
+					<sf:input path="collectionType" class="form-control" placeholder="~Collection Type" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -94,8 +96,8 @@
 				<label for="description" class="col-sm-3 control-label">~ Item Languages</label>
 				<div class="col-sm-9">
 					<ul id="lst-collection-item-languages" class="collection-editor-list">
-						<c:if test="${fn:length(c.itemLanguages)>0}">
-							<c:forEach items="${c.itemLanguages}" var="lang" varStatus="status" >
+						<c:if test="${fn:length(collection.itemLanguages)>0}">
+							<c:forEach items="${collection.itemLanguages}" var="lang" varStatus="status" >
 								<c:set var="currLang" value="${lang}" scope="request" />
 								<c:set var="currIndex" value="${status.index}" scope="request" />
 								<jsp:include page="incl/edit_itemlanguage.jsp" />
@@ -207,8 +209,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${fn:length(c.agentRelations)>0}">
-								<c:forEach items="${c.agentRelations}" var="agentRelation" varStatus="status" >
+							<c:if test="${fn:length(collection.agentRelations)>0}">
+								<c:forEach items="${collection.agentRelations}" var="agentRelation" varStatus="status" >
 									<c:set var="currAgentRelation" value="${agentRelation}" scope="request" />
 									<c:set var="currIndex" value="${status.index}" scope="request" />
 									<jsp:include page="incl/edit_agent.jsp" />
@@ -251,15 +253,15 @@
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~Current description version</label>
 				<div class="col-sm-9">
-					<input type="text" value="${c.id}" class="form-control" placeholder="~Identifier" readonly />
+					<input type="text" value="${collection.id}" class="form-control" placeholder="~Identifier" readonly />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">~External identifiers</label>
 				<div class="col-sm-9">
 					<ul id="lst-collection-provided-identifiers" class="collection-editor-list">
-						<c:if test="${fn:length(c.providedIdentifier)>0}">
-							<c:forEach items="${c.providedIdentifier}" var="identifier" varStatus="status" >
+						<c:if test="${fn:length(collection.providedIdentifier)>0}">
+							<c:forEach items="${collection.providedIdentifier}" var="identifier" varStatus="status" >
 								<c:set var="currIdentifier" value="${identifier}" scope="request" />
 								<c:set var="currIndex" value="${status.index}" scope="request" />
 								<jsp:include page="incl/edit_identifier.jsp" />
@@ -292,8 +294,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${fn:length(c.accessMethods)>0}">
-								<c:forEach items="${c.accessMethods}" var="method" varStatus="status" >
+							<c:if test="${fn:length(collection.accessMethods)>0}">
+								<c:forEach items="${collection.accessMethods}" var="method" varStatus="status" >
 									<c:set var="currMethod" value="${method}" scope="request" />
 									<c:set var="currIndex" value="${status.index}" scope="request" />
 									<jsp:include page="incl/edit_access.jsp" />
@@ -321,8 +323,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${fn:length(c.accrualMethods)>0}">
-								<c:forEach items="${c.accrualMethods}" var="method" varStatus="status" >
+							<c:if test="${fn:length(collection.accrualMethods)>0}">
+								<c:forEach items="${collection.accrualMethods}" var="method" varStatus="status" >
 									<c:set var="currMethod" value="${method}" scope="request" />
 									<c:set var="currIndex" value="${status.index}" scope="request" />
 									<jsp:include page="incl/edit_accrual.jsp" />
@@ -347,7 +349,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<c:if test="${c.deleted==false}">
+					<c:if test="${collection.deleted==false}">
 						<c:choose>
 							<c:when test="${activeChildCollections==false && isDraft==false}">
 								<div class="alert alert-warning alert-sm" role="alert">

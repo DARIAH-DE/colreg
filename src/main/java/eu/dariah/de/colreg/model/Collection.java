@@ -3,6 +3,11 @@ package eu.dariah.de.colreg.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -18,26 +23,32 @@ public class Collection extends VersionedEntityImpl {
 	private List<String> providedIdentifier;
 	
 	// Collection description
-	private List<LocalizedDescription> localizedDescriptions;
-	private String typeId;
-	private String webPage;
+	@Valid private List<LocalizedDescription> localizedDescriptions;
+	
+	@NotBlank private String collectionType;
+	
+	@URL private String webPage;
+	
 	private List<String> itemLanguages; // of the items
+	
 	private Long size;
 	
 	// Legal information
-	private List<CollectionAgentRelation> agentRelations;
+	@Valid private List<CollectionAgentRelation> agentRelations;
+	
 	private String collectionDescriptionRights;
 	private String accessRights;
 	private String itemRights;
 	
 	// Context	  
 	private String parentCollectionId;
+	
 	private String associatedProject;
 	private String provenanceInfo;
 	
 	// Access and accrual
-	private List<Access> accessMethods;
-	private List<Accrual> accrualMethods;
+	@Valid private List<Access> accessMethods;
+	@Valid private List<Accrual> accrualMethods;
 	
 	private boolean deleted;
 	private String draftUserId;
@@ -48,8 +59,8 @@ public class Collection extends VersionedEntityImpl {
 	public List<LocalizedDescription> getLocalizedDescriptions() { return localizedDescriptions; }
 	public void setLocalizedDescriptions(List<LocalizedDescription> localizedDescriptions) { this.localizedDescriptions = localizedDescriptions; }
 	
-	public String getTypeId() { return typeId; }
-	public void setTypeId(String typeId) { this.typeId = typeId; }
+	public String getCollectionType() { return collectionType; }
+	public void setCollectionType(String collectionType) { this.collectionType = collectionType; }
 	
 	public String getWebPage() { return webPage; }
 	public void setWebPage(String webPage) { this.webPage = webPage; }

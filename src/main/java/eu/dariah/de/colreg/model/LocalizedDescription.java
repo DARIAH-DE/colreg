@@ -1,7 +1,14 @@
 package eu.dariah.de.colreg.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class LocalizedDescription {
+	@NotBlank
 	private String languageId;
+	
+	@NotBlank
 	private String title;
 	private String description;
 	private String audience;
@@ -26,4 +33,14 @@ public class LocalizedDescription {
 	
 	public String getAcronym() { return acronym; }
 	public void setAcronym(String acronym) { this.acronym = acronym; }
+	
+	@JsonIgnore
+	public boolean isEmpty() {
+		return (languageId==null || languageId.trim().isEmpty()) &&
+				(title==null || title.trim().isEmpty()) &&
+				(description==null || description.trim().isEmpty()) &&
+				(audience==null || audience.trim().isEmpty()) &&
+				(provenance==null || provenance.trim().isEmpty()) &&
+				(acronym==null || acronym.trim().isEmpty());
+	}
 }

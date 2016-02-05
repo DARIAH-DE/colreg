@@ -161,11 +161,16 @@ public abstract class BaseDaoImpl<T extends Identifiable> extends DaoImpl<T> imp
 
 	@Override
 	public <S extends T> S save(S entity) {
-		if (entity.getId()!=null && entity.getId().isEmpty()) {
-			entity.setId(null);
+		try {
+			if (entity.getId()!=null && entity.getId().isEmpty()) {
+				entity.setId(null);
+			}
+			mongoTemplate.save(entity, this.getCollectionName());
+			return entity;
+		} catch (Exception e) {
+			logger.error("Error saving object", e);
+			return entity;
 		}
-		mongoTemplate.save(entity, this.getCollectionName());
-		return entity;
 	}
 
 	/*@Override

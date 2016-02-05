@@ -4,28 +4,25 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
-import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
-import eu.dariah.de.colreg.model.CollectionAgentRelation;
-import eu.dariah.de.colreg.model.vocabulary.AccessType;
-import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
-import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
+import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
@@ -36,6 +33,13 @@ public class CollectionController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
 	
+	@Autowired private CollectionValidator validator;
+	
+	@InitBinder
+	protected void initBinder(final WebDataBinder binder) {
+	    binder.setValidator(validator);
+	}	
+	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
 		model.addAttribute("collections", collectionService.findAllCurrent());
@@ -45,18 +49,37 @@ public class CollectionController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editCollection(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
-		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-		
 		Collection c;
-		if (inputFlashMap!=null && inputFlashMap.containsKey("c")) {
-			c = (Collection)inputFlashMap.get("c");
-		} else if (id.toLowerCase().equals("new")) {
+		 if (id.toLowerCase().equals("new")) {
 			c = collectionService.createCollection();
 		} else {
 			c = collectionService.findCurrentByCollectionId(id, true);
-			collectionService.initializeAgentRelations(c);
+			if (c!=null) {
+				collectionService.initializeAgentRelations(c);
+			}
 		}
-
+		 
+		if (c==null) {
+			// Should be 404
+			return "redirect:/collections/";
+		}
+		 
+		return fillCollectionEditorModel(id, c, model);
+	}
+	
+	@RequestMapping(value="{id}", method=RequestMethod.POST)
+	public String saveCollection(@ModelAttribute @Valid Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		if (bindingResult.hasErrors()) {
+			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
+		}
+		
+		collectionService.save(collection);
+		return "redirect:/collections/" + collection.getEntityId();
+	}
+	
+	private String fillCollectionEditorModel(String id, Collection c, Model model) {
+		model.addAttribute("collection", c);
+		
 		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
@@ -71,26 +94,7 @@ public class CollectionController {
 		model.addAttribute("activeChildCollections", childCollections!=null && childCollections.size()>0);
 		model.addAttribute("isDraft", c.getDraftUserId()==null || c.getDraftUserId().equals(""));
 		
-		model.addAttribute("c", c);
-		
 		return "collection/edit";
-	}
-	
-	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveCollection(@Valid Collection c, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
-		Collection cSaved = collectionService.findCurrentByCollectionId(c.getEntityId());
-		if (cSaved==null) {
-			// TODO: Actual user ids
-			c.setDraftUserId("system_user_id");
-		} else {
-			c.setDraftUserId(cSaved.getDraftUserId());
-		}
-		collectionService.save(c);
-		
-		// Flash attribute only required on error / otherwise load by id in GET
-		redirectAttributes.addFlashAttribute("c", c);
-		
-		return "redirect:/collections/" + c.getEntityId();
 	}
 	
 	@RequestMapping(value="{id}/delete", method=RequestMethod.POST)

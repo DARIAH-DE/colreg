@@ -7,7 +7,7 @@ public class Access {
 	private String uri;
 	private List<String> schemeIds;
 	private String description;
-	
+	private String oaiSet;
 	
 	public String getType() { return type; }
 	public void setType(String type) { this.type = type; }
@@ -20,4 +20,7 @@ public class Access {
 	
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
+	
+	public String getOaiSet() { return oaiSet; }
+	public void setOaiSet(String oaiSet) { this.oaiSet = oaiSet; }
 }

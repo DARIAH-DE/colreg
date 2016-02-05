@@ -2,12 +2,16 @@ package eu.dariah.de.colreg.model;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CollectionAgentRelation {
-	private List<String> typeIds;
+	
+	@NotBlank private List<String> typeIds;
 	private String annotation;
-	private String agentId;
+	@NotBlank private String agentId;
+	
 	@JsonIgnore private Agent agent;
 
 	

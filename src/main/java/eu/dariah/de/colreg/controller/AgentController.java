@@ -43,7 +43,7 @@ public class AgentController {
 	
 	@InitBinder
 	protected void initBinder(final WebDataBinder binder) {
-	    binder.addValidators(validator);
+		binder.setValidator(validator);
 	}	
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
@@ -98,12 +98,12 @@ public class AgentController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveAgent(@ModelAttribute @Valid Agent a, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveAgent(@ModelAttribute @Valid Agent agent, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			return this.fillAgentEditorModel(a.getEntityId(), a, model);
+			return this.fillAgentEditorModel(agent.getEntityId(), agent, model);
 		} 
-		agentService.save(a);
-		return "redirect:/agents/" + a.getEntityId();
+		agentService.save(agent);
+		return "redirect:/agents/" + agent.getEntityId();
 	}
 	
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)

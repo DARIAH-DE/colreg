@@ -571,3 +571,10 @@ label.control-label.mandatory {
     background-repeat: repeat-x;
     border-color: #dcdcdc;
 }
+
+.validation-error {
+	clear: both;
+	color: #a94442;
+	margin-bottom: 8px;
+    margin-top: -3px;
+}

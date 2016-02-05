@@ -3,34 +3,34 @@ package eu.dariah.de.colreg.model.validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.service.AgentService;
 
 @Component
-public class AgentValidator implements Validator {
+public class AgentValidator extends BaseValidator<Agent> {
 
 	@Autowired private AgentService agentService;
 	
-	@Override
-	public boolean supports(Class<?> arg0) {
-		return Agent.class.equals(arg0);
+	public AgentValidator() {
+		super(Agent.class);
 	}
 
+
 	@Override
-	public void validate(Object obj, Errors errors) {
+	public void preprocess(Agent agent) {}
+
+
+	@Override
+	public void validate(Agent agent, Errors errors) {
 		/*
 		 * 1. Unique names
 		 * 2. Cycles in hierarchy
 		 */
-		Agent agent = (Agent)obj;
 		Agent compareAgent = agentService.findCurrentByName(agent.getName(), agent.getForeName());
 		
 		if (compareAgent!=null && !compareAgent.getEntityId().equals(agent.getEntityId())) {
 			errors.rejectValue("name", "nonuniqe.name");
 			errors.rejectValue("foreName", "nonuniqe.foreName");
 		}
-		
 	}
 }
