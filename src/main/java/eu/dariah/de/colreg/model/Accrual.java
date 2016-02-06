@@ -1,8 +1,10 @@
 package eu.dariah.de.colreg.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Accrual {
-	private String accrualMethod;
-	private String accrualPolicy;
+	@NotBlank private String accrualMethod;
+	@NotBlank private String accrualPolicy;
 	private String description;
 	
 	

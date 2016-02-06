@@ -336,6 +336,10 @@ body .modal.modal450 {
 	cursor: pointer;
 }
 
+.collection-editor-table tr.list.has-error {
+	background-color: #F2DEDE;
+}
+
 .collection-editor-table tr td, .collection-editor-table th {
     border: 1px solid #ddd;
     text-align: left;
@@ -356,6 +360,10 @@ body .modal.modal450 {
 }
 
 .collection-editor-table tr.list:hover {background-color: #ddd;}
+
+.collection-editor-table tr.list.has-error:hover {
+	background-color: #F2DEDE;
+}
 
 .collection-editor-table th {
     /*padding-top: 8px;
@@ -577,4 +585,8 @@ label.control-label.mandatory {
 	color: #a94442;
 	margin-bottom: 8px;
     margin-top: -3px;
+}
+
+.container-error {
+	color: #a94442;
 }

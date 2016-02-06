@@ -21,7 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import eu.dariah.de.colreg.model.Access;
+import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -35,10 +40,10 @@ public class CollectionController {
 	
 	@Autowired private CollectionValidator validator;
 	
-	@InitBinder
+	/*@InitBinder
 	protected void initBinder(final WebDataBinder binder) {
 	    binder.setValidator(validator);
-	}	
+	}*/	
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -68,7 +73,8 @@ public class CollectionController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveCollection(@ModelAttribute @Valid Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveCollection(@ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		validator.validate(collection, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
 		}
@@ -119,12 +125,22 @@ public class CollectionController {
 	
 	@RequestMapping(method=GET, value={"/includes/editAccess"})
 	public String getEditAccessForm(Model model) {
+		Access a = new Access();
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currMethod", a);
+		model.addAttribute("accessMethods[0]", a);
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
 		return "collection/edit/incl/edit_access";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAccrual"})
 	public String getEditAccrualForm(Model model) {
+		Accrual a = new Accrual();
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currMethod", a);
+		model.addAttribute("accrualMethods[0]", a);
+		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
+		
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
 		return "collection/edit/incl/edit_accrual";
@@ -132,27 +148,50 @@ public class CollectionController {
 	
 	@RequestMapping(method=GET, value={"/includes/editAgent"})
 	public String getEditAgentForm(Model model) {
+		CollectionAgentRelation ar = new CollectionAgentRelation();
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currAgentRelation", ar);
+		model.addAttribute("agentRelations[0]", ar);
+				
 		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
 		return "collection/edit/incl/edit_agent";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editDescription"})
-	public String getEditDescriptionForm() {
+	public String getEditDescriptionForm(Model model) {
+		LocalizedDescription desc = new LocalizedDescription();
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currDesc", desc);
+		model.addAttribute("localizedDescriptions[0]", desc);
+		
 		return "collection/edit/incl/edit_description";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editItemLanguage"})
-	public String getEditItemLanguageForm() {
+	public String getEditItemLanguageForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currLang", "");
+		model.addAttribute("itemLanguages[0]", "");
+		
 		return "collection/edit/incl/edit_itemlanguage";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editProvidedIdentifier"})
-	public String getEditProvidedIdentifierForm() {
+	public String getEditProvidedIdentifierForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currIdentifier", "");
+		model.addAttribute("providedIdentifier[0]", "");
 		return "collection/edit/incl/edit_identifier";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editEncodingScheme"})
-	public String getEditEncodingSchemeForm() {
+	public String getEditEncodingSchemeForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("subIndex", 0);
+		model.addAttribute("currSchemeId", "");
+		model.addAttribute("accessMethods[0]", new Access());
+		model.addAttribute("accessMethods[0].schemeIds[0]", "");
+		
 		return "collection/edit/incl/edit_encodingscheme";
 	}
 }

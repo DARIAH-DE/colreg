@@ -115,4 +115,9 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public EncodingScheme findEncodingSchemeByName(String id) {
 		return encodingSchemeDao.findOne(Query.query(Criteria.where("name").is(id)));
 	}
+
+	@Override
+	public AccessType findAccessTypeById(String id) {
+		return accessTypeDao.findById(id);
+	}
 }

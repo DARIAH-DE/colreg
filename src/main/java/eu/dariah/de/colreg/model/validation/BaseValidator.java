@@ -27,9 +27,9 @@ public abstract class BaseValidator<T extends BaseIdentifiable> implements Valid
 			T object = clazz.cast(target);
 			this.preprocess(object);
 			validator.validate(target, errors);
-			this.validate(clazz.cast(target), errors);
+			this.innerValidate(clazz.cast(target), errors);
 		}
 	}
 	
-	public abstract void validate (T object, Errors errors);
+	public abstract void innerValidate (T object, Errors errors);
 }

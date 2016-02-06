@@ -166,6 +166,7 @@ public abstract class BaseDaoImpl<T extends Identifiable> extends DaoImpl<T> imp
 				entity.setId(null);
 			}
 			mongoTemplate.save(entity, this.getCollectionName());
+			logger.debug("Saved {}:{}", this.getCollectionName(), entity.getId());
 			return entity;
 		} catch (Exception e) {
 			logger.error("Error saving object", e);

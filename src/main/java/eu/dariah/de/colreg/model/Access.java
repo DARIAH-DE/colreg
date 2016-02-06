@@ -2,9 +2,12 @@ package eu.dariah.de.colreg.model;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Access {
-	private String type;
-	private String uri;
+	@NotBlank private String type;
+	@NotBlank private String uri;
 	private List<String> schemeIds;
 	private String description;
 	private String oaiSet;

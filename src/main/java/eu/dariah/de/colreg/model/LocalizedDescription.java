@@ -5,11 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class LocalizedDescription {
-	@NotBlank
-	private String languageId;
-	
-	@NotBlank
-	private String title;
+	@NotBlank private String languageId;
+	@NotBlank private String title;
 	private String description;
 	private String audience;
 	private String provenance;

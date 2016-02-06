@@ -21,7 +21,7 @@ public class AgentValidator extends BaseValidator<Agent> {
 
 
 	@Override
-	public void validate(Agent agent, Errors errors) {
+	public void innerValidate(Agent agent, Errors errors) {
 		/*
 		 * 1. Unique names
 		 * 2. Cycles in hierarchy
