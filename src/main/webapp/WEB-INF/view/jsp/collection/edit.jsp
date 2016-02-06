@@ -560,53 +560,39 @@
 			
 			<!-- Entity id -->
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Collection Permalink/Identifier</label>
+				<label for="description" class="col-sm-3 control-label">~Permanent collection identifier</label>
 				<div class="col-sm-9">
 					<label class="control-label">
 						<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
 					</label>
 				</div>
 			</div>
-
-			<!-- Entity timestamp -->
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Description creation timestamp</label>
-				<div class="col-sm-9">
-					<label class="control-label">${collection.entityTimestamp}</label>
-				</div>
-			</div>
-
-			<!-- Entity creator -->
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Description creator</label>
-				<div class="col-sm-9">
-					<label class="control-label">${collection.entityCreator}</label>
-				</div>
-			</div>
 			
 			<!-- Version id -->
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Current version identifier ${contextPath}</label>
+				<label for="description" class="col-sm-3 control-label">~Permanent version identifier ${contextPath}</label>
 				<div class="col-sm-9">
 					<label class="control-label">
-						<a href="<s:url value="/collections/${collection.entityId}/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}/${collection.id}" /></a>
+						<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
 					</label>
 				</div>
 			</div>
-			
+
 			<!-- Version created -->
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Version timestamp</label>
+				<label for="description" class="col-sm-3 control-label">~This version</label>
 				<div class="col-sm-9">
-					<label class="control-label">${collection.versionTimestamp}</label>
+					<label class="control-label">${collection.versionTimestamp}</label><br />
+					<label class="control-label">${collection.versionCreator}</label>
 				</div>
 			</div>
-			
-			<!-- Version creator -->
+
+			<!-- Entity timestamp -->
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Version creator</label>
+				<label for="description" class="col-sm-3 control-label">~Created</label>
 				<div class="col-sm-9">
-					<label class="control-label">${collection.versionCreator}</label>
+					<label class="control-label">${collection.entityTimestamp}</label><br />
+					<label class="control-label">${collection.entityCreator}</label>
 				</div>
 			</div>
 			
