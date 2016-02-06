@@ -90,6 +90,7 @@ public class CollectionController {
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
+		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
 		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
@@ -176,6 +177,33 @@ public class CollectionController {
 		return "collection/edit/incl/edit_itemlanguage";
 	}
 	
+	@RequestMapping(method=GET, value={"/includes/editSpatial"})
+	public String getEditSpatialForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currSpat", "");
+		model.addAttribute("spatials[0]", "");
+		
+		return "collection/edit/incl/edit_spatial";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editSubject"})
+	public String getEditSubjectForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currSubj", "");
+		model.addAttribute("subjects[0]", "");
+		
+		return "collection/edit/incl/edit_subject";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editTemporal"})
+	public String getEditTemporalForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currTemp", "");
+		model.addAttribute("temporals[0]", "");
+		
+		return "collection/edit/incl/edit_temporal";
+	}
+	
 	@RequestMapping(method=GET, value={"/includes/editProvidedIdentifier"})
 	public String getEditProvidedIdentifierForm(Model model) {
 		model.addAttribute("currIndex", 0);
@@ -193,5 +221,23 @@ public class CollectionController {
 		model.addAttribute("accessMethods[0].schemeIds[0]", "");
 		
 		return "collection/edit/incl/edit_encodingscheme";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editAudience"})
+	public String getAudienceForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currAudi", "");
+		model.addAttribute("audiences[0]", "");
+		
+		return "collection/edit/incl/edit_audience";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editLocation"})
+	public String getLocationForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currLoc", "");
+		model.addAttribute("locations[0]", "");
+		
+		return "collection/edit/incl/edit_location";
 	}
 }

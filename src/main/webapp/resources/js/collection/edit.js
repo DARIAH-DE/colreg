@@ -87,6 +87,26 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		listSelector: "#lst-collection-provided-identifiers",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editProvidedIdentifier",
 	});
+	this.lists["spatials"] = new CollectionEditorList({
+		listSelector: "#lst-collection-spatials",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editSpatial",
+	});
+	this.lists["temporals"] = new CollectionEditorList({
+		listSelector: "#lst-collection-temporals",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editTemporal",
+	});
+	this.lists["subjects"] = new CollectionEditorList({
+		listSelector: "#lst-collection-subjects",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editSubject",
+	});
+	this.lists["audiences"] = new CollectionEditorList({
+		listSelector: "#lst-collection-audiences",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAudience",
+	});
+	this.lists["locations"] = new CollectionEditorList({
+		listSelector: "#lst-collection-locations",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editLocation",
+	});
 };
 
 CollectionEditor.prototype.registerLanguageTypeahead = function(element) {

@@ -72,6 +72,11 @@
 	<definition name="collection/edit/incl/edit_encodingscheme" template="/WEB-INF/view/jsp/collection/incl/edit_encodingscheme.jsp" />
 	<definition name="collection/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/collection/incl/edit_identifier.jsp" />
 
+	<definition name="collection/edit/incl/edit_spatial" template="/WEB-INF/view/jsp/collection/incl/edit_spatial.jsp" />
+	<definition name="collection/edit/incl/edit_subject" template="/WEB-INF/view/jsp/collection/incl/edit_subject.jsp" />
+	<definition name="collection/edit/incl/edit_temporal" template="/WEB-INF/view/jsp/collection/incl/edit_temporal.jsp" />
+	<definition name="collection/edit/incl/edit_audience" template="/WEB-INF/view/jsp/collection/incl/edit_audience.jsp" />
+	<definition name="collection/edit/incl/edit_location" template="/WEB-INF/view/jsp/collection/incl/edit_location.jsp" />
 
 	<!-- Agent -->
 	<definition name="agent/list" extends="template_tables">

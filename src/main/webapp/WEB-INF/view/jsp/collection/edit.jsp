@@ -195,18 +195,6 @@
 				<h4>~Content &amp; item related</h4>
 			</div>
 			
-			<!-- Subject* -->
-			
-			<!-- Temporal* -->
-			
-			<!-- Spacial* -->
-			
-			<!-- Collection Created* -->
-			
-			<!-- Items Created* -->
-			
-			<!-- Item type* -->
-			
 			<!-- Item language* -->
 			<s:bind path="itemLanguages*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
@@ -231,6 +219,121 @@
 				</div>
 			</s:bind>
 			
+			<!-- Subject* -->
+			<s:bind path="subjects*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="description" class="col-sm-3 control-label">~ Subjects:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-subjects" class="collection-editor-list">
+							<c:if test="${fn:length(collection.subjects)>0}">
+								<c:forEach items="${collection.subjects}" var="subj" varStatus="status" >
+									<c:set var="currSubj" value="${subj}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_subject.jsp" />
+								</c:forEach>
+								<c:remove var="currSubj" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['subjects'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add subject</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Temporal* -->
+			<s:bind path="temporals*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="description" class="col-sm-3 control-label">~ Temporals:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-temporals" class="collection-editor-list">
+							<c:if test="${fn:length(collection.temporals)>0}">
+								<c:forEach items="${collection.temporals}" var="temp" varStatus="status" >
+									<c:set var="currTemp" value="${temp}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_temporal.jsp" />
+								</c:forEach>
+								<c:remove var="currTemp" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['temporals'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add temporal</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Spatial* -->
+			<s:bind path="spatials*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="description" class="col-sm-3 control-label">~ Spatials:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-spatials" class="collection-editor-list">
+							<c:if test="${fn:length(collection.spatials)>0}">
+								<c:forEach items="${collection.spatials}" var="spat" varStatus="status" >
+									<c:set var="currSpat" value="${spat}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_spatial.jsp" />
+								</c:forEach>
+								<c:remove var="currSpat" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['spatials'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add spatial</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
+
+			<!-- Collection Created* -->
+			<s:bind path="collectionCreated">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="collectionCreated" class="col-sm-3 control-label">~Collection created</label>
+					<div class="col-sm-9">
+						<sf:input path="collectionCreated" class="form-control" placeholder="~Collection created" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionCreated" />
+				</div>
+			</s:bind>
+			
+			<!-- Items Created* -->
+			<s:bind path="itemsCreated">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="itemsCreated" class="col-sm-3 control-label">~Items created</label>
+					<div class="col-sm-9">
+						<sf:input path="itemsCreated" class="form-control" placeholder="~Items created" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemsCreated" />
+				</div>
+			</s:bind>
+			
+			<!-- Item type* -->
+			<s:bind path="itemTypeIds">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="itemTypeIds" class="col-sm-3 control-label">~Item types</label>
+					<div class="col-sm-5">
+						<select class="form-control" id="itemTypeIds" name="itemTypeIds" size="12" multiple="multiple" autocomplete="off">
+						<c:forEach items="${itemTypes}" var="type">
+							<c:set var="contains" value="false" />
+							<c:forEach items="${collection.itemTypeIds}" var="typeId">
+								<c:if test="${typeId==type.id}">
+									<c:set var="contains" value="true" />
+								</c:if>
+							</c:forEach>
+							<option <c:if test="${contains}">selected="selected"</c:if> value="${type.id}">${type.label}</option>
+						</c:forEach>
+					</select>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemTypeIds" />
+				</div>
+			</s:bind>
+			
 			<!-- Size -->
 			<s:bind path="size">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
@@ -251,6 +354,28 @@
 			</div>
 			
 			<!-- Audience* -->
+			<s:bind path="audiences*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="audiences" class="col-sm-3 control-label">~ Audiences:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-audiences" class="collection-editor-list">
+							<c:if test="${fn:length(collection.audiences)>0}">
+								<c:forEach items="${collection.audiences}" var="audi" varStatus="status" >
+									<c:set var="currAudi" value="${audi}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_audience.jsp" />
+								</c:forEach>
+								<c:remove var="currAudi" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['audiences'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add audience</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
 			
 			<!-- Provenance* -->
 			<s:bind path="provenanceInfo">
@@ -264,6 +389,28 @@
 			</s:bind>
 			
 			<!-- Location* -->
+			<s:bind path="locations*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="locations" class="col-sm-3 control-label">~ Locations:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-locations" class="collection-editor-list">
+							<c:if test="${fn:length(collection.locations)>0}">
+								<c:forEach items="${collection.locations}" var="loc" varStatus="status" >
+									<c:set var="currLoc" value="${loc}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_location.jsp" />
+								</c:forEach>
+								<c:remove var="currLoc" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['locations'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add location</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
 			
 			<!-- Is part of -->
 			<s:bind path="parentCollectionId">

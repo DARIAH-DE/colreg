@@ -14,6 +14,7 @@ import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentRelationTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.EncodingSchemeDao;
+import eu.dariah.de.colreg.dao.vocabulary.ItemTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
@@ -21,6 +22,7 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
+import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
 @Service
@@ -33,6 +35,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private AgentTypeDao agentTypeDao;
 	@Autowired private AgentRelationTypeDao agentRelationTypeDao;
 	@Autowired private EncodingSchemeDao encodingSchemeDao;
+	@Autowired private ItemTypeDao itemTypeDao;
 	
 	@Override
 	public List<Language> queryLanguages(String query) {
@@ -119,5 +122,20 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Override
 	public AccessType findAccessTypeById(String id) {
 		return accessTypeDao.findById(id);
+	}
+
+	@Override
+	public List<ItemType> findAllItemTypes() {
+		return itemTypeDao.findAll();
+	}
+
+	@Override
+	public ItemType findItemTypeById(String id) {
+		return itemTypeDao.findById(id);
+	}
+
+	@Override
+	public ItemType findItemTypeByIdentifier(String id) {
+		return itemTypeDao.findOne(Query.query(Criteria.where("identifier").is(id)));
 	}
 }

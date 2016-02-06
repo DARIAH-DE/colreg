@@ -8,6 +8,7 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
+import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
 public interface VocabularyService {
@@ -20,6 +21,10 @@ public interface VocabularyService {
 	public List<AgentType> findAllAgentTypes();
 	public List<AgentRelationType> findAllAgentRelationTypes();
 	public List<EncodingScheme> findAllEncodingSchemes();
+	public List<ItemType> findAllItemTypes();
+	
+	public ItemType findItemTypeById(String id);
+	public ItemType findItemTypeByIdentifier(String id);
 	
 	public Language findLanguageById(String id);
 	public Language findLanguageByCode(String id);

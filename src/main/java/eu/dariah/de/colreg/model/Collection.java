@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
+import eu.dariah.de.colreg.model.vocabulary.ItemType;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
@@ -28,8 +30,21 @@ public class Collection extends VersionedEntityImpl {
 	@NotBlank private String collectionType;
 	
 	@URL private String webPage;
+	@Email private String eMail;
 	
-	private List<String> itemLanguages; // of the items
+	private List<String> audiences;
+	private List<String> locations;
+	
+	private List<String> itemLanguages;
+	
+	private List<String> subjects;
+	private List<String> spatials;
+	private List<String> temporals;
+	
+	private List<String> itemTypeIds;
+	
+	private String collectionCreated;
+	private String itemsCreated;
 	
 	private Long size;
 	
@@ -64,6 +79,9 @@ public class Collection extends VersionedEntityImpl {
 	
 	public String getWebPage() { return webPage; }
 	public void setWebPage(String webPage) { this.webPage = webPage; }
+	
+	public String getEMail() { return eMail; }
+	public void setEMail(String eMail) { this.eMail = eMail; }
 	
 	public List<String> getItemLanguages() { return itemLanguages; }
 	public void setItemLanguages(List<String> itemLanguages) { this.itemLanguages = itemLanguages; }
@@ -103,4 +121,28 @@ public class Collection extends VersionedEntityImpl {
 	
 	public String getDraftUserId() { return draftUserId; }
 	public void setDraftUserId(String draftUserId) { this.draftUserId = draftUserId; }
+	
+	public List<String> getSubjects() {	return subjects; }
+	public void setSubjects(List<String> subjects) { this.subjects = subjects; }
+	
+	public List<String> getSpatials() { return spatials; }
+	public void setSpatials(List<String> spatials) { this.spatials = spatials; }
+	
+	public List<String> getTemporals() { return temporals; }
+	public void setTemporals(List<String> temporals) { this.temporals = temporals; }
+	
+	public String getCollectionCreated() { return collectionCreated; }
+	public void setCollectionCreated(String collectionCreated) { this.collectionCreated = collectionCreated; }
+	
+	public String getItemsCreated() { return itemsCreated; }
+	public void setItemsCreated(String itemsCreated) { this.itemsCreated = itemsCreated; }
+	
+	public List<String> getItemTypeIds() { return itemTypeIds; }
+	public void setItemTypeIds(List<String> itemTypeIds) { this.itemTypeIds = itemTypeIds; }
+	
+	public List<String> getAudiences() { return audiences; }
+	public void setAudiences(List<String> audiences) { this.audiences = audiences; }
+	
+	public List<String> getLocations() { return locations; }
+	public void setLocations(List<String> locations) { this.locations = locations; }
 }
