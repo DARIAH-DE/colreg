@@ -79,7 +79,8 @@ public class CollectionController {
 			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
 		}
 		
-		collectionService.save(collection);
+		// TODO UserId
+		collectionService.save(collection, "default user");
 		return "redirect:/collections/" + collection.getEntityId();
 	}
 	
@@ -112,7 +113,8 @@ public class CollectionController {
 		if (children==null || children.size()==0) {
 			Collection c = collectionService.findCurrentByCollectionId(id);
 			c.setDeleted(true);
-			collectionService.save(c);
+			// TODO UserId
+			collectionService.save(c, "default user");
 			result.setSuccess(true);
 		}
 		

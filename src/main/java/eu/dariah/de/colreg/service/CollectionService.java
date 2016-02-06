@@ -6,7 +6,7 @@ import eu.dariah.de.colreg.model.Collection;
 
 public interface CollectionService {
 	public Collection createCollection();
-	public void save(Collection c);
+	//public void save(Collection c);
 	public Collection findCurrentByCollectionId(String id);
 	public List<Collection> findAllCurrent();
 	public void initializeAgentRelations(Collection c);
@@ -14,4 +14,5 @@ public interface CollectionService {
 	public List<Collection> findCurrentByParentCollectionId(String id);
 	public List<Collection> findCurrentByRelatedAgentId(String id);
 	public Collection findCurrentByCollectionId(String id, boolean includeDeleted);
+	public void save(Collection c, String userId);
 }

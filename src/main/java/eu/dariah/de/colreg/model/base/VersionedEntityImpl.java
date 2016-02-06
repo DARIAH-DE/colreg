@@ -8,8 +8,12 @@ public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	
 	@Indexed private String entityId;		// Persistent identifier of the entity (id is for the version) 
 	private String succeedingVersionId;		// The versionId is actually the id of an object 
-	private DateTime created;	
-	private String creator;
+	
+	private DateTime entityTimestamp;	
+	private String entityCreator;
+	
+	private DateTime versionTimestamp;	
+	private String versionCreator;
 	
 	
 	public String getEntityId() { return entityId; }
@@ -18,9 +22,15 @@ public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	public String getSucceedingVersionId() { return succeedingVersionId; }
 	public void setSucceedingVersionId(String succeedingVersionId) { this.succeedingVersionId = succeedingVersionId; }
 	
-	public DateTime getCreated() { return created; }
-	public void setCreated(DateTime created) { this.created = created; }
+	public DateTime getEntityTimestamp() { return entityTimestamp; }
+	public void setEntityTimestamp(DateTime entityTimestamp) { this.entityTimestamp = entityTimestamp; }
 	
-	public String getCreator() { return creator; }
-	public void setCreator(String creator) { this.creator = creator; }
+	public String getEntityCreator() { return entityCreator; }
+	public void setEntityCreator(String entityCreator) { this.entityCreator = entityCreator; }
+	
+	public DateTime getVersionTimestamp() { return versionTimestamp; }
+	public void setVersionTimestamp(DateTime versionTimestamp) { this.versionTimestamp = versionTimestamp; }
+	
+	public String getVersionCreator() { return versionCreator; }
+	public void setVersionCreator(String versionCreator) { this.versionCreator = versionCreator; }	
 }

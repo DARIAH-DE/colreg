@@ -15,7 +15,6 @@ public abstract class VersionedEntityDaoImpl<T extends VersionedEntityImpl> exte
 	
 	@Override
 	public <S extends T> S save(S entity) {
-		entity.setCreated(DateTime.now());
 		return super.save(entity);
 	}
 	

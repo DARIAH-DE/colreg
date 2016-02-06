@@ -353,65 +353,6 @@
 				<h4>~Contextual</h4>
 			</div>
 			
-			<!-- Audience* -->
-			<s:bind path="audiences*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="audiences" class="col-sm-3 control-label">~ Audiences:</label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-audiences" class="collection-editor-list">
-							<c:if test="${fn:length(collection.audiences)>0}">
-								<c:forEach items="${collection.audiences}" var="audi" varStatus="status" >
-									<c:set var="currAudi" value="${audi}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_audience.jsp" />
-								</c:forEach>
-								<c:remove var="currAudi" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['audiences'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add audience</button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</s:bind>
-			
-			<!-- Provenance* -->
-			<s:bind path="provenanceInfo">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="description" class="col-sm-3 control-label">~Provenance information</label>
-					<div class="col-sm-9">
-						<sf:input path="provenanceInfo" class="form-control" placeholder="~Provenance information" />
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="provenanceInfo" />
-				</div>
-			</s:bind>
-			
-			<!-- Location* -->
-			<s:bind path="locations*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="locations" class="col-sm-3 control-label">~ Locations:</label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-locations" class="collection-editor-list">
-							<c:if test="${fn:length(collection.locations)>0}">
-								<c:forEach items="${collection.locations}" var="loc" varStatus="status" >
-									<c:set var="currLoc" value="${loc}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_location.jsp" />
-								</c:forEach>
-								<c:remove var="currLoc" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['locations'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add location</button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</s:bind>
-			
 			<!-- Is part of -->
 			<s:bind path="parentCollectionId">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
@@ -460,19 +401,6 @@
 				</div>
 			</div>
 			
-			<!-- Associated project -->
-			<s:bind path="associatedProject">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<div class="form-group">
-						<label for="description" class="col-sm-3 control-label">~Associated project</label>
-						<div class="col-sm-9">
-							<sf:input path="associatedProject" class="form-control" placeholder="~Associated project" />
-						</div>
-						<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="associatedProject" />
-					</div>
-				</div>
-			</s:bind>
-			
 			<!-- Provided identifiers -->
 			<s:bind path="providedIdentifier*">
 				<div class="form-group">
@@ -495,6 +423,78 @@
 						</ul>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="providedIdentifier" />
+				</div>
+			</s:bind>
+			
+			<!-- Location* -->
+			<s:bind path="locations*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="locations" class="col-sm-3 control-label">~ Locations:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-locations" class="collection-editor-list">
+							<c:if test="${fn:length(collection.locations)>0}">
+								<c:forEach items="${collection.locations}" var="loc" varStatus="status" >
+									<c:set var="currLoc" value="${loc}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_location.jsp" />
+								</c:forEach>
+								<c:remove var="currLoc" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['locations'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add location</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Audience* -->
+			<s:bind path="audiences*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="audiences" class="col-sm-3 control-label">~ Audiences:</label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-audiences" class="collection-editor-list">
+							<c:if test="${fn:length(collection.audiences)>0}">
+								<c:forEach items="${collection.audiences}" var="audi" varStatus="status" >
+									<c:set var="currAudi" value="${audi}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_audience.jsp" />
+								</c:forEach>
+								<c:remove var="currAudi" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['audiences'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add audience</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Provenance* -->
+			<s:bind path="provenanceInfo">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="description" class="col-sm-3 control-label">~Provenance information</label>
+					<div class="col-sm-9">
+						<sf:input path="provenanceInfo" class="form-control" placeholder="~Provenance information" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="provenanceInfo" />
+				</div>
+			</s:bind>
+			
+			
+			
+			<!-- Associated project -->
+			<s:bind path="associatedProject">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="description" class="col-sm-3 control-label">~Associated project</label>
+					<div class="col-sm-9">
+						<sf:input path="associatedProject" class="form-control" placeholder="~Associated project" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="associatedProject" />
 				</div>
 			</s:bind>
 			
@@ -560,23 +560,55 @@
 			
 			<!-- Entity id -->
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Collection Identifier</label>
+				<label for="description" class="col-sm-3 control-label">~Collection Permalink/Identifier</label>
 				<div class="col-sm-9">
-					<sf:input path="entityId" class="form-control" placeholder="~Identifier" readonly="true" />
+					<label class="control-label">
+						<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
+					</label>
+				</div>
+			</div>
+
+			<!-- Entity timestamp -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Description creation timestamp</label>
+				<div class="col-sm-9">
+					<label class="control-label">${collection.entityTimestamp}</label>
+				</div>
+			</div>
+
+			<!-- Entity creator -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Description creator</label>
+				<div class="col-sm-9">
+					<label class="control-label">${collection.entityCreator}</label>
 				</div>
 			</div>
 			
 			<!-- Version id -->
 			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Current description version</label>
+				<label for="description" class="col-sm-3 control-label">~Current version identifier ${contextPath}</label>
 				<div class="col-sm-9">
-					<input type="text" value="${collection.id}" class="form-control" placeholder="~Identifier" readonly />
+					<label class="control-label">
+						<a href="<s:url value="/collections/${collection.entityId}/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}/${collection.id}" /></a>
+					</label>
 				</div>
 			</div>
 			
-			<!-- Description created -->
-			
 			<!-- Version created -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Version timestamp</label>
+				<div class="col-sm-9">
+					<label class="control-label">${collection.versionTimestamp}</label>
+				</div>
+			</div>
+			
+			<!-- Version creator -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Version creator</label>
+				<div class="col-sm-9">
+					<label class="control-label">${collection.versionCreator}</label>
+				</div>
+			</div>
 			
 		</div>
 		

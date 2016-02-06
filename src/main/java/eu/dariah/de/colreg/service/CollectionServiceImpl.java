@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -29,11 +30,23 @@ public class CollectionServiceImpl implements CollectionService {
 	}
 
 	@Override
-	public void save(Collection c) {
+	public void save(Collection c, String userId) {
 		Collection prev = this.findCurrentByCollectionId(c.getEntityId());
 		
 		c.setId(null);
 		c.setSucceedingVersionId(null);
+		c.setVersionCreator(userId);
+		c.setVersionTimestamp(DateTime.now());
+		
+		if (prev!=null) {
+			c.setEntityCreator(prev.getEntityCreator());
+			c.setEntityTimestamp(prev.getEntityTimestamp());
+		} else {
+			c.setEntityCreator(c.getVersionCreator());
+			c.setEntityTimestamp(c.getVersionTimestamp());
+		}
+		
+		// Save new object first...just to be sure
 		collectionDao.save(c);
 		
 		if (prev!=null) {
