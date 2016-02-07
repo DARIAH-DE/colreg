@@ -98,6 +98,9 @@ public class CollectionController {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
 		}
 		
+		List<Collection> versions = collectionService.findAllVersionsForEntityId(id);
+		model.addAttribute("versions", versions);
+		
 		List<Collection> childCollections = collectionService.findCurrentByParentCollectionId(id);
 		model.addAttribute("childCollections", childCollections);
 		model.addAttribute("activeChildCollections", childCollections!=null && childCollections.size()>0);

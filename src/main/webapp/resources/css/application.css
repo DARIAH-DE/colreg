@@ -1,4 +1,3 @@
-
 /*!
  *	Data Tables
  */
@@ -589,4 +588,59 @@ label.control-label.mandatory {
 
 .container-error {
 	color: #a94442;
+}
+
+#collapse-panel-trigger {
+	position: fixed;
+	right: 0px;
+	top: 50%;
+	width: 15px;
+	height: 55px;
+	color: #FFFFFF;
+	
+	background-image: linear-gradient(to bottom, #5bc0de 0px, #2aabd2 100%);
+    background-repeat: repeat-x;
+    border-color: #28a4c9;
+    border-style: solid;
+    
+	border-radius: 5px 0 0 5px;
+	border-width: 1px;
+	border-right: none;
+	
+	text-align:	center;
+	vertical-align:	middle;
+	cursor: pointer;
+	padding-top: 15px;
+	z-index: 10;
+}
+
+#collapse-panel-trigger:hover, 
+#collapse-panel-trigger:focus {
+    background-color: #2aabd2;
+    background-position: 0 -15px;
+}
+
+#editor-version-panel {
+	/*background-image: linear-gradient(to right, #483E69 0px, #201444 100%);
+    background-repeat: repeat-x;
+    border-color: #483E69;*/
+    background: #F3F3F3;
+	padding-top: 50px;
+	z-index: 11;
+	color: #888;
+	border-left: 2px solid #2aabd2;
+	box-shadow: 0 5px 10px rgba(42, 173, 210, 0.4);
+}
+
+#editor-version-panel ul {
+	padding: 0;
+	list-style: none;
+}
+	
+#editor-version-panel li {
+	display: block;
+	padding: 5px 10px;
+	margin: 0;
+	background-image: linear-gradient(to bottom, #5bc0de 0px, #2aabd2 100%);
+	color: #FFF;
 }

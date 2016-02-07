@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
     <title><tiles:insertAttribute name="title"/></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="author" content="Tobias Gradl, University of Bamberg">
     <meta name="description" content="<tiles:insertAttribute name="title" />">
     <tiles:importAttribute name="styles" />  	

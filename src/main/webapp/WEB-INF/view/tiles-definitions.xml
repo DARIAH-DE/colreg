@@ -44,6 +44,20 @@
         </put-list-attribute>
     </definition>
 	
+	<definition name="template_editors" extends="template_main">
+		<put-attribute name="fluidLayout" cascade="true" value="false" />
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute type="string" value="slidebars.css" />
+        </put-list-attribute>
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
+			<add-attribute type="string" value="jquery/slidebars.js" />
+			<add-attribute type="string" value="_common/editorTable.js" />
+			<add-attribute type="string" value="_common/editorList.js" />
+			<add-attribute type="string" value="_common/baseEditor.js" />
+		</put-list-attribute>
+	</definition>
+	
 	
 	<!-- Collection -->
 	<definition name="collection/list" extends="template_tables">
@@ -52,15 +66,11 @@
 			<add-attribute type="string" value="collection/list.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="collection/edit" extends="template_main">
+	<definition name="collection/edit" extends="template_editors">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/edit.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/collection/incl/nav_editor.jsp" />
+		<put-attribute name="collapsePanel" value="/WEB-INF/view/jsp/common/nav_versionPanel.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
-			<add-attribute type="string" value="_common/editorTable.js" />
-			<add-attribute type="string" value="_common/editorList.js" />
-			<add-attribute type="string" value="_common/baseEditor.js" />
 			<add-attribute type="string" value="collection/edit.js" />
 		</put-list-attribute>
 	</definition>
@@ -85,15 +95,10 @@
 			<add-attribute type="string" value="agent/list.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="agent/edit" extends="template_main">
+	<definition name="agent/edit" extends="template_editors">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/edit.jsp" />
-		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/agent/incl/nav_editor.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
-			<add-attribute type="string" value="_common/editorTable.js" />
-			<add-attribute type="string" value="_common/editorList.js" />
-			<add-attribute type="string" value="_common/baseEditor.js" />
 			<add-attribute type="string" value="agent/edit.js" />
 		</put-list-attribute>
 	</definition>

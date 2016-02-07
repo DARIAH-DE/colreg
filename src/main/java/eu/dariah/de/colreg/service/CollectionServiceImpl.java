@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -126,5 +127,19 @@ public class CollectionServiceImpl implements CollectionService {
 	@Override
 	public Collection findCurrentByCollectionId(String id, boolean includeDeleted) {
 		return collectionDao.findCurrentById(id, includeDeleted);
+	}
+
+	@Override
+	public List<Collection> findAllVersionsForEntityId(String id) {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("entityId").is(id));
+		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
+		q.fields().include("id")
+			.include("versionTimestamp")
+			.include("versionCreator")
+			.include("deleted")
+			.include("draftUserId");
+		
+		return collectionDao.find(q);
 	}
 }

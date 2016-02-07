@@ -15,4 +15,5 @@ public interface CollectionService {
 	public List<Collection> findCurrentByRelatedAgentId(String id);
 	public Collection findCurrentByCollectionId(String id, boolean includeDeleted);
 	public void save(Collection c, String userId);
+	public List<Collection> findAllVersionsForEntityId(String id);
 }

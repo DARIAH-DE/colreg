@@ -12,6 +12,8 @@ $(document).ready(function() {
 	});
 	
 	$("form").submit(function(event) { editor.submit(event); });
+	
+	 $.slidebars();
 });
 
 var CollectionEditor = function() {
