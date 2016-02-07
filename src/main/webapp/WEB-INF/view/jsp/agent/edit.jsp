@@ -6,7 +6,7 @@
 
 <tiles:importAttribute name="fluidLayout" />
 
-<s:url value="${a.id}" var="actionPath" />
+<s:url value="${a.entityId}" var="actionPath" />
 
 <ul class="breadcrumb">
 	<li><a href='<s:url value="/" />' target="_self">~Collection Registry</a></li>

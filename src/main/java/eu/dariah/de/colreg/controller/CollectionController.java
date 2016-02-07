@@ -73,7 +73,8 @@ public class CollectionController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveCollection(@ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		collection.setEntityId(id);
 		validator.validate(collection, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);

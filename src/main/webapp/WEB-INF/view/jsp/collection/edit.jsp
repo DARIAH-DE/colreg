@@ -6,7 +6,7 @@
 
 <tiles:importAttribute name="fluidLayout" />
 
-<s:url value="${collection.id}" var="actionPath" />
+<s:url value="${collection.entityId}" var="actionPath" />
 
 <ul class="breadcrumb">
 	<li><a href='<s:url value="/" />' target="_self">~Collection Registry</a></li>
@@ -552,53 +552,8 @@
 				</div>
 			</s:bind>
 		</div>
-
-		<div class="editor-section">
-			<div class="editor-section-heading">
-				<h4>~Collection identification</h4>
-			</div>
-			
-			<!-- Entity id -->
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Permanent collection identifier</label>
-				<div class="col-sm-9">
-					<label class="control-label">
-						<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
-					</label>
-				</div>
-			</div>
-			
-			<!-- Version id -->
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Permanent version identifier ${contextPath}</label>
-				<div class="col-sm-9">
-					<label class="control-label">
-						<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
-					</label>
-				</div>
-			</div>
-
-			<!-- Version created -->
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~This version</label>
-				<div class="col-sm-9">
-					<label class="control-label">${collection.versionTimestamp}</label><br />
-					<label class="control-label">${collection.versionCreator}</label>
-				</div>
-			</div>
-
-			<!-- Entity timestamp -->
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label">~Created</label>
-				<div class="col-sm-9">
-					<label class="control-label">${collection.entityTimestamp}</label><br />
-					<label class="control-label">${collection.entityCreator}</label>
-				</div>
-			</div>
-			
-		</div>
 		
-		<div class="editor-section">
+			<div class="editor-section">
 			<div class="editor-section-heading">
 				<h4>~Collection access</h4>
 			</div>
@@ -639,6 +594,51 @@
 			
 		</div>
 		
+
+		<div class="editor-section">
+			<div class="editor-section-heading">
+				<h4>~Collection identification</h4>
+			</div>
+			
+			<!-- Entity id -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Permanent collection identifier</label>
+				<div class="col-sm-9">
+					<label class="control-label">
+						<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
+					</label>
+				</div>
+			</div>
+			
+			<!-- Version id -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Permanent version identifier ${contextPath}</label>
+				<div class="col-sm-9">
+					<label class="control-label">
+						<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.id}" /></a>
+					</label>
+				</div>
+			</div>
+
+			<!-- Version created -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Current version</label>
+				<div class="col-sm-9">
+					<label class="control-label">${collection.versionTimestamp}</label><br />
+					<label class="control-label">${collection.versionCreator}</label>
+				</div>
+			</div>
+
+			<!-- Entity timestamp -->
+			<div class="form-group">
+				<label for="description" class="col-sm-3 control-label">~Initially created</label>
+				<div class="col-sm-9">
+					<label class="control-label">${collection.entityTimestamp}</label><br />
+					<label class="control-label">${collection.entityCreator}</label>
+				</div>
+			</div>
+			
+		</div>
 		
 		<div class="editor-section">
 			<div class="editor-section-heading">
