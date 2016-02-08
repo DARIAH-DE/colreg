@@ -1,5 +1,5 @@
 function BaseEditor() {
-	this.entityId = $("#entityId").val();
+	this.entityId = $("#entityId").text();
 	this.vocabularySources = new Array();
 	this.tables = new Array();
 	this.lists = new Array();

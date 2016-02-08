@@ -84,6 +84,20 @@ public class CollectionController {
 		return "redirect:/collections/" + collection.getEntityId();
 	}
 	
+	@RequestMapping(value="{id}/publish", method=RequestMethod.POST)
+	public String publicCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		collection.setEntityId(id);
+		validator.validate(collection, bindingResult);
+		if (bindingResult.hasErrors()) {
+			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
+		}		
+
+		collection.setDraftUserId(null);
+		// TODO UserId
+		collectionService.save(collection, "default user");
+		return "redirect:/collections/" + collection.getEntityId();
+	}
+	
 	private String fillCollectionEditorModel(String entityId, Collection c, Model model) {
 		model.addAttribute("collection", c);
 		model.addAttribute("selectedVersionId", c.getId());
@@ -104,7 +118,15 @@ public class CollectionController {
 		List<Collection> childCollections = collectionService.findCurrentByParentCollectionId(entityId);
 		model.addAttribute("childCollections", childCollections);
 		model.addAttribute("activeChildCollections", childCollections!=null && childCollections.size()>0);
-		model.addAttribute("isDraft", c.getDraftUserId()==null || c.getDraftUserId().equals(""));
+		model.addAttribute("isDraft", (c.getDraftUserId()!=null && !c.getDraftUserId().equals("")) || c.getId().equals("new"));
+		model.addAttribute("isNew", c.getId().equals("new"));
+		
+		if (c.getSucceedingVersionId()==null) {
+			model.addAttribute("isDeleted", c.isDeleted());
+		} else {
+			Collection current = collectionService.findCurrentByCollectionId(entityId, true);
+			model.addAttribute("isDeleted", current.isDeleted());
+		}
 		
 		return "collection/edit";
 	}

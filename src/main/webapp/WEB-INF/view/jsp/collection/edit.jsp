@@ -23,19 +23,33 @@
 	<h1>~Collection Editor</h1>
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
 	<sf:form method="POST" action="javascript:void(0);" modelAttribute="collection" class="form-horizontal" autocomplete="off">
-
+		<span id="entityId" style="display: none;">${collection.entityId}</span>
 		<div class="form-group">
 			<div class="col-sm-12">
-				<c:if test="${collection.deleted}">
-					<div class="alert alert-warning" role="alert">
-						~ This collection is marked deleted and is as such only accessible through its permalink   
-					</div>
-				</c:if>
+				<c:choose>
+					<c:when test="${isDeleted}">
+						<div class="alert alert-danger" role="alert">
+							~ This collection is marked deleted and is thus only accessible through its <a href='<s:url value="/collections/${collection.entityId}" />'>permalink</a>   
+						</div>
+					</c:when>
+					<c:when test="${!isDraft}">
+						<div class="alert alert-info" role="alert">
+							~ Please note: This is a <strong>public</strong> collection. All saved changes will be externally visible.
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="alert alert-info" role="alert">
+							~ This is a <strong>draft</strong> collection entry, which is (even through its permalink) only visible to you. 
+						</div>
+					</c:otherwise>
+				</c:choose>
+				
+				
 				
 				<c:if test="${collection.succeedingVersionId!=null}">
 					<div class="alert alert-warning" role="alert">
-						~ You are looking at an outdated version of a collection description. You can always find the latest revision of this collection  
-						<a href='<s:url value="/collections/${collection.entityId}" />'>here</a>. 
+						~ You are looking at an outdated version of a collection description. You can find the latest revision of this collection through its 
+						<a href='<s:url value="/collections/${collection.entityId}" />'>permalink</a>. 
 					</div>
 				</c:if>
 				
@@ -54,18 +68,10 @@
 		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
-					<button class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></button>
-					<div class="btn-group">
-					  <button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
-					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    <span class="caret"></span>
-					    <span class="sr-only">Toggle Dropdown</span>
-					  </button>
-					  <ul class="dropdown-menu">
-					    <li class="btn-delete-collection"><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.publish" /></a></li>
-					    <li class="btn-delete-collection"><a href="#"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></a></li>
-					  </ul>
-					</div>
+					<a href='<s:url value="/collections/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
+					<c:if test="${!isDeleted}">
+						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -614,66 +620,70 @@
 		</div>
 		
 
-		<div class="editor-section">
-			<div class="editor-section-heading">
-				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.identification" /></h4>
-			</div>
-			
-			<!-- Entity id -->
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></label>
-				<div id="collection-identifier" class="col-sm-9">
-					<label class="control-label">
-						<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
-					</label>
+		<c:if test="${!isNew}">
+			<div class="editor-section">
+				<div class="editor-section-heading">
+					<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.identification_and_administration" /></h4>
 				</div>
-			</div>
-			
-			<!-- Version id -->
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></label>
-				<div id="version-identifier" class="col-sm-9">
-					<label class="control-label">
-						<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.id}" /></a>
-					</label>
+				
+				<!-- Entity id -->
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></label>
+					<div id="collection-identifier" class="col-sm-9">
+						<label class="control-label">
+							<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
+						</label>
+					</div>
 				</div>
-			</div>
-
-			<!-- Version created -->
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></label>
-				<div id="current-version" class="col-sm-9">
-					<label class="control-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
-					<label class="control-label">${collection.versionCreator}</label>
+				
+				<!-- Version id -->
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></label>
+					<div id="version-identifier" class="col-sm-9">
+						<label class="control-label">
+							<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.id}" /></a>
+						</label>
+					</div>
 				</div>
-			</div>
-
-			<!-- Entity timestamp -->
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></label>
-				<div id="initially-created" class="col-sm-9">
-					<label class="control-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
-					<label class="control-label">${collection.entityCreator}</label>
+	
+				<!-- Version created -->
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></label>
+					<div id="current-version" class="col-sm-9">
+						<label class="control-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
+						<label class="control-label">${collection.versionCreator}</label>
+					</div>
 				</div>
-			</div>
-			
-		</div>		
-
+	
+				<!-- Entity timestamp -->
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></label>
+					<div id="initially-created" class="col-sm-9">
+						<label class="control-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
+						<label class="control-label">${collection.entityCreator}</label>
+					</div>
+				</div>
+				
+				<c:if test="${!isDeleted}">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.groups.administration" /></label>
+						<div id="collection-administration" class="col-sm-9">
+							<c:if test="${collection.draftUserId!=null}">
+								<button id="btn-publish-collection" class="btn btn-primary cancel"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.save_and_publish" /></button>
+							</c:if>
+							<button id="btn-delete-collection" class="btn btn-danger cancel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></button>
+						</div>
+					</div>
+				</c:if>
+			</div>		
+		</c:if>
 		<div class="form-group editor-buttonbar">
 			<div class="col-sm-12">
 				<div class="pull-right">
-					<button class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></button>
-					<div class="btn-group">
-					  <button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
-					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    <span class="caret"></span>
-					    <span class="sr-only">Toggle Dropdown</span>
-					  </button>
-					  <ul class="dropdown-menu">
-					    <li class="btn-delete-collection"><a href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.publish" /></a></li>
-					    <li class="btn-delete-collection"><a href="#"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></a></li>
-					  </ul>
-					</div>
+					<a href='<s:url value="/collections/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
+					<c:if test="${!isDeleted}">
+						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
+					</c:if>
 				</div>
 			</div>
 		</div>

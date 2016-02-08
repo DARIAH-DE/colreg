@@ -11,6 +11,11 @@ $(document).ready(function() {
 		editor.deleteEntity("collections/");
 	});
 	
+	$("#btn-publish-collection").on("click", function() {
+		$("form").attr("action", $("#js-form-action").val() + "/publish");
+		$("form").submit();
+	});
+	
 	$("form").submit(function(event) { editor.submit(event); });
 	
 	$.slidebars();

@@ -45,6 +45,9 @@ public class VocabularyServiceImpl implements VocabularyService {
 				Criteria.where("code").regex(Pattern.compile("^" + query + '$', Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
 				
 				// Name starts with
+				Criteria.where("code").regex(Pattern.compile("^" + query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
+				
+				// Name starts with
 				Criteria.where("name").regex(Pattern.compile("^" + query, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE)),
 				
 				// Name likeness

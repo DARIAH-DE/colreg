@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
 <nav class="nav-form-controls">
@@ -100,13 +101,18 @@
 				</s:bind>
 			</ul>
 		</li>
-		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.identification" /></a>
-			<ul class="nav">
-				<li><a href="#collection-identifier"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></a></li>
-				<li><a href="#version-identifier"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></a></li>
-				<li><a href="#current-version"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></a></li>
-				<li><a href="#initially-created"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></a></li>
-			</ul>
-		</li>		
+		<c:if test="${!isNew}">
+			<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.identification_and_administration" /></a>
+				<ul class="nav">
+					<li><a href="#collection-identifier"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></a></li>
+					<li><a href="#version-identifier"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></a></li>
+					<li><a href="#current-version"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></a></li>
+					<li><a href="#initially-created"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></a></li>
+					<c:if test="${!isDeleted}">
+						<li><a href="#collection-administration"><s:message code="~eu.dariah.de.colreg.model.collection.groups.administration" /></a></li>
+					</c:if>
+				</ul>
+			</li>		
+		</c:if>
 	</ul>
 </nav>
