@@ -3,6 +3,13 @@ function BaseEditor() {
 	this.vocabularySources = new Array();
 	this.tables = new Array();
 	this.lists = new Array();
+	
+	this.baseTranslations = ["~eu.dariah.de.colreg.common.labels.no_match_found",
+	                         "~eu.dariah.de.colreg.view.collection.notification.could_not_delete",
+	                         "~eu.dariah.de.colreg.view.collection.labels.delete_collection.body",
+	                         "~eu.dariah.de.colreg.view.collection.labels.delete_collection.head",
+	                         "~eu.dariah.de.colreg.common.link.no",
+	                         "~eu.dariah.de.colreg.common.link.yes"];
 };
 
 BaseEditor.prototype.sort = function() {
@@ -27,6 +34,14 @@ BaseEditor.prototype.addVocabularySource = function(name, urlSuffix, params) {
 			  wildcard: '%QUERY'
 		  }
 	});
+};
+
+BaseEditor.prototype.prepareTranslations = function(translations) {
+	if (translations!=null || (translations instanceof Array && translations.length>0)) {
+		__translator.addTranslations(translations);
+		__translator.addTranslations(this.baseTranslations);
+		__translator.getTranslations();
+	}
 };
 
 BaseEditor.prototype.registerNavFormControlEvents = function() {
@@ -98,7 +113,7 @@ BaseEditor.prototype.registerTypeahead = function(element, datasource, displayAt
 		limit: limit,
 		templates: {
 			empty: ['<div class="tt-empty-message">',
-			        	'~No match found',
+			        	__translator.translate("~eu.dariah.de.colreg.common.labels.no_match_found"),
 			        '</div>'].join('\n'),
 			suggestion: function(data) { return suggestionCallback(data); }
 		}
@@ -136,14 +151,31 @@ BaseEditor.prototype.validateInput = function(element, urlPrefix, value) {
 
 BaseEditor.prototype.deleteEntity = function(prefix) {
 	var _this = this;
-	$.ajax({
-        url: __util.getBaseUrl() + prefix + _this.entityId + "/delete",
-        type: "POST",
-        success: function(data) {
-        	window.location.reload();
-        },
-        error: function(textStatus) { 
-        	alert("Could not delete entity: " + textStatus);
-        }
-	});
+
+    bootbox.dialog({
+            message : __translator.translate("~eu.dariah.de.colreg.view.collection.labels.delete_collection.body"),
+            title : __translator.translate("~eu.dariah.de.colreg.view.collection.labels.delete_collection.head"),
+            buttons : {
+                    no : {
+                            label : __translator.translate("~eu.dariah.de.colreg.common.link.no"),
+                            className : "btn-default"
+                    },
+                    yes : {
+                            label : __translator.translate("~eu.dariah.de.colreg.common.link.yes"),
+                            className : "btn-primary",
+                            callback : function() {
+                            	$.ajax({
+                                    url: __util.getBaseUrl() + prefix + _this.entityId + "/delete",
+                                    type: "POST",
+                                    success: function(data) {
+                                    	window.location.reload();
+                                    },
+                                    error: function(textStatus) { 
+                                    	alert(__translator.translate("~eu.dariah.de.colreg.view.collection.notification.could_not_delete") + textStatus);
+                                    }
+                            	});
+                            }
+                    }
+            }
+    });
 };

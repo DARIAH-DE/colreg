@@ -1,6 +1,6 @@
 var Translator = function() {
 	this.translations = [];
-	this.translationsUrlSuffix = "async/getTranslations";
+	this.translationsUrl = $("#baseUrl").val() + "translate";
 };
 
 Translator.prototype.addTranslations = function(codes) {
@@ -40,7 +40,7 @@ Translator.prototype.addTranslation = function(code) {
 Translator.prototype.getTranslations = function() {
 	var _this = this;
 	$.ajax({
-	    url: window.location.pathname + _this.translationsUrlSuffix,
+	    url: _this.translationsUrl,
 	    type: "POST",
 	    dataType: "json",
 	    async: false,

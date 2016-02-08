@@ -22,6 +22,7 @@ $(document).ready(function() {
 });
 
 var CollectionEditor = function() {
+	this.prepareTranslations([]);
 	this.initVocabularySources();
 	this.initEditorComponents();
 	
