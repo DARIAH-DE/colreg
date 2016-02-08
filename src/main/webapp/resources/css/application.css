@@ -99,7 +99,7 @@
 /*!
  *	Content wrapping
  */
-.container #primary-content-area {
+#primary-content-area {
 	margin-top: 60px;
 }
 
@@ -463,9 +463,10 @@ p.tt-suggestion {
  *  Playing with sidenav...
  */ 
 .sidebar {
-	position: fixed;
+	/*position: fixed;
     top: 100px;
-    margin-left: 30px;
+    margin-left: 30px;*/
+    
 }
 
 .sidebar .nav-form-controls {
