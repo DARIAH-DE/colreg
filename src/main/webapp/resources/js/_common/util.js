@@ -60,12 +60,12 @@ String.prototype.startsWith = function(start) {
 };
 
 var Util = function() {
-        __translator.addTranslations(["~eu.dariah.de.minfba.common.view.notifications.login_required.head",
-                                      "~eu.dariah.de.minfba.common.view.notifications.login_required.body",
-                                      "~eu.dariah.de.minfba.common.link.yes",
-                                      "~eu.dariah.de.minfba.common.link.no",
-                                      "~eu.dariah.de.minfba.common.view.forms.servererror.head",
-                                      "~eu.dariah.de.minfba.common.view.forms.servererror.body"])
+        __translator.addTranslations(["~eu.dariah.de.colreg.common.view.notifications.login_required.head",
+                                      "~eu.dariah.de.colreg.common.view.notifications.login_required.body",
+                                      "~eu.dariah.de.colreg.common.link.yes",
+                                      "~eu.dariah.de.colreg.common.link.no",
+                                      "~eu.dariah.de.colreg.common.view.forms.servererror.head",
+                                      "~eu.dariah.de.colreg.common.view.forms.servererror.body"])
         // We depend on the view's main js for this call
     //__translator.getTranslations();
         this.entityMap = {

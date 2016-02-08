@@ -10,17 +10,17 @@
 <s:url value="${collection.entityId}" var="actionPath" />
 
 <ul class="breadcrumb">
-	<li><a href='<s:url value="/" />' target="_self">~Collection Registry</a></li>
-	<li><a href='<s:url value="/collections/" />' target="_self">~Collections</a></li>
+	<li><a href='<s:url value="/" />' target="_self"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></a></li>
+	<li><a href='<s:url value="/collections/" />' target="_self"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a></li>
 	<li class="active">
 		<c:choose>
-			<c:when test="${collection.id=='new'}">~New Collection</c:when>
-			<c:otherwise>Collection Id: ${collection.entityId}</c:otherwise>
+			<c:when test="${collection.id=='new'}"><s:message code="~eu.dariah.de.colreg.titles.new_collection" /></c:when>
+			<c:otherwise><s:message code="~eu.dariah.de.colreg.titles.collection" />: ${collection.entityId}</c:otherwise>
 		</c:choose>
 	</li>
 </ul>
 <div id="main-content">
-	<h1>~Collection Editor</h1>
+	<h1><s:message code="~eu.dariah.de.colreg.titles.collection_editor" /></h1>
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
 	<sf:form method="POST" action="javascript:void(0);" modelAttribute="collection" class="form-horizontal" autocomplete="off">
 		<span id="entityId" style="display: none;">${collection.entityId}</span>
@@ -29,17 +29,18 @@
 				<c:choose>
 					<c:when test="${isDeleted}">
 						<div class="alert alert-danger" role="alert">
-							~ This collection is marked deleted and is thus only accessible through its <a href='<s:url value="/collections/${collection.entityId}" />'>permalink</a>   
+							<s:url value="/collections/${collection.entityId}" var="latest_link" />  
+							<s:message code="~eu.dariah.de.colreg.view.collection.notification.collection_deleted" arguments="${latest_link}" />
 						</div>
 					</c:when>
 					<c:when test="${!isDraft}">
 						<div class="alert alert-info" role="alert">
-							~ Please note: This is a <strong>public</strong> collection. All saved changes will be externally visible.
+							<s:message code="~eu.dariah.de.colreg.view.collection.notification.public" />
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="alert alert-info" role="alert">
-							~ This is a <strong>draft</strong> collection entry, which is (even through its permalink) only visible to you. 
+							<s:message code="~eu.dariah.de.colreg.view.collection.notification.draft" />
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -48,8 +49,8 @@
 				
 				<c:if test="${collection.succeedingVersionId!=null}">
 					<div class="alert alert-warning" role="alert">
-						~ You are looking at an outdated version of a collection description. You can find the latest revision of this collection through its 
-						<a href='<s:url value="/collections/${collection.entityId}" />'>permalink</a>. 
+						<s:url value="/collections/${collection.entityId}" var="latest_link" />
+						<s:message code="~eu.dariah.de.colreg.view.collection.notification.outdated_version" arguments="${latest_link}" />
 					</div>
 				</c:if>
 				
@@ -57,7 +58,7 @@
 					<s:bind path="*">
 					<c:if test="${status.error}">
 						<div class="alert alert-danger">
-							~ There are validation errors, the object has not been saved
+							<s:message code="~eu.dariah.de.colreg.view.collection.notification.validation_errors" />
 						</div>
 					</c:if>
 					</s:bind>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
 <nav class="nav-form-controls">
-	<h3>~Properties</h3>
+	<h3><s:message code="~eu.dariah.de.colreg.titles.properties" /></h3>
 	<ul class="nav">
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.mandatory_description" /></a>
 			<ul class="nav">

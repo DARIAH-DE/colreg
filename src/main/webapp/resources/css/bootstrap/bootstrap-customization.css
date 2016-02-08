@@ -88,3 +88,13 @@ body {
 	display: inline;
 	margin-left: 10px;
 }
+
+/* Tweak for bootbox dialogs, which are (as all modals) modified according to the bootstrap-modal.css 
+ *	some of the modifications have to be reverted however
+ */
+.modal.bootbox {
+    background: none;
+    border: none;
+    box-shadow: none;
+    width: 600px;
+}
