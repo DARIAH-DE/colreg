@@ -651,7 +651,36 @@ label.control-label.mandatory {
 	border-bottom: 1px solid #483E69;
 	color: #444;
 	font-size: 90%;
-	border-left: 5px solid #999;
+	border-left: 5px solid transparent;
+}
+
+#editor-version-panel li.version-deleted {
+	border-left-color: #F00;
+}
+
+#editor-version-panel li.version-draft {
+	border-left-color: #999;
+}
+
+#editor-version-panel li.version-published {
+	border-left-color: #31B0D5;
+}
+
+#editor-version-panel li .version-action {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+#editor-version-panel li.version-deleted .version-action {
+	color: #F00;
+}
+
+#editor-version-panel li.version-draft .version-action {
+	color: #999;
+}
+
+#editor-version-panel li.version-published .version-action {
+	color: #31B0D5;
 }
 
 #editor-version-panel li a {
