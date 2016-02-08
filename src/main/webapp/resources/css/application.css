@@ -466,7 +466,7 @@ p.tt-suggestion {
 	/*position: fixed;
     top: 100px;
     margin-left: 30px;*/
-    
+    width: 270px;
 }
 
 .sidebar .nav-form-controls {
@@ -482,42 +482,54 @@ p.tt-suggestion {
 	padding-left: 20px;
 }
 
-.sidebar .nav > li.mandatory > a {
+.sidebar .nav-form-controls .nav > li.mandatory > a {
 	font-weight: bold;
 }
 
-.sidebar .nav > li {
+.sidebar .nav-form-controls .nav > li {
     /*border-top: 1px solid #CCC;*/
 }
 
-.sidebar .nav > li > a {
+.sidebar .nav-form-controls .nav > li > a {
     color: #555;
     display: block;
     font-size: 15px;
     padding: 4px 20px 4px 10px;
 }
-.sidebar .nav > li > a:focus, 
-.sidebar .nav > li > a:hover {
+.sidebar .nav-form-controls .nav > li.has-error > a {
+	color: #a94442;
+	font-weight: bold;
+}
+
+.sidebar .nav-form-controls .nav > li > a:focus, 
+.sidebar .nav-form-controls .nav > li > a:hover {
     background-color: transparent;
     border-left: 1px solid #563d7c;
     color: #563d7c;
     padding-left: 9px;
     text-decoration: none;
 }
-.sidebar .nav > .active:focus > a, 
-.sidebar .nav > .active:hover > a, 
-.sidebar .nav > .active > a {
+
+.sidebar .nav-form-controls .nav > li.has-error > a:focus, 
+.sidebar .nav-form-controls .nav > li.has-error > a:hover {
+	color: #a94442;
+	border-left: 1px solid #a94442;
+}
+
+.sidebar .nav-form-controls .nav > .active:focus > a, 
+.sidebar .nav-form-controls .nav > .active:hover > a, 
+.sidebar .nav-form-controls .nav > .active > a {
     background-color: transparent;
     border-left: 2px solid #563d7c;
     color: #563d7c;
     
     padding-left: 18px;
 }
-.sidebar .nav .nav {
+.sidebar .nav-form-controls .nav .nav {
     /*display: none;*/
     padding-bottom: 10px;
 }
-.sidebar .nav .nav > li > a {
+.sidebar .nav-form-controls .nav .nav > li > a {
     font-size: 12px;
     
     padding-bottom: 1px;
@@ -525,19 +537,24 @@ p.tt-suggestion {
     padding-top: 1px;
 }
 
-.sidebar .nav .nav > li {
+.sidebar .nav-form-controls .nav .nav > li {
 	border: none;
 } 
 
-.sidebar .nav .nav > li > a:focus, 
-.sidebar .nav .nav > li > a:hover {
+.sidebar .nav-form-controls .nav .nav > li > a:focus, 
+.sidebar .nav-form-controls .nav .nav > li > a:hover {
     padding-left: 29px;
 }
-.sidebar .nav .nav > .active:focus > a, 
-.sidebar .nav .nav > .active:hover > a, 
-.sidebar .nav .nav > .active > a {
-    
+.sidebar .nav-form-controls .nav .nav > .active:focus > a, 
+.sidebar .nav-form-controls .nav .nav > .active:hover > a, 
+.sidebar .nav-form-controls .nav .nav > .active > a {
     padding-left: 28px;
+}
+.sidebar .nav-form-controls .nav .nav > .has-error.active:focus > a, 
+.sidebar .nav-form-controls .nav .nav > .has-error.active:hover > a, 
+.sidebar .nav-form-controls .nav .nav > .has-error.active > a {
+    color: #a94442;
+	border-left: 2px solid #a94442;
 }
 
 label.control-label {

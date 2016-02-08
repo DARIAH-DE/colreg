@@ -77,7 +77,7 @@
 			
 			<!-- Localized collection descriptions -->
 			<s:bind path="localizedDescriptions*">
-				<div class="form-group">
+				<div class="form-group" >
 					<label for="tbl-collection-description-sets" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.description_sets" /></label>
 					<div class="col-sm-9">
 						<table id="tbl-collection-description-sets" class="collection-editor-table">
@@ -400,7 +400,7 @@
 			<!-- Has part of -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></label>
-				<div class="col-sm-9">
+				<div id="lst-child-collections" class="col-sm-9">
 					<c:choose>
 						<c:when test="${childCollections!=null && fn:length(childCollections)>0}">
 							<c:forEach items="${childCollections}" var="child" varStatus="status" >
@@ -571,7 +571,7 @@
 			</s:bind>
 		</div>
 		
-			<div class="editor-section">
+		<div class="editor-section">
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.access" /></h4>
 			</div>
@@ -581,6 +581,7 @@
 				<div class="form-group">
 					<label for="tbl-collection-access" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.access" /></label>
 					<div class="col-sm-9">
+						<a class="form-anchor" id="tbl-collection-access-anchor"></a>
 						<table id="tbl-collection-access" class="collection-editor-table">
 							<thead>
 								<tr>
@@ -621,7 +622,7 @@
 			<!-- Entity id -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></label>
-				<div class="col-sm-9">
+				<div id="collection-identifier" class="col-sm-9">
 					<label class="control-label">
 						<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
 					</label>
@@ -631,7 +632,7 @@
 			<!-- Version id -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></label>
-				<div class="col-sm-9">
+				<div id="version-identifier" class="col-sm-9">
 					<label class="control-label">
 						<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.id}" /></a>
 					</label>
@@ -641,7 +642,7 @@
 			<!-- Version created -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></label>
-				<div class="col-sm-9">
+				<div id="current-version" class="col-sm-9">
 					<label class="control-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
 					<label class="control-label">${collection.versionCreator}</label>
 				</div>
@@ -650,7 +651,7 @@
 			<!-- Entity timestamp -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></label>
-				<div class="col-sm-9">
+				<div id="initially-created" class="col-sm-9">
 					<label class="control-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
 					<label class="control-label">${collection.entityCreator}</label>
 				</div>

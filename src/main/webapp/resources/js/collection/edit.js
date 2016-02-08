@@ -13,7 +13,7 @@ $(document).ready(function() {
 	
 	$("form").submit(function(event) { editor.submit(event); });
 	
-	 $.slidebars();
+	$.slidebars();
 });
 
 var CollectionEditor = function() {
@@ -25,6 +25,9 @@ var CollectionEditor = function() {
 	this.registerEncodingSchemeTypeahead($(".encoding-scheme-typeahead"));
 	this.registerAgentTypeahead($(".agent-typeahead"));
 	this.registerAgentRelationTypeSelection($(".select-relation-type"));
+	
+	this.registerNavFormControlEvents();
+	this.registerFormControlSelectionEvents($("form"));
 };
 
 CollectionEditor.prototype = new BaseEditor();
@@ -45,6 +48,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editDescription",
 		newRowCallback: function(row) {
 			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
+			_this.registerFormControlSelectionEvents($(row));
 		}
 	});
 	this.tables["agentRelationTable"] = new CollectionEditorTable({
@@ -53,6 +57,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowCallback: function(row) {
 			_this.registerAgentTypeahead($(row).find(".agent-typeahead"));
 			_this.registerAgentRelationTypeSelection($(row).find(".select-relation-type"));
+			_this.registerFormControlSelectionEvents($(row));
 		}
 	});
 	this.tables["accessMethodTable"] = new CollectionEditorTable({
@@ -60,6 +65,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccess",
 		newRowCallback: function(row) {
 			_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
+			_this.registerFormControlSelectionEvents($(row));
 		},
 		initCallback: function(table) {
 			table.schemesList = new CollectionEditorList({
@@ -74,7 +80,10 @@ CollectionEditor.prototype.initEditorComponents = function() {
 	});
 	this.tables["accrualMethodTable"] = new CollectionEditorTable({
 		tableSelector: "#tbl-collection-accrual",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccrual"
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccrual",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	
 	// Editor lists
@@ -83,31 +92,50 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editItemLanguage",
 		newRowCallback: function(row) {
 			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
+			_this.registerFormControlSelectionEvents($(row));
 		}
 	});
 	this.lists["identifierList"] = new CollectionEditorList({
 		listSelector: "#lst-collection-provided-identifiers",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editProvidedIdentifier",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	this.lists["spatials"] = new CollectionEditorList({
 		listSelector: "#lst-collection-spatials",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editSpatial",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	this.lists["temporals"] = new CollectionEditorList({
 		listSelector: "#lst-collection-temporals",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editTemporal",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	this.lists["subjects"] = new CollectionEditorList({
 		listSelector: "#lst-collection-subjects",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editSubject",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	this.lists["audiences"] = new CollectionEditorList({
 		listSelector: "#lst-collection-audiences",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAudience",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	this.lists["locations"] = new CollectionEditorList({
 		listSelector: "#lst-collection-locations",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editLocation",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 };
 

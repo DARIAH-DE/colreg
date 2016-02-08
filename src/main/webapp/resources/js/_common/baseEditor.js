@@ -29,6 +29,63 @@ BaseEditor.prototype.addVocabularySource = function(name, urlSuffix, params) {
 	});
 };
 
+BaseEditor.prototype.registerNavFormControlEvents = function() {
+	var _this = this;
+	$(".nav-form-controls a").on('click', function(e) {
+		var href = $(this).attr("href");
+		if (href===undefined || href==="#") {
+			href = $(this).next().find("a").first().attr("href"); 
+		}
+		
+		if (!_this.isScrolledIntoView(href)) {
+			$.scrollTo(href, 300, {
+				onAfter: function(target, settings) { $(target).focus() }
+			});		
+		} else {
+			$(href).focus();
+		}
+		e.stopPropagation(); 
+		return false;
+	});
+};
+
+BaseEditor.prototype.registerFormControlSelectionEvents = function(element) {
+	var _this = this;
+	element.find("input").focus(function() {		
+		$(".nav-form-controls li").removeClass("active");
+		
+		var select = $(".nav-form-controls a[href='#" + $(this).attr("id") + "']");
+		if (select.length) {
+			select.parent().addClass("active");
+		} else {
+			var selector = $(this).closest(".collection-editor-table, .collection-editor-list").attr("id");
+			if (selector!==undefined) {
+				select = $(".nav-form-controls a[href='#" + selector + "']");
+				select.parent().addClass("active");
+			}
+		}
+		
+		
+	});
+	element.find("select").focus(function() {		
+		$(".nav-form-controls li").removeClass("active");
+		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
+	});
+};
+
+BaseEditor.prototype.isScrolledIntoView = function(elem) {
+    var $elem = $(elem);
+    var $window = $(window);
+
+    var docViewTop = $window.scrollTop();
+    var docViewBottom = docViewTop + $window.height();
+
+    var elemTop = $elem.offset().top;
+    var elemBottom = elemTop + $elem.height();
+
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+}
+
 BaseEditor.prototype.registerTypeahead = function(element, datasource, displayAttr, limit, 
 		suggestionCallback, selectionCallback, changeCallback) {
 	

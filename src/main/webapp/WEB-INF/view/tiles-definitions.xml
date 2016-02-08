@@ -51,6 +51,7 @@
         </put-list-attribute>
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
+			<add-attribute type="string" value="jquery/jquery.scrollTo.js" />
 			<add-attribute type="string" value="jquery/slidebars.js" />
 			<add-attribute type="string" value="_common/editorTable.js" />
 			<add-attribute type="string" value="_common/editorList.js" />

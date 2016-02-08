@@ -1,31 +1,112 @@
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+
 <nav class="nav-form-controls">
 	<h3>~Properties</h3>
 	<ul class="nav">
-		<li><a href="#overview">~Mandatory description</a>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.mandatory_description" /></a>
 			<ul class="nav">
-				<li><a href="#tbl-collection-description-sets">~Localized descriptions</a></li>
-				<li><a href="#collectionType">~Collection type</a></li>
-				<li><a href="#collectionDescriptionRights">~Collection Description Rights</a></li>
-				<li><a href="#accessRights">~Access Rights</a></li>
+				<s:bind path="collection.localizedDescriptions*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-description-sets"><s:message code="~eu.dariah.de.colreg.model.collection.description_sets" /></a></li>
+				</s:bind>
+				<s:bind path="collection.collectionType">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionType"><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></a></li>
+				</s:bind>
+				<s:bind path="collection.collectionDescriptionRights">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionDescriptionRights"><s:message code="~eu.dariah.de.colreg.model.collection.description_rights" /></a></li>
+				</s:bind>
+				<s:bind path="collection.accessRights">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#accessRights"><s:message code="~eu.dariah.de.colreg.model.collection.access_rights" /></a></li>
+				</s:bind>
 			</ul>
 		</li>
-		<li><a href="#grid">~Agent description</a>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.contact_and_agents" /></a>
 			<ul class="nav">
-				<li class="mandatory"><a href="#name">~Last Name</a></li>
-				<li><a href="#foreName">~First Name</a></li>
-				<li><a href="#address">~Address</a></li>
-				<li><a href="#eMail">~e-Mail</a></li>
-				<li><a href="#webPage">~Web page</a></li>
-				<li><a href="#phone">~Phone</a></li>
+				<s:bind path="collection.webPage">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#webPage"><s:message code="~eu.dariah.de.colreg.model.collection.webpage" /></a></li>
+				</s:bind>
+				<s:bind path="collection.eMail">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#eMail"><s:message code="~eu.dariah.de.colreg.model.collection.email" /></a></li>
+				</s:bind>
+				<s:bind path="collection.agentRelations*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-agents"><s:message code="~eu.dariah.de.colreg.model.collection.agents" /></a></li>
+				</s:bind>
 			</ul>
 		</li>
-		<li><a href="#type">~Contextual information</a>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.content_related" /></a>
 			<ul class="nav">
-				<li class="active"><a href="#parentAgentIdSelector">~Parent agent</a></li>
-				<li><a href="#entityId">~Collection Identifier</a></li>
-				<li><a href="#id">~Version id</a></li>
-				<li><a href="#tbl-agent-identifier">~ External identifiers</a></li>
+				<s:bind path="collection.itemLanguages*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-item-languages"><s:message code="~eu.dariah.de.colreg.model.collection.item_languages" /></a></li>
+				</s:bind>
+				<s:bind path="collection.subjects*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-subjects"><s:message code="~eu.dariah.de.colreg.model.collection.subjects" /></a></li>
+				</s:bind>
+				<s:bind path="collection.temporals*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-temporals"><s:message code="~eu.dariah.de.colreg.model.collection.temporals" /></a></li>
+				</s:bind>
+				<s:bind path="collection.spatials*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-spatials"><s:message code="~eu.dariah.de.colreg.model.collection.spatials" /></a></li>
+				</s:bind>
+				<s:bind path="collection.collectionCreated">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionCreated"><s:message code="~eu.dariah.de.colreg.model.collection.collection_created" /></a></li>
+				</s:bind>
+				<s:bind path="collection.itemsCreated">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#itemsCreated"><s:message code="~eu.dariah.de.colreg.model.collection.items_created" /></a></li>
+				</s:bind>
+				<s:bind path="collection.itemTypeIds">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#itemTypeIds"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></a></li>
+				</s:bind>
+				<s:bind path="collection.size">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#size"><s:message code="~eu.dariah.de.colreg.model.collection.size" /></a></li>
+				</s:bind>
 			</ul>
 		</li>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></a>
+			<ul class="nav">
+				<s:bind path="collection.parentCollectionId">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#parentCollectionIdSelector"><s:message code="~eu.dariah.de.colreg.model.collection.parent_collection" /></a></li>
+				</s:bind>
+				<li><a href="#lst-child-collections"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></a></li>
+				<s:bind path="collection.providedIdentifier*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-provided-identifiers"><s:message code="~eu.dariah.de.colreg.model.collection.provided_identifiers" /></a></li>
+				</s:bind>
+				<s:bind path="collection.locations*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-locations"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></a></li>
+				</s:bind>
+				<s:bind path="collection.audiences*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-audiences"><s:message code="~eu.dariah.de.colreg.model.collection.audiences" /></a></li>
+				</s:bind>
+				<s:bind path="collection.provenanceInfo">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#provenanceInfo"><s:message code="~eu.dariah.de.colreg.model.collection.provenance" /></a></li>
+				</s:bind>
+				<s:bind path="collection.associatedProject">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#associatedProject"><s:message code="~eu.dariah.de.colreg.model.collection.associated_project" /></a></li>
+				</s:bind>
+			</ul>
+		</li>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.policy" /></a>
+			<ul class="nav">
+				<s:bind path="collection.accrualMethods*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-accrual"><s:message code="~eu.dariah.de.colreg.model.collection.accrual" /></a></li>
+				</s:bind>
+				<s:bind path="collection.itemRights">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#itemRights"><s:message code="~eu.dariah.de.colreg.model.collection.item_rights" /></a></li>
+				</s:bind>
+			</ul>
+		</li>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.access" /></a>
+			<ul class="nav">
+				<s:bind path="collection.accessMethods*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-access-anchor"><s:message code="~eu.dariah.de.colreg.model.collection.access" /></a></li>
+				</s:bind>
+			</ul>
+		</li>
+		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.identification" /></a>
+			<ul class="nav">
+				<li><a href="#collection-identifier"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></a></li>
+				<li><a href="#version-identifier"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></a></li>
+				<li><a href="#current-version"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></a></li>
+				<li><a href="#initially-created"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></a></li>
+			</ul>
+		</li>		
 	</ul>
 </nav>

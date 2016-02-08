@@ -51,8 +51,8 @@ public class Collection extends VersionedEntityImpl {
 	// Legal information
 	@Valid private List<CollectionAgentRelation> agentRelations;
 	
-	private String collectionDescriptionRights;
-	private String accessRights;
+	@NotBlank private String collectionDescriptionRights;
+	@NotBlank private String accessRights;
 	private String itemRights;
 	
 	// Context	  
