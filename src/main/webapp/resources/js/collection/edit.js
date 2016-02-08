@@ -181,6 +181,15 @@ CollectionEditor.prototype.handleParentCollectionSelection = function(select, en
 	}
 };
 
+CollectionEditor.prototype.handleAccessTypeChange = function(select) {
+	var editField = $(select).closest("td");
+	if ($(select).find(":selected").text()==="OAI-PMH") {
+		editField.find(".oaiset").show();
+	} else {
+		editField.find(".oaiset").hide();
+	}
+};
+
 CollectionEditor.prototype.handleAgentSelection = function(select, control, suggestion) {
 	var _this = this;
 	var formGroup = $(control).closest(".form-group"); 

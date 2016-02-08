@@ -33,7 +33,7 @@
 				<div class="col-sm-4">
 					<span class="attribute-name-helper">accessMethods{}.type</span>
 					<select class="form-control" name="accessMethods[${currIndex}].type" id="accessMethods${currIndex}.type" 
-						onchange="editor.tables['accessMethodTable'].handleSelectChange(this, 'accessMethodTable_type');" autocomplete="off">
+						onchange="editor.handleAccessTypeChange(this); editor.tables['accessMethodTable'].handleSelectChange(this, 'accessMethodTable_type');" autocomplete="off">
 						<c:forEach items="${accessTypes}" var="type">
 							<option <c:if test="${currMethod.type==type.id}">selected="selected"</c:if> value="${type.id}">${type.label}</option>
 						</c:forEach>
@@ -56,6 +56,29 @@
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
 					path="accessMethods[${currIndex}].uri" />
+			</div>
+		</s:bind>
+		
+		<c:set var="isOaiPMH" value="false" />
+		<c:forEach items="${accessTypes}" var="accessType">
+			<c:if test="${currMethod.type==accessType.id && accessType.identifier=='oaipmh'}">
+				<c:set var="isOaiPMH" value="true" />
+			</c:if>
+		</c:forEach>
+		
+		<s:bind path="accessMethods[${currIndex}].oaiSet">
+			<div class="form-group oaiset${status.error ? ' has-error' : ''}" ${isOaiPMH ? '' : 'style="display: none;"'}>
+				<label for="title" class="col-sm-4 control-label">~OAI-PMH Set</label>
+				<div class="col-sm-8">
+					<span class="attribute-name-helper">accessMethods{}.oaiSet</span>
+					<input type="text" 
+						onchange="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_oaiSet');" 
+						onkeyup="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_oaiSet');" 
+						class="form-control" id="accessMethods${currIndex}.oaiSet" name="accessMethods[${currIndex}].oaiSet" 
+						value="<c:if test="${currMethod!=null}">${currMethod.oaiSet}</c:if>" placeholder="~OAI SET">
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
+					path="accessMethods[${currIndex}].oaiSet" />
 			</div>
 		</s:bind>
 		<s:bind path="accessMethods[${currIndex}].schemeIds*">

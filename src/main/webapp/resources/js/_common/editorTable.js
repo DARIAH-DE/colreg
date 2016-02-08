@@ -41,6 +41,7 @@ CollectionEditorTable.prototype.triggerAddTableElement = function() {
         	if (_this.options.newRowCallback!==null && typeof _this.options.newRowCallback==='function') {
         		_this.options.newRowCallback(r);
         	}
+        	_this.table.find("select").trigger("change");
         },
         error: function(textStatus) { }
 	});

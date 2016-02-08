@@ -138,4 +138,9 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public ItemType findItemTypeByIdentifier(String id) {
 		return itemTypeDao.findOne(Query.query(Criteria.where("identifier").is(id)));
 	}
+
+	@Override
+	public AccessType findAccessTypeByIdentfier(String identifier) {
+		return accessTypeDao.findOne(Query.query(Criteria.where("identifier").is(identifier)));
+	}
 }

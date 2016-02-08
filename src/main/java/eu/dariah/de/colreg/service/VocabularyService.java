@@ -31,4 +31,5 @@ public interface VocabularyService {
 	public EncodingScheme findEncodingSchemeById(String id);
 	public EncodingScheme findEncodingSchemeByName(String id);
 	public AccessType findAccessTypeById(String id);
+	public AccessType findAccessTypeByIdentfier(String string);
 }

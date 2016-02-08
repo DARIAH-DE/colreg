@@ -3,6 +3,7 @@ package eu.dariah.de.colreg.model.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -18,13 +19,21 @@ import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
 
 @Component
-public class CollectionValidator extends BaseValidator<Collection> {	
+public class CollectionValidator extends BaseValidator<Collection> implements InitializingBean {	
 	@Autowired private CollectionService collectionService;
 	@Autowired private AgentService agentService;
 	@Autowired private VocabularyService vocabularyService;
 	
+	private String oaiTypeId;
+	
 	public CollectionValidator() {
 		super(Collection.class);
+	}
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		AccessType oaiType = vocabularyService.findAccessTypeByIdentfier("oaipmh");
+		oaiTypeId = oaiType==null ? "" : oaiType.getId();
 	}
 
 	@Override
@@ -71,13 +80,18 @@ public class CollectionValidator extends BaseValidator<Collection> {
 			collection.getAgentRelations().removeAll(emptyRelations);
 		}
 		
-		// Remove empty encoding schemes
+		// Access
 		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
 			Access acc;
 			List<String> retainSchemeIds;
 			String schemeId;
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
 				acc = collection.getAccessMethods().get(i);
+				if (!acc.getType().equals(oaiTypeId)) {
+					acc.setOaiSet(null);
+				}
+				
+				// Remove empty encoding schemes
 				if (acc.getSchemeIds()!=null && acc.getSchemeIds().size()>0) {
 					retainSchemeIds = new ArrayList<String>();
 					for (int j=0; j<acc.getSchemeIds().size(); j++) {
