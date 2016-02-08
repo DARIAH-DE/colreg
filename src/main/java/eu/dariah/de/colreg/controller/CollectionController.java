@@ -40,10 +40,6 @@ public class CollectionController {
 	
 	@Autowired private CollectionValidator validator;
 	
-	/*@InitBinder
-	protected void initBinder(final WebDataBinder binder) {
-	    binder.setValidator(validator);
-	}*/	
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -59,6 +55,9 @@ public class CollectionController {
 			c = collectionService.createCollection();
 		} else {
 			c = collectionService.findCurrentByCollectionId(id, true);
+			if (c==null) {
+				c = collectionService.findVersionById(id, true);
+			}
 			if (c!=null) {
 				collectionService.initializeAgentRelations(c);
 			}
@@ -69,7 +68,7 @@ public class CollectionController {
 			return "redirect:/collections/";
 		}
 		 
-		return fillCollectionEditorModel(id, c, model);
+		return fillCollectionEditorModel(c.getEntityId(), c, model);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
@@ -85,8 +84,9 @@ public class CollectionController {
 		return "redirect:/collections/" + collection.getEntityId();
 	}
 	
-	private String fillCollectionEditorModel(String id, Collection c, Model model) {
+	private String fillCollectionEditorModel(String entityId, Collection c, Model model) {
 		model.addAttribute("collection", c);
+		model.addAttribute("selectedVersionId", c.getId());
 		
 		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
@@ -98,10 +98,10 @@ public class CollectionController {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
 		}
 		
-		List<Collection> versions = collectionService.findAllVersionsForEntityId(id);
+		List<Collection> versions = collectionService.findAllVersionsForEntityId(entityId);
 		model.addAttribute("versions", versions);
 		
-		List<Collection> childCollections = collectionService.findCurrentByParentCollectionId(id);
+		List<Collection> childCollections = collectionService.findCurrentByParentCollectionId(entityId);
 		model.addAttribute("childCollections", childCollections);
 		model.addAttribute("activeChildCollections", childCollections!=null && childCollections.size()>0);
 		model.addAttribute("isDraft", c.getDraftUserId()==null || c.getDraftUserId().equals(""));

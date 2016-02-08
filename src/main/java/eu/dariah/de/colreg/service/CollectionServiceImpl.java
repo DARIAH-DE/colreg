@@ -136,11 +136,17 @@ public class CollectionServiceImpl implements CollectionService {
 		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
 		q.fields().include("id")
 			.include("succeedingVersionId")
+			.include("entityId")
 			.include("versionTimestamp")
 			.include("versionCreator")
 			.include("deleted")
 			.include("draftUserId");
 		
 		return collectionDao.find(q);
+	}
+
+	@Override
+	public Collection findVersionById(String id, boolean includeDeleted) {
+		return collectionDao.findById(id, includeDeleted);
 	}
 }

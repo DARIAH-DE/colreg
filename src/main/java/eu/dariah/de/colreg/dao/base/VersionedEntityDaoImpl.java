@@ -50,4 +50,14 @@ public abstract class VersionedEntityDaoImpl<T extends VersionedEntityImpl> exte
 		}
 		return this.find(q);
 	}
+	
+	@Override
+	public T findById(String id, boolean includeDeleted) {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("id").is(id));
+		if (!includeDeleted) {
+			q.addCriteria(Criteria.where("deleted").ne(true));
+		}
+		return this.findOne(q);
+	}
 }

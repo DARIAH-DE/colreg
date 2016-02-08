@@ -8,6 +8,8 @@ public interface VersionedEntityDao<T extends VersionedEntityImpl> extends BaseD
 	public T findCurrentById(String id);
 	public T findCurrentById(String id, boolean includeDeleted);
 	
+	public T findById(String id, boolean includeDeleted);
+	
 	public List<T> findAllCurrent();
 	public List<T> findAllCurrent(boolean includeDeleted);
 }

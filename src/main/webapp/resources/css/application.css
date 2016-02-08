@@ -654,12 +654,16 @@ label.control-label.mandatory {
 	border-left: 5px solid transparent;
 }
 
+#editor-version-panel li.version-selected {
+	background-color: #E6E6E6;
+}
+
 #editor-version-panel li.version-deleted {
 	border-left-color: #F00;
 }
 
 #editor-version-panel li.version-draft {
-	border-left-color: #999;
+	border-left-color: #888;
 }
 
 #editor-version-panel li.version-published {
@@ -676,7 +680,7 @@ label.control-label.mandatory {
 }
 
 #editor-version-panel li.version-draft .version-action {
-	color: #999;
+	color: #777;
 }
 
 #editor-version-panel li.version-published .version-action {

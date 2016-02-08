@@ -30,6 +30,14 @@
 						~ This collection is marked deleted and is as such only accessible through its permalink   
 					</div>
 				</c:if>
+				
+				<c:if test="${collection.succeedingVersionId!=null}">
+					<div class="alert alert-warning" role="alert">
+						~ You are looking at an outdated version of a collection description. You can always find the latest revision of this collection  
+						<a href='<s:url value="/collections/${collection.entityId}" />'>here</a>. 
+					</div>
+				</c:if>
+				
 				<div id="entity-notifications-area">
 					<s:bind path="*">
 					<c:if test="${status.error}">
