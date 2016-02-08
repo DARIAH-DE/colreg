@@ -76,7 +76,10 @@
 						</p>
 					</div>
 					<div class="agent-display-null <c:if test="${currAgentRelation.agent!=null}">hide</c:if>">
-						<label class="control-label"><em>~ No agent set</em></label>
+						<label class="control-label"><em>~ No agent set</em></label><br />
+						<label class="control-label"><small>~ If you cannot find the appropriate agent here, you might have to 
+							<a target="_blank" href='<s:url value="/agents/new" />'>create it</a> first.</small>
+						</label>
 					</div>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 

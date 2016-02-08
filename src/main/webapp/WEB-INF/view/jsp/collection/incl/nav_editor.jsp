@@ -1,9 +1,12 @@
 <nav class="nav-form-controls">
 	<h3>~Properties</h3>
 	<ul class="nav">
-		<li><a href="#overview">~Agent type</a>
+		<li><a href="#overview">~Mandatory description</a>
 			<ul class="nav">
-				<li class="mandatory"><a href="#agentTypeId">~Type</a></li>
+				<li><a href="#tbl-collection-description-sets">~Localized descriptions</a></li>
+				<li><a href="#collectionType">~Collection type</a></li>
+				<li><a href="#collectionDescriptionRights">~Collection Description Rights</a></li>
+				<li><a href="#accessRights">~Access Rights</a></li>
 			</ul>
 		</li>
 		<li><a href="#grid">~Agent description</a>

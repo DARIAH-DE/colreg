@@ -542,11 +542,9 @@ p.tt-suggestion {
 
 label.control-label {
 	font-weight: normal;
+	font-style: italic;
 }
 
-label.control-label.mandatory {
-	font-weight: bold;
-}
 
 .editor-section {
 	border: 1px solid #CCC;
