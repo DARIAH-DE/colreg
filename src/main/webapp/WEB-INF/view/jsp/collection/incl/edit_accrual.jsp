@@ -11,7 +11,7 @@
 						<c:if test="${currMethod.accrualMethod==method.id}">${method.label}</c:if>
 					</c:forEach>
 				</c:when>
-				<c:otherwise>~ New entry</c:otherwise>
+				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>
 		<td class="accrualMethodTable_accrualPolicy nowrap" onclick="editor.tables['accrualMethodTable'].editEntry(this); return false;">
@@ -34,7 +34,7 @@
 		<!-- Method -->
 		<s:bind path="accrualMethods[${currIndex}].accrualMethod">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label">~Accrual method</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></label>
 				<div class="col-sm-4">
 					<span class="attribute-name-helper">accrualMethods{}.accrualMethod</span>
 					<select class="form-control" name="accrualMethods[${currIndex}].accrualMethod" id="accrualMethods${currIndex}.accrualMethod" 
@@ -52,7 +52,7 @@
 		<!-- Policy -->
 		<s:bind path="accrualMethods[${currIndex}].accrualPolicy">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label">~Accrual policy</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.policy" /></label>
 				<div class="col-sm-4">
 					<span class="attribute-name-helper">accrualMethods{}.accrualPolicy</span>
 					<select class="form-control" name="accrualMethods[${currIndex}].accrualPolicy" id="accrualMethods${currIndex}.accrualPolicy" 
@@ -72,10 +72,10 @@
 		<!-- Note -->
 		<s:bind path="accrualMethods[${currIndex}].description">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label">~Description</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.description" /></label>
 				<div class="col-sm-8">
 					<span class="attribute-name-helper">accrualMethods{}.description</span>
-					<textarea class="form-control" rows="3" id="accrualMethods${currIndex}.description" name="accrualMethods[${currIndex}].description" placeholder="~Description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
+					<textarea class="form-control" rows="3" id="accrualMethods${currIndex}.description" name="accrualMethods[${currIndex}].description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
 					path="accrualMethods[${currIndex}].description" />

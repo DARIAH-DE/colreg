@@ -6,9 +6,9 @@
 	<li class="collection-editor-list-item form-item${status.error ? ' has-error' : ' '}">
 		<div class="collection-editor-list-input col-sm-5">
 			<span class="attribute-name-helper">locations{}</span>
-			<span style="display: inline-block;">
+			<span style="display: inline-block; width: 100%;">
 				<input type="text" class="form-control" id="locations${currIndex}" name="locations[${currIndex}]" 
-					value="<c:if test="${currLoc!=null}">${currLoc}</c:if>" placeholder="~Location">
+					value="<c:if test="${currLoc!=null}">${currLoc}</c:if>">
 			</span>
 		</div>
 		<div class="collection-editor-list-item-buttons">

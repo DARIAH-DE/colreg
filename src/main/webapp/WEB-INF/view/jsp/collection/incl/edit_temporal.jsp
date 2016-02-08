@@ -6,9 +6,9 @@
 	<li class="collection-editor-list-item form-item${status.error ? ' has-error' : ' '}">
 		<div class="collection-editor-list-input col-sm-5">
 			<span class="attribute-name-helper">temporals{}</span>
-			<span style="display: inline-block;">
+			<span style="display: inline-block; width: 100%;">
 				<input type="text" class="form-control" id="temporals${currIndex}" name="temporals[${currIndex}]" 
-					value="<c:if test="${currTemp!=null}">${currTemp}</c:if>" placeholder="~ Temporal information">
+					value="<c:if test="${currTemp!=null}">${currTemp}</c:if>">
 			</span>
 		</div>
 		<div class="collection-editor-list-item-buttons">

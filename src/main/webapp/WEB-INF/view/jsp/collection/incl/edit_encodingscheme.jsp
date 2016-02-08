@@ -6,9 +6,9 @@
 	<li class="collection-editor-list-item form-item${status.error ? ' has-error' : ' '}">
 		<div class="collection-editor-list-input col-sm-5">
 			<span class="attribute-name-helper">accessMethods{}.schemeIds</span>
-			<span style="display: inline-block;">
+			<span style="display: inline-block; width: 100%;">
 				<input type="text" class="form-control typeahead encoding-scheme-typeahead" 
-					value="<c:if test="${currSchemeId!=null}">${currSchemeId}</c:if>" placeholder="~Scheme Id">
+					value="<c:if test="${currSchemeId!=null}">${currSchemeId}</c:if>" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.type_to_search" />">
 			</span>
 		</div>
 		<div class="collection-editor-list-item-buttons">

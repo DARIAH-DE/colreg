@@ -60,7 +60,7 @@
 			
 			
 			<noscript>
-		        <div><s:message code="~eu.dariah.de.minfba.common.noscript" /></div>
+		        <div><s:message code="~eu.dariah.de.colreg.common.noscript" /></div>
 		    </noscript>
 	  	</div>
 	  	

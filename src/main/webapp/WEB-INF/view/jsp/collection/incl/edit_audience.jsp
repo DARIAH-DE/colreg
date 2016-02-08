@@ -6,9 +6,9 @@
 	<li class="collection-editor-list-item form-item${status.error ? ' has-error' : ' '}">
 		<div class="collection-editor-list-input col-sm-5">
 			<span class="attribute-name-helper">audiences{}</span>
-			<span style="display: inline-block;">
+			<span style="display: inline-block; width: 100%;">
 				<input type="text" class="form-control" id="audiences${currIndex}" name="audiences[${currIndex}]" 
-					value="<c:if test="${currAudi!=null}">${currAudi}</c:if>" placeholder="~Audience">
+					value="<c:if test="${currAudi!=null}">${currAudi}</c:if>">
 			</span>
 		</div>
 		<div class="collection-editor-list-item-buttons">

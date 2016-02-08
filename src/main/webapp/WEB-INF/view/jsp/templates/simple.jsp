@@ -27,7 +27,7 @@
 		</div>
 		
 		<noscript>
-	        <div><s:message code="~eu.dariah.de.minfba.common.noscript" /></div>
+	        <div><s:message code="~eu.dariah.de.colreg.common.noscript" /></div>
 	    </noscript>
 	  	<!-- JavaScript files at the end for faster loading of documents -->
 	  	<tiles:importAttribute name="scripts" />  	

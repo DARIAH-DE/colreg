@@ -7,7 +7,7 @@
 		<td class="agentRelationTable_agentName" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">
 			<c:choose>
 				<c:when test="${currAgentRelation!=null}">${currAgentRelation.agent.name} ${currAgentRelation.agent.foreName}</c:when>
-				<c:otherwise>~ New entry</c:otherwise>
+				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>
 		<td class="agentRelationTable_agentType" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">
@@ -34,7 +34,7 @@
 	<td colspan="3">
 		<s:bind path="agentRelations[${currIndex}].typeIds">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="description" class="col-sm-3 control-label mandatory">~Type</label>
+				<label for="description" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.agent_relation.relation" /></label>
 				<div class="col-sm-5">
 					<span class="attribute-name-helper">agentRelations{}.typeIds</span>
 					<select class="form-control select-relation-type" id="agentRelations${currIndex}.typeIds" name="agentRelations[${currIndex}].typeIds" size="4" multiple="multiple" autocomplete="off">
@@ -56,13 +56,13 @@
 		</s:bind>
 		<s:bind path="agentRelations[${currIndex}].agentId">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-3 control-label">~Related Agent</label>
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent_relation.agent" /></label>
 				<div class="col-sm-9">
 					<span class="attribute-name-helper">agentRelations{}.agentId</span>
 					<input type="hidden" class="form-control" id="agentRelations${currIndex}.agentId" name="agentRelations[${currIndex}].agentId" 
 						value="<c:if test="${currAgentRelation!=null}">${currAgentRelation.agentId}</c:if>" />
 					<input type="hidden" class="agent-name-display-helper" onchange="editor.tables['agentRelationTable'].handleInputChange(this, 'agentRelationTable_agentName');" />
-					<input type="text" class="form-control typeahead agent-typeahead" placeholder="~Search for agent">
+					<input type="text" class="form-control typeahead agent-typeahead" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.type_to_search" />" />
 				</div>
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="agent-display alert alert-default <c:if test="${currAgentRelation.agent==null}">hide</c:if>">
@@ -76,10 +76,9 @@
 						</p>
 					</div>
 					<div class="agent-display-null <c:if test="${currAgentRelation.agent!=null}">hide</c:if>">
-						<label class="control-label"><em>~ No agent set</em></label><br />
-						<label class="control-label"><small>~ If you cannot find the appropriate agent here, you might have to 
-							<a target="_blank" href='<s:url value="/agents/new" />'>create it</a> first.</small>
-						</label>
+						<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_agent_set" /></em></label><br />
+						<s:url value="/agents/new" var="newAgentUrl" />
+						<label class="control-label"><small><s:message code="~eu.dariah.de.colreg.view.collection.labels.hint_add_agent" arguments="${newAgentUrl}" /></small></label>
 					</div>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
@@ -88,10 +87,10 @@
 		</s:bind>
 		<s:bind path="agentRelations[${currIndex}].annotation">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="description" class="col-sm-3 control-label">~Description</label>
+				<label for="description" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent_relation.description" /></label>
 				<div class="col-sm-9">
 					<span class="attribute-name-helper">agentRelations{}.annotation</span>
-					<textarea class="form-control" rows="3" id="agentRelations${currIndex}.annotation" name="agentRelations[${currIndex}].annotation" placeholder="~Description"><c:if test="${currAgentRelation!=null}">${currAgentRelation.annotation}</c:if></textarea>
+					<textarea class="form-control" rows="3" id="agentRelations${currIndex}.annotation" name="agentRelations[${currIndex}].annotation"><c:if test="${currAgentRelation!=null}">${currAgentRelation.annotation}</c:if></textarea>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="agentRelations[${currIndex}].annotation" />

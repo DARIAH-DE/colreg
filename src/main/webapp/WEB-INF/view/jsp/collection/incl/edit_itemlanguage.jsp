@@ -6,9 +6,9 @@
 	<li class="collection-editor-list-item form-item${status.error ? ' has-error' : ' '}">
 		<div class="collection-editor-list-input col-sm-5">
 			<span class="attribute-name-helper">itemLanguages{}</span>
-			<span style="display: inline-block;">
+			<span style="display: inline-block; width: 100%;">
 				<input type="text" class="form-control typeahead language-typeahead" id="itemLanguages${currIndex}" name="itemLanguages[${currIndex}]" 
-					value="<c:if test="${currLang!=null}">${currLang}</c:if>" placeholder="~Language">
+					value="<c:if test="${currLang!=null}">${currLang}</c:if>" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.type_to_search" />">
 			</span>
 		</div>
 		<div class="collection-editor-list-item-buttons">

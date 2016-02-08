@@ -8,7 +8,7 @@
 		<td class="accessMethodTable_uri" onclick="editor.tables['accessMethodTable'].editEntry(this); return false;">
 			<c:choose>
 				<c:when test="${currMethod!=null}">${currMethod.uri}</c:when>
-				<c:otherwise>~ New entry</c:otherwise>
+				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>
 		<td class="accessMethodTable_type nowrap" onclick="editor.tables['accessMethodTable'].editEntry(this); return false;">
@@ -29,7 +29,7 @@
 	<td colspan="3">
 		<s:bind path="accessMethods[${currIndex}].type">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label">~Access type</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.access.type" /></label>
 				<div class="col-sm-4">
 					<span class="attribute-name-helper">accessMethods{}.type</span>
 					<select class="form-control" name="accessMethods[${currIndex}].type" id="accessMethods${currIndex}.type" 
@@ -45,14 +45,14 @@
 		</s:bind>
 		<s:bind path="accessMethods[${currIndex}].uri">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label">~Uri</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.access.uri" /></label>
 				<div class="col-sm-8">
 					<span class="attribute-name-helper">accessMethods{}.uri</span>
 					<input type="text" 
 						onchange="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_uri');" 
 						onkeyup="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_uri');" 
 						class="form-control" id="accessMethods${currIndex}.uri" name="accessMethods[${currIndex}].uri" 
-						value="<c:if test="${currMethod!=null}">${currMethod.uri}</c:if>" placeholder="~URI">
+						value="<c:if test="${currMethod!=null}">${currMethod.uri}</c:if>">
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
 					path="accessMethods[${currIndex}].uri" />
@@ -68,14 +68,14 @@
 		
 		<s:bind path="accessMethods[${currIndex}].oaiSet">
 			<div class="form-group oaiset${status.error ? ' has-error' : ''}" ${isOaiPMH ? '' : 'style="display: none;"'}>
-				<label for="title" class="col-sm-4 control-label">~OAI-PMH Set</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.access.oaipmh_set" /></label>
 				<div class="col-sm-8">
 					<span class="attribute-name-helper">accessMethods{}.oaiSet</span>
 					<input type="text" 
 						onchange="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_oaiSet');" 
 						onkeyup="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_oaiSet');" 
 						class="form-control" id="accessMethods${currIndex}.oaiSet" name="accessMethods[${currIndex}].oaiSet" 
-						value="<c:if test="${currMethod!=null}">${currMethod.oaiSet}</c:if>" placeholder="~OAI SET">
+						value="<c:if test="${currMethod!=null}">${currMethod.oaiSet}</c:if>">
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
 					path="accessMethods[${currIndex}].oaiSet" />
@@ -83,7 +83,7 @@
 		</s:bind>
 		<s:bind path="accessMethods[${currIndex}].schemeIds*">
 			<div class="form-group">
-				<label for="title" class="col-sm-4 control-label${status.error ? ' container-error' : ' '}">~Encoding schemes</label>
+				<label for="title" class="col-sm-4 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.access.encoding_schemes" /></label>
 				<div class="col-sm-8">
 					<ul class="lst-collection-access-schemes collection-editor-list">
 						<c:if test="${fn:length(currMethod.schemeIds)>0}">
@@ -107,10 +107,10 @@
 		</s:bind>
 		<s:bind path="accessMethods[${currIndex}].description">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label">~Description</label>
+				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.access.description" /></label>
 				<div class="col-sm-8">
 					<span class="attribute-name-helper">accessMethods{}.description</span>
-					<textarea class="form-control" rows="3" id="accessMethods${currIndex}.description" name="accessMethods[${currIndex}].description" placeholder="~Description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
+					<textarea class="form-control" rows="3" id="accessMethods${currIndex}.description" name="accessMethods[${currIndex}].description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
 					path="accessMethods[${currIndex}].description" />
