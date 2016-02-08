@@ -135,6 +135,7 @@ public class CollectionServiceImpl implements CollectionService {
 		q.addCriteria(Criteria.where("entityId").is(id));
 		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
 		q.fields().include("id")
+			.include("succeedingVersionId")
 			.include("versionTimestamp")
 			.include("versionCreator")
 			.include("deleted")

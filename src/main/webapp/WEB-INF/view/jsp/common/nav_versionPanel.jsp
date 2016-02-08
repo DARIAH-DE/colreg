@@ -3,13 +3,14 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
 <nav id="editor-version-panel" class="sb-slidebar sb-right sb-style-overlay${version.deleted ? ' deleted' : ''} ${version.draftUserId!=null ? ' draft' : ''}">
-	<h1>~ Collection versions</h1>
+	<h3>~ Version history</h3>
 	<ul>
 		<c:forEach items="${versions}" var="version">
 			<li>
-				<joda:format value="${version.versionTimestamp}" style="LM" /><br />
-				${version.versionCreator}<br />
-				<a href="<s:url value="/collections/${version.id}" />">${version.id}</a>
+				<a href="<s:url value="/collections/${version.id}" />">
+					<joda:format value="${version.versionTimestamp}" style="LM" />${version.succeedingVersionId==null ? ' (~current)' : ''}<br />
+					${version.versionCreator}
+				</a>
 			</li>
 		</c:forEach>
 	</ul>

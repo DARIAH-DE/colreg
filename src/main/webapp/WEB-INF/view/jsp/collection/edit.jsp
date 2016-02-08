@@ -46,7 +46,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<button class="btn btn-default cancel form-btn-cancel">~ Cancel</button>
-					<button class="btn btn-info start form-btn-submit">~ Save as draft</button>
+					<button class="btn btn-primary start form-btn-submit">~ Save as draft</button>
 					<button class="btn btn-primary start form-btn-submit">~ Publish</button>
 				</div>
 			</div>
