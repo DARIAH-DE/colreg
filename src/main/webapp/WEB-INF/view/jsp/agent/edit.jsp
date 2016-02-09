@@ -86,6 +86,12 @@
 						</select>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="agentTypeId" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.type" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -119,14 +125,38 @@
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.agent.groups.extended_description" /></h4>
 			</div>
+			
 			<!-- Agent address -->
-			<s:bind path="address">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="address" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.address" /></label>
+			<s:bind path="addresses*">
+				<div class="form-group" >
+					<label for="tbl-agent-addresses" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.agent.addresses" /></label>
 					<div class="col-sm-9">
-						<sf:input path="address" class="form-control" />
+						<table id="tbl-agent-addresses" class="collection-editor-table">
+							<thead>
+								<tr>
+									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent.place" /></th>
+									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.agent.country" /></th>
+									<th class="nowrap"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${fn:length(agent.addresses)>0}">
+									<c:forEach items="${agent.addresses}" var="addr" varStatus="status" >
+										<c:set var="currAddr" value="${addr}" scope="request" />
+										<c:set var="currIndex" value="${status.index}" scope="request" />
+										<jsp:include page="incl/edit_address.jsp" />
+									</c:forEach>
+									<c:remove var="currAddr" />	
+								</c:if>
+								<tr class="collection-editor-table-buttons">
+									<td colspan="4" style="text-align: right;">
+										<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_address" /></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="address" />
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="addresses" />
 				</div>
 			</s:bind>
 			

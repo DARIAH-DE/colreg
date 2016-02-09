@@ -707,3 +707,18 @@ label.control-label {
 	color: #444;
 	text-decoration: none;
 }
+
+.editor-hint {
+	padding: 5px;
+	padding-left: 25px;
+	margin-top: 3px;
+	margin-bottom: 6px;
+	
+	font-size: 95%;
+	font-style: italic;
+	color: #555;
+}
+
+.editor-hint span.glyphicon {
+	margin-left: -20px;
+}

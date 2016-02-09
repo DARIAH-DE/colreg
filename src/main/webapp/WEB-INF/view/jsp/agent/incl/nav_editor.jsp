@@ -20,8 +20,8 @@
 		</li>
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.agent.groups.extended_description" /></a>
 			<ul class="nav">
-				<s:bind path="agent.address">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#address"><s:message code="~eu.dariah.de.colreg.model.agent.address" /></a></li>
+				<s:bind path="agent.addresses*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-agent-addresses"><s:message code="~eu.dariah.de.colreg.model.agent.addresses" /></a></li>
 				</s:bind>
 				<s:bind path="agent.eMail">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#eMail"><s:message code="~eu.dariah.de.colreg.model.agent.email" /></a></li>

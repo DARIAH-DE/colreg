@@ -131,7 +131,12 @@ public class AgentController {
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editIdentifier"})
-	public String getEditAccessForm() {
+	public String getEditIdentifierForm() {
 		return "agent/edit/incl/edit_identifier";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editAddress"})
+	public String getEditAddressForm() {
+		return "agent/edit/incl/edit_address";
 	}
 }

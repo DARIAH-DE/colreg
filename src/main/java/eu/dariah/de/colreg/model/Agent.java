@@ -23,7 +23,8 @@ public class Agent extends VersionedEntityImpl {
 	@NotBlank
 	private String name;
 	private String foreName;
-	private String address;
+	
+	private List<Address> addresses;
 	
 	@Email
 	private String eMail;
@@ -44,8 +45,8 @@ public class Agent extends VersionedEntityImpl {
 	public String getForeName() { return foreName; }
 	public void setForeName(String foreName) { this.foreName = foreName; }
 	
-	public String getAddress() { return address; }
-	public void setAddress(String address) { this.address = address; }
+	public List<Address> getAddresses() { return addresses; }
+	public void setAddresses(List<Address> addresses) { this.addresses = addresses; }
 	
 	public String getEMail() { return eMail; }
 	public void setEMail(String eMail) { this.eMail = eMail; }

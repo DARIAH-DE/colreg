@@ -33,7 +33,7 @@ public class Collection extends VersionedEntityImpl {
 	@Email private String eMail;
 	
 	private List<String> audiences;
-	private List<String> locations;
+	private List<Address> locations;
 	
 	private List<String> itemLanguages;
 	
@@ -143,6 +143,6 @@ public class Collection extends VersionedEntityImpl {
 	public List<String> getAudiences() { return audiences; }
 	public void setAudiences(List<String> audiences) { this.audiences = audiences; }
 	
-	public List<String> getLocations() { return locations; }
-	public void setLocations(List<String> locations) { this.locations = locations; }
+	public List<Address> getLocations() { return locations; }
+	public void setLocations(List<Address> locations) { this.locations = locations; }
 }

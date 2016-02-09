@@ -33,6 +33,14 @@ var AgentEditor = function() {
 		}
 	});
 	
+	this.tables["addresses"] = new CollectionEditorTable({
+		tableSelector: "#tbl-agent-addresses",
+		newRowUrl: __util.getBaseUrl() + "agents/includes/editAddress",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
+	});
+	
 	this.registerNavFormControlEvents();
 	this.registerFormControlSelectionEvents($("form"));
 };

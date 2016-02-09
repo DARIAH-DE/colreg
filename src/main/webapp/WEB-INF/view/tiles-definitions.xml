@@ -105,6 +105,6 @@
 		</put-list-attribute>
 	</definition>
 	<definition name="agent/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/agent/incl/edit_identifier.jsp" />
-	
+	<definition name="agent/edit/incl/edit_address" template="/WEB-INF/view/jsp/agent/incl/edit_address.jsp" />
 
 </tiles-definitions>
