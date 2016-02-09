@@ -5,7 +5,7 @@
 		<span class="attribute-name-helper">providedIdentifier{}</span>
 		<span style="display: inline-block; width: 100%;">
 			<input type="text" class="form-control" id="providedIdentifier${currIndex}" name="providedIdentifier[${currIndex}]" 
-				value="<c:if test="${currIdentifier!=null}">${currIdentifier}</c:if>" placeholder="~Provided identifier">
+				value="<c:if test="${currIdentifier!=null}">${currIdentifier}</c:if>">
 		</span>
 	</div>
 	<div class="collection-editor-list-item-buttons">

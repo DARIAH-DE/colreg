@@ -40,12 +40,7 @@ public class AgentController {
 	@Autowired private VocabularyService vocabularyService;
 	
 	@Autowired private AgentValidator validator;
-	
-	@InitBinder
-	protected void initBinder(final WebDataBinder binder) {
-		binder.setValidator(validator);
-	}	
-	
+		
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
 		model.addAttribute("agents", agentService.findAllCurrent());
@@ -78,6 +73,15 @@ public class AgentController {
 		model.addAttribute("collections", collections);
 		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
 		
+		model.addAttribute("isNew", a.getId().equals("new"));
+		
+		if (a.getSucceedingVersionId()==null) {
+			model.addAttribute("isDeleted", a.isDeleted());
+		} else {
+			Agent current = agentService.findCurrentByAgentId(id, true);
+			model.addAttribute("isDeleted", current.isDeleted());
+		}
+		
 		return "agent/edit";
 	}
 	
@@ -98,7 +102,9 @@ public class AgentController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveAgent(@ModelAttribute @Valid Agent agent, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveAgent(@PathVariable String id, @ModelAttribute Agent agent, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+		agent.setEntityId(id);
+		validator.validate(agent, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return this.fillAgentEditorModel(agent.getEntityId(), agent, model);
 		} 
