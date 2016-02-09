@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.Collection;
 
 @Service
 public class AgentServiceImpl implements AgentService {
@@ -49,11 +52,22 @@ public class AgentServiceImpl implements AgentService {
 	}
 	
 	@Override
-	public void save(Agent a) {
+	public void save(Agent a, String userId) {
 		Agent prev = this.findCurrentByAgentId(a.getEntityId());
 		
 		a.setId(null);
 		a.setSucceedingVersionId(null);
+		a.setVersionCreator(userId);
+		a.setVersionTimestamp(DateTime.now());
+		
+		if (prev!=null) {
+			a.setEntityCreator(prev.getEntityCreator());
+			a.setEntityTimestamp(prev.getEntityTimestamp());
+		} else {
+			a.setEntityCreator(a.getVersionCreator());
+			a.setEntityTimestamp(a.getVersionTimestamp());
+		}
+		
 		agentDao.save(a);
 		
 		if (prev!=null) {
@@ -98,5 +112,26 @@ public class AgentServiceImpl implements AgentService {
 			q.addCriteria(Criteria.where("foreName").is(foreName.trim()));
 		}
 		return agentDao.findOne(q);
+	}
+
+	@Override
+	public List<Agent> findAllVersionsForEntityId(String id) {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("entityId").is(id));
+		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
+		q.fields().include("id")
+			.include("succeedingVersionId")
+			.include("entityId")
+			.include("versionTimestamp")
+			.include("versionCreator")
+			.include("deleted")
+			.include("draftUserId");
+		
+		return agentDao.find(q);
+	}
+
+	@Override
+	public Agent findVersionById(String id, boolean includeDeleted) {
+		return agentDao.findById(id, includeDeleted);
 	}
 }

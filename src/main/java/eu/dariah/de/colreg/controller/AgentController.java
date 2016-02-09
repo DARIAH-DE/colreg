@@ -55,6 +55,9 @@ public class AgentController {
 			a = agentService.createAgent();
 		} else {
 			a = agentService.findCurrentByAgentId(id, true);
+			if (a==null) {
+				a = agentService.findVersionById(id, true);
+			}
 		}
 		return this.fillAgentEditorModel(id, a, model);
 	}
@@ -72,6 +75,9 @@ public class AgentController {
 		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(id);
 		model.addAttribute("collections", collections);
 		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
+		
+		List<Agent> versions = agentService.findAllVersionsForEntityId(id);
+		model.addAttribute("versions", versions);
 		
 		model.addAttribute("isNew", a.getId().equals("new"));
 		
@@ -94,7 +100,7 @@ public class AgentController {
 		if ((children==null || children.size()==0) && (collections==null || collections.size()==0)) {
 			Agent a = agentService.findCurrentByAgentId(id);
 			a.setDeleted(true);
-			agentService.save(a);
+			agentService.save(a, "default_user");
 			result.setSuccess(true);
 		}
 		
@@ -108,7 +114,7 @@ public class AgentController {
 		if (bindingResult.hasErrors()) {
 			return this.fillAgentEditorModel(agent.getEntityId(), agent, model);
 		} 
-		agentService.save(agent);
+		agentService.save(agent, "default_user");
 		return "redirect:/agents/" + agent.getEntityId();
 	}
 	

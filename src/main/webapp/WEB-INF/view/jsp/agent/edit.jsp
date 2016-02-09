@@ -197,7 +197,7 @@
 			<!-- Child agents -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.child_agents" /></label>
-				<div class="col-sm-9">
+				<div class="col-sm-9" id="child-agents">
 					<c:choose>
 						<c:when test="${childAgents!=null && fn:length(childAgents)>0}">
 							<c:forEach items="${childAgents}" var="child" varStatus="status" >
@@ -220,7 +220,7 @@
 			<!-- Associated collections -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.associated_collections" /></label>
-				<div class="col-sm-9">
+				<div class="col-sm-9" id="associated-collections">
 					<c:choose>
 						<c:when test="${collections!=null && fn:length(collections)>0}">
 							<c:forEach items="${collections}" var="collection" varStatus="status" >
@@ -270,7 +270,7 @@
 				<!-- Entity id -->
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.agent_identifier" /></label>
-					<div id="collection-identifier" class="col-sm-9">
+					<div id="agent-identifier" class="col-sm-9">
 						<label class="control-label">
 							<a href="<s:url value="/agents/${agent.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.entityId}" /></a>
 						</label>

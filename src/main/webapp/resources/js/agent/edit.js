@@ -12,6 +12,8 @@ $(document).ready(function() {
 	});
 	
 	$("form").submit(function(event) { editor.submit(event); });
+	
+	$.slidebars();
 });
 
 
@@ -24,24 +26,13 @@ var AgentEditor = function() {
 	this.lists["identifierList"] = new CollectionEditorList({
 		listSelector: "#lst-agent-provided-identifiers",
 		newRowUrl: __util.getBaseUrl() + "agents/includes/editIdentifier",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
 	});
 	
-	/**
-	 * Side navigation interaction -> move to BaseEditor once workable
-	 */
-	$(".nav-form-controls a").on('click', function(e) {
-		$($(this).attr("href")).focus();
-		e.stopPropagation(); 
-		return false;
-	});
-	$("input").focus(function() {		
-		$(".nav-form-controls li").removeClass("active");
-		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
-	});
-	$("select").focus(function() {		
-		$(".nav-form-controls li").removeClass("active");
-		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
-	});
+	this.registerNavFormControlEvents();
+	this.registerFormControlSelectionEvents($("form"));
 };
 
 AgentEditor.prototype = new BaseEditor();

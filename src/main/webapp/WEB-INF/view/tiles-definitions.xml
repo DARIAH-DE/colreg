@@ -69,8 +69,8 @@
 	</definition>
 	<definition name="collection/edit" extends="template_editors">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/edit.jsp" />
+		<put-attribute name="collapsePanel" value="/WEB-INF/view/jsp/collection/incl/nav_versionPanel.jsp" />
 		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/collection/incl/nav_editor.jsp" />
-		<put-attribute name="collapsePanel" value="/WEB-INF/view/jsp/common/nav_versionPanel.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="collection/edit.js" />
 		</put-list-attribute>
@@ -98,6 +98,7 @@
 	</definition>
 	<definition name="agent/edit" extends="template_editors">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/edit.jsp" />
+		<put-attribute name="collapsePanel" value="/WEB-INF/view/jsp/agent/incl/nav_versionPanel.jsp" />
 		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/agent/incl/nav_editor.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="agent/edit.js" />

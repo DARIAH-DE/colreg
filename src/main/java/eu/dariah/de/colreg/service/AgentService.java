@@ -8,9 +8,11 @@ public interface AgentService {
 	public List<Agent> findAllCurrent();
 	public Agent createAgent();
 	public Agent findCurrentByAgentId(String id);
-	public void save(Agent a);
+	public void save(Agent a, String userId);
 	public List<Agent> queryAgents(String query, List<String> excl);
 	public List<Agent> findCurrentByParentAgentId(String id);
 	public Agent findCurrentByAgentId(String id, boolean includeDeleted);
 	public Agent findCurrentByName(String name, String foreName);
+	public List<Agent> findAllVersionsForEntityId(String id);
+	public Agent findVersionById(String id, boolean includeDeleted);
 }
