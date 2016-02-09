@@ -59,24 +59,31 @@ public class AgentController {
 				a = agentService.findVersionById(id, true);
 			}
 		}
-		return this.fillAgentEditorModel(id, a, model);
+		
+		if (a==null) {
+			// Should be 404
+			return "redirect:/collections/";
+		}
+		
+		return this.fillAgentEditorModel(a.getEntityId(), a, model);
 	}
 	
-	private String fillAgentEditorModel(String id, Agent a, Model model) {
+	private String fillAgentEditorModel(String entityId, Agent a, Model model) {
 		model.addAttribute("agent", a);
+		model.addAttribute("selectedVersionId", a.getId());
 		
 		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
 		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
 		
-		List<Agent> children = agentService.findCurrentByParentAgentId(id);
+		List<Agent> children = agentService.findCurrentByParentAgentId(entityId);
 		model.addAttribute("childAgents", children);
 		model.addAttribute("activeChildAgents", children!=null && children.size()>0);
 		
-		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(id);
+		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(entityId);
 		model.addAttribute("collections", collections);
 		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
 		
-		List<Agent> versions = agentService.findAllVersionsForEntityId(id);
+		List<Agent> versions = agentService.findAllVersionsForEntityId(entityId);
 		model.addAttribute("versions", versions);
 		
 		model.addAttribute("isNew", a.getId().equals("new"));
@@ -84,7 +91,7 @@ public class AgentController {
 		if (a.getSucceedingVersionId()==null) {
 			model.addAttribute("isDeleted", a.isDeleted());
 		} else {
-			Agent current = agentService.findCurrentByAgentId(id, true);
+			Agent current = agentService.findCurrentByAgentId(entityId, true);
 			model.addAttribute("isDeleted", current.isDeleted());
 		}
 		
@@ -112,7 +119,7 @@ public class AgentController {
 		agent.setEntityId(id);
 		validator.validate(agent, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return this.fillAgentEditorModel(agent.getEntityId(), agent, model);
+			return this.fillAgentEditorModel(id, agent, model);
 		} 
 		agentService.save(agent, "default_user");
 		return "redirect:/agents/" + agent.getEntityId();

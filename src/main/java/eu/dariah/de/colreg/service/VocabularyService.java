@@ -32,4 +32,5 @@ public interface VocabularyService {
 	public EncodingScheme findEncodingSchemeByName(String id);
 	public AccessType findAccessTypeById(String id);
 	public AccessType findAccessTypeByIdentfier(String string);
+	public AgentType findAgentTypeById(String agentTypeId);
 }

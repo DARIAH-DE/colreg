@@ -24,7 +24,7 @@
 						${version.versionCreator}
 					</c:when>
 					<c:otherwise>
-						<a href="<s:url value="/collections/${version.succeedingVersionId==null ? version.entityId : version.id}" />">
+						<a href="<s:url value="/agents/${version.succeedingVersionId==null ? version.entityId : version.id}" />">
 							<joda:format value="${version.versionTimestamp}" style="LM" />
 							<c:if test="${version.succeedingVersionId==null}">(<s:message code="~eu.dariah.de.colreg.common.labels.latest" />)</c:if><br />
 							<span class="version-action">

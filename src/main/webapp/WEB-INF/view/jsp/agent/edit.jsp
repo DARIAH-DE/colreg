@@ -57,7 +57,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<a href='<s:url value="/agents/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted}">
+					<c:if test="${!isDeleted && agent.succeedingVersionId==null}">
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
 					</c:if>
 				</div>
@@ -111,6 +111,7 @@
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="foreName" />
 				</div>
 			</s:bind>
+			
 		</div>
 				
 		
@@ -118,7 +119,6 @@
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.agent.groups.extended_description" /></h4>
 			</div>
-			
 			<!-- Agent address -->
 			<s:bind path="address">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
@@ -197,7 +197,7 @@
 			<!-- Child agents -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.child_agents" /></label>
-				<div class="col-sm-9" id="child-agents">
+				<div class="col-sm-9">
 					<c:choose>
 						<c:when test="${childAgents!=null && fn:length(childAgents)>0}">
 							<c:forEach items="${childAgents}" var="child" varStatus="status" >
@@ -220,7 +220,7 @@
 			<!-- Associated collections -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.associated_collections" /></label>
-				<div class="col-sm-9" id="associated-collections">
+				<div class="col-sm-9">
 					<c:choose>
 						<c:when test="${collections!=null && fn:length(collections)>0}">
 							<c:forEach items="${collections}" var="collection" varStatus="status" >
@@ -270,7 +270,7 @@
 				<!-- Entity id -->
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.agent_identifier" /></label>
-					<div id="agent-identifier" class="col-sm-9">
+					<div id="collection-identifier" class="col-sm-9">
 						<label class="control-label">
 							<a href="<s:url value="/agents/${agent.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.entityId}" /></a>
 						</label>
@@ -313,7 +313,7 @@
 								<c:when test="${activeChildAgents==false && activeCollectionRelation==false}">
 									<div class="alert alert-warning alert-sm" role="alert">
 										<s:url value="/agents/${agent.entityId}" var="latest_link" />
-										<s:message code="~eu.dariah.de.colreg.view.agent.notification.deletable" arguments="${latest_link}" />
+										<s:message code="~eu.dariah.de.colreg.view.agent.notification.deletable" arguments="" />
 									</div>
 									<div>
 										<button id="btn-delete-agent" class="btn btn-danger cancel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></button>
@@ -343,7 +343,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<a href='<s:url value="/agents/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted}">
+					<c:if test="${!isDeleted && agent.succeedingVersionId==null}">
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
 					</c:if>
 				</div>

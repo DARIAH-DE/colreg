@@ -146,4 +146,9 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public AccessType findAccessTypeByIdentfier(String identifier) {
 		return accessTypeDao.findOne(Query.query(Criteria.where("identifier").is(identifier)));
 	}
+
+	@Override
+	public AgentType findAgentTypeById(String agentTypeId) {
+		return agentTypeDao.findOne(Query.query(Criteria.where("id").is(agentTypeId)));
+	}
 }

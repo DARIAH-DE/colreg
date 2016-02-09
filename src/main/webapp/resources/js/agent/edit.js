@@ -13,6 +13,8 @@ $(document).ready(function() {
 	
 	$("form").submit(function(event) { editor.submit(event); });
 	
+	$("#agentTypeId").trigger("change");
+	
 	$.slidebars();
 });
 

@@ -70,7 +70,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<a href='<s:url value="/collections/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted}">
+					<c:if test="${!isDeleted && collection.succeedingVersionId==null}">
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
 					</c:if>
 				</div>
@@ -682,7 +682,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<a href='<s:url value="/collections/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted}">
+					<c:if test="${!isDeleted && collection.succeedingVersionId==null}">
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
 					</c:if>
 				</div>
