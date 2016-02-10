@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
@@ -36,7 +37,7 @@ import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
 @RequestMapping("/agents/")
-public class AgentController {
+public class AgentController extends BaseController {
 	@Autowired private AgentService agentService;
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;

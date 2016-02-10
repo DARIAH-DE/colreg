@@ -3,7 +3,7 @@
 	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">        
 <tiles-definitions>  
 	<definition name="template_simple" template="/WEB-INF/view/jsp/templates/simple.jsp">
-		<put-attribute name="title" cascade="true" value="DARIAH-DE Schema Registry" />
+		<put-attribute name="title" cascade="true" value="DARIAH-DE Collection Registry" />
 		<put-attribute name="navbarInverse" cascade="true" value="false" />
 		<put-attribute name="sideNav" cascade="true" value="false" />
 		<put-attribute name="fluidLayout" cascade="true" value="false" />

@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.pojo.TranslationPojo;
 
 @Controller
 @RequestMapping("")
-public class HomeController {
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+public class HomeController extends BaseController {
+
 	@Autowired protected ObjectMapper objectMapper;
 	@Autowired protected MessageSource messageSource;
 	

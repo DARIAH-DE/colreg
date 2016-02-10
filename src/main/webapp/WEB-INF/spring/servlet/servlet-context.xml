@@ -41,6 +41,9 @@
 			<property name="paramName" value="lang" />
 			<property name="initService" ref="initService" />
 		</bean>
+		<bean class="de.dariah.aai.javasp.web.view.AuthInfoHandlerInterceptor">
+			<property name="authInfoHelper" ref="authInfoHelper" />
+		</bean>
 	</mvc:interceptors>
 	
 	<context:component-scan base-package="eu.dariah.de.colreg.controller" />

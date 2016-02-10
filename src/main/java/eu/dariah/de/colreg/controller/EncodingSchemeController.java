@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
 import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/schemes/")
-public class EncodingSchemeController {
+public class EncodingSchemeController extends BaseController {
 	@Autowired private VocabularyService vocabularyService;
 	
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)

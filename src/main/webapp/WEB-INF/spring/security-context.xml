@@ -18,6 +18,8 @@
   	<beans:bean id="ajaxEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
 	</beans:bean>
 	
+	<beans:bean id="authInfoHelper" class="de.dariah.aai.javasp.web.helper.AuthInfoHelper" />
+		
 	<authentication-manager>
 	  <authentication-provider>
 	    <user-service>

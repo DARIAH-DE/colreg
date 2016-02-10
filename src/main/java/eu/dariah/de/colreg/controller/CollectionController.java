@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Address;
@@ -40,7 +41,7 @@ import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
 @RequestMapping("/collections/")
-public class CollectionController {
+public class CollectionController extends BaseController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
 	

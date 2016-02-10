@@ -86,6 +86,22 @@
 			<version>${org.springsecurity-version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>de.dariah</groupId>
+			<artifactId>dariah-javasp-core</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.dariah</groupId>
+			<artifactId>dariah-javasp-web</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.dariah</groupId>
+			<artifactId>spring-security-saml2-core</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
+		</dependency>
+		
 		<!-- Persistence -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
