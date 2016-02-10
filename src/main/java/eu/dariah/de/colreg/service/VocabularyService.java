@@ -4,6 +4,7 @@ import java.util.List;
 
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
@@ -16,6 +17,7 @@ public interface VocabularyService {
 	public List<EncodingScheme> queryEncodingSchemes(String query);
 	
 	public List<AccrualMethod> findAllAccrualMethods();
+	public List<AccrualPeriodicity> findAllAccrualPeriodicities();
 	public List<AccrualPolicy> findAllAccrualPolicies();
 	public List<AccessType> findAllAccessTypes();
 	public List<AgentType> findAllAgentTypes();

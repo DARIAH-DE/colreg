@@ -21,6 +21,13 @@
 				</c:forEach>
 			</c:if>
 		</td>
+		<td class="accrualMethodTable_accrualPeriodicity nowrap" onclick="editor.tables['accrualMethodTable'].editEntry(this); return false;">
+			<c:if test="${currMethod!=null}">
+				<c:forEach items="${accrualPeriodicities}" var="periodicity">
+					<c:if test="${currMethod.accrualPeriodicity==periodicity.id}">${periodicity.label}</c:if>
+				</c:forEach>
+			</c:if>
+		</td>
 		<td class="nowrap">
 			<button onclick="editor.tables['accrualMethodTable'].pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
 			<button onclick="editor.tables['accrualMethodTable'].pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
@@ -29,7 +36,7 @@
 	</tr>
 </s:bind>
 <tr class="edit" style="display: none;">
-	<td colspan="3">
+	<td colspan="4">
 	
 		<!-- Method -->
 		<s:bind path="accrualMethods[${currIndex}].accrualMethod">
@@ -80,6 +87,28 @@
 		</s:bind>
 		
 		<!-- Periodicity -->
+		<s:bind path="accrualMethods[${currIndex}].accrualPeriodicity">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.periodicity" /></label>
+				<div class="col-sm-4">
+					<span class="attribute-name-helper">accrualMethods{}.accrualPeriodicity</span>
+					<select class="form-control" name="accrualMethods[${currIndex}].accrualPeriodicity" id="accrualMethods${currIndex}.accrualPeriodicity" 
+						onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPeriodicity');" autocomplete="off">
+						<c:forEach items="${accrualPeriodicities}" var="accPeriodicity">
+							<option <c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}">selected="selected"</c:if> value="${accPeriodicity.id}">${accPeriodicity.label}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="accrualMethods[${currIndex}].accrualPeriodicity" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.accrual.accrual_periodicity" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
 		
 		<!-- Note -->
 		<s:bind path="accrualMethods[${currIndex}].description">

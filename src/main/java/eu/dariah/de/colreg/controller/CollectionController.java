@@ -29,6 +29,7 @@ import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
@@ -107,6 +108,7 @@ public class CollectionController {
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
+		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
 		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
 		
 		if (c.getParentCollectionId()!=null) {
@@ -173,6 +175,7 @@ public class CollectionController {
 		
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
+		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
 		return "collection/edit/incl/edit_accrual";
 	}
 	

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccrualPeriodicityDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentRelationTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
@@ -18,6 +19,7 @@ import eu.dariah.de.colreg.dao.vocabulary.ItemTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
@@ -32,6 +34,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private AccessTypeDao accessTypeDao;
 	@Autowired private AccrualMethodDao accrualMethodDao;
 	@Autowired private AccrualPolicyDao accrualPolicyDao;
+	@Autowired private AccrualPeriodicityDao accrualPeriodicityDao;
 	@Autowired private AgentTypeDao agentTypeDao;
 	@Autowired private AgentRelationTypeDao agentRelationTypeDao;
 	@Autowired private EncodingSchemeDao encodingSchemeDao;
@@ -150,5 +153,10 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Override
 	public AgentType findAgentTypeById(String agentTypeId) {
 		return agentTypeDao.findOne(Query.query(Criteria.where("id").is(agentTypeId)));
+	}
+
+	@Override
+	public List<AccrualPeriodicity> findAllAccrualPeriodicities() {
+		return accrualPeriodicityDao.findAll();
 	}
 }

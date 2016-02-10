@@ -684,6 +684,7 @@
 								<tr>
 									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.accrual.policy" /></th>
+									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.accrual.periodicity" /></th>
 									<th class="nowrap"></th>
 								</tr>
 							</thead>
@@ -697,7 +698,7 @@
 									<c:remove var="currMethod" />	
 								</c:if>
 								<tr class="collection-editor-table-buttons">
-									<td colspan="3" style="text-align: right;">
+									<td colspan="4" style="text-align: right;">
 										<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_accrual" /></button>
 									</td>
 								</tr>
