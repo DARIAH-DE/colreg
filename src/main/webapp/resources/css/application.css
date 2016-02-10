@@ -569,6 +569,12 @@ label.control-label {
 	font-style: italic;
 }
 
+.content-label {
+	margin-bottom: 0;
+    padding-top: 7px;
+    font-weight: normal;
+	font-style: 
+}
 
 .editor-section {
 	border: 1px solid #CCC;

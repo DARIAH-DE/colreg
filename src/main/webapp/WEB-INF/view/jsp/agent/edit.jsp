@@ -282,13 +282,12 @@
 							<p>
 						<c:if test="${parentAgent!=null}">
 							<a href="<s:url value="${parentAgent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentAgent.name} ${parentAgent.foreName}</strong><br />
-							<small><em>ID: ${parentAgent.entityId}</em></small><br />
-							${parentAgent.address}</a>
+							<small><em>ID: ${parentAgent.entityId}</em></small><br /></a>
 						</c:if>	
 						</p>
 					</div>
 					<div id="parentAgent-display-null" class="<c:if test="${parentAgent!=null}">hide</c:if>">
-						<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label>
+						<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label>
 					</div>
 				</div>
 				<div class="col-sm-9 col-sm-offset-3">
@@ -309,14 +308,13 @@
 								<div class="alert alert-default">
 									<p>
 										<a href="<s:url value="${child.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${child.name} ${child.foreName}</strong><br />
-										<small><em>ID: ${child.entityId}</em></small><br />
-										${child.address}</a>	
+										<small><em>ID: ${child.entityId}</em></small><br /></a>	
 									</p>
 								</div>
 							</c:forEach>		
 						</c:when>
 						<c:otherwise>
-							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_children_assigned" /></em></label>
+							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_children_assigned" /></em></label>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -344,7 +342,7 @@
 							</c:forEach>		
 						</c:when>
 						<c:otherwise>
-							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_collections_assigned" /></em></label>
+							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_collections_assigned" /></em></label>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -367,7 +365,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.agent_identifier" /></label>
 					<div id="collection-identifier" class="col-sm-9">
-						<label class="control-label">
+						<label class="content-label">
 							<a href="<s:url value="/agents/${agent.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.entityId}" /></a>
 						</label>
 					</div>
@@ -383,7 +381,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.version_identifier" /></label>
 					<div id="version-identifier" class="col-sm-9">
-						<label class="control-label">
+						<label class="content-label">
 							<a href="<s:url value="/agents/${agent.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.id}" /></a>
 						</label>
 					</div>
@@ -399,8 +397,8 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.current_version" /></label>
 					<div id="current-version" class="col-sm-9">
-						<label class="control-label"><joda:format value="${agent.versionTimestamp}" style="LM" /></label><br />
-						<label class="control-label">${agent.versionCreator}</label>
+						<label class="content-label"><joda:format value="${agent.versionTimestamp}" style="LM" /></label><br />
+						<label class="content-label">${agent.versionCreator}</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -414,8 +412,8 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.created" /></label>
 					<div id="initially-created" class="col-sm-9">
-						<label class="control-label"><joda:format value="${agent.entityTimestamp}" style="LM" /></label><br />
-						<label class="control-label">${agent.entityCreator}</label>
+						<label class="content-label"><joda:format value="${agent.entityTimestamp}" style="LM" /></label><br />
+						<label class="content-label">${agent.entityCreator}</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">

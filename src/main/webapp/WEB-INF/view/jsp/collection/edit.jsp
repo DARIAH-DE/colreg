@@ -535,7 +535,7 @@
 							</p>
 						</div>
 						<div id="parentCollection-display-null" class="<c:if test="${parentCollection!=null}">hide</c:if>">
-							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></label>
+							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></label>
 						</div>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="parentCollectionId" />
@@ -564,7 +564,7 @@
 							</c:forEach>		
 						</c:when>
 						<c:otherwise>
-							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></label>
+							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></label>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -800,7 +800,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_identifier" /></label>
 					<div id="collection-identifier" class="col-sm-9">
-						<label class="control-label">
+						<label class="content-label">
 							<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
 						</label>
 					</div>
@@ -816,7 +816,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.version_identifier" /></label>
 					<div id="version-identifier" class="col-sm-9">
-						<label class="control-label">
+						<label class="content-label">
 							<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.id}" /></a>
 						</label>
 					</div>
@@ -832,8 +832,8 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></label>
 					<div id="current-version" class="col-sm-9">
-						<label class="control-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
-						<label class="control-label">${collection.versionCreator}</label>
+						<label class="content-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
+						<label class="content-label">${collection.versionCreator}</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -847,8 +847,8 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></label>
 					<div id="initially-created" class="col-sm-9">
-						<label class="control-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
-						<label class="control-label">${collection.entityCreator}</label>
+						<label class="content-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
+						<label class="content-label">${collection.entityCreator}</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -862,10 +862,23 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.groups.administration" /></label>
 						<div id="collection-administration" class="col-sm-9">
+							<c:choose>
+								<c:when test="${activeChildCollections}">
+									<div class="alert alert-warning alert-sm" role="alert">
+										<s:message code="~eu.dariah.de.colreg.view.collection.notification.not_deletable" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="alert alert-warning alert-sm" role="alert">
+										<s:url value="/collections/${collection.entityId}" var="latest_link" />
+										<s:message code="~eu.dariah.de.colreg.view.collection.notification.deletable" arguments="" />
+									</div>		
+									<button id="btn-delete-collection" class="btn btn-danger cancel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></button>					
+								</c:otherwise>
+							</c:choose>
 							<c:if test="${collection.draftUserId!=null}">
 								<button id="btn-publish-collection" class="btn btn-primary cancel"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.save_and_publish" /></button>
 							</c:if>
-							<button id="btn-delete-collection" class="btn btn-danger cancel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></button>
 						</div>
 					</div>
 				</c:if>
