@@ -15,6 +15,7 @@ $(document).ready(function() {
 	
 	$("#agentTypeId").trigger("change");
 	
+	$('[data-toggle="tooltip"]').tooltip();
 	$.slidebars();
 });
 

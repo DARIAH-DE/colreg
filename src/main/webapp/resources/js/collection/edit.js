@@ -18,6 +18,7 @@ $(document).ready(function() {
 	
 	$("form").submit(function(event) { editor.submit(event); });
 	
+	$('[data-toggle="tooltip"]').tooltip();
 	$.slidebars();
 });
 

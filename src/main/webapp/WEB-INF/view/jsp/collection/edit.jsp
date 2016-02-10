@@ -80,6 +80,10 @@
 		<div class="editor-section">
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.mandatory_description" /></h4>
+				<div class="editor-hint">
+					<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+					<s:message code="~eu.dariah.de.colreg.editorhint.collection.mandatory_description" />
+				</div>
 			</div>
 			
 			<!-- Localized collection descriptions -->
@@ -179,6 +183,10 @@
 		<div class="editor-section">
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.contact_and_agents" /></h4>
+				<div class="editor-hint">
+					<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+					<s:message code="~eu.dariah.de.colreg.editorhint.collection.has_contact" />
+				</div>
 			</div>
 			
 			<!-- Web page -->
