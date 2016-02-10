@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import eu.dariah.de.colreg.model.Access;
+import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
@@ -58,6 +59,17 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			collection.getLocalizedDescriptions().removeAll(emptyDescriptions);
 		}
 		
+		// Remove the completely empty locations
+		if (collection.getLocations()!=null && collection.getLocations().size()>0) {
+			List<Address> emptyAddresses = new ArrayList<Address>();
+			for (Address addr : collection.getLocations()) {
+				if (addr.isEmpty()) {
+					emptyAddresses.add(addr);
+				}
+			}
+			collection.getLocations().removeAll(emptyAddresses);
+		}
+		
 		// Remove empty item languages
 		if (collection.getItemLanguages()!=null && collection.getItemLanguages().size()>0) {
 			List<String> retainLanguages = new ArrayList<String>();
@@ -67,6 +79,61 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 				}
 			}
 			collection.setItemLanguages(retainLanguages);
+		}
+		
+		// Remove empty identifiers
+		if (collection.getProvidedIdentifier()!=null && collection.getProvidedIdentifier().size()>0) {
+			List<String> retainIdentifiers = new ArrayList<String>();
+			for (String id : collection.getProvidedIdentifier()) {
+				if (id!=null && !id.trim().isEmpty()) {
+					retainIdentifiers.add(id);
+				}
+			}
+			collection.setProvidedIdentifier(retainIdentifiers);
+		}
+		
+		// Remove empty audiences
+		if (collection.getAudiences()!=null && collection.getAudiences().size()>0) {
+			List<String> retainAudiences = new ArrayList<String>();
+			for (String id : collection.getAudiences()) {
+				if (id!=null && !id.trim().isEmpty()) {
+					retainAudiences.add(id);
+				}
+			}
+			collection.setAudiences(retainAudiences);
+		}
+		
+		// Remove empty subjects
+		if (collection.getSubjects()!=null && collection.getSubjects().size()>0) {
+			List<String> retainSubjects = new ArrayList<String>();
+			for (String id : collection.getSubjects()) {
+				if (id!=null && !id.trim().isEmpty()) {
+					retainSubjects.add(id);
+				}
+			}
+			collection.setSubjects(retainSubjects);
+		}
+		
+		// Remove empty spatials
+		if (collection.getSpatials()!=null && collection.getSpatials().size()>0) {
+			List<String> retainSpatials = new ArrayList<String>();
+			for (String id : collection.getSpatials()) {
+				if (id!=null && !id.trim().isEmpty()) {
+					retainSpatials.add(id);
+				}
+			}
+			collection.setSpatials(retainSpatials);
+		}
+		
+		// Remove empty temporals
+		if (collection.getTemporals()!=null && collection.getTemporals().size()>0) {
+			List<String> retainTemporals = new ArrayList<String>();
+			for (String id : collection.getTemporals()) {
+				if (id!=null && !id.trim().isEmpty()) {
+					retainTemporals.add(id);
+				}
+			}
+			collection.setTemporals(retainTemporals);
 		}
 		
 		// Remove empty agent relations

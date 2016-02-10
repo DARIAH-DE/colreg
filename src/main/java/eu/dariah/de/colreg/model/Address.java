@@ -25,4 +25,13 @@ public class Address {
 	
 	public String getNote() { return note; }
 	public void setNote(String note) { this.note = note; }
+	
+	public boolean isEmpty() {
+		return ((this.getStreet()==null || this.getStreet().trim().isEmpty()) && 
+				(this.getNumber()==null || this.getNumber().trim().isEmpty()) && 
+				(this.getPostalCode()==null || this.getPostalCode().trim().isEmpty()) && 
+				(this.getPlace()==null || this.getPlace().trim().isEmpty()) && 
+				(this.getCountry()==null || this.getCountry().trim().isEmpty()) && 
+				(this.getNote()==null || this.getNote().trim().isEmpty()) );
+	}
 }
