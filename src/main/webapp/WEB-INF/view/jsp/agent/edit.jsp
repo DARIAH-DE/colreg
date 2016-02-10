@@ -24,6 +24,7 @@
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
 	<sf:form method="POST" action="javascript:void(0);" modelAttribute="agent" class="form-horizontal" autocomplete="off">
 		<span id="entityId" style="display: none;">${agent.entityId}</span>
+		<sf:hidden path="versionComment"/>
 		
 		<div class="form-group">
 			<div class="col-sm-12">

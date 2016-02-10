@@ -1,12 +1,7 @@
 var editor;
 $(document).ready(function() {
 	editor = new CollectionEditor();
-	
-	$(".form-btn-submit").on("click", function() {
-		$("form").attr("action", $("#js-form-action").val());
-		$("form").submit();
-	});
-	
+
 	$("#btn-delete-collection").on("click", function() {
 		editor.deleteEntity("collections/");
 	});
@@ -15,9 +10,7 @@ $(document).ready(function() {
 		$("form").attr("action", $("#js-form-action").val() + "/publish");
 		$("form").submit();
 	});
-	
-	$("form").submit(function(event) { editor.submit(event); });
-	
+		
 	$('[data-toggle="tooltip"]').tooltip();
 	$.slidebars();
 });

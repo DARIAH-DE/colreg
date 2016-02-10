@@ -721,6 +721,11 @@ label.control-label {
 	text-decoration: none;
 }
 
+.version-comment {
+	/*font-style: italic;*/
+	font-weight: bold;
+}
+
 .editor-hint {
 	display: none;
 	padding: 5px;

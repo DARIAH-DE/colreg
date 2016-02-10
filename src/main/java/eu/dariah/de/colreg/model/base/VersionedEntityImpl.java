@@ -15,6 +15,8 @@ public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	private DateTime versionTimestamp;	
 	private String versionCreator;
 	
+	private String versionComment;
+	
 	
 	public String getEntityId() { return entityId; }
 	public void setEntityId(String entityId) { this.entityId = entityId; }
@@ -32,5 +34,8 @@ public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	public void setVersionTimestamp(DateTime versionTimestamp) { this.versionTimestamp = versionTimestamp; }
 	
 	public String getVersionCreator() { return versionCreator; }
-	public void setVersionCreator(String versionCreator) { this.versionCreator = versionCreator; }	
+	public void setVersionCreator(String versionCreator) { this.versionCreator = versionCreator; }
+	
+	public String getVersionComment() { return versionComment; }
+	public void setVersionComment(String versionComment) { this.versionComment = versionComment; }	
 }

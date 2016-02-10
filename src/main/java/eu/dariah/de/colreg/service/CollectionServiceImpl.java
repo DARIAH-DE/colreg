@@ -142,6 +142,7 @@ public class CollectionServiceImpl implements CollectionService {
 			.include("entityId")
 			.include("versionTimestamp")
 			.include("versionCreator")
+			.include("versionComment")
 			.include("deleted")
 			.include("draftUserId");
 		

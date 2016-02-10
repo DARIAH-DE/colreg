@@ -5,18 +5,20 @@ function BaseEditor() {
 	this.lists = new Array();
 	
 	this.baseTranslations = ["~eu.dariah.de.colreg.common.labels.no_match_found",
+	                         "~eu.dariah.de.colreg.view.common.labels.enter_version_comment",
 	                         "~eu.dariah.de.colreg.view.collection.notification.could_not_delete",
 	                         "~eu.dariah.de.colreg.view.collection.labels.delete_collection.body",
 	                         "~eu.dariah.de.colreg.view.collection.labels.delete_collection.head",
+	                         "~eu.dariah.de.colreg.common.link.cancel",
 	                         "~eu.dariah.de.colreg.common.link.no",
+	                         "~eu.dariah.de.colreg.common.link.ok",
 	                         "~eu.dariah.de.colreg.common.link.yes"];
 	
 	var _this = this;
-	$("#chk-toggle-hints").on("change", function() {
-		_this.toggleHints($(this).is(":checked"));
-	});
-	
+	$("#chk-toggle-hints").on("change", function() { _this.toggleHints($(this).is(":checked")); });
 	$("#chk-toggle-hints").trigger("change");
+	
+	$(".form-btn-submit").on("click", function(e) { _this.submit(); });
 };
 
 BaseEditor.prototype.sort = function() {
@@ -28,8 +30,32 @@ BaseEditor.prototype.sort = function() {
 	}
 };
 
-BaseEditor.prototype.submit = function(event) {
+BaseEditor.prototype.submit = function() {
 	this.sort();
+	
+	bootbox.dialog({
+		title : __translator.translate("~eu.dariah.de.colreg.view.common.labels.enter_version_comment"),
+		message : 	"<div class='row'>" +
+						"<div class='col-sm-12'>" +
+							"<input id='last-minute-version-comment' class='form-control'></input>" +
+						"</div>" +
+					"</div>",
+        buttons : {
+        	cancel : {
+            	label : __translator.translate("~eu.dariah.de.colreg.common.link.cancel"),
+                className : "btn-default"
+        	},
+            ok : {
+            	label : __translator.translate("~eu.dariah.de.colreg.common.link.ok"),
+                className : "btn-primary",
+                callback : function() {
+                	$("#versionComment").val($("#last-minute-version-comment").val());
+                	$("form").attr("action", $("#js-form-action").val());
+                	$("form").submit();
+            	}
+            }
+    	}
+	});
 };
 
 BaseEditor.prototype.toggleHints = function(check) {

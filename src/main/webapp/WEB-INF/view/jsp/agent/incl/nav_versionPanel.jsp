@@ -22,6 +22,9 @@
 							</c:choose>
 						</span><br />
 						${version.versionCreator}
+						<c:if test="${version.versionComment!=null && version.versionComment!=''}">							
+							<br /><span class="version-comment">"${version.versionComment}"</span>
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						<a href="<s:url value="/agents/${version.succeedingVersionId==null ? version.entityId : version.id}" />">
@@ -38,6 +41,9 @@
 								</c:choose>
 							</span><br />
 							${version.versionCreator}
+							<c:if test="${version.versionComment!=null && version.versionComment!=''}">							
+								<br /><span class="version-comment">"${version.versionComment}"</span>
+							</c:if>							
 						</a>
 					</c:otherwise>
 				</c:choose>

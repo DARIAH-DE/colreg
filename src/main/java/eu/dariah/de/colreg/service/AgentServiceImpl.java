@@ -129,7 +129,7 @@ public class AgentServiceImpl implements AgentService {
 			.include("versionTimestamp")
 			.include("versionCreator")
 			.include("deleted")
-			.include("draftUserId");
+			.include("versionComment");
 		
 		return agentDao.find(q);
 	}

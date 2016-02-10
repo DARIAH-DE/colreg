@@ -2,16 +2,9 @@ var editor;
 $(document).ready(function() {
 	editor = new AgentEditor();
 	
-	$(".form-btn-submit").on("click", function() {
-		$("form").attr("action", $("#js-form-action").val());
-		$("form").submit();
-	});
-	
 	$("#btn-delete-agent").on("click", function() {
 		editor.deleteEntity("agents/");
 	});
-	
-	$("form").submit(function(event) { editor.submit(event); });
 	
 	$("#agentTypeId").trigger("change");
 	
@@ -22,6 +15,7 @@ $(document).ready(function() {
 
 var AgentEditor = function() {
 	var _this = this;
+	this.prepareTranslations([]);
 	this.addVocabularySource("parentAgents", "agents/query/", "excl=" + this.entityId);
 
 	this.registerParentAgentTypeahead($('#parentAgentIdSelector'));
