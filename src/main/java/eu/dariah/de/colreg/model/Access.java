@@ -6,8 +6,11 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class Access {
-	@NotBlank private String type;
-	@NotBlank private String uri;
+	@NotBlank
+	private String type;
+	
+	@NotBlank(message="{~eu.dariah.de.colreg.validation.access.uri}")
+	private String uri;
 	private List<String> schemeIds;
 	private String description;
 	private String oaiSet;

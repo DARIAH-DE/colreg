@@ -57,14 +57,14 @@ public class AgentValidator extends BaseValidator<Agent> {
 		
 		if (vocabularyService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson() &&
 				(agent.getForeName()==null || agent.getForeName().trim().isEmpty())) {
-			errors.rejectValue("foreName", "~must.be.set", "~must.be.set");
+			errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.first_name");
 		}
 		
 		// Unique names of agents
 		Agent compareAgent = agentService.findCurrentByName(agent.getName(), agent.getForeName());
 		if (compareAgent!=null && !compareAgent.getEntityId().equals(agent.getEntityId())) {
-			errors.rejectValue("name", "nonuniqe.name");
-			errors.rejectValue("foreName", "nonuniqe.foreName");
+			errors.rejectValue("name", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
+			errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
 		}
 	}
 }

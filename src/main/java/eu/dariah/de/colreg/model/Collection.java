@@ -27,10 +27,14 @@ public class Collection extends VersionedEntityImpl {
 	// Collection description
 	@Valid private List<LocalizedDescription> localizedDescriptions;
 	
-	@NotBlank private String collectionType;
+	@NotBlank(message="{~eu.dariah.de.colreg.validation.collection.type}")
+	private String collectionType;
 	
-	@URL private String webPage;
-	@Email private String eMail;
+	@URL(message="{~eu.dariah.de.colreg.validation.collection.webpage}")
+	private String webPage;
+	
+	@Email(message="{~eu.dariah.de.colreg.validation.collection.email}")
+	private String eMail;
 	
 	private List<String> audiences;
 	private List<Address> locations;
@@ -51,8 +55,11 @@ public class Collection extends VersionedEntityImpl {
 	// Legal information
 	@Valid private List<CollectionAgentRelation> agentRelations;
 	
-	@NotBlank private String collectionDescriptionRights;
-	@NotBlank private String accessRights;
+	@NotBlank(message="{~eu.dariah.de.colreg.validation.collection.collection_description_rights}")
+	private String collectionDescriptionRights;
+	
+	@NotBlank(message="{~eu.dariah.de.colreg.validation.collection.access_rights}")
+	private String accessRights;
 	private String itemRights;
 	
 	// Context	  

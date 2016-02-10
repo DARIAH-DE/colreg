@@ -194,17 +194,17 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 				(collection.getEMail()==null || collection.getEMail().trim().isEmpty()) && 
 				(collection.getAgentRelations()==null || collection.getAgentRelations().size()==0) && 
 				(collection.getLocations()==null || collection.getLocations().size()==0)) {
-			errors.rejectValue("webPage", "~contact_required", "~contact_required");
-			errors.rejectValue("eMail", "~contact_required", "~contact_required");
-			errors.rejectValue("agentRelations", "~contact_required", "~contact_required");
-			errors.rejectValue("locations", "~contact_required", "~contact_required");
+			errors.rejectValue("webPage", "~eu.dariah.de.colreg.validation.collection.no_contact_specified");
+			errors.rejectValue("eMail", "~eu.dariah.de.colreg.validation.collection.no_contact_specified");
+			errors.rejectValue("agentRelations", "~eu.dariah.de.colreg.validation.collection.no_contact_specified");
+			errors.rejectValue("locations", "~eu.dariah.de.colreg.validation.collection.no_contact_specified");
 		}
 	}
 	
 	private void validateLocalizedDescriptions(Collection collection, Errors errors) {
 		// One localized description must be present
 		if (collection.getLocalizedDescriptions()==null || collection.getLocalizedDescriptions().size()==0) {
-			errors.rejectValue("localizedDescriptions", "~need at least one", "~need at least one");
+			errors.rejectValue("localizedDescriptions", "~eu.dariah.de.colreg.validation.collection.no_description_set");
 		}
 	}
 	
@@ -214,13 +214,13 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			boolean itemLanguageError = false;
 			for (int i=0; i<collection.getItemLanguages().size(); i++) {
 				if (vocabularyService.findLanguageByCode(collection.getItemLanguages().get(i))==null) {
-					errors.rejectValue("itemLanguages[" + i + "]", "~not_a_valid_language", "~not_a_valid_language");
+					errors.rejectValue("itemLanguages[" + i + "]", "~eu.dariah.de.colreg.validation.collection.invalid_language");
 					itemLanguageError = true;
 				}
 			}
 			
 			if (itemLanguageError) {
-				errors.rejectValue("itemLanguages", "~at_least_one_is_messed_up", "~at_least_one_is_messed_up");
+				errors.rejectValue("itemLanguages", "~eu.dariah.de.colreg.validation.collection.one_or_more_invalid_languages");
 			}
 		}
 	}
@@ -231,7 +231,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			Collection p = collectionService.findCurrentByCollectionId(collection.getParentCollectionId());
 			// TODO: Other reasons why parent collection is invalid -> cycle
 			if (p==null) {
-				errors.rejectValue("parentCollection", "~invalid_parent_collection", "~invalid_parent_collection");
+				errors.rejectValue("parentCollection", "~eu.dariah.de.colreg.validation.collection.invalid_parent");
 			}
 		}
 	}
@@ -245,7 +245,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 				if (rel.getAgentId()!=null && !rel.getAgentId().trim().isEmpty()) {
 					Agent relAgent = agentService.findCurrentByAgentId(rel.getAgentId());
 					if (relAgent==null) {
-						errors.rejectValue("agentRelations[" + i + "].agentId", "~invalid_related_agent", "~invalid_related_agent");
+						errors.rejectValue("agentRelations[" + i + "].agentId", "~eu.dariah.de.colreg.validation.collection.invalid_related_agent");
 					}
 				}
 			}
@@ -261,14 +261,9 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 				if (acc.getSchemeIds()!=null && acc.getSchemeIds().size()>0) {
 					for (int j=0; j<acc.getSchemeIds().size(); j++) {
 						if (vocabularyService.findEncodingSchemeByName(acc.getSchemeIds().get(j))==null) {
-							errors.rejectValue("accessMethods[" + i + "].schemeIds[" + j + "]", "~not_a_valid_scheme", "~not_a_valid_scheme");
+							errors.rejectValue("accessMethods[" + i + "].schemeIds[" + j + "]", "~not_a_valid_scheme");
 						}
 					}	
-				} else if (acc.getType()!=null && !acc.getType().trim().isEmpty()) {
-					accType = vocabularyService.findAccessTypeById(acc.getType());
-					if (accType.isMachineAccessible()) {
-						errors.rejectValue("accessMethods[" + i + "].schemeIds", "~required_for_machine_processible_access_type", "~required_for_machine_processible_access_type");
-					}
 				}
 			}
 		}

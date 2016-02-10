@@ -8,8 +8,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CollectionAgentRelation {
-	@NotEmpty private List<String> typeIds;
-	@NotBlank private String agentId;
+	@NotEmpty(message="{~eu.dariah.de.colreg.validation.agent_relation.type_ids}")
+	private List<String> typeIds;
+	
+	@NotBlank(message="{~eu.dariah.de.colreg.validation.agent_relation.agentId}")
+	private String agentId;
+	
 	@JsonIgnore private Agent agent;
 	private String annotation;
 

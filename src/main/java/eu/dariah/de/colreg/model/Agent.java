@@ -20,16 +20,16 @@ public class Agent extends VersionedEntityImpl {
 	@NotBlank
 	private String agentTypeId;
 	
-	@NotBlank
+	@NotBlank(message="{~eu.dariah.de.colreg.validation.agent.name}")
 	private String name;
 	private String foreName;
 	
 	private List<Address> addresses;
 	
-	@Email
+	@Email(message="{~eu.dariah.de.colreg.validation.agent.email}")
 	private String eMail;
 	
-	@URL
+	@URL(message="{~eu.dariah.de.colreg.validation.agent.webpage}")
 	private String webPage;
 	private String phone;
 	private List<String> providedIdentifier;
