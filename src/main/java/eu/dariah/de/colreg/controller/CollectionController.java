@@ -4,6 +4,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -16,11 +18,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
@@ -53,7 +57,7 @@ public class CollectionController {
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editCollection(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
 		Collection c;
-		 if (id.toLowerCase().equals("new")) {
+		if (id.toLowerCase().equals("new")) {
 			c = collectionService.createCollection();
 		} else {
 			c = collectionService.findCurrentByCollectionId(id, true);
@@ -69,6 +73,12 @@ public class CollectionController {
 			// Should be 404
 			return "redirect:/collections/";
 		}
+		
+		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+		if (inputFlashMap!=null && inputFlashMap.containsKey("lastSavedVersion")) {
+			model.addAttribute("lastSavedVersion", inputFlashMap.get("lastSavedVersion"));
+			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
+		}
 		 
 		return fillCollectionEditorModel(c.getEntityId(), c, model);
 	}
@@ -83,7 +93,17 @@ public class CollectionController {
 		
 		// TODO UserId
 		collectionService.save(collection, "default user");
+		redirectAttributes.addFlashAttribute("lastSavedVersion", collection.getId());
+		redirectAttributes.addFlashAttribute("lastSavedTimestamp", collection.getVersionTimestamp());
+		
 		return "redirect:/collections/" + collection.getEntityId();
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value={"{id}/commentVersion/{versionid}"})
+	public @ResponseBody ModelActionPojo appendVersionComment(@PathVariable String id, @PathVariable String versionid, @RequestParam String comment) {
+		collectionService.appendVersionComment(versionid, comment);
+
+		return new ModelActionPojo(true);
 	}
 	
 	@RequestMapping(value="{id}/publish", method=RequestMethod.POST)

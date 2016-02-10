@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
+import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 
@@ -152,5 +153,12 @@ public class CollectionServiceImpl implements CollectionService {
 	@Override
 	public Collection findVersionById(String id, boolean includeDeleted) {
 		return collectionDao.findById(id, includeDeleted);
+	}
+	
+	@Override
+	public void appendVersionComment(String versionid, String comment) {
+		Collection c = collectionDao.findById(versionid, true);
+		c.setVersionComment(comment);
+		collectionDao.save(c);
 	}
 }

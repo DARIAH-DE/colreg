@@ -24,10 +24,18 @@
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
 	<sf:form method="POST" action="javascript:void(0);" modelAttribute="agent" class="form-horizontal" autocomplete="off">
 		<span id="entityId" style="display: none;">${agent.entityId}</span>
-		<sf:hidden path="versionComment"/>
 		
 		<div class="form-group">
 			<div class="col-sm-12">
+				<c:if test="${lastSavedVersion!=null}">
+					<div class="alert alert-success" role="alert">
+						<joda:format value="${lastSavedTimestamp}" style="LM" var="saveTimestamp" />
+						<s:message code="~eu.dariah.de.colreg.view.agent.notification.agent_saved" arguments="${saveTimestamp}" /><br />
+						<a href="#" onclick="editor.appendComment('agents/', '${lastSavedVersion}'); return false;"><s:message code="~eu.dariah.de.colreg.view.agent.labels.comment_revision" /></a>
+					</div>
+				</c:if>
+			
+			
 				<c:if test="${isDeleted}">
 					<div class="alert alert-danger" role="alert">
 						<s:url value="/agents/${agent.entityId}" var="latest_link" />  

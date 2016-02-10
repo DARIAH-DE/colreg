@@ -15,4 +15,5 @@ public interface AgentService {
 	public Agent findCurrentByName(String name, String foreName);
 	public List<Agent> findAllVersionsForEntityId(String id);
 	public Agent findVersionById(String id, boolean includeDeleted);
+	public void appendVersionComment(String versionid, String comment);
 }

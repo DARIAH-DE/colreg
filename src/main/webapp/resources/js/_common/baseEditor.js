@@ -30,9 +30,8 @@ BaseEditor.prototype.sort = function() {
 	}
 };
 
-BaseEditor.prototype.submit = function() {
-	this.sort();
-	
+BaseEditor.prototype.appendComment = function(prefix, id) {
+	var _this = this;
 	bootbox.dialog({
 		title : __translator.translate("~eu.dariah.de.colreg.view.common.labels.enter_version_comment"),
 		message : 	"<div class='row'>" +
@@ -49,13 +48,25 @@ BaseEditor.prototype.submit = function() {
             	label : __translator.translate("~eu.dariah.de.colreg.common.link.ok"),
                 className : "btn-primary",
                 callback : function() {
-                	$("#versionComment").val($("#last-minute-version-comment").val());
-                	$("form").attr("action", $("#js-form-action").val());
-                	$("form").submit();
+                	$.ajax({
+                        url: __util.getBaseUrl() + prefix + _this.entityId + "/commentVersion/" + id,
+                        type: "POST",
+                        data: {comment: $("#last-minute-version-comment").val()},
+                        success: function(data) {
+                        	window.location.reload();
+                        }
+                	});
             	}
             }
     	}
 	});
+};
+
+BaseEditor.prototype.submit = function() {
+	this.sort();
+	
+	$("form").attr("action", $("#js-form-action").val());
+	$("form").submit();
 };
 
 BaseEditor.prototype.toggleHints = function(check) {

@@ -24,10 +24,17 @@
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
 	<sf:form method="POST" action="javascript:void(0);" modelAttribute="collection" class="form-horizontal" autocomplete="off">
 		<span id="entityId" style="display: none;">${collection.entityId}</span>
-		<sf:hidden path="versionComment"/>
 		
 		<div class="form-group">
 			<div class="col-sm-12">
+				<c:if test="${lastSavedVersion!=null}">
+					<div class="alert alert-success" role="alert">
+						<joda:format value="${lastSavedTimestamp}" style="LM" var="saveTimestamp" />
+						<s:message code="~eu.dariah.de.colreg.view.collection.notification.collection_saved" arguments="${saveTimestamp}" /><br />
+						<a href="#" onclick="editor.appendComment('collections/', '${lastSavedVersion}'); return false;"><s:message code="~eu.dariah.de.colreg.view.collection.labels.comment_revision" /></a>
+					</div>
+				</c:if>
+			
 				<c:choose>
 					<c:when test="${isDeleted}">
 						<div class="alert alert-danger" role="alert">

@@ -17,6 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +65,12 @@ public class AgentController {
 		if (a==null) {
 			// Should be 404
 			return "redirect:/collections/";
+		}
+		
+		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+		if (inputFlashMap!=null && inputFlashMap.containsKey("lastSavedVersion")) {
+			model.addAttribute("lastSavedVersion", inputFlashMap.get("lastSavedVersion"));
+			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
 		}
 		
 		return this.fillAgentEditorModel(a.getEntityId(), a, model);
@@ -123,12 +130,21 @@ public class AgentController {
 			return this.fillAgentEditorModel(id, agent, model);
 		} 
 		agentService.save(agent, "default_user");
+		redirectAttributes.addFlashAttribute("lastSavedVersion", agent.getId());
+		redirectAttributes.addFlashAttribute("lastSavedTimestamp", agent.getVersionTimestamp());
 		return "redirect:/agents/" + agent.getEntityId();
 	}
 	
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)
 	public @ResponseBody List<Agent> queryAgents(@PathVariable String query, @RequestParam(required=false) List<String> excl) {
 		return agentService.queryAgents(query, excl);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value={"{id}/commentVersion/{versionid}"})
+	public @ResponseBody ModelActionPojo appendVersionComment(@PathVariable String id, @PathVariable String versionid, @RequestParam String comment) {
+		agentService.appendVersionComment(versionid, comment);
+
+		return new ModelActionPojo(true);
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editIdentifier"})

@@ -138,4 +138,11 @@ public class AgentServiceImpl implements AgentService {
 	public Agent findVersionById(String id, boolean includeDeleted) {
 		return agentDao.findById(id, includeDeleted);
 	}
+
+	@Override
+	public void appendVersionComment(String versionid, String comment) {
+		Agent a = agentDao.findById(versionid, true);
+		a.setVersionComment(comment);
+		agentDao.save(a);
+	}
 }
