@@ -12,8 +12,8 @@
   	</div>
 </nav>
 
-<nav class="nav-form-controls">
-	<h3><s:message code="~eu.dariah.de.colreg.titles.properties" /></h3>
+<nav class="list-group nav-form-controls">
+	<h4><s:message code="~eu.dariah.de.colreg.titles.properties" /></h4>
 	<ul class="nav">
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.mandatory_description" /></a>
 			<ul class="nav">

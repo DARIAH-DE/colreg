@@ -653,7 +653,7 @@
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="associatedProject" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.associated_project" /></label>
 					<div class="col-sm-9">
-						<sf:input path="associatedProject" class="form-control" />
+						<sf:textarea class="form-control" rows="3" path="associatedProject"></sf:textarea>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="associatedProject" />
 					<div class="col-sm-9 col-sm-offset-3">
