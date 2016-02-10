@@ -25,7 +25,7 @@ public class CollectionServiceImpl implements CollectionService {
 	public Collection createCollection() {
 		Collection c = new Collection();
 		c.setId("new");
-		c.setEntityId(new ObjectId().toString());
+		c.setEntityId("new");
 		
 		return c;
 	}
@@ -35,6 +35,9 @@ public class CollectionServiceImpl implements CollectionService {
 		Collection prev = this.findCurrentByCollectionId(c.getEntityId());
 		
 		c.setId(null);
+		if (c.getEntityId().equals("new")) {
+			c.setEntityId(new ObjectId().toString());
+		}
 		c.setSucceedingVersionId(null);
 		c.setVersionCreator(userId);
 		c.setVersionTimestamp(DateTime.now());

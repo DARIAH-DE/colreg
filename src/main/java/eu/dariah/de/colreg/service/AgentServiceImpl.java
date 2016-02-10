@@ -30,7 +30,7 @@ public class AgentServiceImpl implements AgentService {
 	public Agent createAgent() {
 		Agent a = new Agent();
 		a.setId("new");
-		a.setEntityId(new ObjectId().toString());
+		a.setEntityId("new");
 		a.setAgentTypeId(agentTypeDao.findAll().get(0).getId());
 
 		return a;
@@ -56,6 +56,10 @@ public class AgentServiceImpl implements AgentService {
 		Agent prev = this.findCurrentByAgentId(a.getEntityId());
 		
 		a.setId(null);
+		if (a.getEntityId().equals("new")) {
+			a.setEntityId(new ObjectId().toString());
+		}
+		
 		a.setSucceedingVersionId(null);
 		a.setVersionCreator(userId);
 		a.setVersionTimestamp(DateTime.now());

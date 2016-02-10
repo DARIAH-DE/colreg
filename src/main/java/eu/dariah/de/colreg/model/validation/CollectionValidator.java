@@ -125,10 +125,12 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	private void validateContact(Collection collection, Errors errors) {
 		if ((collection.getWebPage()==null || collection.getWebPage().trim().isEmpty()) && 
 				(collection.getEMail()==null || collection.getEMail().trim().isEmpty()) && 
-				(collection.getAgentRelations()==null || collection.getAgentRelations().size()==0)) {
+				(collection.getAgentRelations()==null || collection.getAgentRelations().size()==0) && 
+				(collection.getLocations()==null || collection.getLocations().size()==0)) {
 			errors.rejectValue("webPage", "~contact_required", "~contact_required");
 			errors.rejectValue("eMail", "~contact_required", "~contact_required");
 			errors.rejectValue("agentRelations", "~contact_required", "~contact_required");
+			errors.rejectValue("locations", "~contact_required", "~contact_required");
 		}
 	}
 	

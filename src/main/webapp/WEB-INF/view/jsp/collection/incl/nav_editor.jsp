@@ -39,6 +39,9 @@
 				<s:bind path="collection.eMail">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#eMail"><s:message code="~eu.dariah.de.colreg.model.collection.email" /></a></li>
 				</s:bind>
+				<s:bind path="collection.locations*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-locations"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></a></li>
+				</s:bind>
 				<s:bind path="collection.agentRelations*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-agents"><s:message code="~eu.dariah.de.colreg.model.collection.agents" /></a></li>
 				</s:bind>
@@ -80,9 +83,6 @@
 				<li><a href="#lst-child-collections"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></a></li>
 				<s:bind path="collection.providedIdentifier*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-provided-identifiers"><s:message code="~eu.dariah.de.colreg.model.collection.provided_identifiers" /></a></li>
-				</s:bind>
-				<s:bind path="collection.locations*">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-locations"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></a></li>
 				</s:bind>
 				<s:bind path="collection.audiences*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-audiences"><s:message code="~eu.dariah.de.colreg.model.collection.audiences" /></a></li>
