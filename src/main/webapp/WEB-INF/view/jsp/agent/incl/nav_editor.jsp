@@ -1,8 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
-<nav class="nav-form-controls">
-	<h3><s:message code="~eu.dariah.de.colreg.titles.properties" /></h3>
+<nav class="list-group active">
+	<h4><s:message code="~eu.dariah.de.colreg.titles.editor_options" /></h4>
+  	<div class="list-group-item">
+  		<div class="checkbox">
+		  <label>
+		    <input id="chk-toggle-hints" type="checkbox" value=""> <s:message code="~eu.dariah.de.colreg.view.common.labels.show_hints" />
+		  </label>
+		</div>
+  	</div>
+</nav>
+
+<nav class="list-group nav-form-controls">
+	<h4><s:message code="~eu.dariah.de.colreg.titles.properties" /></h4>
 	<ul class="nav">
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.agent.groups.mandatory_description" /></a>
 			<ul class="nav">

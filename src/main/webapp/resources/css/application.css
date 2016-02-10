@@ -162,10 +162,16 @@
  
 .sidebar .list-group {
 	box-shadow: none;
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	
 	/*margin: -35px -20px 0 auto;*/
-	width: 260px;
+	width: 280px;
+	
+	border-radius: 5px 0 0 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: -20px;
 }
 
 .sidebar .list-group.active {
@@ -187,8 +193,13 @@
 }
 
 .sidebar .list-group-item {
-	padding: 3px 15px 3px 37px;
+	padding: 4px 15px 4px 10px;
 	border : none;
+}
+
+.sidebar .list-group-item .checkbox {
+	font-size: 15px;
+	margin: 0;
 }
 
 .sidebar-logo {
@@ -203,7 +214,7 @@
 }
 
 .sidebar .active .sidebar-title {
-	border-bottom: 1px solid #f0f0f0;
+	/*border-bottom: 1px solid #f0f0f0;*/
 }
 
 .sidebar .sidebar-title a {
@@ -466,16 +477,12 @@ p.tt-suggestion {
 	/*position: fixed;
     top: 100px;
     margin-left: 30px;*/
-    width: 270px;
+    /*width: 270px;*/
 }
 
 .sidebar .nav-form-controls {
 	background: #fff none repeat scroll 0 0 padding-box;
-    border-radius: 5px 0 0 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-right: -20px;
+    
 }
 
 .sidebar nav {
@@ -709,6 +716,7 @@ label.control-label {
 }
 
 .editor-hint {
+	display: none;
 	padding: 5px;
 	padding-left: 25px;
 

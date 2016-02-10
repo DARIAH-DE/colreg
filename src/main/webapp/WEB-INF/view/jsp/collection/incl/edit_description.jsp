@@ -39,6 +39,12 @@
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="localizedDescriptions[${currIndex}].languageId" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.localized_description.language" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		<s:bind path="localizedDescriptions[${currIndex}].title">
@@ -54,6 +60,12 @@
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="localizedDescriptions[${currIndex}].title" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.localized_description.title" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		<s:bind path="localizedDescriptions[${currIndex}].acronym">
@@ -69,6 +81,12 @@
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="localizedDescriptions[${currIndex}].acronym" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.localized_description.acronym" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		<s:bind path="localizedDescriptions[${currIndex}].description">
@@ -77,6 +95,12 @@
 				<div class="col-sm-9">
 					<span class="attribute-name-helper">localizedDescriptions{}.description</span>
 					<textarea class="form-control" rows="3" id="localizedDescriptions${currIndex}.description" name="localizedDescriptions[${currIndex}].description"><c:if test="${currDesc!=null}">${currDesc.description}</c:if></textarea>
+				</div>
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.localized_description.description" />
+					</div>
 				</div>
 			</div>
 		</s:bind>

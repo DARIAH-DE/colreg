@@ -34,7 +34,7 @@
 		<!-- Method -->
 		<s:bind path="accrualMethods[${currIndex}].accrualMethod">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></label>
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></label>
 				<div class="col-sm-4">
 					<span class="attribute-name-helper">accrualMethods{}.accrualMethod</span>
 					<select class="form-control" name="accrualMethods[${currIndex}].accrualMethod" id="accrualMethods${currIndex}.accrualMethod" 
@@ -44,15 +44,21 @@
 						</c:forEach>
 					</select>
 				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="accrualMethods[${currIndex}].accrualMethod" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.accrual.accrual_method" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		
 		<!-- Policy -->
 		<s:bind path="accrualMethods[${currIndex}].accrualPolicy">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.policy" /></label>
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.policy" /></label>
 				<div class="col-sm-4">
 					<span class="attribute-name-helper">accrualMethods{}.accrualPolicy</span>
 					<select class="form-control" name="accrualMethods[${currIndex}].accrualPolicy" id="accrualMethods${currIndex}.accrualPolicy" 
@@ -62,8 +68,14 @@
 						</c:forEach>
 					</select>
 				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="accrualMethods[${currIndex}].accrualPolicy" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.accrual.accrual_policy" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		
@@ -72,13 +84,19 @@
 		<!-- Note -->
 		<s:bind path="accrualMethods[${currIndex}].description">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.description" /></label>
-				<div class="col-sm-8">
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.description" /></label>
+				<div class="col-sm-9">
 					<span class="attribute-name-helper">accrualMethods{}.description</span>
 					<textarea class="form-control" rows="3" id="accrualMethods${currIndex}.description" name="accrualMethods[${currIndex}].description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
 				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="accrualMethods[${currIndex}].description" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.accrual.description" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 	</td>

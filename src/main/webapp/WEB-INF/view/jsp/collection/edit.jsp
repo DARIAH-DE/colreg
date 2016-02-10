@@ -114,6 +114,12 @@
 						</table>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="localizedDescriptions" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.localized_descriptions" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -125,6 +131,12 @@
 						<sf:input path="collectionType" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionType" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.collection_type" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -136,6 +148,12 @@
 						<sf:input path="collectionDescriptionRights" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionDescriptionRights" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.description_rights" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -147,6 +165,12 @@
 						<sf:input path="accessRights" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="accessRights" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.access_rights" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -165,6 +189,12 @@
 						<sf:input path="webPage" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="webPage" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.webpage" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -176,278 +206,12 @@
 						<sf:input path="eMail" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="eMail" />
-				</div>
-			</s:bind>
-			
-			<!-- Agents -->
-			<s:bind path="agentRelations*">
-				<div class="form-group">
-					<label for="tbl-collection-agents" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.agents" /></label>
-					<div class="col-sm-9">
-						<table id="tbl-collection-agents" class="collection-editor-table">
-							<thead>
-								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent_relation.agent_name" /></th>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent_relation.relation" /></th>
-									<th class="nowrap"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:if test="${fn:length(collection.agentRelations)>0}">
-									<c:forEach items="${collection.agentRelations}" var="agentRelation" varStatus="status" >
-										<c:set var="currAgentRelation" value="${agentRelation}" scope="request" />
-										<c:set var="currIndex" value="${status.index}" scope="request" />
-										<jsp:include page="incl/edit_agent.jsp" />
-									</c:forEach>
-									<c:remove var="currAgentRelation" />	
-								</c:if>
-								<tr class="collection-editor-table-buttons">
-									<td colspan="4" style="text-align: right;">
-										<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_agent_relation" /></button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="agentRelations" />
-				</div>
-			</s:bind>
-		</div>
-		
-		
-		<div class="editor-section">
-			<div class="editor-section-heading">
-				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.content_related" /></h4>
-			</div>
-			
-			<!-- Item language* -->
-			<s:bind path="itemLanguages*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="lst-collection-item-languages" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_languages" /></label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-item-languages" class="collection-editor-list">
-							<c:if test="${fn:length(collection.itemLanguages)>0}">
-								<c:forEach items="${collection.itemLanguages}" var="lang" varStatus="status" >
-									<c:set var="currLang" value="${lang}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_itemlanguage.jsp" />
-								</c:forEach>
-								<c:remove var="currDesc" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['itemLanguageList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_item_language" /></button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</s:bind>
-			
-			<!-- Subject* -->
-			<s:bind path="subjects*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="lst-collection-subjects" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.subjects" /></label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-subjects" class="collection-editor-list">
-							<c:if test="${fn:length(collection.subjects)>0}">
-								<c:forEach items="${collection.subjects}" var="subj" varStatus="status" >
-									<c:set var="currSubj" value="${subj}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_subject.jsp" />
-								</c:forEach>
-								<c:remove var="currSubj" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['subjects'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_subject" /></button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</s:bind>
-			
-			<!-- Temporal* -->
-			<s:bind path="temporals*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="lst-collection-temporals" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.temporals" /></label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-temporals" class="collection-editor-list">
-							<c:if test="${fn:length(collection.temporals)>0}">
-								<c:forEach items="${collection.temporals}" var="temp" varStatus="status" >
-									<c:set var="currTemp" value="${temp}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_temporal.jsp" />
-								</c:forEach>
-								<c:remove var="currTemp" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['temporals'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_temporal" /></button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</s:bind>
-			
-			<!-- Spatial* -->
-			<s:bind path="spatials*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="lst-collection-spatials" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.spatials" /></label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-spatials" class="collection-editor-list">
-							<c:if test="${fn:length(collection.spatials)>0}">
-								<c:forEach items="${collection.spatials}" var="spat" varStatus="status" >
-									<c:set var="currSpat" value="${spat}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_spatial.jsp" />
-								</c:forEach>
-								<c:remove var="currSpat" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['spatials'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_spacial" /></button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</s:bind>
-
-			<!-- Collection Created* -->
-			<s:bind path="collectionCreated">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="collectionCreated" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_created" /></label>
-					<div class="col-sm-9">
-						<sf:input path="collectionCreated" class="form-control" />
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionCreated" />
-				</div>
-			</s:bind>
-			
-			<!-- Items Created* -->
-			<s:bind path="itemsCreated">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="itemsCreated" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.items_created" /></label>
-					<div class="col-sm-9">
-						<sf:input path="itemsCreated" class="form-control" />
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemsCreated" />
-				</div>
-			</s:bind>
-			
-			<!-- Item type* -->
-			<s:bind path="itemTypeIds">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="itemTypeIds" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></label>
-					<div class="col-sm-5">
-						<select class="form-control" id="itemTypeIds" name="itemTypeIds" size="12" multiple="multiple" autocomplete="off">
-						<c:forEach items="${itemTypes}" var="type">
-							<c:set var="contains" value="false" />
-							<c:forEach items="${collection.itemTypeIds}" var="typeId">
-								<c:if test="${typeId==type.id}">
-									<c:set var="contains" value="true" />
-								</c:if>
-							</c:forEach>
-							<option <c:if test="${contains}">selected="selected"</c:if> value="${type.id}">${type.label}</option>
-						</c:forEach>
-					</select>
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemTypeIds" />
-				</div>
-			</s:bind>
-			
-			<!-- Size -->
-			<s:bind path="size">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="size" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.size" /></label>
-					<div class="col-sm-3">
-						<input type="number" id="size" name="size" class="form-control" />
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="size" />
-				</div>
-			</s:bind>
-		</div>
-			
-		
-		
-		<div class="editor-section">
-			<div class="editor-section-heading">
-				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></h4>
-			</div>
-			
-			<!-- Is part of -->
-			<s:bind path="parentCollectionId">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="parentCollectionIdSelector" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.parent_collection" /></label>
-					<div class="col-sm-5">
-						<input type="text" id="parentCollectionIdSelector" class="form-control" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.search_by_id_name" />" />
-						<sf:hidden path="parentCollectionId" />
-					</div>
 					<div class="col-sm-9 col-sm-offset-3">
-						<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
-							<button type="button" class="btn btn-xs btn-link pull-right collection-reset"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-								<p>
-							<c:if test="${parentCollection!=null}">
-								<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
-								<small><em>ID: ${parentCollection.entityId}</em></small></a>
-							</c:if>	
-							</p>
-						</div>
-						<div id="parentCollection-display-null" class="<c:if test="${parentCollection!=null}">hide</c:if>">
-							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></label>
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.email" />
 						</div>
 					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="parentCollectionId" />
-				</div>
-			</s:bind>
-			
-			<!-- Has part of -->
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></label>
-				<div id="lst-child-collections" class="col-sm-9">
-					<c:choose>
-						<c:when test="${childCollections!=null && fn:length(childCollections)>0}">
-							<c:forEach items="${childCollections}" var="child" varStatus="status" >
-								<div class="alert alert-default">
-									<p>
-										<a href="<s:url value="${child.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${child.localizedDescriptions[0].title}</strong><br />
-										<small><em>ID: ${child.entityId}</em></small></a>	
-									</p>
-								</div>
-							</c:forEach>		
-						</c:when>
-						<c:otherwise>
-							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></label>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
-			
-			<!-- Provided identifiers -->
-			<s:bind path="providedIdentifier*">
-				<div class="form-group">
-					<label for="lst-collection-provided-identifiers" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.provided_identifiers" /></label>
-					<div class="col-sm-9">
-						<ul id="lst-collection-provided-identifiers" class="collection-editor-list">
-							<c:if test="${fn:length(collection.providedIdentifier)>0}">
-								<c:forEach items="${collection.providedIdentifier}" var="identifier" varStatus="status" >
-									<c:set var="currIdentifier" value="${identifier}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_identifier.jsp" />
-								</c:forEach>
-								<c:remove var="currIdentifier" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_identifier" /></button>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="providedIdentifier" />
 				</div>
 			</s:bind>
 			
@@ -482,9 +246,359 @@
 						</table>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="locations" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.locations" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
+			<!-- Agents -->
+			<s:bind path="agentRelations*">
+				<div class="form-group">
+					<label for="tbl-collection-agents" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.agents" /></label>
+					<div class="col-sm-9">
+						<table id="tbl-collection-agents" class="collection-editor-table">
+							<thead>
+								<tr>
+									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent_relation.agent_name" /></th>
+									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent_relation.relation" /></th>
+									<th class="nowrap"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${fn:length(collection.agentRelations)>0}">
+									<c:forEach items="${collection.agentRelations}" var="agentRelation" varStatus="status" >
+										<c:set var="currAgentRelation" value="${agentRelation}" scope="request" />
+										<c:set var="currIndex" value="${status.index}" scope="request" />
+										<jsp:include page="incl/edit_agent.jsp" />
+									</c:forEach>
+									<c:remove var="currAgentRelation" />	
+								</c:if>
+								<tr class="collection-editor-table-buttons">
+									<td colspan="4" style="text-align: right;">
+										<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_agent_relation" /></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="agentRelations" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.agents" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+		</div>
+		
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
+				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.content_related" /></h4>
+			</div>
+			
+			<!-- Item language* -->
+			<s:bind path="itemLanguages*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="lst-collection-item-languages" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_languages" /></label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-item-languages" class="collection-editor-list">
+							<c:if test="${fn:length(collection.itemLanguages)>0}">
+								<c:forEach items="${collection.itemLanguages}" var="lang" varStatus="status" >
+									<c:set var="currLang" value="${lang}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_itemlanguage.jsp" />
+								</c:forEach>
+								<c:remove var="currDesc" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['itemLanguageList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_item_language" /></button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.item_languages" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Subject* -->
+			<s:bind path="subjects*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="lst-collection-subjects" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.subjects" /></label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-subjects" class="collection-editor-list">
+							<c:if test="${fn:length(collection.subjects)>0}">
+								<c:forEach items="${collection.subjects}" var="subj" varStatus="status" >
+									<c:set var="currSubj" value="${subj}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_subject.jsp" />
+								</c:forEach>
+								<c:remove var="currSubj" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['subjects'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_subject" /></button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.subjects" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Temporal* -->
+			<s:bind path="temporals*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="lst-collection-temporals" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.temporals" /></label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-temporals" class="collection-editor-list">
+							<c:if test="${fn:length(collection.temporals)>0}">
+								<c:forEach items="${collection.temporals}" var="temp" varStatus="status" >
+									<c:set var="currTemp" value="${temp}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_temporal.jsp" />
+								</c:forEach>
+								<c:remove var="currTemp" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['temporals'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_temporal" /></button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.temporals" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Spatial* -->
+			<s:bind path="spatials*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="lst-collection-spatials" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.spatials" /></label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-spatials" class="collection-editor-list">
+							<c:if test="${fn:length(collection.spatials)>0}">
+								<c:forEach items="${collection.spatials}" var="spat" varStatus="status" >
+									<c:set var="currSpat" value="${spat}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_spatial.jsp" />
+								</c:forEach>
+								<c:remove var="currSpat" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['spatials'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_spacial" /></button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.spatials" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+
+			<!-- Collection Created* -->
+			<s:bind path="collectionCreated">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="collectionCreated" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_created" /></label>
+					<div class="col-sm-9">
+						<sf:input path="collectionCreated" class="form-control" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionCreated" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.collection_created" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Items Created* -->
+			<s:bind path="itemsCreated">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="itemsCreated" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.items_created" /></label>
+					<div class="col-sm-9">
+						<sf:input path="itemsCreated" class="form-control" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemsCreated" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.items_created" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Item type* -->
+			<s:bind path="itemTypeIds">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="itemTypeIds" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></label>
+					<div class="col-sm-5">
+						<select class="form-control" id="itemTypeIds" name="itemTypeIds" size="12" multiple="multiple" autocomplete="off">
+						<c:forEach items="${itemTypes}" var="type">
+							<c:set var="contains" value="false" />
+							<c:forEach items="${collection.itemTypeIds}" var="typeId">
+								<c:if test="${typeId==type.id}">
+									<c:set var="contains" value="true" />
+								</c:if>
+							</c:forEach>
+							<option <c:if test="${contains}">selected="selected"</c:if> value="${type.id}">${type.label}</option>
+						</c:forEach>
+					</select>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemTypeIds" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.item_types" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Size -->
+			<s:bind path="size">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="size" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.size" /></label>
+					<div class="col-sm-3">
+						<input type="number" id="size" name="size" class="form-control" />
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="size" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.size" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+		</div>
+			
+		
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
+				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></h4>
+			</div>
+			
+			<!-- Is part of -->
+			<s:bind path="parentCollectionId">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="parentCollectionIdSelector" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.parent_collection" /></label>
+					<div class="col-sm-5">
+						<input type="text" id="parentCollectionIdSelector" class="form-control" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.search_by_id_name" />" />
+						<sf:hidden path="parentCollectionId" />
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
+							<button type="button" class="btn btn-xs btn-link pull-right collection-reset"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+								<p>
+							<c:if test="${parentCollection!=null}">
+								<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
+								<small><em>ID: ${parentCollection.entityId}</em></small></a>
+							</c:if>	
+							</p>
+						</div>
+						<div id="parentCollection-display-null" class="<c:if test="${parentCollection!=null}">hide</c:if>">
+							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></label>
+						</div>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="parentCollectionId" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.parent_collection" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Has part of -->
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></label>
+				<div id="lst-child-collections" class="col-sm-9">
+					<c:choose>
+						<c:when test="${childCollections!=null && fn:length(childCollections)>0}">
+							<c:forEach items="${childCollections}" var="child" varStatus="status" >
+								<div class="alert alert-default">
+									<p>
+										<a href="<s:url value="${child.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${child.localizedDescriptions[0].title}</strong><br />
+										<small><em>ID: ${child.entityId}</em></small></a>	
+									</p>
+								</div>
+							</c:forEach>		
+						</c:when>
+						<c:otherwise>
+							<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></label>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.collection.child_collections" />
+					</div>
+				</div>
+			</div>
+			
+			<!-- Provided identifiers -->
+			<s:bind path="providedIdentifier*">
+				<div class="form-group">
+					<label for="lst-collection-provided-identifiers" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.provided_identifiers" /></label>
+					<div class="col-sm-9">
+						<ul id="lst-collection-provided-identifiers" class="collection-editor-list">
+							<c:if test="${fn:length(collection.providedIdentifier)>0}">
+								<c:forEach items="${collection.providedIdentifier}" var="identifier" varStatus="status" >
+									<c:set var="currIdentifier" value="${identifier}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_identifier.jsp" />
+								</c:forEach>
+								<c:remove var="currIdentifier" />	
+							</c:if>
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_identifier" /></button>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="providedIdentifier" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.provided_identifiers" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+						
 			<!-- Audience* -->
 			<s:bind path="audiences*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
@@ -506,6 +620,12 @@
 							</li>
 						</ul>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.audiences" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -517,6 +637,12 @@
 						<sf:input path="provenanceInfo" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="provenanceInfo" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.provenance_info" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -530,6 +656,12 @@
 						<sf:input path="associatedProject" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="associatedProject" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.associated_project" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -573,6 +705,12 @@
 						</table>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="accrualMethods" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.accrual" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -584,6 +722,12 @@
 						<sf:input path="itemRights" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemRights" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.item_rights" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 		</div>
@@ -625,6 +769,12 @@
 						</table>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="accessMethods" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.access" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -645,6 +795,12 @@
 							<a href="<s:url value="/collections/${collection.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.entityId}" /></a>
 						</label>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.collection_identifier" />
+						</div>
+					</div>
 				</div>
 				
 				<!-- Version id -->
@@ -655,6 +811,12 @@
 							<a href="<s:url value="/collections/${collection.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/collections/${collection.id}" /></a>
 						</label>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.version_identifier" />
+						</div>
+					</div>
 				</div>
 	
 				<!-- Version created -->
@@ -664,6 +826,12 @@
 						<label class="control-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
 						<label class="control-label">${collection.versionCreator}</label>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.current_version" />
+						</div>
+					</div>
 				</div>
 	
 				<!-- Entity timestamp -->
@@ -672,6 +840,12 @@
 					<div id="initially-created" class="col-sm-9">
 						<label class="control-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
 						<label class="control-label">${collection.entityCreator}</label>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.created" />
+						</div>
 					</div>
 				</div>
 				

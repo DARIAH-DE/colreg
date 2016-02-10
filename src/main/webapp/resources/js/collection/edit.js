@@ -55,6 +55,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowCallback: function(row) {
 			_this.registerLanguageTypeahead($(row).find(".language-typeahead"));
 			_this.registerFormControlSelectionEvents($(row));
+			$("#chk-toggle-hints").trigger("change");
 		}
 	});
 	this.tables["agentRelationTable"] = new CollectionEditorTable({
@@ -64,6 +65,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 			_this.registerAgentTypeahead($(row).find(".agent-typeahead"));
 			_this.registerAgentRelationTypeSelection($(row).find(".select-relation-type"));
 			_this.registerFormControlSelectionEvents($(row));
+			$("#chk-toggle-hints").trigger("change");
 		}
 	});
 	this.tables["accessMethodTable"] = new CollectionEditorTable({
@@ -72,6 +74,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowCallback: function(row) {
 			_this.registerEncodingSchemeTypeahead($(row).find(".encoding-scheme-typeahead"));
 			_this.registerFormControlSelectionEvents($(row));
+			$("#chk-toggle-hints").trigger("change");
 		},
 		initCallback: function(table) {
 			table.schemesList = new CollectionEditorList({
@@ -89,6 +92,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAccrual",
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
+			$("#chk-toggle-hints").trigger("change");
 		}
 	});
 	this.tables["locations"] = new CollectionEditorTable({
@@ -96,6 +100,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editLocation",
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
+			$("#chk-toggle-hints").trigger("change");
 		}
 	});
 	

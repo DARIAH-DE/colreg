@@ -52,6 +52,12 @@
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="agentRelations[${currIndex}].typeIds" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.relation" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		<s:bind path="agentRelations[${currIndex}].agentId">
@@ -76,12 +82,17 @@
 					</div>
 					<div class="agent-display-null <c:if test="${currAgentRelation.agent!=null}">hide</c:if>">
 						<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_agent_set" /></em></label><br />
-						<s:url value="/agents/new" var="newAgentUrl" />
-						<label class="control-label"><small><s:message code="~eu.dariah.de.colreg.view.collection.labels.hint_add_agent" arguments="${newAgentUrl}" /></small></label>
 					</div>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="agentRelations[${currIndex}].agentId" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<s:url value="/agents/new" var="newAgentUrl" />
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.agent" arguments="${newAgentUrl}" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		<s:bind path="agentRelations[${currIndex}].annotation">
@@ -93,6 +104,12 @@
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="agentRelations[${currIndex}].annotation" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.annotation" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 	</td>

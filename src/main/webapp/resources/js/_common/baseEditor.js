@@ -10,6 +10,13 @@ function BaseEditor() {
 	                         "~eu.dariah.de.colreg.view.collection.labels.delete_collection.head",
 	                         "~eu.dariah.de.colreg.common.link.no",
 	                         "~eu.dariah.de.colreg.common.link.yes"];
+	
+	var _this = this;
+	$("#chk-toggle-hints").on("change", function() {
+		_this.toggleHints($(this).is(":checked"));
+	});
+	
+	$("#chk-toggle-hints").trigger("change");
 };
 
 BaseEditor.prototype.sort = function() {
@@ -23,6 +30,14 @@ BaseEditor.prototype.sort = function() {
 
 BaseEditor.prototype.submit = function(event) {
 	this.sort();
+};
+
+BaseEditor.prototype.toggleHints = function(check) {
+	if (check) {
+		$(".editor-hint").show();
+	} else {
+		$(".editor-hint").hide();
+	}
 };
 
 BaseEditor.prototype.addVocabularySource = function(name, urlSuffix, params) {

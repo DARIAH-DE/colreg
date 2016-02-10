@@ -104,6 +104,18 @@
 						<sf:input path="name" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="name" />
+					<div class="col-sm-9 col-sm-offset-3 agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>>
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.name" />
+						</div>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3 agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.last_name" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -115,6 +127,12 @@
 						<sf:input path="foreName" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="foreName" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.first_name" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -157,6 +175,12 @@
 						</table>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="addresses" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.addresses" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -168,6 +192,12 @@
 						<sf:input path="eMail" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="eMail" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.email" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -179,6 +209,12 @@
 						<sf:input path="webPage" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="webPage" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.webpage" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 			
@@ -190,6 +226,12 @@
 						<sf:input path="phone" class="form-control" />
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="phone" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.phone" />
+						</div>
+					</div>
 				</div>
 			</s:bind>
 		</div>
@@ -197,6 +239,34 @@
 		<div class="editor-section">
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.agent.groups.contextual" /></h4>
+			</div>
+			
+			<!-- Identifiers -->
+			<div class="form-group">
+				<label for="lst-agent-provided-identifiers" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.provided_identifiers" /></label>
+				<div class="col-sm-9">
+					<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
+						<c:if test="${fn:length(agent.providedIdentifier)>0}">
+							<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >
+								<c:set var="currIdentifier" value="${identifier}" scope="request" />
+								<c:set var="currIndex" value="${status.index}" scope="request" />
+								<jsp:include page="incl/edit_identifier.jsp" />
+							</c:forEach>
+							<c:remove var="currIdentifier" />	
+						</c:if>
+						<li class="collection-editor-list-buttons">
+							<div class="col-sm-12">
+								<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_identifier" /></button>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent.identifiers" />
+					</div>
+				</div>
 			</div>
 			
 			<!-- Parent agent -->
@@ -221,7 +291,12 @@
 						<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label>
 					</div>
 				</div>
-				
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent.parent_agent" />
+					</div>
+				</div>
 			</div>
 			
 			<!-- Child agents -->
@@ -245,6 +320,12 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent.child_agents" />
+					</div>
+				</div>
 			</div>
 			
 			<!-- Associated collections -->
@@ -267,26 +348,11 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="description" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.provided_identifiers" /></label>
-				<div class="col-sm-9">
-					<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
-						<c:if test="${fn:length(agent.providedIdentifier)>0}">
-							<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >
-								<c:set var="currIdentifier" value="${identifier}" scope="request" />
-								<c:set var="currIndex" value="${status.index}" scope="request" />
-								<jsp:include page="incl/edit_identifier.jsp" />
-							</c:forEach>
-							<c:remove var="currIdentifier" />	
-						</c:if>
-						<li class="collection-editor-list-buttons">
-							<div class="col-sm-12">
-								<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_identifier" /></button>
-							</div>
-						</li>
-					</ul>
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.agent.associated_collections" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -305,6 +371,12 @@
 							<a href="<s:url value="/agents/${agent.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.entityId}" /></a>
 						</label>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.agent_identifier" />
+						</div>
+					</div>
 				</div>
 				
 				<!-- Version id -->
@@ -315,6 +387,12 @@
 							<a href="<s:url value="/agents/${agent.id}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.id}" /></a>
 						</label>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.version_identifier" />
+						</div>
+					</div>
 				</div>
 	
 				<!-- Version created -->
@@ -324,6 +402,12 @@
 						<label class="control-label"><joda:format value="${agent.versionTimestamp}" style="LM" /></label><br />
 						<label class="control-label">${agent.versionCreator}</label>
 					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.current_version" />
+						</div>
+					</div>
 				</div>
 	
 				<!-- Entity timestamp -->
@@ -332,6 +416,12 @@
 					<div id="initially-created" class="col-sm-9">
 						<label class="control-label"><joda:format value="${agent.entityTimestamp}" style="LM" /></label><br />
 						<label class="control-label">${agent.entityCreator}</label>
+					</div>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.created" />
+						</div>
 					</div>
 				</div>
 				

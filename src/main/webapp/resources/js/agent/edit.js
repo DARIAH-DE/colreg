@@ -38,6 +38,7 @@ var AgentEditor = function() {
 		newRowUrl: __util.getBaseUrl() + "agents/includes/editAddress",
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
+			$("#chk-toggle-hints").trigger("change");
 		}
 	});
 	
