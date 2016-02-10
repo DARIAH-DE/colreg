@@ -91,6 +91,14 @@ CollectionEditor.prototype.initEditorComponents = function() {
 			_this.registerFormControlSelectionEvents($(row));
 		}
 	});
+	this.tables["locations"] = new CollectionEditorTable({
+		tableSelector: "#tbl-collection-locations",
+		newRowUrl: __util.getBaseUrl() + "collections/includes/editLocation",
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
+	});
+	
 	
 	// Editor lists
 	this.lists["itemLanguageList"] = new CollectionEditorList({
@@ -132,13 +140,6 @@ CollectionEditor.prototype.initEditorComponents = function() {
 	this.lists["audiences"] = new CollectionEditorList({
 		listSelector: "#lst-collection-audiences",
 		newRowUrl: __util.getBaseUrl() + "collections/includes/editAudience",
-		newRowCallback: function(row) {
-			_this.registerFormControlSelectionEvents($(row));
-		}
-	});
-	this.lists["locations"] = new CollectionEditorList({
-		listSelector: "#lst-collection-locations",
-		newRowUrl: __util.getBaseUrl() + "collections/includes/editLocation",
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
 		}
@@ -252,6 +253,5 @@ CollectionEditor.prototype.renderCollectionSuggestion = function(collection) {
 
 CollectionEditor.prototype.renderAgentSuggestion = function(agent) {
 	return  "<strong>" + agent.name + " " + agent.foreName + "</strong><br />" +
-			"<small><em>ID:" + agent.entityId + "</em></small>" +
-			(agent.address!=null && agent.address!="" ? "<br />" + agent.address : "");
+			"<small><em>ID:" + agent.entityId + "</em></small>";
 };

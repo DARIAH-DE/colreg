@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
@@ -136,7 +137,11 @@ public class AgentController {
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAddress"})
-	public String getEditAddressForm() {
+	public String getEditAddressForm(Model model) {
+		Address a = new Address();
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currAddr", a);
+		model.addAttribute("addresses[0]", a);
 		return "agent/edit/incl/edit_address";
 	}
 }

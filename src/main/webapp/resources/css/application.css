@@ -711,9 +711,7 @@ label.control-label {
 .editor-hint {
 	padding: 5px;
 	padding-left: 25px;
-	margin-top: 3px;
-	margin-bottom: 6px;
-	
+
 	font-size: 95%;
 	font-style: italic;
 	color: #555;

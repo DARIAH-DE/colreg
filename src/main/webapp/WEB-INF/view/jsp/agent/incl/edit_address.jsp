@@ -27,17 +27,134 @@
 		<!-- Street -->
 		<s:bind path="addresses[${currIndex}].street">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="street" class="col-sm-4 control-label"><s:message code="~eu.dariah.de.colreg.model.access.uri" /></label>
-				<div class="col-sm-8">
-					<span class="attribute-name-helper">accessMethods{}.uri</span>
+				<label for="street" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.address.street" /></label>
+				<div class="col-sm-7">
+					<span class="attribute-name-helper">addresses{}.street</span>
 					<input type="text" 
-						onchange="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_uri');" 
-						onkeyup="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_uri');" 
-						class="form-control" id="accessMethods${currIndex}.uri" name="accessMethods[${currIndex}].uri" 
-						value="<c:if test="${currMethod!=null}">${currMethod.uri}</c:if>">
+						onchange="editor.tables['addresses'].handleInputChange(this, 'addresses_street');" 
+						onkeyup="editor.tables['addresses'].handleInputChange(this, 'addresses_street');" 
+						class="form-control" id="addresses${currIndex}.street" name="addresses[${currIndex}].street" 
+						value="<c:if test="${currAddr!=null}">${currAddr.street}</c:if>">
 				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-8 col-sm-offset-4" 
-					path="accessMethods[${currIndex}].uri" />
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="addresses[${currIndex}].street" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.address.street" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
+		<!-- Number -->
+		<s:bind path="addresses[${currIndex}].number">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="number" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.address.number" /></label>
+				<div class="col-sm-3">
+					<span class="attribute-name-helper">addresses{}.number</span>
+					<input type="text" 
+						onchange="editor.tables['addresses'].handleInputChange(this, 'addresses_number');" 
+						onkeyup="editor.tables['addresses'].handleInputChange(this, 'addresses_number');" 
+						class="form-control" id="addresses${currIndex}.number" name="addresses[${currIndex}].number" 
+						value="<c:if test="${currAddr!=null}">${currAddr.number}</c:if>">
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="addresses[${currIndex}].number" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.address.number" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
+		<!-- Postal code -->
+		<s:bind path="addresses[${currIndex}].postalCode">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="street" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.address.postal_code" /></label>
+				<div class="col-sm-3">
+					<span class="attribute-name-helper">addresses{}.postalCode</span>
+					<input type="text" 
+						onchange="editor.tables['addresses'].handleInputChange(this, 'addresses_postalCode');" 
+						onkeyup="editor.tables['addresses'].handleInputChange(this, 'addresses_postalCode');" 
+						class="form-control" id="addresses${currIndex}.postalCode" name="addresses[${currIndex}].postalCode" 
+						value="<c:if test="${currAddr!=null}">${currAddr.postalCode}</c:if>">
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="addresses[${currIndex}].postalCode" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.address.postal_code" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
+		<!-- Place -->
+		<s:bind path="addresses[${currIndex}].place">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="street" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.address.place" /></label>
+				<div class="col-sm-7">
+					<span class="attribute-name-helper">addresses{}.place</span>
+					<input type="text" 
+						onchange="editor.tables['addresses'].handleInputChange(this, 'addresses_place');" 
+						onkeyup="editor.tables['addresses'].handleInputChange(this, 'addresses_place');" 
+						class="form-control" id="addresses${currIndex}.place" name="addresses[${currIndex}].place" 
+						value="<c:if test="${currAddr!=null}">${currAddr.place}</c:if>">
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="addresses[${currIndex}].place" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.address.place" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
+		<!-- Country -->
+		<s:bind path="addresses[${currIndex}].country">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="street" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.address.country" /></label>
+				<div class="col-sm-6">
+					<span class="attribute-name-helper">addresses{}.country</span>
+					<input type="text" 
+						onchange="editor.tables['addresses'].handleInputChange(this, 'addresses_country');" 
+						onkeyup="editor.tables['addresses'].handleInputChange(this, 'addresses_country');" 
+						class="form-control" id="addresses${currIndex}.country" name="addresses[${currIndex}].country" 
+						value="<c:if test="${currAddr!=null}">${currAddr.country}</c:if>">
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="addresses[${currIndex}].country" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.address.country" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
+		<!-- Note -->
+		<s:bind path="addresses[${currIndex}].note">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="note" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.address.note" /></label>
+				<div class="col-sm-9">
+					<span class="attribute-name-helper">addresses{}.note</span>
+					<textarea class="form-control" rows="3" id="addresses${currIndex}.note" name="addresses[${currIndex}].note"><c:if test="${currAddr!=null}">${currAddr.note}</c:if></textarea>
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="addresses[${currIndex}].note" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.address.note" />
+					</div>
+				</div>
 			</div>
 		</s:bind>
 		

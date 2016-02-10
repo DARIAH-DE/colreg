@@ -453,25 +453,35 @@
 			
 			<!-- Location* -->
 			<s:bind path="locations*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="lst-collection-locations" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></label>
+				<div class="form-group" >
+					<label for="tbl-collection-locations" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></label>
 					<div class="col-sm-9">
-						<ul id="lst-collection-locations" class="collection-editor-list">
-							<c:if test="${fn:length(collection.locations)>0}">
-								<c:forEach items="${collection.locations}" var="loc" varStatus="status" >
-									<c:set var="currLoc" value="${loc}" scope="request" />
-									<c:set var="currIndex" value="${status.index}" scope="request" />
-									<jsp:include page="incl/edit_location.jsp" />
-								</c:forEach>
-								<c:remove var="currLoc" />	
-							</c:if>
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['locations'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_location" /></button>
-								</div>
-							</li>
-						</ul>
+						<table id="tbl-collection-locations" class="collection-editor-table">
+							<thead>
+								<tr>
+									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.address.place" /></th>
+									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.address.country" /></th>
+									<th class="nowrap"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${fn:length(collection.locations)>0}">
+									<c:forEach items="${collection.locations}" var="addr" varStatus="status" >
+										<c:set var="currAddr" value="${addr}" scope="request" />
+										<c:set var="currIndex" value="${status.index}" scope="request" />
+										<jsp:include page="incl/edit_location.jsp" />
+									</c:forEach>
+									<c:remove var="currAddr" />	
+								</c:if>
+								<tr class="collection-editor-table-buttons">
+									<td colspan="4" style="text-align: right;">
+										<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_location" /></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="locations" />
 				</div>
 			</s:bind>
 			

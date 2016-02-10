@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
+import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
@@ -262,9 +263,10 @@ public class CollectionController {
 	
 	@RequestMapping(method=GET, value={"/includes/editLocation"})
 	public String getLocationForm(Model model) {
+		Address a = new Address();
 		model.addAttribute("currIndex", 0);
-		model.addAttribute("currLoc", "");
-		model.addAttribute("locations[0]", "");
+		model.addAttribute("currAddr", a);
+		model.addAttribute("locations[0]", a);
 		
 		return "collection/edit/incl/edit_location";
 	}

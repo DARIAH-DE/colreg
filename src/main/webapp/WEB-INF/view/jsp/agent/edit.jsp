@@ -134,8 +134,8 @@
 						<table id="tbl-agent-addresses" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent.place" /></th>
-									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.agent.country" /></th>
+									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.address.place" /></th>
+									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.address.country" /></th>
 									<th class="nowrap"></th>
 								</tr>
 							</thead>

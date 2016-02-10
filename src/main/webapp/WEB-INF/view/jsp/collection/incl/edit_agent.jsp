@@ -70,8 +70,7 @@
 							<p>
 							<c:if test="${currAgentRelation.agent!=null}">
 								<a href="<s:url value="/agents/${currAgentRelation.agent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${currAgentRelation.agent.name} ${currAgentRelation.agent.foreName}</strong><br />
-								<small><em>ID: ${currAgentRelation.agent.entityId}</em></small><br />
-								${currAgentRelation.agent.address}</a>
+								<small><em>ID: ${currAgentRelation.agent.entityId}</em></small></a>
 							</c:if>	
 						</p>
 					</div>
