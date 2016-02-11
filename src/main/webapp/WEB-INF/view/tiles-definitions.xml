@@ -31,7 +31,7 @@
 		<put-attribute name="sideNav" cascade="true" value="true" />
 		<put-attribute name="fluidLayout" cascade="true" value="true" />
 	</definition>
-		<definition name="template_tables" extends="template_simple">
+	<definition name="template_tables" extends="template_main">
 		<put-attribute name="fluidLayout" cascade="true" value="true" />
 		<put-list-attribute name="styles" inherit="true">
 			<add-attribute type="string" value="dataTables/datatables.css" />

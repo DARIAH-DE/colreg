@@ -1,8 +1,10 @@
 package eu.dariah.de.colreg.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.pojo.AgentPojo;
 
 public interface AgentService {
 	public List<Agent> findAllCurrent();
@@ -16,4 +18,6 @@ public interface AgentService {
 	public List<Agent> findAllVersionsForEntityId(String id);
 	public Agent findVersionById(String id, boolean includeDeleted);
 	public void appendVersionComment(String versionid, String comment);
+	public List<AgentPojo> convertToPojos(List<Agent> agents, Locale locale);
+	public AgentPojo convertToPojo(Agent agent, Locale locale);
 }

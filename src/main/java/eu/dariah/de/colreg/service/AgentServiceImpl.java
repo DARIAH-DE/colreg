@@ -1,26 +1,36 @@
 package eu.dariah.de.colreg.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
 import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.pojo.AgentPojo;
 
 @Service
 public class AgentServiceImpl implements AgentService {
 	@Autowired private AgentDao agentDao;
 	@Autowired private AgentTypeDao agentTypeDao;
-
+	
+	@Autowired private MessageSource messageSource;
+	
 	@Override
 	public List<Agent> findAllCurrent() {
 		return agentDao.findAllCurrent();
@@ -144,5 +154,33 @@ public class AgentServiceImpl implements AgentService {
 		Agent a = agentDao.findById(versionid, true);
 		a.setVersionComment(comment);
 		agentDao.save(a);
+	}
+
+	@Override
+	public List<AgentPojo> convertToPojos(List<Agent> agents, Locale locale) {
+		if (agents==null) {
+			return null;
+		}
+		List<AgentPojo> pojos = new ArrayList<AgentPojo>(agents.size());
+		for (Agent a : agents) {
+			pojos.add(this.convertToPojo(a, locale));
+		}
+		return pojos;
+	}
+	
+	@Override
+	public AgentPojo convertToPojo(Agent agent, Locale locale) {
+		if (agent==null) {
+			return null;
+		}
+		AgentPojo pojo = new AgentPojo();
+		pojo.setEntityId(agent.getEntityId());
+		pojo.setParentEntityId(agent.getParentAgentId());
+		pojo.setId(agent.getId());
+		pojo.setLastChanged(agent.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("LM", locale), locale));
+		pojo.setName(agent.getName() + ((agent.getForeName()!=null && !agent.getForeName().trim().isEmpty()) ? ", " + agent.getForeName(): ""));
+		pojo.setType(agentTypeDao.findById(agent.getAgentTypeId()).getLabel());
+		pojo.setState(agent.isDeleted() ? "deleted" : "valid");
+		return pojo;
 	}
 }

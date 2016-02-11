@@ -35,6 +35,7 @@ import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
+import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
@@ -53,6 +54,18 @@ public class CollectionController extends BaseController {
 		model.addAttribute("collections", collectionService.findAllCurrent());
 		
 		return "collection/list";
+	}
+	
+	@RequestMapping(value="list/public", method=RequestMethod.GET)
+	public @ResponseBody TableListPojo<Collection> getAllPublic(Model model, Locale locale, HttpServletRequest request) {
+		List<Collection> collections = collectionService.findAllCurrent();
+		return new TableListPojo<Collection>(collections);
+	}
+	
+	@RequestMapping(value="list/draft", method=RequestMethod.GET)
+	public @ResponseBody TableListPojo<Collection> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
+		List<Collection> collections = collectionService.findAllCurrent();
+		return new TableListPojo<Collection>(collections);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)

@@ -30,6 +30,8 @@ import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
+import eu.dariah.de.colreg.pojo.AgentPojo;
+import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -49,6 +51,14 @@ public class AgentController extends BaseController {
 		model.addAttribute("agents", agentService.findAllCurrent());
 		
 		return "agent/list";
+	}
+	
+	@RequestMapping(value="list", method=RequestMethod.GET)
+	public @ResponseBody TableListPojo<AgentPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
+		List<Agent> agents = agentService.findAllCurrent();
+		List<AgentPojo> agentPojos = agentService.convertToPojos(agents, locale);
+		
+		return new TableListPojo<AgentPojo>(agentPojos);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
