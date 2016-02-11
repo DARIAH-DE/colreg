@@ -193,8 +193,16 @@
 }
 
 .sidebar .list-group-item {
-	padding: 4px 15px 4px 10px;
+	padding: 4px 15px 4px 30px;
 	border : none;
+}
+
+.sidebar a.list-group-item {
+	color: #483E69;
+}
+
+.sidebar hr {
+	margin: 5px 0;
 }
 
 .sidebar .list-group-item .checkbox {

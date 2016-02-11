@@ -22,4 +22,9 @@ public class CollectionDaoImpl extends VersionedEntityDaoImpl<Collection> implem
 				.and("deleted").ne(true)
 				.and("succeedingVersionId").is(null)));
 	}
+	
+	@Override
+	public List<Collection> findAllDrafts(String userId) {
+		return this.find(Query.query(Criteria.where("succeedingVersionId").is(null).and("deleted").ne(true).and("draftUserId").is(userId)));
+	}
 }

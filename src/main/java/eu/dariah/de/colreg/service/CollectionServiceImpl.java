@@ -77,6 +77,11 @@ public class CollectionServiceImpl implements CollectionService {
 	public List<Collection> findAllCurrent() {
 		return collectionDao.findAllCurrent();
 	}
+	
+	@Override
+	public List<Collection> findAllDrafts(String userId) {
+		return collectionDao.findAllDrafts(userId);
+	}
 
 	@Override
 	public void initializeAgentRelations(Collection c) {

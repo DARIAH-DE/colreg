@@ -39,14 +39,6 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 
 	@Override
 	public void preprocess(Collection collection) {
-		Collection cCurrent = collectionService.findCurrentByCollectionId(collection.getEntityId());
-		if (cCurrent==null) {
-			// TODO: Actual user ids
-			collection.setDraftUserId("system_user_id");
-		} else {
-			// Stays with its draft creator or published
-			collection.setDraftUserId(cCurrent.getDraftUserId());
-		}
 		
 		// Remove the completely empty localized descriptions
 		if (collection.getLocalizedDescriptions()!=null && collection.getLocalizedDescriptions().size()>0) {

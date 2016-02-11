@@ -19,15 +19,15 @@
 		    	<nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
 		    		<!-- Main top navigation built from configuration -->
 		    		<ul class="nav navbar-nav">
-		    			<li><a href="<s:url value='/collections/' />">Collections</a></li>
-		    			<li><a href="<s:url value='/agents/' />">Agents</a></li>
+		    			<li><a href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a></li>
+		    			<li><a href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a></li>
 		    		</ul>
 		    
 		    		<!-- Elements for language selection and login/logout -->
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 							<a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<span class="glyphicon glyphicon-globe"></span> Language <span class="caret"></span>
+								<span class="glyphicon glyphicon-globe"></span> <s:message code="~eu.dariah.de.colreg.titles.languages" /> <span class="caret"></span>
 							</a>
 							<ul role="menu" class="dropdown-menu">
 								<c:forEach items="${_LANGUAGES}" var="_LANGUAGE">

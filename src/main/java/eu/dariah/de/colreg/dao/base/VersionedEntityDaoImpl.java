@@ -38,9 +38,9 @@ public abstract class VersionedEntityDaoImpl<T extends VersionedEntityImpl> exte
 
 	@Override
 	public List<T> findAllCurrent() {
-		return this.find(Query.query(Criteria.where("succeedingVersionId").is(null).and("deleted").ne(true)));
+		return this.find(Query.query(Criteria.where("succeedingVersionId").is(null).and("deleted").ne(true).and("draftUserId").exists(false)));
 	}
-	
+		
 	@Override
 	public List<T> findAllCurrent(boolean includeDeleted) {
 		Query q = new Query();

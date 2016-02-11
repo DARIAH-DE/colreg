@@ -19,15 +19,22 @@
 	</beans:bean>
 	
 	<beans:bean id="authInfoHelper" class="de.dariah.aai.javasp.web.helper.AuthInfoHelper" />
-		
-	<authentication-manager>
-	  <authentication-provider>
-	    <user-service>
-			<user name="tgradl" password="hairad" authorities="ROLE_ADMINISTRATOR, ROLE_CONTRIBUTOR" />
-			<user name="ahenrich" password="hairad" authorities="ROLE_CONTRIBUTOR" />
-	    </user-service>
-	  </authentication-provider>
+	
+	<authentication-manager alias="authenticationManager">
+	  <authentication-provider ref="localAuthenticationProvider" />
 	</authentication-manager>
+	
+	<beans:bean id="localAuthenticationProvider" class="eu.dariah.de.colreg.security.LocalAuthenticationProvider">
+		<beans:property name="localUserDetailsService" ref="localUserService" />
+	</beans:bean>
+	
+	<user-service id="localUserService">
+		<user name="tgradl" password="hairad" authorities="ROLE_ADMINISTRATOR, ROLE_CONTRIBUTOR" />
+		<user name="tgradl_user" password="hairad" authorities="" />
+		<user name="ahenrich" password="hairad" authorities="ROLE_CONTRIBUTOR" />
+		<user name="hlordick" password="harald" authorities="ROLE_CONTRIBUTOR" />
+    </user-service>
+
 		
 	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
 		<beans:constructor-arg name="decisionVoters">

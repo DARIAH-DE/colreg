@@ -1,8 +1,8 @@
 var collectionTable;
 var draftTable;
 $(document).ready(function() {
-	draftTable = new CollectionTable(__util.getBaseUrl() + "collections/list/draft", "#draft-table-container", "#draft-table");
-	collectionTable = new CollectionTable(__util.getBaseUrl() + "collections/list/public", "#collection-table-container", "#collection-table");
+	draftTable = new CollectionTable(__util.getBaseUrl() + "drafts/list", "#draft-table-container", "#draft-table");
+	collectionTable = new CollectionTable(__util.getBaseUrl() + "collections/list", "#collection-table-container", "#collection-table");
 });
 
 var CollectionTable = function(url, containerSelector, selector) {

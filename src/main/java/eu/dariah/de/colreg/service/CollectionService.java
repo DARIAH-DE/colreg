@@ -22,4 +22,5 @@ public interface CollectionService {
 	public void appendVersionComment(String versionid, String comment);
 	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale);
 	public CollectionPojo convertToPojo(Collection collection, Locale locale);
+	public List<Collection> findAllDrafts(String userId);
 }

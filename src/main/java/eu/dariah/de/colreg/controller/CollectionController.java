@@ -23,9 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import de.dariah.aai.javasp.web.helper.AuthInfoHelper;
+import de.dariah.samlsp.model.pojo.AuthPojo;
 import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
@@ -44,34 +47,38 @@ import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
-@RequestMapping("/collections/")
+@RequestMapping(value={"/collections/", "/drafts/"})
 public class CollectionController extends BaseController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
 	
 	@Autowired private CollectionValidator validator;
 	
-	
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public String getList(Model model, Locale locale) {		
+	public String getList(Model model, Locale locale, HttpServletRequest request) {		
 		model.addAttribute("collections", collectionService.findAllCurrent());
+		if(request.getServletPath().equals("/collections/")) {
+			model.addAttribute("load", "collections");
+		} else {
+			model.addAttribute("load", "drafts");
+		}
 		
 		return "collection/list";
 	}
 	
-	@RequestMapping(value="list/public", method=RequestMethod.GET)
+	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody TableListPojo<CollectionPojo> getAllPublic(Model model, Locale locale, HttpServletRequest request) {
-		List<Collection> collections = collectionService.findAllCurrent();
-		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, locale);
+		List<Collection> collections = null;
+		if(request.getServletPath().equals("/drafts/list")) {
+			AuthPojo auth = authInfoHelper.getAuth(request);
+			if (auth.isAuth()) {
+				collections = collectionService.findAllDrafts(auth.getUserId());
+			}
+		} else {
+			collections = collectionService.findAllCurrent();
+		}
 		
-		return new TableListPojo<CollectionPojo>(collectionPojos);
-	}
-	
-	@RequestMapping(value="list/draft", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<CollectionPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
-		List<Collection> collections = collectionService.findAllCurrent();
 		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, locale);
-		
 		return new TableListPojo<CollectionPojo>(collectionPojos);
 	}
 	
@@ -105,15 +112,27 @@ public class CollectionController extends BaseController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, 
+			final RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		if (!auth.isAuth()) {
+			return "redirect:/" + this.getLoginUrl();
+		}
+		
 		collection.setEntityId(id);
 		validator.validate(collection, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
 		}
 		
-		// TODO UserId
-		collectionService.save(collection, "default user");
+		Collection cCurrent = collectionService.findCurrentByCollectionId(collection.getEntityId());
+		if (cCurrent==null) {
+			collection.setDraftUserId(auth.getUserId());
+		} else {
+			// Stays with its draft creator or published
+			collection.setDraftUserId(cCurrent.getDraftUserId());
+		}
+		collectionService.save(collection, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", collection.getId());
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", collection.getVersionTimestamp());
 		
@@ -128,7 +147,12 @@ public class CollectionController extends BaseController {
 	}
 	
 	@RequestMapping(value="{id}/publish", method=RequestMethod.POST)
-	public String publicCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String publicCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		if (!auth.isAuth()) {
+			return "redirect:/" + this.getLoginUrl();
+		}
+		
 		collection.setEntityId(id);
 		validator.validate(collection, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -136,8 +160,7 @@ public class CollectionController extends BaseController {
 		}		
 
 		collection.setDraftUserId(null);
-		// TODO UserId
-		collectionService.save(collection, "default user");
+		collectionService.save(collection, auth.getUserId());
 		return "redirect:/collections/" + collection.getEntityId();
 	}
 	
@@ -176,15 +199,19 @@ public class CollectionController extends BaseController {
 	}
 	
 	@RequestMapping(value="{id}/delete", method=RequestMethod.POST)
-	public @ResponseBody ModelActionPojo deleteAgent(@PathVariable String id) {
+	public @ResponseBody ModelActionPojo deleteAgent(@PathVariable String id, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		if (!auth.isAuth()) {
+			return new ModelActionPojo(false);
+		}
+				
 		ModelActionPojo result = new ModelActionPojo(false);
 		List<Collection> children = collectionService.findCurrentByParentCollectionId(id);
 				
 		if (children==null || children.size()==0) {
 			Collection c = collectionService.findCurrentByCollectionId(id);
 			c.setDeleted(true);
-			// TODO UserId
-			collectionService.save(c, "default user");
+			collectionService.save(c, auth.getUserId());
 			result.setSuccess(true);
 		}
 		

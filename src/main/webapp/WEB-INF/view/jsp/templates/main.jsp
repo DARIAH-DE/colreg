@@ -36,11 +36,11 @@
 										<img width="220" height="103" src="<s:url value="/resources/img/dariah-logo.png" />" alt="DARIAH-DE Digital Research Infrastructure for the Arts and Humanities">
 									</a>
 								</div>
-								<c:if test="${sideOpts!=null}">
-									<tiles:insertAttribute name="sideOpts"/>
-								</c:if>
 								<c:if test="${sideNav==true}">
 									<%@ include file="incl/sideNav.jsp" %>
+								</c:if>
+								<c:if test="${sideOpts!=null}">
+									<tiles:insertAttribute name="sideOpts"/>
 								</c:if>
 			              	</div>
 		              	</div>
