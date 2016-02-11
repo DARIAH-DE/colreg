@@ -4,7 +4,6 @@
 
 <tiles:importAttribute name="fluidLayout" />
 
-
 <ul class="breadcrumb">
 	<li><a href='<s:url value="/" />' target="_self"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></a></li>
 	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.agents" /></li>
@@ -26,7 +25,7 @@
 					  <option>25</option>
 					  <option>50</option>
 					  <option>100</option>
-					  <option>~All</option>
+					  <option><s:message code="~eu.dariah.de.colreg.common.labels.all" /></option>
 					</select>
 				</div>					
 			</div>

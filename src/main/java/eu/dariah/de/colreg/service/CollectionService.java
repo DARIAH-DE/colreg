@@ -1,8 +1,10 @@
 package eu.dariah.de.colreg.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.pojo.CollectionPojo;
 
 public interface CollectionService {
 	public Collection createCollection();
@@ -18,4 +20,6 @@ public interface CollectionService {
 	public List<Collection> findAllVersionsForEntityId(String id);
 	public Collection findVersionById(String id, boolean includeDeleted);
 	public void appendVersionComment(String versionid, String comment);
+	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale);
+	public CollectionPojo convertToPojo(Collection collection, Locale locale);
 }

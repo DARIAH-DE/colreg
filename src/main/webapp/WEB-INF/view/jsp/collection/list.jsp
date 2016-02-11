@@ -4,73 +4,92 @@
 
 <tiles:importAttribute name="fluidLayout" />
 
-<div class="jumbotron jumbotron-small">
-	 <div class="container<c:if test="${fluidLayout==true}">-fluid</c:if>">
-		<div class="row">
-			<!-- Notifications -->
-			<div id="notifications-area" class="col-sm-10 col-sm-offset-1"></div>
-			<div class="xs-hidden sm-visible col-sm-3 col-lg-2 col-sm-offset-1">
-				<div class="pull-right dariah-flower-white-45">~Collection Registry</div>
+<ul class="breadcrumb">
+	<li><a href='<s:url value="/" />' target="_self"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></a></li>
+	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.collections" /></li>
+</ul>
+<div id="main-content">
+	<div class="row">
+		<div id="draft-table-container" class="col-md-12">
+			<h2><s:message code="~eu.dariah.de.colreg.titles.collections" /></h2>
+			<h3 class="pull-left">~Drafts</h3>
+		
+			<div class="pull-right">
+				<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
+					<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.collection.actions.add_collection" />
+				</a>
+				<div class="data-table-filter pull-left">
+					<input type="text" class="form-control input-sm" placeholder='<s:message code="~eu.dariah.de.colreg.common.labels.filter" />'>
+				</div>
+				<div class="data-table-count pull-left">
+					<select class="form-control input-sm">
+					  <option>10</option>
+					  <option>25</option>
+					  <option>50</option>
+					  <option>100</option>
+					  <option><s:message code="~eu.dariah.de.colreg.common.labels.all" /></option>
+					</select>
+				</div>					
 			</div>
-			<div class="col-sm-6 col-lg-7 col-sm-offset-1">
-				<h1>~Collections</h1>
+			<div class="clearfix">
+				<table id="draft-table" class="table table-striped table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th><!-- ~Badges --></th> 
+							<th><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.access" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></th>
+							<th><!-- ~Actions --></th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td colspan="6" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+					</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="container<c:if test="${fluidLayout==true}">-fluid</c:if>">
-	<div class="row">
-		<div id="main-content-wrapper" class="col-sm-10 col-sm-offset-1">
-			<ul class="breadcrumb">
-				<li><a href='<s:url value="/" />' target="_self">~Collection Registry</a></li>
-				<li class="active">~Collections</li>
-			</ul>
-			<div id="main-content">
-				<div class="row">
-					<div class="col-md-12">
-						<h2>~Collections</h2>
-						<ul>
-							<c:forEach items="${collections}" var="c">
-								<li><a href='<s:url value="${c.entityId}" />'>${c.entityId}</a></li>
-							</c:forEach>
-						</ul>
-						<!-- 
-						<h2 class="pull-left">~Collections</h2>
-						<div class="pull-right">
-							<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
-								<span class="glyphicon glyphicon-plus"></span> ~Register collection
-							</a>
-							<div class="data-table-filter pull-left">
-								<input type="text" class="form-control input-sm" placeholder='~Filter'>
-							</div>
-							<div class="data-table-count pull-left">
-								<select class="form-control input-sm">
-								  <option>10</option>
-								  <option>25</option>
-								  <option>50</option>
-								  <option>100</option>
-								  <option>~All</option>
-								</select>
-							</div>					
-						</div>
-						<div class="clearfix">
-							<table id="schema-table" class="table table-striped table-bordered table-condensed">
-								<thead>
-									<tr>
-										<th></th> 
-										<th>~Label</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-								<tr>
-									<td colspan="3" align="center">~Nothing fetched yet</td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-					</div> -->
+		
+		<div id="collection-table-container" class="col-md-12">
+			<h3 class="pull-left">~Collections</h3>
+			
+			<div class="pull-right">
+				<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
+					<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.collection.actions.add_collection" />
+				</a>
+				<div class="data-table-filter pull-left">
+					<input type="text" class="form-control input-sm" placeholder='<s:message code="~eu.dariah.de.colreg.common.labels.filter" />'>
 				</div>
+				<div class="data-table-count pull-left">
+					<select class="form-control input-sm">
+					  <option>10</option>
+					  <option>25</option>
+					  <option>50</option>
+					  <option>100</option>
+					  <option><s:message code="~eu.dariah.de.colreg.common.labels.all" /></option>
+					</select>
+				</div>					
+			</div>
+			<div class="clearfix">
+				<table id="collection-table" class="table table-striped table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th><!-- ~Badges --></th> 
+							<th><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.access" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></th>
+							<th><!-- ~Actions --></th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td colspan="6" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+					</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

@@ -30,11 +30,14 @@ import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Address;
+import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
+import eu.dariah.de.colreg.pojo.AgentPojo;
+import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -57,15 +60,19 @@ public class CollectionController extends BaseController {
 	}
 	
 	@RequestMapping(value="list/public", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<Collection> getAllPublic(Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody TableListPojo<CollectionPojo> getAllPublic(Model model, Locale locale, HttpServletRequest request) {
 		List<Collection> collections = collectionService.findAllCurrent();
-		return new TableListPojo<Collection>(collections);
+		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, locale);
+		
+		return new TableListPojo<CollectionPojo>(collectionPojos);
 	}
 	
 	@RequestMapping(value="list/draft", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<Collection> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody TableListPojo<CollectionPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
 		List<Collection> collections = collectionService.findAllCurrent();
-		return new TableListPojo<Collection>(collections);
+		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, locale);
+		
+		return new TableListPojo<CollectionPojo>(collectionPojos);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)

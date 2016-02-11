@@ -1,10 +1,13 @@
 package eu.dariah.de.colreg.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,14 +16,19 @@ import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
+import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.pojo.AgentPojo;
+import eu.dariah.de.colreg.pojo.CollectionPojo;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
 	@Autowired private CollectionDao collectionDao;
 	@Autowired private AgentDao agentDao;
+	@Autowired private AccessTypeDao accessTypeDao;
 
 	@Override
 	public Collection createCollection() {
@@ -160,5 +168,50 @@ public class CollectionServiceImpl implements CollectionService {
 		Collection c = collectionDao.findById(versionid, true);
 		c.setVersionComment(comment);
 		collectionDao.save(c);
+	}
+
+	@Override
+	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale) {
+		if (collections==null) {
+			return null;
+		}
+		List<CollectionPojo> pojos = new ArrayList<CollectionPojo>(collections.size());
+		for (Collection c : collections) {
+			pojos.add(this.convertToPojo(c, locale));
+		}
+		return pojos;
+	}
+	
+	@Override
+	public CollectionPojo convertToPojo(Collection collection, Locale locale) {
+		if (collection==null) {
+			return null;
+		}
+		CollectionPojo pojo = new CollectionPojo();
+		pojo.setEntityId(collection.getEntityId());
+		pojo.setParentEntityId(collection.getParentCollectionId());
+		pojo.setId(collection.getId());
+		pojo.setLastChanged(collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("LM", locale), locale));
+		
+		pojo.setTitle(collection.getLocalizedDescriptions().get(0).getTitle());
+		if (collection.getLocalizedDescriptions().get(0).getAcronym()!=null && 
+				!collection.getLocalizedDescriptions().get(0).getAcronym().trim().isEmpty()) {
+			pojo.setTitle(pojo.getTitle() + " (" + collection.getLocalizedDescriptions().get(0).getAcronym() + ")");
+		}
+		
+		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
+			String accessTypes = "";
+			for (int i=0; i<collection.getAccessMethods().size(); i++) {
+				accessTypes += accessTypeDao.findById(collection.getAccessMethods().get(i).getType()).getLabel();
+				if (i<collection.getAccessMethods().size()-1) {
+					accessTypes += "; ";
+				}
+			}
+			pojo.setAccess(accessTypes);
+		}
+		
+		pojo.setType(collection.getCollectionType());
+		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");
+		return pojo;
 	}
 }
