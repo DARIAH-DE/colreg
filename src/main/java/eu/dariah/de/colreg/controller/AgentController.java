@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import de.dariah.samlsp.model.pojo.AuthPojo;
 import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
@@ -45,11 +46,11 @@ public class AgentController extends BaseController {
 	@Autowired private VocabularyService vocabularyService;
 	
 	@Autowired private AgentValidator validator;
-		
+	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
 		model.addAttribute("agents", agentService.findAllCurrent());
-		
+		model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "agents");
 		return "agent/list";
 	}
 	
@@ -65,6 +66,10 @@ public class AgentController extends BaseController {
 	public String editAgent(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
 		Agent a;
 		if (id.toLowerCase().equals("new")) {
+			AuthPojo auth = authInfoHelper.getAuth(request);
+			if (!auth.isAuth()) {
+				return "redirect:/" + this.getLoginUrl();
+			}
 			a = agentService.createAgent();
 		} else {
 			a = agentService.findCurrentByAgentId(id, true);
@@ -113,6 +118,7 @@ public class AgentController extends BaseController {
 			Agent current = agentService.findCurrentByAgentId(entityId, true);
 			model.addAttribute("isDeleted", current.isDeleted());
 		}
+		model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "agents");
 		
 		return "agent/edit";
 	}

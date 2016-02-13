@@ -5,20 +5,18 @@
 
 <div class="list-group nav active">
 	<h4 class="sidebar-title"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></h4>
-	<a class="list-group-item" href="<s:url value='/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.dashboard" /></a>
+	<a class="list-group-item${_navigationAttribute=='dashboard' ? ' active' : ''}" href="<s:url value='/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.dashboard" /></a>
 	<hr />
-	
 	<c:choose>
 		<c:when test="${_auth!=null && _auth.auth==true}">
-			<a class="list-group-item" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a>
-			<div class="list-group-item" class="nav">
-				<a class="list-group-item" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.public_collections" /></a>
-				<a class="list-group-item" href="<s:url value='/drafts/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.drafts" arguments="12" /></a>
-			</div>
+			<h5 class="list-group-header"><s:message code="~eu.dariah.de.colreg.titles.collections" /></h5>
+			<a class="list-group-item${_navigationAttribute=='collections' ? ' active' : ''}" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.public_collections" /></a>
+			<a class="list-group-item${_navigationAttribute=='drafts' ? ' active' : ''}" href="<s:url value='/drafts/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.drafts" arguments="${_draftCount}" /></a>
+			<hr />
 		</c:when>
 		<c:otherwise>
-			<a class="list-group-item" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a>		
+			<a class="list-group-item${_navigationAttribute=='collections' ? ' active' : ''}" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a>		
 		</c:otherwise>
 	</c:choose>
-	<a class="list-group-item" href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a>
+	<a class="list-group-item${_navigationAttribute=='agents' ? ' active' : ''}" href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a>
 </div>

@@ -37,13 +37,26 @@
 		<property name="defaultLocale" value="de" />
 	</bean>
 	<mvc:interceptors>
-		<bean class="eu.dariah.de.minfba.core.web.interceptor.UserLocaleChangeInterceptor">
-			<property name="paramName" value="lang" />
-			<property name="initService" ref="initService" />
-		</bean>
-		<bean class="de.dariah.aai.javasp.web.view.AuthInfoHandlerInterceptor">
-			<property name="authInfoHelper" ref="authInfoHelper" />
-		</bean>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="eu.dariah.de.minfba.core.web.interceptor.UserLocaleChangeInterceptor">
+				<property name="paramName" value="lang" />
+				<property name="initService" ref="initService" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="de.dariah.aai.javasp.web.view.AuthInfoHandlerInterceptor">
+				<property name="authInfoHelper" ref="authInfoHelper" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/collections/"/>
+			<mvc:mapping path="/collections/*"/>
+			<mvc:mapping path="/agents/"/>
+			<mvc:mapping path="/agents/*"/>
+			<bean class="eu.dariah.de.colreg.security.UserContextInterceptor" />
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<context:component-scan base-package="eu.dariah.de.colreg.controller" />

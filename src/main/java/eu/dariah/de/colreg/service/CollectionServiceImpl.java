@@ -31,10 +31,11 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired private AccessTypeDao accessTypeDao;
 
 	@Override
-	public Collection createCollection() {
+	public Collection createCollection(String userId) {
 		Collection c = new Collection();
 		c.setId("new");
 		c.setEntityId("new");
+		c.setDraftUserId(userId);
 		
 		return c;
 	}

@@ -1,8 +1,8 @@
 var collectionTable;
 var draftTable;
 $(document).ready(function() {
-	draftTable = new CollectionTable(__util.getBaseUrl() + "drafts/list", "#draft-table-container", "#draft-table");
-	collectionTable = new CollectionTable(__util.getBaseUrl() + "collections/list", "#collection-table-container", "#collection-table");
+	draftTable = new CollectionTable(__util.composeUrl("drafts/list"), "#draft-table-container", "#draft-table");
+	collectionTable = new CollectionTable(__util.composeUrl("collections/list"), "#collection-table-container", "#collection-table");
 });
 
 var CollectionTable = function(url, containerSelector, selector) {
@@ -90,7 +90,7 @@ CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 CollectionTable.prototype.renderActionColumn = function(row, type, val, meta) {
 	var result = "";	
 	if (type==="display") {
-		return 	"<a href=\"" + __util.getBaseUrl() + "agents/" + row.entity.entityId + "\"><span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span></a>";
+		return 	"<a href=\"" + __util.composeUrl("collections/" + row.entity.entityId) + "\"><span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span></a>";
 	}
 	return result;
 };

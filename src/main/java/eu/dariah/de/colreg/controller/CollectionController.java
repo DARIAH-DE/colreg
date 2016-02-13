@@ -59,8 +59,10 @@ public class CollectionController extends BaseController {
 		model.addAttribute("collections", collectionService.findAllCurrent());
 		if(request.getServletPath().equals("/collections/")) {
 			model.addAttribute("load", "collections");
+			model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "collections");
 		} else {
 			model.addAttribute("load", "drafts");
+			model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "drafts");
 		}
 		
 		return "collection/list";
@@ -86,7 +88,11 @@ public class CollectionController extends BaseController {
 	public String editCollection(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
 		Collection c;
 		if (id.toLowerCase().equals("new")) {
-			c = collectionService.createCollection();
+			AuthPojo auth = authInfoHelper.getAuth(request);
+			if (!auth.isAuth()) {
+				return "redirect:/" + this.getLoginUrl();
+			}
+			c = collectionService.createCollection(auth.getUserId());
 		} else {
 			c = collectionService.findCurrentByCollectionId(id, true);
 			if (c==null) {
@@ -107,7 +113,7 @@ public class CollectionController extends BaseController {
 			model.addAttribute("lastSavedVersion", inputFlashMap.get("lastSavedVersion"));
 			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
 		}
-		 
+		
 		return fillCollectionEditorModel(c.getEntityId(), c, model);
 	}
 	
@@ -118,24 +124,41 @@ public class CollectionController extends BaseController {
 		if (!auth.isAuth()) {
 			return "redirect:/" + this.getLoginUrl();
 		}
-		
-		collection.setEntityId(id);
+		return this.doSave(collection, id, false, bindingResult, auth, model, redirectAttributes);
+	}
+	
+	@RequestMapping(value="{id}/publish", method=RequestMethod.POST)
+	public String publicCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, 
+			final RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		if (!auth.isAuth()) {
+			return "redirect:/" + this.getLoginUrl();
+		}
+		return this.doSave(collection, id, true, bindingResult, auth, model, redirectAttributes);
+	}
+	
+	
+	private String doSave(Collection collection, String entityId, boolean doPublish, BindingResult bindingResult, AuthPojo auth, Model model, final RedirectAttributes redirectAttributes) {
+		collection.setEntityId(entityId);
 		validator.validate(collection, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
 		}
 		
-		Collection cCurrent = collectionService.findCurrentByCollectionId(collection.getEntityId());
-		if (cCurrent==null) {
-			collection.setDraftUserId(auth.getUserId());
+		if (doPublish) {
+			collection.setDraftUserId(null);
 		} else {
-			// Stays with its draft creator or published
-			collection.setDraftUserId(cCurrent.getDraftUserId());
+			Collection cCurrent = collectionService.findCurrentByCollectionId(collection.getEntityId());
+			if (cCurrent==null) {
+				collection.setDraftUserId(auth.getUserId());
+			} else {
+				// Stays with its draft creator or published
+				collection.setDraftUserId(cCurrent.getDraftUserId());
+			}
 		}
 		collectionService.save(collection, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", collection.getId());
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", collection.getVersionTimestamp());
-		
 		return "redirect:/collections/" + collection.getEntityId();
 	}
 	
@@ -144,24 +167,6 @@ public class CollectionController extends BaseController {
 		collectionService.appendVersionComment(versionid, comment);
 
 		return new ModelActionPojo(true);
-	}
-	
-	@RequestMapping(value="{id}/publish", method=RequestMethod.POST)
-	public String publicCollection(@PathVariable String id, @ModelAttribute Collection collection, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
-		AuthPojo auth = authInfoHelper.getAuth(request);
-		if (!auth.isAuth()) {
-			return "redirect:/" + this.getLoginUrl();
-		}
-		
-		collection.setEntityId(id);
-		validator.validate(collection, bindingResult);
-		if (bindingResult.hasErrors()) {
-			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
-		}		
-
-		collection.setDraftUserId(null);
-		collectionService.save(collection, auth.getUserId());
-		return "redirect:/collections/" + collection.getEntityId();
 	}
 	
 	private String fillCollectionEditorModel(String entityId, Collection c, Model model) {
@@ -193,6 +198,11 @@ public class CollectionController extends BaseController {
 		} else {
 			Collection current = collectionService.findCurrentByCollectionId(entityId, true);
 			model.addAttribute("isDeleted", current.isDeleted());
+		}
+		if (c.getDraftUserId()!=null && !c.getDraftUserId().trim().isEmpty()) {
+			model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "drafts");
+		} else {
+			model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "collections");
 		}
 		
 		return "collection/edit";

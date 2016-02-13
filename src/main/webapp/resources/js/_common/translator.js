@@ -1,6 +1,6 @@
 var Translator = function() {
 	this.translations = [];
-	this.translationsUrl = $("#baseUrl").val() + "translate";
+	this.translationsUrl = $("#baseUrl2").val().replace("{}", "translate");
 };
 
 Translator.prototype.addTranslations = function(codes) {

@@ -11,7 +11,7 @@ var AgentTable = function() {
 	this.createTable();
 };
 
-AgentTable.prototype = new BaseTable(__util.getBaseUrl() + "agents/list", "#agent-table-container");
+AgentTable.prototype = new BaseTable(__util.composeUrl("agents/list"), "#agent-table-container");
 
 AgentTable.prototype.createTable = function() {
 	this._base.table = $('#agent-table').DataTable($.extend(true, {
@@ -75,7 +75,7 @@ AgentTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 AgentTable.prototype.renderActionColumn = function(row, type, val, meta) {
 	var result = "";	
 	if (type==="display") {
-		return 	"<a href=\"" + __util.getBaseUrl() + "agents/" + row.entity.entityId + "\"><span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span></a>";
+		return 	"<a href=\"" + __util.composeUrl("agents/" + row.entity.entityId) + "\"><span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span></a>";
 	}
 	return result;
 };

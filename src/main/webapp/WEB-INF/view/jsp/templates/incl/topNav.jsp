@@ -47,5 +47,6 @@
 			</div>
 		</div>
 		<input id="baseUrl" type="hidden" value="<s:url value="/" />" />
+		<input id="baseUrl2" type="hidden" value="<s:url value="/{}" />" />
 	</div>
 </header>

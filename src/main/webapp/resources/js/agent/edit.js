@@ -22,7 +22,7 @@ var AgentEditor = function() {
 	
 	this.lists["identifierList"] = new CollectionEditorList({
 		listSelector: "#lst-agent-provided-identifiers",
-		newRowUrl: __util.getBaseUrl() + "agents/includes/editIdentifier",
+		newRowUrl: __util.composeUrl("agents/includes/editIdentifier"),
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
 		}
@@ -30,7 +30,7 @@ var AgentEditor = function() {
 	
 	this.tables["addresses"] = new CollectionEditorTable({
 		tableSelector: "#tbl-agent-addresses",
-		newRowUrl: __util.getBaseUrl() + "agents/includes/editAddress",
+		newRowUrl: __util.composeUrl("agents/includes/editAddress"),
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
 			$("#chk-toggle-hints").trigger("change");
@@ -46,7 +46,7 @@ AgentEditor.prototype = new BaseEditor();
 AgentEditor.prototype.deleteAgent = function() {
 	var _this = this;
 	$.ajax({
-        url: __util.getBaseUrl() + "agents/" + _this.entityId + "/delete",
+        url: __util.composeUrl("agents/" + _this.entityId + "/delete"),
         type: "POST",
         success: function(data) {
         	window.location.reload();

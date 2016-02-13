@@ -49,7 +49,7 @@ BaseEditor.prototype.appendComment = function(prefix, id) {
                 className : "btn-primary",
                 callback : function() {
                 	$.ajax({
-                        url: __util.getBaseUrl() + prefix + _this.entityId + "/commentVersion/" + id,
+                        url: __util.composeUrl(prefix + _this.entityId + "/commentVersion/" + id),
                         type: "POST",
                         data: {comment: $("#last-minute-version-comment").val()},
                         success: function(data) {
@@ -82,7 +82,7 @@ BaseEditor.prototype.addVocabularySource = function(name, urlSuffix, params) {
 		  datumTokenizer: Bloodhound.tokenizers.whitespace,
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
 		  remote: {
-			  url: __util.getBaseUrl() + urlSuffix + "%QUERY" + (params!==undefined ? "?" + params : ""),
+			  url: __util.composeUrl(urlSuffix + "%QUERY" + (params!==undefined ? "?" + params : "")),
 			  wildcard: '%QUERY'
 		  }
 	});
@@ -189,7 +189,7 @@ BaseEditor.prototype.registerTypeahead = function(element, datasource, displayAt
 BaseEditor.prototype.validateInput = function(element, urlPrefix, value) {
 	var _this = this;
 	$.ajax({
-        url: __util.getBaseUrl() + urlPrefix + value,
+        url: __util.composeUrl(urlPrefix + value),
         type: "GET",
         dataType: "json",
         success: function(data) {
@@ -217,7 +217,7 @@ BaseEditor.prototype.deleteEntity = function(prefix) {
                             className : "btn-primary",
                             callback : function() {
                             	$.ajax({
-                                    url: __util.getBaseUrl() + prefix + _this.entityId + "/delete",
+                                    url: __util.composeUrl(prefix + _this.entityId + "/delete"),
                                     type: "POST",
                                     success: function(data) {
                                     	window.location.reload();

@@ -7,7 +7,7 @@ import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 
 public interface CollectionService {
-	public Collection createCollection();
+	public Collection createCollection(String userId);
 	//public void save(Collection c);
 	public Collection findCurrentByCollectionId(String id);
 	public List<Collection> findAllCurrent();

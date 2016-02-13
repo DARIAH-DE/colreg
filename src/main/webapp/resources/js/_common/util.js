@@ -149,6 +149,10 @@ Util.prototype.getBaseUrl = function() {
         return $("#baseUrl").val();
 };
 
+Util.prototype.composeUrl = function(target) {
+    return $("#baseUrl2").val().replace("{}", target);
+};
+
 Util.prototype.renderActivities = function(container, id, data) {
 	$(container).html("");
 	
