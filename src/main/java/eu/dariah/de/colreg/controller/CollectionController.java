@@ -102,9 +102,16 @@ public class CollectionController extends BaseController {
 				collectionService.initializeAgentRelations(c);
 			}
 		}
+		
 		 
 		if (c==null) {
 			// Should be 404
+			return "redirect:/collections/";
+		}
+		
+		if (c.getDraftUserId()!=null && !c.getDraftUserId().trim().isEmpty() &&
+				!c.getDraftUserId().equals(auth.getUserId())) {
+			// Should be 403
 			return "redirect:/collections/";
 		}
 		
@@ -244,6 +251,7 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currMethod", a);
 		model.addAttribute("accessMethods[0]", a);
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
+		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_access";
 	}
 	
@@ -258,6 +266,7 @@ public class CollectionController extends BaseController {
 		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
 		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
+		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_accrual";
 	}
 	
@@ -269,6 +278,7 @@ public class CollectionController extends BaseController {
 		model.addAttribute("agentRelations[0]", ar);
 				
 		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
+		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_agent";
 	}
 	
@@ -278,7 +288,7 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currDesc", desc);
 		model.addAttribute("localizedDescriptions[0]", desc);
-		
+		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_description";
 	}
 	
@@ -287,7 +297,6 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currLang", "");
 		model.addAttribute("itemLanguages[0]", "");
-		
 		return "collection/edit/incl/edit_itemlanguage";
 	}
 	
@@ -296,7 +305,6 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currSpat", "");
 		model.addAttribute("spatials[0]", "");
-		
 		return "collection/edit/incl/edit_spatial";
 	}
 	
@@ -305,7 +313,6 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currSubj", "");
 		model.addAttribute("subjects[0]", "");
-		
 		return "collection/edit/incl/edit_subject";
 	}
 	
@@ -314,7 +321,6 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currTemp", "");
 		model.addAttribute("temporals[0]", "");
-		
 		return "collection/edit/incl/edit_temporal";
 	}
 	
@@ -352,7 +358,7 @@ public class CollectionController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currAddr", a);
 		model.addAttribute("locations[0]", a);
-		
+		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_location";
 	}
 }

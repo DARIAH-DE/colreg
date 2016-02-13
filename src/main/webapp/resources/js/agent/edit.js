@@ -88,7 +88,7 @@ AgentEditor.prototype.handleParentAgentSelection = function(select, entityId, ht
 };
 	
 AgentEditor.prototype.renderAgentSuggestion = function(agent) {
-	return  "<strong>" + agent.name + " " + agent.foreName + "</strong><br />" +
+	return  "<strong>" + agent.name + " " + (agent.foreName!==undefined ? agent.foreName : "") + "</strong><br />" +
 			"<small><em>ID:" + agent.entityId + "</em></small>" +
 			(agent.address!=null && agent.address!="" ? "<br />" + agent.address : "");
 };

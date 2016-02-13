@@ -228,7 +228,7 @@ CollectionEditor.prototype.handleAgentSelection = function(select, control, sugg
 	var _this = this;
 	var formGroup = $(control).closest(".form-group"); 
 	formGroup.find("input[type='hidden']").val(suggestion!=null ? suggestion.entityId : "");
-	formGroup.find(".agent-name-display-helper").val(suggestion!=null ? (suggestion.name + " " + suggestion.foreName) : "").trigger('change');
+	formGroup.find(".agent-name-display-helper").val(suggestion!=null ? (suggestion.name + " " + (suggestion.foreName!==undefined ? suggestion.foreName : "")) : "").trigger('change');
 	
 	if (select) {
 		formGroup.find(".agent-display p").html(
@@ -251,6 +251,6 @@ CollectionEditor.prototype.renderCollectionSuggestion = function(collection) {
 };
 
 CollectionEditor.prototype.renderAgentSuggestion = function(agent) {
-	return  "<strong>" + agent.name + " " + agent.foreName + "</strong><br />" +
+	return  "<strong>" + agent.name + " " + (agent.foreName!==undefined ? agent.foreName : "") + "</strong><br />" +
 			"<small><em>ID:" + agent.entityId + "</em></small>";
 };

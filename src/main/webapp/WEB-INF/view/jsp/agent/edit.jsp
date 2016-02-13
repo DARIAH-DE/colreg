@@ -62,7 +62,7 @@
 			</div>
 		</div>
 		
-		<c:if test="${!isDeleted && agent.succeedingVersionId==null && _auth!=null && _auth.auth}">
+		<c:if test="${!isDeleted && agent.succeedingVersionId==null && _auth!=null && _auth.auth && editMode}">
 			<div class="form-group editor-buttonbar">
 				<div class="col-sm-12">
 					<div class="pull-right">
@@ -186,18 +186,20 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${fn:length(agent.addresses)>0}">
-									<c:forEach items="${agent.addresses}" var="addr" varStatus="status" >
-										<c:set var="currAddr" value="${addr}" scope="request" />
-										<c:set var="currIndex" value="${status.index}" scope="request" />
-										<jsp:include page="incl/edit_address.jsp" />
-									</c:forEach>
-									<c:remove var="currAddr" />	
-								</c:if>
+								<c:choose>
+									<c:when test="${fn:length(agent.addresses)>0}">
+										<c:forEach items="${agent.addresses}" var="addr" varStatus="status" >
+											<c:set var="currAddr" value="${addr}" scope="request" />
+											<c:set var="currIndex" value="${status.index}" scope="request" />
+											<jsp:include page="incl/edit_address.jsp" />
+										</c:forEach>
+										<c:remove var="currAddr" />	
+									</c:when>
+								</c:choose>
 								<c:if test="${editMode}">
 									<tr class="collection-editor-table-buttons">
-										<td colspan="${editMode ? 3 : 2}" style="text-align: right;">
-											<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_address" /></button>
+										<td colspan="${editMode ? 3 : 2}">
+											<button class="btn btn-xs pull-right btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_address" /></button>	
 										</td>
 									</tr>
 								</c:if>
@@ -296,23 +298,32 @@
 			<div class="form-group">
 				<label for="lst-agent-provided-identifiers" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.provided_identifiers" /></label>
 				<div class="col-sm-9">
-					<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
-						<c:if test="${fn:length(agent.providedIdentifier)>0}">
-							<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >
-								<c:set var="currIdentifier" value="${identifier}" scope="request" />
-								<c:set var="currIndex" value="${status.index}" scope="request" />
-								<jsp:include page="incl/edit_identifier.jsp" />
-							</c:forEach>
-							<c:remove var="currIdentifier" />	
-						</c:if>
-						<c:if test="${editMode}">
-							<li class="collection-editor-list-buttons">
-								<div class="col-sm-12">
-									<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_identifier" /></button>
-								</div>
-							</li>
-						</c:if>
-					</ul>
+					<c:choose>
+						<c:when test="${editMode}">
+							<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
+								<c:if test="${fn:length(agent.providedIdentifier)>0}">
+									<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >
+										<c:set var="currIdentifier" value="${identifier}" scope="request" />
+										<c:set var="currIndex" value="${status.index}" scope="request" />
+										<jsp:include page="incl/edit_identifier.jsp" />
+									</c:forEach>
+									<c:remove var="currIdentifier" />	
+								</c:if>
+								<c:if test="${editMode}">
+									<li class="collection-editor-list-buttons">
+										<div class="col-sm-12">
+											<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_identifier" /></button>
+										</div>
+									</li>
+								</c:if>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<label class="content-label">
+								<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >${identifier}<br /></c:forEach>
+							</label>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="editor-hint">
@@ -338,7 +349,9 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div id="parentAgent-display" class="alert alert-default <c:if test="${parentAgent==null}">hide</c:if>">
-								<button id="parentAgentIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+								<c:if test="${editMode}">
+									<button id="parentAgentIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+									</c:if>
 									<p>
 								<c:if test="${parentAgent!=null}">
 									<a href="<s:url value="${parentAgent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentAgent.name} ${parentAgent.foreName}</strong><br />
@@ -517,7 +530,7 @@
 			</div>		
 		</c:if>
 		
-		<c:if test="${!isDeleted && agent.succeedingVersionId==null && _auth!=null && _auth.auth}">
+		<c:if test="${!isDeleted && agent.succeedingVersionId==null && _auth!=null && _auth.auth && editMode}">
 			<div class="form-group editor-buttonbar">
 				<div class="col-sm-12">
 					<div class="pull-right">

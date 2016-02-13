@@ -5,8 +5,12 @@
 
 <div class="list-group nav active">
 	<h4 class="sidebar-title"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></h4>
+	<!-- 
+	
 	<a class="list-group-item${_navigationAttribute=='dashboard' ? ' active' : ''}" href="<s:url value='/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.dashboard" /></a>
 	<hr />
+	
+	 -->
 	<c:choose>
 		<c:when test="${_auth!=null && _auth.auth==true}">
 			<h5 class="list-group-header"><s:message code="~eu.dariah.de.colreg.titles.collections" /></h5>

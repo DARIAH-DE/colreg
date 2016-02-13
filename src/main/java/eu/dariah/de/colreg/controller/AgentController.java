@@ -179,6 +179,7 @@ public class AgentController extends BaseController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currAddr", a);
 		model.addAttribute("addresses[0]", a);
+		model.addAttribute("editMode", true);
 		return "agent/edit/incl/edit_address";
 	}
 }

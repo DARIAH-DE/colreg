@@ -34,7 +34,7 @@ CollectionTable.prototype.createTable = function() {
 	       }, {	
 	    	   "targets": [1],
 	    	   "data": "entity.title",
-	    	   "width" : "100%"
+	    	   "width" : "80%"
 	       }, {	
 	    	   "targets": [2],
 	    	   "data": "entity.type",
@@ -42,7 +42,7 @@ CollectionTable.prototype.createTable = function() {
 	       }, {	
 	    	   "targets": [3],
 	    	   "data": "entity.access",
-	    	   "class" : "td-no-wrap",
+	    	   "width" : "20%",
 	    	  /* "visible" : false*/
 	       }, {	
 	    	   "targets": [4],

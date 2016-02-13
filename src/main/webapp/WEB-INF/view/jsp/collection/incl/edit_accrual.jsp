@@ -28,31 +28,47 @@
 				</c:forEach>
 			</c:if>
 		</td>
-		<td class="nowrap">
-			<button onclick="editor.tables['accrualMethodTable'].pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
-			<button onclick="editor.tables['accrualMethodTable'].pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
-			<button onclick="editor.tables['accrualMethodTable'].removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-		</td>
+		<c:if test="${editMode}">
+			<td class="nowrap">
+				<button onclick="editor.tables['accrualMethodTable'].pushEntryUp(this); return false;" class="btn btn-xs btn-link btn-push-up"><span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span></button>
+				<button onclick="editor.tables['accrualMethodTable'].pushEntryDown(this); return false;" class="btn btn-xs btn-link btn-push-down"><span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span></button>
+				<button onclick="editor.tables['accrualMethodTable'].removeEntry(this); return false;" class="btn btn-xs btn-link"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+			</td>
+		</c:if>
 	</tr>
 </s:bind>
 <tr class="edit" style="display: none;">
-	<td colspan="4">
+	<td colspan="${editMode ? 4 : 3}">
 	
 		<!-- Method -->
 		<s:bind path="accrualMethods[${currIndex}].accrualMethod">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
 				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></label>
-				<div class="col-sm-4">
-					<span class="attribute-name-helper">accrualMethods{}.accrualMethod</span>
-					<select class="form-control" name="accrualMethods[${currIndex}].accrualMethod" id="accrualMethods${currIndex}.accrualMethod" 
-						onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualMethod');" autocomplete="off">
-						<c:forEach items="${accrualMethods}" var="accMethod">
-							<option <c:if test="${currMethod.accrualMethod==accMethod.id}">selected="selected"</c:if> value="${accMethod.id}">${accMethod.label}</option>
-						</c:forEach>
-					</select>
-				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
-					path="accrualMethods[${currIndex}].accrualMethod" />
+				<c:choose>
+					<c:when test="${editMode}">
+						<div class="col-sm-4">
+							<span class="attribute-name-helper">accrualMethods{}.accrualMethod</span>
+							<select class="form-control" name="accrualMethods[${currIndex}].accrualMethod" id="accrualMethods${currIndex}.accrualMethod" 
+								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualMethod');" autocomplete="off">
+								<c:forEach items="${accrualMethods}" var="accMethod">
+									<option <c:if test="${currMethod.accrualMethod==accMethod.id}">selected="selected"</c:if> value="${accMethod.id}">${accMethod.label}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+							path="accrualMethods[${currIndex}].accrualMethod" />
+					</c:when>
+					<c:otherwise>
+						<div class="col-sm-9">
+							<label class="content-label">
+								<c:forEach items="${accrualMethods}" var="accMethod">
+									<c:if test="${currMethod.accrualMethod==accMethod.id}">${accMethod.label}</c:if>
+								</c:forEach>
+							</label>
+						</div>
+					</c:otherwise>
+				</c:choose>		
+				
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="editor-hint">
 						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
@@ -66,17 +82,30 @@
 		<s:bind path="accrualMethods[${currIndex}].accrualPolicy">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
 				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.policy" /></label>
-				<div class="col-sm-4">
-					<span class="attribute-name-helper">accrualMethods{}.accrualPolicy</span>
-					<select class="form-control" name="accrualMethods[${currIndex}].accrualPolicy" id="accrualMethods${currIndex}.accrualPolicy" 
-						onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPolicy');" autocomplete="off">
-						<c:forEach items="${accrualPolicies}" var="accPolicy">
-							<option <c:if test="${currMethod.accrualPolicy==accPolicy.id}">selected="selected"</c:if> value="${accPolicy.id}">${accPolicy.label}</option>
-						</c:forEach>
-					</select>
-				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
-					path="accrualMethods[${currIndex}].accrualPolicy" />
+				<c:choose>
+					<c:when test="${editMode}">
+						<div class="col-sm-4">
+							<span class="attribute-name-helper">accrualMethods{}.accrualPolicy</span>
+							<select class="form-control" name="accrualMethods[${currIndex}].accrualPolicy" id="accrualMethods${currIndex}.accrualPolicy" 
+								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPolicy');" autocomplete="off">
+								<c:forEach items="${accrualPolicies}" var="accPolicy">
+									<option <c:if test="${currMethod.accrualPolicy==accPolicy.id}">selected="selected"</c:if> value="${accPolicy.id}">${accPolicy.label}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+							path="accrualMethods[${currIndex}].accrualPolicy" />
+					</c:when>
+					<c:otherwise>
+						<div class="col-sm-9">
+							<label class="content-label">
+								<c:forEach items="${accrualPolicies}" var="accPolicy">
+									<c:if test="${currMethod.accrualPolicy==accPolicy.id}">${accPolicy.label}</c:if>
+								</c:forEach>
+							</label>
+						</div>
+					</c:otherwise>
+				</c:choose>		
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="editor-hint">
 						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
@@ -90,17 +119,31 @@
 		<s:bind path="accrualMethods[${currIndex}].accrualPeriodicity">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
 				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.periodicity" /></label>
-				<div class="col-sm-4">
-					<span class="attribute-name-helper">accrualMethods{}.accrualPeriodicity</span>
-					<select class="form-control" name="accrualMethods[${currIndex}].accrualPeriodicity" id="accrualMethods${currIndex}.accrualPeriodicity" 
-						onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPeriodicity');" autocomplete="off">
-						<c:forEach items="${accrualPeriodicities}" var="accPeriodicity">
-							<option <c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}">selected="selected"</c:if> value="${accPeriodicity.id}">${accPeriodicity.label}</option>
-						</c:forEach>
-					</select>
-				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
-					path="accrualMethods[${currIndex}].accrualPeriodicity" />
+				<c:choose>
+					<c:when test="${editMode}">
+						<div class="col-sm-4">
+							<span class="attribute-name-helper">accrualMethods{}.accrualPeriodicity</span>
+							<select class="form-control" name="accrualMethods[${currIndex}].accrualPeriodicity" id="accrualMethods${currIndex}.accrualPeriodicity" 
+								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPeriodicity');" autocomplete="off">
+								<c:forEach items="${accrualPeriodicities}" var="accPeriodicity">
+									<option <c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}">selected="selected"</c:if> value="${accPeriodicity.id}">${accPeriodicity.label}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+							path="accrualMethods[${currIndex}].accrualPeriodicity" />
+					</c:when>
+					<c:otherwise>
+						<div class="col-sm-9">
+							<label class="content-label">
+								<c:forEach items="${accrualPeriodicities}" var="accPeriodicity">
+									<c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}">${accPeriodicity.label}</c:if>
+								</c:forEach>
+							</label>
+						</div>
+					</c:otherwise>
+				</c:choose>		
+				
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="editor-hint">
 						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
@@ -115,8 +158,15 @@
 			<div class="form-group${status.error ? ' has-error' : ' '}">
 				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.accrual.description" /></label>
 				<div class="col-sm-9">
-					<span class="attribute-name-helper">accrualMethods{}.description</span>
-					<textarea class="form-control" rows="3" id="accrualMethods${currIndex}.description" name="accrualMethods[${currIndex}].description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
+					<c:choose>
+						<c:when test="${editMode}">
+							<span class="attribute-name-helper">accrualMethods{}.description</span>
+							<textarea class="form-control" rows="3" id="accrualMethods${currIndex}.description" name="accrualMethods[${currIndex}].description"><c:if test="${currMethod!=null}">${currMethod.description}</c:if></textarea>
+						</c:when>
+						<c:otherwise>
+							<label class="content-label">${currMethod!=null ? currMethod.description : ''}</label>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="accrualMethods[${currIndex}].description" />
