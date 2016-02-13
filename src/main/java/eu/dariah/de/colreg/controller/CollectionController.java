@@ -86,9 +86,9 @@ public class CollectionController extends BaseController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editCollection(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
 		Collection c;
 		if (id.toLowerCase().equals("new")) {
-			AuthPojo auth = authInfoHelper.getAuth(request);
 			if (!auth.isAuth()) {
 				return "redirect:/" + this.getLoginUrl();
 			}
@@ -114,7 +114,7 @@ public class CollectionController extends BaseController {
 			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
 		}
 		
-		return fillCollectionEditorModel(c.getEntityId(), c, model);
+		return fillCollectionEditorModel(c.getEntityId(), c, auth, model);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
@@ -142,7 +142,7 @@ public class CollectionController extends BaseController {
 		collection.setEntityId(entityId);
 		validator.validate(collection, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return this.fillCollectionEditorModel(collection.getEntityId(), collection, model);
+			return this.fillCollectionEditorModel(collection.getEntityId(), collection, auth, model);
 		}
 		
 		if (doPublish) {
@@ -169,7 +169,7 @@ public class CollectionController extends BaseController {
 		return new ModelActionPojo(true);
 	}
 	
-	private String fillCollectionEditorModel(String entityId, Collection c, Model model) {
+	private String fillCollectionEditorModel(String entityId, Collection c, AuthPojo auth, Model model) {
 		model.addAttribute("collection", c);
 		model.addAttribute("selectedVersionId", c.getId());
 		
@@ -203,6 +203,10 @@ public class CollectionController extends BaseController {
 			model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "drafts");
 		} else {
 			model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "collections");
+		}
+		
+		if (auth.isAuth() && c.getSucceedingVersionId()==null && !c.isDeleted()) {
+			model.addAttribute("editMode", true);
 		}
 		
 		return "collection/edit";

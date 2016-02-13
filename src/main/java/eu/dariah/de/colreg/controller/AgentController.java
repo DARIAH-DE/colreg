@@ -64,9 +64,9 @@ public class AgentController extends BaseController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public String editAgent(@PathVariable String id, Model model, Locale locale, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
 		Agent a;
 		if (id.toLowerCase().equals("new")) {
-			AuthPojo auth = authInfoHelper.getAuth(request);
 			if (!auth.isAuth()) {
 				return "redirect:/" + this.getLoginUrl();
 			}
@@ -89,10 +89,10 @@ public class AgentController extends BaseController {
 			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
 		}
 		
-		return this.fillAgentEditorModel(a.getEntityId(), a, model);
+		return this.fillAgentEditorModel(a.getEntityId(), a, auth, model);
 	}
 	
-	private String fillAgentEditorModel(String entityId, Agent a, Model model) {
+	private String fillAgentEditorModel(String entityId, Agent a, AuthPojo auth, Model model) {
 		model.addAttribute("agent", a);
 		model.addAttribute("selectedVersionId", a.getId());
 		
@@ -120,6 +120,10 @@ public class AgentController extends BaseController {
 		}
 		model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "agents");
 		
+		if (auth.isAuth() && a.getSucceedingVersionId()==null && !a.isDeleted()) {
+			model.addAttribute("editMode", true);
+		}
+		
 		return "agent/edit";
 	}
 	
@@ -140,11 +144,11 @@ public class AgentController extends BaseController {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
-	public String saveAgent(@PathVariable String id, @ModelAttribute Agent agent, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes) {
+	public String saveAgent(@PathVariable String id, @ModelAttribute Agent agent, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		agent.setEntityId(id);
 		validator.validate(agent, bindingResult);
 		if (bindingResult.hasErrors()) {
-			return this.fillAgentEditorModel(id, agent, model);
+			return this.fillAgentEditorModel(id, agent, authInfoHelper.getAuth(request), model);
 		} 
 		agentService.save(agent, "default_user");
 		redirectAttributes.addFlashAttribute("lastSavedVersion", agent.getId());

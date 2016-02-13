@@ -79,7 +79,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<a href='<s:url value="/collections/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted && collection.succeedingVersionId==null}">
+					<c:if test="${!isDeleted && collection.succeedingVersionId==null && _auth!=null && _auth.auth}">
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
 					</c:if>
 				</div>
@@ -867,7 +867,7 @@
 					</div>
 				</div>
 				
-				<c:if test="${!isDeleted}">
+				<c:if test="${!isDeleted && _auth!=null && _auth.auth}">
 					<div class="form-group">
 						<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.groups.administration" /></label>
 						<div id="collection-administration" class="col-sm-9">
@@ -897,7 +897,7 @@
 			<div class="col-sm-12">
 				<div class="pull-right">
 					<a href='<s:url value="/collections/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted && collection.succeedingVersionId==null}">
+					<c:if test="${!isDeleted && collection.succeedingVersionId==null && _auth!=null && _auth.auth}">
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
 					</c:if>
 				</div>

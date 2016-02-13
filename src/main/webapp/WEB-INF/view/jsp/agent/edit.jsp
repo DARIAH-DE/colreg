@@ -62,16 +62,16 @@
 			</div>
 		</div>
 		
-		<div class="form-group editor-buttonbar">
-			<div class="col-sm-12">
-				<div class="pull-right">
-					<a href='<s:url value="/agents/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted && agent.succeedingVersionId==null}">
+		<c:if test="${!isDeleted && agent.succeedingVersionId==null && _auth!=null && _auth.auth}">
+			<div class="form-group editor-buttonbar">
+				<div class="col-sm-12">
+					<div class="pull-right">
+						<a href='<s:url value="/agents/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
-					</c:if>
+					</div>
 				</div>
 			</div>
-		</div>
+		</c:if>
 				
 		
 		<div class="editor-section">
@@ -85,14 +85,25 @@
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="agentTypeId" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.agent.type" /></label>
 					<div class="col-sm-4">
-						<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
-							<c:forEach items="${agentTypes}" var="type">
-								<option <c:if test="${agent.agentTypeId==type.id}">selected="selected"</c:if> value="${type.id}" data-natural="${type.naturalPerson}">${type.label}</option>
-								<c:if test="${agent.agentTypeId==type.id}">
-									<c:set var="agentIsNatural" value="${type.naturalPerson}" scope="request" />
-								</c:if>
-							</c:forEach>
-						</select>
+						<c:choose>
+							<c:when test="${editMode}">
+								<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
+									<c:forEach items="${agentTypes}" var="type">
+										<option <c:if test="${agent.agentTypeId==type.id}">selected="selected"</c:if> value="${type.id}" data-natural="${type.naturalPerson}">${type.label}</option>
+										<c:if test="${agent.agentTypeId==type.id}">
+											<c:set var="agentIsNatural" value="${type.naturalPerson}" scope="request" />
+										</c:if>
+									</c:forEach>
+								</select>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${agentTypes}" var="type">
+									<c:if test="${agent.agentTypeId==type.id}">
+										<label class="content-label">${type.label}</label>
+									</c:if>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>						
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="agentTypeId" />
 					<div class="col-sm-9 col-sm-offset-3">
@@ -102,15 +113,16 @@
 						</div>
 					</div>
 				</div>
-			</s:bind>
-			
+			</s:bind>	
+						
 			<!-- Agent name -->
 			<s:bind path="name">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="name" class="col-sm-3 control-label mandatory agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>><s:message code="~eu.dariah.de.colreg.model.agent.name" /></label>
 					<label for="name" class="col-sm-3 control-label mandatory agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>><s:message code="~eu.dariah.de.colreg.model.agent.last_name" /></label>
 					<div class="col-sm-9">
-						<sf:input path="name" class="form-control" />
+						<c:if test="${editMode}"><sf:input path="name" class="form-control" /></c:if>
+						<c:if test="${!editMode}"><label class="content-label">${agent.name}</label></c:if>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="name" />
 					<div class="col-sm-9 col-sm-offset-3 agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>>
@@ -133,7 +145,14 @@
 				<div class="form-group${status.error ? ' has-error' : ' '} agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>
 					<label for="foreName" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.first_name" /></label>
 					<div class="col-sm-9">
-						<sf:input path="foreName" class="form-control" />
+						<c:choose>
+							<c:when test="${editMode}">
+								<sf:input path="foreName" class="form-control" />
+							</c:when>
+							<c:otherwise>
+								<label class="content-label">${agent.foreName}</label>
+							</c:otherwise>
+						</c:choose>		
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="foreName" />
 					<div class="col-sm-9 col-sm-offset-3">
@@ -163,7 +182,7 @@
 								<tr>
 									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.address.place" /></th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.address.country" /></th>
-									<th class="nowrap"></th>
+									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
 								</tr>
 							</thead>
 							<tbody>
@@ -175,11 +194,13 @@
 									</c:forEach>
 									<c:remove var="currAddr" />	
 								</c:if>
-								<tr class="collection-editor-table-buttons">
-									<td colspan="4" style="text-align: right;">
-										<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_address" /></button>
-									</td>
-								</tr>
+								<c:if test="${editMode}">
+									<tr class="collection-editor-table-buttons">
+										<td colspan="${editMode ? 3 : 2}" style="text-align: right;">
+											<button class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_address" /></button>
+										</td>
+									</tr>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -198,7 +219,14 @@
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="eMail" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.email" /></label>
 					<div class="col-sm-9">
-						<sf:input path="eMail" class="form-control" />
+						<c:choose>
+							<c:when test="${editMode}">
+								<sf:input path="eMail" class="form-control" />
+							</c:when>
+							<c:otherwise>
+								<label class="content-label">${agent.EMail}</label>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="eMail" />
 					<div class="col-sm-9 col-sm-offset-3">
@@ -215,7 +243,14 @@
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="webPage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.webpage" /></label>
 					<div class="col-sm-9">
-						<sf:input path="webPage" class="form-control" />
+						<c:choose>
+							<c:when test="${editMode}">
+								<sf:input path="webPage" class="form-control" />
+							</c:when>
+							<c:otherwise>
+								<label class="content-label">${agent.webPage}</label>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="webPage" />
 					<div class="col-sm-9 col-sm-offset-3">
@@ -232,7 +267,14 @@
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="phone" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.phone" /></label>
 					<div class="col-sm-9">
-						<sf:input path="phone" class="form-control" />
+						<c:choose>
+							<c:when test="${editMode}">
+								<sf:input path="phone" class="form-control" />
+							</c:when>
+							<c:otherwise>
+								<label class="content-label">${agent.phone}</label>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="phone" />
 					<div class="col-sm-9 col-sm-offset-3">
@@ -263,11 +305,13 @@
 							</c:forEach>
 							<c:remove var="currIdentifier" />	
 						</c:if>
-						<li class="collection-editor-list-buttons">
-							<div class="col-sm-12">
-								<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_identifier" /></button>
-							</div>
-						</li>
+						<c:if test="${editMode}">
+							<li class="collection-editor-list-buttons">
+								<div class="col-sm-12">
+									<button onclick="editor.lists['identifierList'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_identifier" /></button>
+								</div>
+							</li>
+						</c:if>
 					</ul>
 				</div>
 				<div class="col-sm-9 col-sm-offset-3">
@@ -281,28 +325,36 @@
 			<!-- Parent agent -->
 			<div class="form-group">
 				<label for="parentAgentId" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.parent_agent" /></label>
-				<div class="col-sm-5">
-					<input type="text" id="parentAgentIdSelector" class="form-control" placeholder="<s:message code="~eu.dariah.de.colreg.view.agent.labels.search_by_id_name" />" />
-					<sf:hidden path="parentAgentId" />
-				</div>
-				<div class="col-sm-9 col-sm-offset-3">
-					<div id="parentAgent-display" class="alert alert-default <c:if test="${parentAgent==null}">hide</c:if>">
-						<button id="parentAgentIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-							<p>
-						<c:if test="${parentAgent!=null}">
-							<a href="<s:url value="${parentAgent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentAgent.name} ${parentAgent.foreName}</strong><br />
-							<small><em>ID: ${parentAgent.entityId}</em></small><br /></a>
-						</c:if>	
-						</p>
-					</div>
-					<div id="parentAgent-display-null" class="<c:if test="${parentAgent!=null}">hide</c:if>">
-						<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label>
-					</div>
-				</div>
-				<div class="col-sm-9 col-sm-offset-3">
-					<div class="editor-hint">
-						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-						<s:message code="~eu.dariah.de.colreg.editorhint.agent.parent_agent" />
+				<div class="col-sm-9">
+					<c:if test="${editMode}">
+						<div class="row">
+							<div class="col-sm-5">
+								<input type="text" id="parentAgentIdSelector" class="form-control" placeholder="<s:message code="~eu.dariah.de.colreg.view.agent.labels.search_by_id_name" />" />
+								<sf:hidden path="parentAgentId" />			
+							</div>
+						</div>
+					</c:if>
+				
+					<div class="row">
+						<div class="col-sm-12">
+							<div id="parentAgent-display" class="alert alert-default <c:if test="${parentAgent==null}">hide</c:if>">
+								<button id="parentAgentIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
+									<p>
+								<c:if test="${parentAgent!=null}">
+									<a href="<s:url value="${parentAgent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentAgent.name} ${parentAgent.foreName}</strong><br />
+									<small><em>ID: ${parentAgent.entityId}</em></small><br /></a>
+								</c:if>	
+								</p>
+							</div>
+							<div id="parentAgent-display-null" class="<c:if test="${parentAgent!=null}">hide</c:if>">
+								<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label>
+							</div>
+						
+							<div class="editor-hint">
+								<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+								<s:message code="~eu.dariah.de.colreg.editorhint.agent.parent_agent" />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -432,7 +484,7 @@
 					</div>
 				</div>
 				
-				<c:if test="${!isDeleted}">
+				<c:if test="${!isDeleted && editMode && _auth!=null && _auth.auth}">
 					<div class="form-group">
 						<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.groups.administration" /></label>
 						<div id="agent-administration" class="col-sm-9">
@@ -465,17 +517,16 @@
 			</div>		
 		</c:if>
 		
-		
-		<div class="form-group editor-buttonbar">
-			<div class="col-sm-12">
-				<div class="pull-right">
-					<a href='<s:url value="/agents/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
-					<c:if test="${!isDeleted && agent.succeedingVersionId==null}">
+		<c:if test="${!isDeleted && agent.succeedingVersionId==null && _auth!=null && _auth.auth}">
+			<div class="form-group editor-buttonbar">
+				<div class="col-sm-12">
+					<div class="pull-right">
+						<a href='<s:url value="/agents/" />' class="btn btn-default cancel form-btn-cancel"><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></a>
 						<button class="btn btn-primary start form-btn-submit"><s:message code="~eu.dariah.de.colreg.common.actions.save" /></button>
-					</c:if>
+					</div>
 				</div>
 			</div>
-		</div>
+		</c:if>
 		
 	</sf:form>
 </div>

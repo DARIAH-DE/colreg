@@ -22,9 +22,11 @@
 		<div ${load=="drafts" ? 'id="draft-table-container"' : 'id="collection-table-container"'} class="col-md-12">
 			<h2 class="pull-left">${title}</h2>
 			<div class="pull-right">
-				<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
-					<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.collection.actions.add_collection" />
-				</a>
+				<c:if test="${_auth!=null && _auth.auth}">
+					<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
+						<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.collection.actions.add_collection" />
+					</a>
+				</c:if>
 				<div class="data-table-filter pull-left">
 					<input type="text" class="form-control input-sm" placeholder='<s:message code="~eu.dariah.de.colreg.common.labels.filter" />'>
 				</div>
