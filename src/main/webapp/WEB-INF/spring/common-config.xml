@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 	<bean id="configLocation" class="java.lang.String">
-		<constructor-arg value="file:${colreg.conf}" />
+		<constructor-arg value="file:${colreg3.conf}" />
 	</bean>
 	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>file:${colreg.conf}</value>
+				<value>file:${colreg3.conf}</value>
 			</list>
 		</property>
 	</bean>

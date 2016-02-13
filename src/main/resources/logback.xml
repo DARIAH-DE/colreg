@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-	<property file="${colreg.conf}" />
+	<property file="${colreg3.conf}" />
 	
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
