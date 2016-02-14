@@ -6,7 +6,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	private static final long serialVersionUID = 4943714699707768827L;
 	
-	@Indexed private String entityId;		// Persistent identifier of the entity (id is for the version) 
+	@Indexed 
+	private String entityId;				// Persistent identifier of the entity (id is for the version) 
 	private String succeedingVersionId;		// The versionId is actually the id of an object 
 	
 	private DateTime entityTimestamp;	
@@ -16,7 +17,6 @@ public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	private String versionCreator;
 	
 	private String versionComment;
-	
 	
 	public String getEntityId() { return entityId; }
 	public void setEntityId(String entityId) { this.entityId = entityId; }

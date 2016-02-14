@@ -33,6 +33,7 @@
 		<user name="tgradl_user" password="hairad" authorities="" />
 		<user name="ahenrich" password="hairad" authorities="ROLE_CONTRIBUTOR" />
 		<user name="hlordick" password="harald" authorities="ROLE_CONTRIBUTOR" />
+		<user name="bmache" password="beata" authorities="ROLE_CONTRIBUTOR" />
     </user-service>
 
 		

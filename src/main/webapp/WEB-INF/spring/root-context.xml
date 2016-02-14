@@ -41,6 +41,21 @@
 		<constructor-arg name="validator" ref="validator" />
 	</bean>
 	
+	<bean id="xmlConverter" class="eu.dariah.de.colreg.model.marshalling.XMLConverter">
+		<property name="marshaller" ref="jaxb2Marshaller" />
+		<property name="unmarshaller" ref="jaxb2Marshaller" />
+	</bean>
+	
+     <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="classesToBeBound">
+            <list>
+                <value>eu.dariah.de.colreg.model.Agent</value>
+                <value>eu.dariah.de.colreg.model.Collection</value>
+            </list>
+        </property>
+    </bean>
+    
+	
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.model.validation"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.service"/>
