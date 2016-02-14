@@ -55,6 +55,7 @@
         </property>
     </bean>
     
+    <import resource="security/security-context-srvtemplate.xml"/>
 	
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.model.validation"/>
