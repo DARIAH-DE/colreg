@@ -49,8 +49,11 @@
      <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="classesToBeBound">
             <list>
+                <value>eu.dariah.de.colreg.model.api.ActionObject</value>
                 <value>eu.dariah.de.colreg.model.Agent</value>
                 <value>eu.dariah.de.colreg.model.Collection</value>
+                <value>eu.dariah.de.colreg.model.api.repository.RepositoryDraftContainer</value>
+                <value>eu.dariah.de.colreg.model.api.repository.RepositoryResponse</value>
             </list>
         </property>
     </bean>

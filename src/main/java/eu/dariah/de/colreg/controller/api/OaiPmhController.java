@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.api.ActionObject;
+import eu.dariah.de.colreg.model.api.ActionObject.INGEST_ACTION;
 import eu.dariah.de.colreg.model.marshalling.XMLConverter;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
@@ -25,14 +27,20 @@ public class OaiPmhController {
 	
 	@Autowired private XMLConverter xmlConverter;
 	
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(value="", method=RequestMethod.GET, produces={"application/json", "application/xml"})
 	public @ResponseBody Object dispatchOaiPmhCommand() throws IOException {
 		
 		List<Collection> colls = collectionService.findAllCurrent();
 		
-		xmlConverter.convertFromObjectToXML(colls.get(0), "/tmp/test.xml");
+		ActionObject obj = new ActionObject();
+		obj.setCollection(colls.get(0));
+		obj.setAction(INGEST_ACTION.DELETE);
+		obj.setVerfiedUser("vuser");
+		obj.setVerifiedEndpoint("vendpoint");
 		
-		return null;
+		//xmlConverter.convertFromObjectToXML(obj, "/tmp/test.xml");
+		
+		return obj;
 	}
 
     @RequestMapping(value = "consume/", method = RequestMethod.POST, 

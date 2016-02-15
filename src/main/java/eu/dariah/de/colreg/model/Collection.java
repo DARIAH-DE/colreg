@@ -1,10 +1,13 @@
+
 package eu.dariah.de.colreg.model;
 
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,6 +22,7 @@ import eu.dariah.de.colreg.model.vocabulary.ItemType;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
+
 
 @XmlRootElement(name="collection")
 public class Collection extends VersionedEntityImpl {
