@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -33,6 +34,20 @@ public class HomeController extends BaseController {
 	@RequestMapping(value = {"", "/", "/collections"}, method = RequestMethod.GET)
 	public String getCollections(HttpServletResponse response) throws IOException  {
 		response.sendRedirect("collections/");
+		return null;
+	}
+	
+	// Just for now
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String redirectDashboard(HttpServletResponse response) throws IOException  {
+		response.sendRedirect("collections/");
+		return null;
+	}
+	
+	@RequestMapping(value = {"/colreg/main", "/colreg/main/"}, method = RequestMethod.GET)
+	public String redirectMessedUpEntry(HttpServletResponse response, HttpServletRequest request) throws IOException  {
+		response.sendRedirect(request.getContextPath() + "/home"); 
+		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 		return null;
 	}
 	
