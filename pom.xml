@@ -90,27 +90,23 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springsecurity-version}</version>
 		</dependency>
+		
+		
+		<dependency>
+			<groupId>eu.dariah.de</groupId>
+			<artifactId>dariah-javasp-core</artifactId>
+			<version>0.0.4-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.dariah.de</groupId>
+			<artifactId>dariah-javasp-web</artifactId>
+			<version>0.0.4-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 	        <groupId>eu.dariah.de</groupId>
 	        <artifactId>spring-security-saml2-core</artifactId>
-	        <version>1.0.2.SNAPSHOT</version>
+	        <version>1.0.2-SNAPSHOT</version>
 	    </dependency>
-		
-		<dependency>
-			<groupId>de.dariah</groupId>
-			<artifactId>dariah-javasp-core</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>de.dariah</groupId>
-			<artifactId>dariah-javasp-web</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>de.dariah</groupId>
-			<artifactId>spring-security-saml2-core</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency>
 		
 		<!-- Persistence -->
 		<dependency>

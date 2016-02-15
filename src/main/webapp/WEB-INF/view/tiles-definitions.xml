@@ -59,6 +59,10 @@
 		</put-list-attribute>
 	</definition>
 	
+	<definition name="logout" extends="template_simple">
+		<put-attribute name="fluidLayout" cascade="true" value="true" />
+		<put-attribute name="content" value="/WEB-INF/view/jsp/common/logout.jsp" />
+	</definition>
 	
 	<!-- Collection -->
 	<definition name="collection/list" extends="template_tables">

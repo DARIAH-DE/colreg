@@ -42,6 +42,11 @@ public class HomeController extends BaseController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String showLogout(HttpServletResponse response) throws IOException  {
+		return "logout";
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value="/translate", produces = "application/json; charset=utf-8")
 	public @ResponseBody List<TranslationPojo> getTranslations(Model model, @RequestParam String keys, Locale locale) {	
 		ObjectMapper m = new ObjectMapper();
