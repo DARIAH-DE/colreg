@@ -45,7 +45,7 @@ public class CollectionServiceImpl implements CollectionService {
 		Collection prev = this.findCurrentByCollectionId(c.getEntityId());
 		
 		c.setId(null);
-		if (c.getEntityId().equals("new")) {
+		if (c.getEntityId()==null || c.getEntityId().isEmpty() || c.getEntityId().equals("new")) {
 			c.setEntityId(new ObjectId().toString());
 		}
 		c.setSucceedingVersionId(null);

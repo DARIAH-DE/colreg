@@ -8,21 +8,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.LocalizedDescription;
+import eu.dariah.de.colreg.model.PersistedUserDetails;
 import eu.dariah.de.colreg.model.api.repository.RepositoryDraft;
 import eu.dariah.de.colreg.model.api.repository.RepositoryDraftContainer;
 import eu.dariah.de.colreg.model.api.repository.RepositoryResponse;
+import eu.dariah.de.colreg.model.validation.CollectionValidator;
+import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.PersistedUserDetailsService;
+import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/colreg/collection")
@@ -31,13 +41,18 @@ public class CrLegacyApiController {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired private Jaxb2Marshaller jaxb2Marshaller;
+
+	@Autowired private PersistedUserDetailsService userDetailsService;
+	@Autowired private CollectionValidator collectionValidator;
+	@Autowired private CollectionService collectionService;
+	@Autowired private VocabularyService vocabularyService;
 	
 	@RequestMapping(value={"/submitDraft", "/submitDraft/"}, method = RequestMethod.POST, produces="application/xml")
 	public @ResponseBody RepositoryResponse postRepositoryCollection(@RequestBody String xml, HttpServletResponse response, HttpServletRequest request) {
 		RepositoryResponse resp = new RepositoryResponse();
 		resp.setStatus("Error");
 		try {
-			logger.debug("Received draft from repository: ", xml);
+			logger.debug("Received draft from repository: " + xml);
 			
 			if (xml==null || xml.trim().isEmpty()) {
 				resp.setError("No content provided in request body.");
@@ -62,6 +77,7 @@ public class CrLegacyApiController {
 				}
 				Collection c = new Collection();
 				
+				// Titles, descriptions -> localized descriptions
 				if (draft.getTitles()!=null) {
 					c.setLocalizedDescriptions(new ArrayList<LocalizedDescription>());
 					LocalizedDescription desc;
@@ -76,12 +92,60 @@ public class CrLegacyApiController {
 					}
 				}
 				
+				Access a = new Access();
+				a.setSchemeIds(new ArrayList<String>());
+				a.getSchemeIds().add("oai_dc");
+				a.setType(vocabularyService.findAccessTypeByIdentfier("oaipmh").getId());
+				a.setUri(this.getOaiUrl(draft));
+				a.setOaiSet(this.getOaiSet(draft));
+				
+				c.setAccessMethods(new ArrayList<Access>(1));
+				c.getAccessMethods().add(a);
+				
+				// Identifiers -> Identifiers, Access
 				c.setProvidedIdentifier(draft.getIdentifiers());
 				
 				
+				c.setCollectionDescriptionRights("CC0");
+				c.setAccessRights("?");
+				c.setCollectionType("DARIAH-DE Repository");
+				c.setWebPage(draft.getAboutAttribute()!=null ? draft.getAboutAttribute() : a.getUri());
+				
+				// Creator and draft user
+				String username = null;
+				String endpoint = "https://ldap-dariah.esc.rzg.mpg.de/idp/shibboleth";
+				if (draft.getContributors()!=null) {
+					for (String contr : draft.getContributors()) {
+						if (contr.toLowerCase().endsWith("@dariah.eu")) {
+							username = contr.toLowerCase();
+							break;
+						}
+					}
+				}
+				PersistedUserDetails ud = userDetailsService.loadUserByUsername(endpoint, username);
+				if (ud==null) {
+					ud = new PersistedUserDetails();
+					ud.setEndpointId(endpoint);
+					ud.setEndpointName(endpoint);
+					ud.setUsername(username);
+					userDetailsService.saveUser(ud);
+				}
+				c.setDraftUserId(ud.getId());
+
+				DataBinder binder = new DataBinder(c);
+				collectionValidator.validate(c, binder.getBindingResult());
+				if (binder.getBindingResult().hasErrors()) {
+					resp.setError("Validation errors occurred: " + binder.getBindingResult().toString());
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					return resp;
+				}
+				
+				collectionService.save(c, ud.getId());
+				
+				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/drafts/" + c.getEntityId()).build().toUriString();
 				
 				resp.setStatus("OK");
-				resp.setUrl("https://" + request.getServerName() + request.getContextPath() + "/drafts/" + "collId");
+				resp.setUrl(url);
 				response.setStatus(HttpServletResponse.SC_OK);
 			}
 		} catch (Exception e) {
@@ -99,7 +163,7 @@ public class CrLegacyApiController {
 		}
 		for (String id : draft.getIdentifiers()) {
 			if (id.startsWith("http") && id.contains("oai")) {
-				return id.substring(0, id.lastIndexOf("/"));
+				return id.substring(0, id.lastIndexOf("/")+1);
 			}
 		}
 		return null;
@@ -111,7 +175,7 @@ public class CrLegacyApiController {
 		}
 		for (String id : draft.getIdentifiers()) {
 			if (id.startsWith("http") && id.contains("oai")) {
-				return id.substring(0, id.lastIndexOf("/"));
+				return id.substring(id.lastIndexOf("/")+1);
 			}
 		}
 		return null;
