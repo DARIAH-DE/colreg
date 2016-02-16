@@ -54,8 +54,16 @@
                 <value>eu.dariah.de.colreg.model.Collection</value>
                 <value>eu.dariah.de.colreg.model.api.repository.RepositoryDraftContainer</value>
                 <value>eu.dariah.de.colreg.model.api.repository.RepositoryResponse</value>
+                <value>eu.dariah.de.colreg.model.api.oaipmh.OaiPmhResponseContainer</value>
             </list>
         </property>
+        <property name="marshallerProperties">
+        <map>
+            <entry key="jaxb.encoding">
+                <value>UTF-8</value>
+            </entry>
+        </map>
+    </property>
     </bean>
     
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>

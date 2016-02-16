@@ -136,9 +136,11 @@ public class CrLegacyApiController {
 				collectionService.save(c, ud.getId());
 				
 				String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/drafts/" + c.getEntityId()).build().toUriString();
+				String link = ServletUriComponentsBuilder.fromCurrentContextPath().path("/oaipmh/?verb=GetRecord&metadataPrefix=dcddm&identifier=" + c.getEntityId()).build().toUriString();
 				
 				resp.setStatus("OK");
 				resp.setUrl(url);
+				resp.setXml(link);
 				response.setStatus(HttpServletResponse.SC_OK);
 			}
 		} catch (Exception e) {
