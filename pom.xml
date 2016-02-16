@@ -36,6 +36,13 @@
 			<artifactId>core-web</artifactId>
 			<version>${eu.dariah.de.minfba.core-web.version}</version>
 		</dependency>
+		
+		<!-- Generic Search legacy integration -->
+		<dependency>
+			<groupId>de.dariah</groupId>
+			<artifactId>dariah-federation-base</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
 			
 		<!-- Spring -->
 		<dependency>

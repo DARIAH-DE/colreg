@@ -29,7 +29,7 @@ import eu.dariah.de.colreg.service.PersistedUserDetailsService;
 import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
-@RequestMapping("/colreg/collection")
+@RequestMapping("/colreg")
 public class CrLegacyApiController {
 	
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -41,7 +41,7 @@ public class CrLegacyApiController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
 	
-	@RequestMapping(value={"/submitDraft", "/submitDraft/"}, method = RequestMethod.POST, produces="application/xml")
+	@RequestMapping(value={"/collection/submitDraft", "/collection/submitDraft/"}, method = RequestMethod.POST, produces="application/xml")
 	public @ResponseBody RepositoryResponse postRepositoryCollection(@RequestBody String xml, HttpServletResponse response, HttpServletRequest request) {
 		RepositoryResponse resp = new RepositoryResponse();
 		resp.setStatus("Error");
