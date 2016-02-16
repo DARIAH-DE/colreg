@@ -1,20 +1,13 @@
 package eu.dariah.de.colreg.controller.api;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +22,7 @@ import eu.dariah.de.colreg.model.PersistedUserDetails;
 import eu.dariah.de.colreg.model.api.repository.RepositoryDraft;
 import eu.dariah.de.colreg.model.api.repository.RepositoryDraftContainer;
 import eu.dariah.de.colreg.model.api.repository.RepositoryResponse;
+import eu.dariah.de.colreg.model.marshalling.XMLConverter;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.PersistedUserDetailsService;
@@ -40,7 +34,7 @@ public class CrLegacyApiController {
 	
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired private Jaxb2Marshaller jaxb2Marshaller;
+	@Autowired private XMLConverter xmlConverter;
 
 	@Autowired private PersistedUserDetailsService userDetailsService;
 	@Autowired private CollectionValidator collectionValidator;
@@ -61,8 +55,7 @@ public class CrLegacyApiController {
 			
 			RepositoryDraftContainer container = null;
 			try {
-				Source source = new StreamSource(new StringReader(xml));
-				container = (RepositoryDraftContainer)jaxb2Marshaller.unmarshal(source);
+				container = (RepositoryDraftContainer)xmlConverter.convertXmlToObject(xml);
 			} catch (Exception e) {
 				resp.setError("Failed to parse provided payload: " + e.getMessage());
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

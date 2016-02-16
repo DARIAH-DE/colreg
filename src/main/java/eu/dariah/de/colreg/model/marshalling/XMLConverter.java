@@ -1,15 +1,20 @@
 package eu.dariah.de.colreg.model.marshalling;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 
+import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
+import org.springframework.oxm.XmlMappingException;
 
+/**
+ * Facade for XML handling to keep actual implementations exchangeable
+ */
 public class XMLConverter {
 
 	private Marshaller marshaller;
@@ -21,27 +26,23 @@ public class XMLConverter {
 	public Unmarshaller getUnmarshaller() { return unmarshaller; }
 	public void setUnmarshaller(Unmarshaller unmarshaller) { this.unmarshaller = unmarshaller; }
 
-	public void convertFromObjectToXML(Object object, String filepath) throws IOException {
-		FileOutputStream os = null;
+	
+	public String convertObjectToXml(Object obj) throws XmlMappingException, IOException {
+		StringWriter sw=null;		
 		try {
-			os = new FileOutputStream(filepath);
-			getMarshaller().marshal(object, new StreamResult(os));
+			sw = new StringWriter();
+			this.getMarshaller().marshal(obj, new StreamResult(sw));
 		} finally {
-			if (os != null) {
-				os.close();
+			if (sw!=null) {
+				sw.close();
+				return sw.toString();
 			}
 		}
+		return null;
 	}
-
-	public Object convertFromXMLToObject(String xmlfile) throws IOException {
-		FileInputStream is = null;
-		try {
-			is = new FileInputStream(xmlfile);
-			return getUnmarshaller().unmarshal(new StreamSource(is));
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
+	
+	public Object convertXmlToObject(String xml) throws XmlMappingException, IOException {
+		Source source = new StreamSource(new StringReader(xml));
+		return unmarshaller.unmarshal(source);
 	}
 }
