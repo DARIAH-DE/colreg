@@ -30,6 +30,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import de.dariah.aai.javasp.web.helper.AuthInfoHelper;
 import de.dariah.samlsp.model.pojo.AuthPojo;
 import eu.dariah.de.colreg.controller.base.BaseController;
+import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Address;
@@ -48,7 +49,7 @@ import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
 @RequestMapping(value={"/collections/", "/drafts/"})
-public class CollectionController extends BaseController {
+public class CollectionController extends VersionedEntityController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
 	
@@ -192,6 +193,8 @@ public class CollectionController extends BaseController {
 		}
 		
 		List<Collection> versions = collectionService.findAllVersionsForEntityId(entityId);
+		this.setUsers(versions);
+		
 		model.addAttribute("versions", versions);
 		
 		List<Collection> childCollections = collectionService.findCurrentByParentCollectionId(entityId);
@@ -215,6 +218,8 @@ public class CollectionController extends BaseController {
 		if (auth.isAuth() && c.getSucceedingVersionId()==null && !c.isDeleted()) {
 			model.addAttribute("editMode", true);
 		}
+		
+		this.setUsers(c);
 		
 		return "collection/edit";
 	}

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,20 +28,24 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import de.dariah.samlsp.model.pojo.AuthPojo;
 import eu.dariah.de.colreg.controller.base.BaseController;
+import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
+import eu.dariah.de.colreg.security.UserDetailsService;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.PersistedUserDetailsService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
 @Controller
 @RequestMapping("/agents/")
-public class AgentController extends BaseController {
+public class AgentController extends VersionedEntityController {
 	@Autowired private AgentService agentService;
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
@@ -108,6 +113,7 @@ public class AgentController extends BaseController {
 		model.addAttribute("activeCollectionRelation", collections!=null && collections.size()>0);
 		
 		List<Agent> versions = agentService.findAllVersionsForEntityId(entityId);
+		this.setUsers(versions);
 		model.addAttribute("versions", versions);
 		
 		model.addAttribute("isNew", a.getId().equals("new"));
@@ -124,19 +130,26 @@ public class AgentController extends BaseController {
 			model.addAttribute("editMode", true);
 		}
 		
+		this.setUsers(a);		
+		
 		return "agent/edit";
 	}
 	
 	@RequestMapping(value="{id}/delete", method=RequestMethod.POST)
-	public @ResponseBody ModelActionPojo deleteAgent(@PathVariable String id) {
+	public @ResponseBody ModelActionPojo deleteAgent(@PathVariable String id, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
 		ModelActionPojo result = new ModelActionPojo(false);
+		if (!auth.isAuth()) {
+			return result;
+		}
+		
 		List<Agent> children = agentService.findCurrentByParentAgentId(id);
 		List<Collection> collections = collectionService.findCurrentByRelatedAgentId(id);
 		
 		if ((children==null || children.size()==0) && (collections==null || collections.size()==0)) {
 			Agent a = agentService.findCurrentByAgentId(id);
 			a.setDeleted(true);
-			agentService.save(a, "default_user");
+			agentService.save(a, auth.getUserId());
 			result.setSuccess(true);
 		}
 		
@@ -145,12 +158,17 @@ public class AgentController extends BaseController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
 	public String saveAgent(@PathVariable String id, @ModelAttribute Agent agent, BindingResult bindingResult, Model model, Locale locale, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		if (!auth.isAuth()) {
+			return "redirect:/" + this.getLoginUrl();
+		}
 		agent.setEntityId(id);
 		validator.validate(agent, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return this.fillAgentEditorModel(id, agent, authInfoHelper.getAuth(request), model);
 		} 
-		agentService.save(agent, "default_user");
+		agentService.save(agent, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", agent.getId());
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", agent.getVersionTimestamp());
 		return "redirect:/agents/" + agent.getEntityId();

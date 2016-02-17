@@ -1,6 +1,11 @@
 package eu.dariah.de.colreg.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +25,15 @@ public class PersistedUserDetailsServiceImpl implements PersistedUserDetailsServ
 	@Override
 	public void saveUser(PersistedUserDetails persistedUser) {
 		userDetailsDao.save(persistedUser);
+	}
+
+	@Override
+	public PersistedUserDetails findById(String id) {
+		return userDetailsDao.findById(id);
+	}
+
+	@Override
+	public List<PersistedUserDetails> findByIds(List<String> fetchedUserIds) {
+		return userDetailsDao.find(new Query(Criteria.where("id").in(fetchedUserIds)));
 	}
 }

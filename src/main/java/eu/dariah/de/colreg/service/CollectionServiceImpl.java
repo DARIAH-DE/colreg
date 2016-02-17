@@ -134,10 +134,12 @@ public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public List<Collection> findCurrentByRelatedAgentId(String id) {
+		Criteria c = Criteria.where("succeedingVersionId").is(null)
+				.and("agentRelations").elemMatch(Criteria.where("agentId").is(id));
+		c.orOperator(Criteria.where("draftUserId").exists(false), Criteria.where("draftUserId").is(""));
+		
 		Query q = new Query();
-		q.addCriteria(Criteria
-				.where("succeedingVersionId").is(null)
-				.and("agentRelations").elemMatch(Criteria.where("agentId").is(id)));
+		q.addCriteria(c);		
 
 		return collectionDao.find(q);
 	}
