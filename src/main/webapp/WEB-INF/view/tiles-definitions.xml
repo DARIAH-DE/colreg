@@ -59,6 +59,13 @@
 		</put-list-attribute>
 	</definition>
 	
+	<!-- Common screens: home, logout, error etc -->
+	<definition name="home" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/home/home.jsp" />
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="home.js" />
+		</put-list-attribute>
+	</definition>
 	<definition name="logout" extends="template_simple">
 		<put-attribute name="fluidLayout" cascade="true" value="true" />
 		<put-attribute name="content" value="/WEB-INF/view/jsp/common/logout.jsp" />

@@ -1,6 +1,9 @@
 package eu.dariah.de.colreg.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,20 +24,58 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.dariah.de.colreg.controller.base.BaseController;
+import eu.dariah.de.colreg.controller.base.VersionedEntityController;
+import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.PersistedUserDetails;
+import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
+import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TranslationPojo;
+import eu.dariah.de.colreg.service.AgentService;
+import eu.dariah.de.colreg.service.CollectionService;
 
 @Controller
 @RequestMapping("")
-public class HomeController extends BaseController {
+public class HomeController extends VersionedEntityController {
 
 	@Autowired protected ObjectMapper objectMapper;
 	@Autowired protected MessageSource messageSource;
+	
+	@Autowired private CollectionService collectionService;
+	@Autowired private AgentService agentService;
 	
 	// "" and "/" could also serve for a dashboard
 	@RequestMapping(value = {"", "/", "/collections"}, method = RequestMethod.GET)
 	public String getCollections(HttpServletResponse response) throws IOException  {
 		response.sendRedirect("collections/");
 		return null;
+	}
+	
+	// Just for now
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public String showHome(Model model, HttpServletResponse response, Locale locale) throws IOException  {
+		List<VersionedEntityImpl> entities = new ArrayList<VersionedEntityImpl>();
+		
+		List<Collection> latestCollections = collectionService.findLatestChanges(5);
+		if (latestCollections!=null && latestCollections.size()>0) {
+			entities.addAll(latestCollections);
+		}
+		
+		List<Agent> latestAgents = agentService.findLatestChanges(5);
+		if (latestAgents!=null && latestAgents.size()>0) {
+			entities.addAll(latestAgents);
+		}
+		
+		Collections.sort(entities, new Comparator<VersionedEntityImpl>() {
+			@Override
+			public int compare(VersionedEntityImpl o1, VersionedEntityImpl o2) {
+				return o1.getVersionTimestamp().compareTo((o2.getVersionTimestamp())) * -1;
+			}
+		});
+		
+		this.setUsers(entities);
+		model.addAttribute("latest", entities);
+		return "home";
 	}
 	
 	// Just for now

@@ -685,6 +685,17 @@ label.control-label {
     background-position: 0 -15px;
 }
 
+/** The case only on dashboard */
+div#editor-version-panel {
+	border: 1px solid #483E69;
+	margin-top: 10px; 
+	overflow-y:scroll;
+}
+
+div#editor-version-panel ul {
+	margin-bottom: 0;
+}
+
 #editor-version-panel {
     background: #FFFFFF;
 	
@@ -735,7 +746,8 @@ label.control-label {
 	border-left-color: #31B0D5;
 }
 
-#editor-version-panel li .version-action {
+#editor-version-panel li .version-action,
+#editor-version-panel li .version-title {
 	font-size: 120%;
 	font-weight: bold;
 }

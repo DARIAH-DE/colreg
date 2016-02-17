@@ -189,4 +189,13 @@ public class AgentServiceImpl implements AgentService {
 		pojo.setState(agent.isDeleted() ? "deleted" : "valid");
 		return pojo;
 	}
+
+	@Override
+	public List<Agent> findLatestChanges(int i) {
+		Query q = new Query();
+		q.limit(i);
+		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
+		
+		return agentDao.find(q);
+	}
 }

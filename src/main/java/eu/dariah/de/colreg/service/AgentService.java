@@ -20,4 +20,5 @@ public interface AgentService {
 	public void appendVersionComment(String versionid, String comment);
 	public List<AgentPojo> convertToPojos(List<Agent> agents, Locale locale);
 	public AgentPojo convertToPojo(Agent agent, Locale locale);
+	public List<Agent> findLatestChanges(int i);
 }

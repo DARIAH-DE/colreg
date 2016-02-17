@@ -227,4 +227,13 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");
 		return pojo;
 	}
+
+	@Override
+	public List<Collection> findLatestChanges(int i) {
+		Query q = new Query();
+		q.limit(i);
+		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
+		
+		return collectionDao.find(q);
+	}
 }

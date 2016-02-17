@@ -13,7 +13,7 @@ import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 import eu.dariah.de.colreg.service.PersistedUserDetailsService;
 
 public class VersionedEntityController extends BaseController {
-	@Autowired private PersistedUserDetailsService userDetailsService;
+	@Autowired protected PersistedUserDetailsService userDetailsService;
 	
 	
 	protected <T extends VersionedEntityImpl> void setUsers(List<T> ves) {
