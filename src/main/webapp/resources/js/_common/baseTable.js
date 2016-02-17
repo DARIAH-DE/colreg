@@ -132,7 +132,7 @@ BaseTable.prototype.refresh = function() {
 			if (!hasSelected) {
 				_this.handleSelection(null);
 			}
-		});
+		}, false);
 	}
 };
 
