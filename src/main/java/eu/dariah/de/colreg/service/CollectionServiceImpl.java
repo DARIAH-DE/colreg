@@ -199,7 +199,12 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.setEntityId(collection.getEntityId());
 		pojo.setParentEntityId(collection.getParentCollectionId());
 		pojo.setId(collection.getId());
-		pojo.setLastChanged(collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("LM", locale), locale));
+		pojo.setLastChanged(
+				"<span style=\"white-space: nowrap;\">" + 
+						collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +
+				"</span> <span style=\"white-space: nowrap;\">" + 
+						collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("-M", locale), locale) +
+				"</span>");
 		
 		pojo.setTitle(collection.getLocalizedDescriptions().get(0).getTitle());
 		if (collection.getLocalizedDescriptions().get(0).getAcronym()!=null && 

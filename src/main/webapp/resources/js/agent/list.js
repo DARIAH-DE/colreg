@@ -32,7 +32,6 @@ AgentTable.prototype.createTable = function() {
 	       }, {	
 	    	   "targets": [3],
 	    	   "data": "entity.lastChanged",
-	    	   "class" : "td-no-wrap",
 	    	  /* "visible" : false*/
 	       }, {
 	    	   "targets": [4],
