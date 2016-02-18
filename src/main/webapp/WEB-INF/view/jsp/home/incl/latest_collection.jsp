@@ -22,6 +22,7 @@
 			</c:choose>
 		</span><br />		
 		<c:if test="${version.draftUserId==null || version.draftUserId==_auth.userId}">		
+			<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
 			<span class="version-title">${version.localizedDescriptions[0].title}</span>
 			<c:if test="${version.versionComment!=null && version.versionComment!=''}">							
 				<br /><span class="version-comment">"${version.versionComment}"</span>

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +28,14 @@ import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.PersistedUserDetails;
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
+import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
+import eu.dariah.de.colreg.pojo.EdgePojo;
+import eu.dariah.de.colreg.pojo.GraphPojo;
+import eu.dariah.de.colreg.pojo.NodePojo;
 import eu.dariah.de.colreg.pojo.TranslationPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
@@ -69,9 +75,10 @@ public class HomeController extends VersionedEntityController {
 		Collections.sort(entities, new Comparator<VersionedEntityImpl>() {
 			@Override
 			public int compare(VersionedEntityImpl o1, VersionedEntityImpl o2) {
-				return o1.getVersionTimestamp().compareTo((o2.getVersionTimestamp())) * -1;
+				return o1.getVersionTimestamp().compareTo((o2.getVersionTimestamp()));
 			}
 		});
+		Collections.reverse(entities);
 		
 		this.setUsers(entities);
 		model.addAttribute("latest", entities);
@@ -101,6 +108,79 @@ public class HomeController extends VersionedEntityController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String showLogout(HttpServletResponse response) throws IOException  {
 		return "logout";
+	}
+	
+	@RequestMapping(value="/async/graph", method=RequestMethod.GET)
+	public @ResponseBody GraphPojo getGraph() {
+		// TODO: Just for now...should query th id only
+		List<Collection> collections = collectionService.findAllCurrent();
+		List<Agent> agents = agentService.findAllCurrent();
+		List<NodePojo> nodes = new ArrayList<NodePojo>();
+		List<EdgePojo> edges = new ArrayList<EdgePojo>();
+		List<String> nodeIds = new ArrayList<String>();
+		
+		NodePojo node;
+		EdgePojo edge;
+		
+		// Nodes
+		for (Collection c : collections) {
+			node = new NodePojo();
+			node.setId(c.getEntityId());
+			node.setLabel(c.getLocalizedDescriptions().get(0).getTitle());
+			node.setType("collection");
+			nodes.add(node);
+			nodeIds.add(node.getId());
+		}
+		for (Agent agent : agents) {
+			node = new NodePojo();
+			node.setId(agent.getEntityId());
+			node.setType("agent");
+			
+			String name = (agent.getForeName()==null? "": (agent.getForeName() + " ")) + agent.getName() ;
+			node.setLabel(name);
+			nodes.add(node);
+			nodeIds.add(node.getId());
+		}
+		
+		// Edges
+		for (Collection c : collections) {
+			if (c.getParentCollectionId()!=null && !c.getParentCollectionId().isEmpty()) {
+				edge = new EdgePojo();
+				edge.setSource(c.getEntityId());
+				edge.setTarget(c.getParentCollectionId());
+				
+				if (!edges.contains(edge) && nodeIds.contains(edge.getSource()) && nodeIds.contains(edge.getTarget())) {
+					edges.add(edge);
+				}
+			}
+			if (c.getAgentRelations()!=null && c.getAgentRelations().size()!=0) {
+				for (CollectionAgentRelation car : c.getAgentRelations()) {
+					edge = new EdgePojo();
+					edge.setSource(c.getEntityId());
+					edge.setTarget(car.getAgentId());
+					if (!edges.contains(edge) && nodeIds.contains(edge.getSource()) && nodeIds.contains(edge.getTarget())) {
+						edges.add(edge);
+					}
+				}
+			}
+		}
+		for (Agent agent : agents) {
+			if (agent.getParentAgentId()!=null && !agent.getParentAgentId().isEmpty()) {
+				edge = new EdgePojo();
+				edge.setSource(agent.getEntityId());
+				edge.setTarget(agent.getParentAgentId());
+				
+				if (!edges.contains(edge) && nodeIds.contains(edge.getSource()) && nodeIds.contains(edge.getTarget())) {
+					edges.add(edge);
+				}
+			}
+		}
+		
+		GraphPojo graph = new GraphPojo();
+		graph.setNodes(nodes);
+		graph.setEdges(edges);
+		
+		return graph;		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/translate", produces = "application/json; charset=utf-8")

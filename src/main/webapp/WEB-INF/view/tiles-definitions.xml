@@ -63,6 +63,8 @@
 	<definition name="home" extends="template_simple">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/home/home.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="sigma/sigma.min.js" />
+			<add-attribute type="string" value="sigma/plugins/sigma.layout.forceAtlas2.min.js" />
 			<add-attribute type="string" value="home.js" />
 		</put-list-attribute>
 	</definition>

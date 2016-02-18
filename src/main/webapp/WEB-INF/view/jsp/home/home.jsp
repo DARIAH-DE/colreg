@@ -29,8 +29,8 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-8">
 						<h2><s:message code="~eu.dariah.de.colreg.common.labels.object_network" /></h2>
-						<p><s:message code="~eu.dariah.de.colreg.view.common.notification.logout.body" /></p>
-						<a href="<s:url value="/" />"><s:message code="~eu.dariah.de.colreg.view.common.labels.back_to_start" /></a>
+						<p><em><small><s:message code="~eu.dariah.de.colreg.common.labels.object_network_double_click" /></em></small></p>						
+						<div id="graph-container"></div>
 					</div>
 					<div class="col-sm-12 col-md-4">
 						<h2><s:message code="~eu.dariah.de.colreg.common.labels.latest_activities" /></h2>
