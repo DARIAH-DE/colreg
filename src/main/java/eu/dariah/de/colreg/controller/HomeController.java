@@ -50,15 +50,16 @@ public class HomeController extends VersionedEntityController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private AgentService agentService;
 	
-	// "" and "/" could also serve for a dashboard
-	@RequestMapping(value = {"", "/", "/collections"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/collections", method = RequestMethod.GET)
 	public String getCollections(HttpServletResponse response) throws IOException  {
 		response.sendRedirect("collections/");
 		return null;
 	}
 	
+	
+	
 	// Just for now
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public String showHome(Model model, HttpServletResponse response, Locale locale) throws IOException  {
 		List<VersionedEntityImpl> entities = new ArrayList<VersionedEntityImpl>();
 		
@@ -88,7 +89,7 @@ public class HomeController extends VersionedEntityController {
 	// Just for now
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String redirectDashboard(HttpServletResponse response) throws IOException  {
-		response.sendRedirect("collections/");
+		response.sendRedirect("/");
 		return null;
 	}
 	

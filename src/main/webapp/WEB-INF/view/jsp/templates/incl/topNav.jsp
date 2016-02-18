@@ -19,6 +19,7 @@
 		    	<nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
 		    		<!-- Main top navigation built from configuration -->
 		    		<ul class="nav navbar-nav">
+		    			<li><a href="<s:url value='/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.dashboard" /></a></li>
 		    			<li><a href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a></li>
 		    			<li><a href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a></li>
 		    		</ul>
