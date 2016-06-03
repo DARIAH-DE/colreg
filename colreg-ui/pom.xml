@@ -1,35 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>eu.dariah.de</groupId>
-	<artifactId>colreg</artifactId>
-	<version>3.2.0-SNAPSHOT</version>
+
+ 	<parent>
+		<groupId>eu.dariah.de</groupId>
+		<artifactId>colreg-parent</artifactId>
+		<version>3.2.0-SNAPSHOT</version>
+    	</parent>
+
+	
+	<artifactId>colreg-ui</artifactId>
+
 	<packaging>war</packaging>
+
 	<name>DARIAH-DE Collection Registry</name>
 	<description>DARIAH-DE Collection Registry</description>
-	<properties>
-		<java-version>1.7</java-version>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	
 
-		<eu.dariah.de.minfba.core-web.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
-		<eu.dariah.de.minfba.core-metamodel.version>3.0.0-SNAPSHOT</eu.dariah.de.minfba.core-metamodel.version>
-
-		<org.springframework-version>4.1.9.RELEASE</org.springframework-version>
-		<org.springsecurity-version>3.2.6.RELEASE</org.springsecurity-version>
-		<org.apache.tiles-version>3.0.5</org.apache.tiles-version>
-		<org.slf4j-version>1.7.10</org.slf4j-version>
-		<ch.qos.logback.version>1.1.2</ch.qos.logback.version>
-	</properties>
 
 	<dependencies>
 		<!-- DARIAH -->
 		<dependency>
 			<groupId>eu.dariah.de</groupId>
   			<artifactId>colreg-model</artifactId>
-  			<version>1.0.0-SNAPSHOT</version>
+  			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.dariah.de.minfba.core</groupId>
@@ -230,43 +224,5 @@
 
 	</dependencies>
 	
-	<distributionManagement>
-		<repository>
-			<id>dariah-releases</id>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>dariah-snapshots</id>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
-	<repositories>
-		<repository>
-			<id>dariah-releases</id>
-			<name>DARIAH MInf Release Repository</name>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-releases/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>dariah-snapshots</id>
-			<name>DARIAH MInf Snapshot Repository</name>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<organization>
-		<name>DARIAH-DE</name>
-		<url>http://de.dariah.eu</url>
-	</organization>
+	
 </project>
