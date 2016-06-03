@@ -65,14 +65,6 @@
 		</dependency>
 		
 		<!-- Security -->
-		<!-- Forces spring security dependencies to Spring 4 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-framework-bom</artifactId>
-			<version>${org.springframework-version}</version>
-			<type>pom</type>
-			<scope>import</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>

@@ -24,9 +24,10 @@
 
 		<eu.dariah.de.minfba.core-web.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
 		<eu.dariah.de.minfba.core-metamodel.version>3.0.0-SNAPSHOT</eu.dariah.de.minfba.core-metamodel.version>
-
-		<org.springframework-version>4.1.9.RELEASE</org.springframework-version>
-		<org.springsecurity-version>3.2.6.RELEASE</org.springsecurity-version>
+		
+		<org.springframework-version>4.2.6.RELEASE</org.springframework-version>
+		<org.springsecurity-version>4.1.0.RELEASE</org.springsecurity-version>
+		
 		<org.apache.tiles-version>3.0.5</org.apache.tiles-version>
 		<org.slf4j-version>1.7.10</org.slf4j-version>
 		<ch.qos.logback.version>1.1.2</ch.qos.logback.version>
