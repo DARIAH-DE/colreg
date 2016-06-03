@@ -1,23 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
  	<parent>
 		<groupId>eu.dariah.de</groupId>
 		<artifactId>colreg-parent</artifactId>
 		<version>3.2.0-SNAPSHOT</version>
-    	</parent>
-
-	
+    </parent>
 	<artifactId>colreg-ui</artifactId>
-
 	<packaging>war</packaging>
-
-	<name>DARIAH-DE Collection Registry</name>
-	<description>DARIAH-DE Collection Registry</description>
+	<name>DARIAH-DE Collection Registry - UI</name>
+	<description>DARIAH-DE Collection Registry - UI</description>
 	
-
-
 	<dependencies>
 		<!-- DARIAH -->
 		<dependency>
@@ -101,12 +93,12 @@
 		<dependency>
 			<groupId>eu.dariah.de</groupId>
 			<artifactId>dariah-javasp-core</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>${eu.dariah.de.javasp-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.dariah.de</groupId>
 			<artifactId>dariah-javasp-web</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>${eu.dariah.de.javasp-version}</version>
 		</dependency>
 		<dependency>
 	        <groupId>eu.dariah.de</groupId>
@@ -118,7 +110,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.8.2.RELEASE</version>
+			<version>${org.springframework.data.spring-data-mongodb-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -130,7 +122,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.2.Final</version>
+			<version>${org.hibernate.hibernate-validator-version}</version>
 		</dependency>
 		
 		<!-- Tiles -->
@@ -184,7 +176,7 @@
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>2.9.2</version>
+			<version>${joda-time-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -204,6 +196,33 @@
 			<version>2.8.1</version>
 		</dependency> -->
 
+		<!-- Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${com.fasterxml.jackson-version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -221,8 +240,5 @@
 			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
-	
-	
 </project>

@@ -32,6 +32,10 @@
 		<ch.qos.logback.version>1.1.2</ch.qos.logback.version>
 
 		<com.fasterxml.jackson-version>2.7.4</com.fasterxml.jackson-version>
+		<org.hibernate.hibernate-validator-version>5.2.2.Final</org.hibernate.hibernate-validator-version>
+		<joda-time-version>2.9.2</joda-time-version>
+		<org.springframework.data.spring-data-mongodb-version>1.8.2.RELEASE</org.springframework.data.spring-data-mongodb-version>
+		<eu.dariah.de.javasp-version>0.0.4-SNAPSHOT</eu.dariah.de.javasp-version>
 	</properties>
 
 	<distributionManagement>
