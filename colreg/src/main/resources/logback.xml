@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<property file="${colreg3.conf}" />
+	
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d %-5level [%thread] %logger{32}: %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>TRACE</level>
+		</filter>
+	</appender>
+
+	<appender name="dailyRolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${paths.logging}/colreg.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<FileNamePattern>${paths.logging}/colreg.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %-5level [%thread] %logger{32}: %msg%n</pattern>
+		</encoder>
+	</appender>
+		
+	<root>
+		<level value="info"/>
+		<appender-ref ref="console" />
+		<appender-ref ref="dailyRolling" />
+	</root>
+	
+	<logger name="eu.dariah.de.colreg">
+		<level value="debug" />
+	</logger>
+</configuration>
