@@ -21,6 +21,7 @@ import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 
@@ -196,6 +197,8 @@ public class CollectionServiceImpl implements CollectionService {
 			return null;
 		}
 		CollectionPojo pojo = new CollectionPojo();
+		pojo.setVersionId(collection.getId());
+		pojo.setVersionTimestamp(collection.getVersionTimestamp().toInstant().getMillis());
 		pojo.setEntityId(collection.getEntityId());
 		pojo.setParentEntityId(collection.getParentCollectionId());
 		pojo.setId(collection.getId());
@@ -221,6 +224,7 @@ public class CollectionServiceImpl implements CollectionService {
 				}
 			}
 			pojo.setAccess(accessTypes);
+			pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
 		}
 		
 		pojo.setType(collection.getCollectionType());
@@ -235,5 +239,28 @@ public class CollectionServiceImpl implements CollectionService {
 		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
 		
 		return collectionDao.find(q);
+	}
+	
+	private List<AccessPojo> convertAccessToPojos (List<Access> as) {
+		List<AccessPojo> aPojos = null;
+		if (as!=null) {
+			aPojos = new ArrayList<AccessPojo>();
+			for (Access a : as) {
+				aPojos.add(convertAccessToPojo(a));
+			}
+		}
+		return aPojos;
+	}
+	
+	private AccessPojo convertAccessToPojo (Access a) {
+		AccessPojo aPojo = null;
+		if (a!=null) {
+			aPojo = new AccessPojo();
+			aPojo.setSchemeIds(new ArrayList<String>(a.getSchemeIds()));
+			aPojo.setSet(a.getOaiSet());
+			aPojo.setType(a.getType());
+			aPojo.setUri(a.getUri());
+		}
+		return aPojo;
 	}
 }

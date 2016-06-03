@@ -10,6 +10,7 @@
 	<http security="none" pattern="/resources/**"/>
 		
 	<http auto-config="true" use-expressions="false"  access-decision-manager-ref="accessDecisionManager" >
+		<csrf disabled="true"/>
 		<intercept-url pattern="/test/jumboFluid" requires-channel="http" access="IS_AUTHENTICATED_FULLY" />
 
 		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/" />
