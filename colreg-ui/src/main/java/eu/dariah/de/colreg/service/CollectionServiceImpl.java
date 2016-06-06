@@ -269,7 +269,9 @@ public class CollectionServiceImpl implements CollectionService {
 		AccessPojo aPojo = null;
 		if (a!=null) {
 			aPojo = new AccessPojo();
-			aPojo.setSchemeIds(new ArrayList<String>(a.getSchemeIds()));
+			if (a.getSchemeIds()!=null) {
+				aPojo.setSchemeIds(new ArrayList<String>(a.getSchemeIds()));
+			}
 			aPojo.setSet(a.getOaiSet());
 			aPojo.setType(a.getType());
 			aPojo.setUri(a.getUri());
