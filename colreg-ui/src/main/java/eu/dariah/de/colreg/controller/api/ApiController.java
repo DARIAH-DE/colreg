@@ -23,9 +23,9 @@ public class ApiController {
 	@Autowired private CollectionService collectionService;
 	
 	@RequestMapping(value="collections", method=RequestMethod.GET)
-	public @ResponseBody List<CollectionPojo> getAllPublic(Locale locale) {
+	public @ResponseBody List<CollectionPojo> getAllPublic() {
 		List<Collection> collections = collectionService.findAllCurrent();
-		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, locale);
+		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, null);
 		return collectionPojos;
 	}
 }

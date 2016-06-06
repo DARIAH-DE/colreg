@@ -1,8 +1,10 @@
 package eu.dariah.de.colreg.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
@@ -21,6 +23,7 @@ import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
@@ -202,19 +205,29 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.setEntityId(collection.getEntityId());
 		pojo.setParentEntityId(collection.getParentCollectionId());
 		pojo.setId(collection.getId());
-		pojo.setLastChanged(
-				"<span style=\"white-space: nowrap;\">" + 
-						collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +
-				"</span> <span style=\"white-space: nowrap;\">" + 
-						collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("-M", locale), locale) +
-				"</span>");
 		
-		pojo.setTitle(collection.getLocalizedDescriptions().get(0).getTitle());
-		if (collection.getLocalizedDescriptions().get(0).getAcronym()!=null && 
-				!collection.getLocalizedDescriptions().get(0).getAcronym().trim().isEmpty()) {
-			pojo.setTitle(pojo.getTitle() + " (" + collection.getLocalizedDescriptions().get(0).getAcronym() + ")");
-		}
-		
+		if (locale!=null) {
+			pojo.setLastChanged(
+					"<span style=\"white-space: nowrap;\">" + 
+							collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +
+					"</span> <span style=\"white-space: nowrap;\">" + 
+							collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("-M", locale), locale) +
+					"</span>");
+			
+			// TODO: Actually use the one we need not the first
+			pojo.setTitle(collection.getLocalizedDescriptions().get(0).getTitle());
+			if (collection.getLocalizedDescriptions().get(0).getAcronym()!=null && 
+					!collection.getLocalizedDescriptions().get(0).getAcronym().trim().isEmpty()) {
+				pojo.setTitle(pojo.getTitle() + " (" + collection.getLocalizedDescriptions().get(0).getAcronym() + ")");
+			}
+		} else {
+			Map<String, String> titles = new HashMap<String, String>();
+			for (LocalizedDescription desc : collection.getLocalizedDescriptions()) {
+				titles.put(desc.getLanguageId(), desc.getTitle());
+			}
+			pojo.setTitles(titles);
+		}		
+			
 		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
 			String accessTypes = "";
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
