@@ -251,10 +251,11 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
 				acc = collection.getAccessMethods().get(i);
 				if (acc.getSchemeIds()!=null && acc.getSchemeIds().size()>0) {
+					// TODO: Static list -> nothing to do
 					for (int j=0; j<acc.getSchemeIds().size(); j++) {
-						if (vocabularyService.findEncodingSchemeByName(acc.getSchemeIds().get(j))==null) {
-							errors.rejectValue("accessMethods[" + i + "].schemeIds[" + j + "]", "~not_a_valid_scheme");
-						}
+						//if (vocabularyService.findEncodingSchemeByName(acc.getSchemeIds().get(j))==null) {
+							//errors.rejectValue("accessMethods[" + i + "].schemeIds[" + j + "]", "~not_a_valid_scheme");
+						//}
 					}	
 				}
 			}

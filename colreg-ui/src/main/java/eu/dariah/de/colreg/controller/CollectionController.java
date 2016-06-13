@@ -44,6 +44,7 @@ import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 
@@ -52,6 +53,7 @@ import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
 public class CollectionController extends VersionedEntityController {
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
+	@Autowired private SchemaService schemaService;
 	
 	@Autowired private CollectionValidator validator;
 	
@@ -187,6 +189,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
 		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
 		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
+		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
@@ -256,6 +259,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("currMethod", a);
 		model.addAttribute("accessMethods[0]", a);
 		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
+		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_access";
 	}
@@ -335,17 +339,6 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("currIdentifier", "");
 		model.addAttribute("providedIdentifier[0]", "");
 		return "collection/edit/incl/edit_identifier";
-	}
-	
-	@RequestMapping(method=GET, value={"/includes/editEncodingScheme"})
-	public String getEditEncodingSchemeForm(Model model) {
-		model.addAttribute("currIndex", 0);
-		model.addAttribute("subIndex", 0);
-		model.addAttribute("currSchemeId", "");
-		model.addAttribute("accessMethods[0]", new Access());
-		model.addAttribute("accessMethods[0].schemeIds[0]", "");
-		
-		return "collection/edit/incl/edit_encodingscheme";
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAudience"})

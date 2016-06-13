@@ -132,33 +132,31 @@
 		<s:bind path="accessMethods[${currIndex}].schemeIds*">
 			<div class="form-group">
 				<label for="title" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.access.encoding_schemes" /></label>
-				<div class="col-sm-9">
+				<div class="col-sm-7">
 					<c:choose>
 						<c:when test="${editMode}">
-							<ul class="lst-collection-access-schemes collection-editor-list">
-								<c:if test="${fn:length(currMethod.schemeIds)>0}">
-									<c:forEach items="${currMethod.schemeIds}" var="schemeId" varStatus="status" >
-										<c:set var="currSchemeId" value="${schemeId}" scope="request" />
-										<c:set var="subIndex" value="${status.index}" scope="request" />
-										<jsp:include page="edit_encodingscheme.jsp" />
+							<select class="form-control" id="accessMethods[${currIndex}].schemeIds" name="accessMethods[${currIndex}].schemeIds" size="8" multiple="multiple" autocomplete="off">
+								<c:forEach items="${encodingSchemes}" var="scheme">
+									<c:set var="contains" value="false" />
+									<c:forEach items="${currMethod.schemeIds}" var="schemeId">
+										<c:if test="${schemeId==scheme.id}">
+											<c:set var="contains" value="true" />
+										</c:if>
 									</c:forEach>
-									<c:remove var="currScheme" />	
-								</c:if>
-								<li class="collection-editor-list-buttons">
-									<div class="col-sm-12">
-										<button onclick="editor.tables['accessMethodTable'].schemesList.triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add-scheme"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.access.actions.add_encoding_scheme" /></button>
-									</div>
-								</li>
-							</ul>
+									<option <c:if test="${contains}">selected="selected"</c:if> value="${scheme.id}">${scheme.name} [${scheme.id}]</option>
+								</c:forEach>
+							</select>
 						</c:when>
 						<c:otherwise>
 							<label class="content-label">
-								<c:forEach items="${currMethod.schemeIds}" var="schemeId" varStatus="status" >
-									${schemeId}<br />
+							<c:forEach items="${encodingSchemes}" var="scheme">
+								<c:forEach items="${currMethod.schemeIds}" var="schemeId">
+									<c:if test="${schemeId==scheme.id}">${scheme.name}<br /></c:if>
 								</c:forEach>
+							</c:forEach>
 							</label>
 						</c:otherwise>
-					</c:choose>		
+					</c:choose>
 				</div>
 				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
 					path="accessMethods[${currIndex}].schemeIds" />

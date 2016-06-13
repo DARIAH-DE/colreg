@@ -66,6 +66,29 @@
     </property>
     </bean>
     
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="messageConverters">
+	        <list>
+	            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	                <property name="objectMapper" ref="objectMapper"/>
+	            </bean>
+	        </list>
+    	</property>
+    	<property name="requestFactory">
+    		<bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+	            <property name="readTimeout" value="${api.common.readTimeout:20000}" />
+	            <property name="connectTimeout" value="${api.common.connectionTimeout:20000}" />
+            </bean>
+    	</property>
+	</bean>
+	
+    
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.model.validation"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.service"/>

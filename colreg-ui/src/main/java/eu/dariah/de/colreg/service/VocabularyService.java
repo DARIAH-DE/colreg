@@ -8,21 +8,18 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
-import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
 import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
 public interface VocabularyService {
 	public List<Language> queryLanguages(String query);
-	public List<EncodingScheme> queryEncodingSchemes(String query);
-	
+
 	public List<AccrualMethod> findAllAccrualMethods();
 	public List<AccrualPeriodicity> findAllAccrualPeriodicities();
 	public List<AccrualPolicy> findAllAccrualPolicies();
 	public List<AccessType> findAllAccessTypes();
 	public List<AgentType> findAllAgentTypes();
 	public List<AgentRelationType> findAllAgentRelationTypes();
-	public List<EncodingScheme> findAllEncodingSchemes();
 	public List<ItemType> findAllItemTypes();
 	
 	public ItemType findItemTypeById(String id);
@@ -30,8 +27,6 @@ public interface VocabularyService {
 	
 	public Language findLanguageById(String id);
 	public Language findLanguageByCode(String id);
-	public EncodingScheme findEncodingSchemeById(String id);
-	public EncodingScheme findEncodingSchemeByName(String id);
 	public AccessType findAccessTypeById(String id);
 	public AccessType findAccessTypeByIdentfier(String string);
 	public AgentType findAgentTypeById(String agentTypeId);

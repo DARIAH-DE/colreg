@@ -215,6 +215,13 @@
 			<version>${com.fasterxml.jackson-version}</version>
 		</dependency>
 
+		<!-- Required for REST Client -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.3</version>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
