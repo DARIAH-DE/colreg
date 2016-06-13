@@ -273,7 +273,7 @@ public class CollectionServiceImpl implements CollectionService {
 				aPojo.setSchemeIds(new ArrayList<String>(a.getSchemeIds()));
 			}
 			aPojo.setSet(a.getOaiSet());
-			aPojo.setType(a.getType());
+			aPojo.setType(accessTypeDao.findById(a.getType()).getLabel());
 			aPojo.setUri(a.getUri());
 		}
 		return aPojo;
