@@ -96,7 +96,7 @@ BaseTable.prototype.handleAjaxError = function(xhr, textStatus, error) {
 	} else if (textStatus==='timeout') {
         alert(__translator.translate("~eu.dariah.de.colreg.common.view.notifications.async_timeout"));
     } else {
-        alert(__translator.translate("~eu.dariah.de.colreg.common.view.notifications.async_general_error"));
+        //alert(__translator.translate("~eu.dariah.de.colreg.common.view.notifications.async_general_error"));
     }
 	this.error = true;
     this.table.fnProcessingIndicator(false);
