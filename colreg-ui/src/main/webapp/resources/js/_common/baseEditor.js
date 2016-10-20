@@ -117,6 +117,8 @@ BaseEditor.prototype.registerNavFormControlEvents = function() {
 			selectedElement = selectedElement.find(".btn-collection-editor-add").first();
 		} else if (selectedElement.find("a").length>0) { 
 			selectedElement = selectedElement.find("a").first();
+		} else if (selectedElement.find(".form-control:not(:disabled)").length>0) {
+			selectedElement = selectedElement.find(".form-control:not(:disabled)").first();
 		}
 		selectedElement.focus();
 		
@@ -137,38 +139,38 @@ BaseEditor.prototype.registerFormControlSelectionEvents = function(element) {
 		
 		var selector = $(this).closest(".collection-editor-table, .collection-editor-list").attr("id");
 		if (selector!==undefined) {
-			select = $(".nav-form-controls a[href='#" + selector + "']");
-			select.parent().addClass("active");
+			var s = $(".nav-form-controls a[href='#" + selector + "']");
+			s.parent().addClass("active");
 		}
 	});
 	
-	element.find(".editor-section a").focus(function() {
+	element.find(".editor-section a, .form-control.form-control-subcontrol").focus(function() {
 		var selector = $(this).closest("div[id]").attr("id");
+		
 		if (selector!==undefined) {
 			$(".nav-form-controls li").removeClass("active");
-			
-			select = $(".nav-form-controls a[href='#" + selector + "']");
-			select.parent().addClass("active");
+			var s = $(".nav-form-controls a[href='#" + selector + "']");
+			s.parent().addClass("active");	
 		}
 	});
 	
-	element.find(".form-control").focus(function() {		
+	element.find(".form-control:not('.form-control-subcontrol')").focus(function() {		
 		$(".nav-form-controls li").removeClass("active");
 		
-		var select = $(".nav-form-controls a[href='#" + $(this).attr("id") + "']");
-		if (select.length) {
-			select.parent().addClass("active");
+		var s = $(".nav-form-controls a[href='#" + $(this).attr("id") + "']");
+		if (s.length) {
+			s.parent().addClass("active");
 		} else {
 			var selector = $(this).closest(".collection-editor-table, .collection-editor-list").attr("id");
 			if (selector!==undefined) {
-				select = $(".nav-form-controls a[href='#" + selector + "']");
-				select.parent().addClass("active");
+				s = $(".nav-form-controls a[href='#" + selector + "']");
+				s.parent().addClass("active");
 			}
 		}
 		
 		
 	});
-	element.find("select").focus(function() {		
+	element.find("select:not('.form-control-subcontrol')").focus(function() {		
 		$(".nav-form-controls li").removeClass("active");
 		$(".nav-form-controls a[href='#" + $(this).attr("id") + "']").parent().addClass("active");
 	});

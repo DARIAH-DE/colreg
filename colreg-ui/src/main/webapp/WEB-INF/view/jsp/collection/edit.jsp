@@ -168,16 +168,10 @@
 			<s:bind path="collectionDescriptionRights">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="collectionDescriptionRights" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.description_rights" /></label>
-					<div class="col-sm-9">
-						<c:choose>
-							<c:when test="${editMode}">
-								<sf:input path="collectionDescriptionRights" class="form-control" />
-							</c:when>
-							<c:otherwise>
-								<label class="content-label">${collection.collectionDescriptionRights}</label>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					<c:set var="currRightsLicenseId" value="${collectionDescriptionRightsIsLicenseId}" scope="request" />
+					<c:set var="currRightsName" value="collectionDescriptionRights" scope="request" />
+					<c:set var="currRightsValue" value="${collection.collectionDescriptionRights}" scope="request" />
+					<jsp:include page="incl/edit_rights.jsp" />	
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionDescriptionRights" />
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -192,16 +186,10 @@
 			<s:bind path="accessRights">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="accessRights" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.access_rights" /></label>
-					<div class="col-sm-9">
-						<c:choose>
-							<c:when test="${editMode}">
-								<sf:input path="accessRights" class="form-control" />
-							</c:when>
-							<c:otherwise>
-								<label class="content-label">${collection.accessRights}</label>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					<c:set var="currRightsLicenseId" value="${accessRightsIsLicenseId}" scope="request" />
+					<c:set var="currRightsName" value="accessRights" scope="request" />
+					<c:set var="currRightsValue" value="${collection.accessRights}" scope="request" />
+					<jsp:include page="incl/edit_rights.jsp" />	
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="accessRights" />
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -922,16 +910,10 @@
 			<s:bind path="itemRights">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="itemRights" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_rights" /></label>
-					<div class="col-sm-9">
-						<c:choose>
-							<c:when test="${editMode}">
-								<sf:input path="itemRights" class="form-control" />
-							</c:when>
-							<c:otherwise>
-								<label class="content-label">${collection.itemRights}</label>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					<c:set var="currRightsLicenseId" value="${itemRightsIsLicenseId}" scope="request" />
+					<c:set var="currRightsName" value="itemRights" scope="request" />
+					<c:set var="currRightsValue" value="${collection.itemRights}" scope="request" />
+					<jsp:include page="incl/edit_rights.jsp" />	
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemRights" />
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">

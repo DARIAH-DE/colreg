@@ -28,6 +28,7 @@ var CollectionEditor = function() {
 	
 	this.registerNavFormControlEvents();
 	this.registerFormControlSelectionEvents($("form"));
+	this.initRightsContainer();
 };
 
 CollectionEditor.prototype = new BaseEditor();
@@ -201,6 +202,19 @@ CollectionEditor.prototype.registerAgentRelationTypeSelection = function(element
 		$(this).closest(".form-group").find(".agent-type-display-helper").val(strSelected).trigger('change');
 	});
 }
+
+CollectionEditor.prototype.initRightsContainer = function() {
+	$(".rights-container input[type='radio']").change(function () {
+		var id = $(this).closest(".rights-container").prop("id");
+		var controls = $(this).closest(".rights-container").find(".form-control");
+		var selected = $(this).closest(".rights-container").find("#" + $(this).prop("name") + "-" + $(this).val());
+		
+		$(controls).prop('disabled', true);
+		$(controls).prop('name', "");
+		$(selected).prop('disabled', false);
+		$(selected).prop('name', id);
+	});
+};
 
 CollectionEditor.prototype.handleParentCollectionSelection = function(select, entityId, html) {
 	$("#parentCollectionId").val(entityId);

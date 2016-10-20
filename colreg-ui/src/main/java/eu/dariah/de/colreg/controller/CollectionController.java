@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +45,7 @@ import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
@@ -56,6 +58,7 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private SchemaService schemaService;
 	
 	@Autowired private CollectionValidator validator;
+	@Autowired private LicenseService licenseService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale, HttpServletRequest request) {		
@@ -105,6 +108,8 @@ public class CollectionController extends VersionedEntityController {
 				collectionService.initializeAgentRelations(c);
 			}
 		}
+		
+		model.addAttribute("locale", locale.getLanguage());
 		
 		 
 		if (c==null) {
@@ -181,6 +186,27 @@ public class CollectionController extends VersionedEntityController {
 	
 	private String fillCollectionEditorModel(String entityId, Collection c, AuthPojo auth, Model model) {
 		model.addAttribute("collection", c);
+		
+		if (c.getAccessRights()!=null && ObjectId.isValid(c.getAccessRights())) {
+			model.addAttribute("accessRightsIsLicenseId", true);
+		} else {
+			model.addAttribute("accessRightsIsLicenseId", false);
+		}
+		
+		if (c.getCollectionDescriptionRights()!=null && ObjectId.isValid(c.getCollectionDescriptionRights())) {
+			model.addAttribute("collectionDescriptionRightsIsLicenseId", true);
+		} else {
+			model.addAttribute("collectionDescriptionRightsIsLicenseId", false);
+		}
+
+		if (c.getItemRights()!=null && ObjectId.isValid(c.getItemRights())) {
+			model.addAttribute("itemRightsIsLicenseId", true);
+		} else {
+			model.addAttribute("itemRightsIsLicenseId", false);
+		}
+		
+		model.addAttribute("licenseGroups", licenseService.findAllLicenseGroups());
+		
 		model.addAttribute("selectedVersionId", c.getId());
 		
 		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
