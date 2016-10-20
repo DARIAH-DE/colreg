@@ -38,7 +38,7 @@
 					<div class="form-group">
 						<label for="username" class="col-sm-2 control-label"><s:message code="~eu.dariah.de.minfba.common.local_login.username" /></label>
 					    <div class="col-sm-4">
-					     	<input type="text" class="form-control" id="username" name="username">
+					     	<input type="text" class="form-control" id="username" name="username" autofocus>
 					    </div>
 					</div>
 					<div class="form-group">
