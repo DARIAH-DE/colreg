@@ -712,7 +712,9 @@
 							</c:forEach>		
 						</c:when>
 						<c:otherwise>
-							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></label>
+							<label class="control-label">
+								<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></a> 
+							</label>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -1033,8 +1035,9 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></label>
 					<div id="current-version" class="col-sm-9">
-						<label class="content-label"><joda:format value="${collection.versionTimestamp}" style="LM" /></label><br />
-						<label class="content-label">${collection.versionCreator}</label>
+						<label class="control-label">
+							<a href="javascript:void(0)"><joda:format value="${collection.versionTimestamp}" style="LM" /> (${collection.versionCreator})</a> 
+						</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -1048,8 +1051,9 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></label>
 					<div id="initially-created" class="col-sm-9">
-						<label class="content-label"><joda:format value="${collection.entityTimestamp}" style="LM" /></label><br />
-						<label class="content-label">${collection.entityCreator}</label>
+						<label class="control-label">
+							<a href="javascript:void(0)"><joda:format value="${collection.entityTimestamp}" style="LM" /> (${collection.entityCreator})</a> 
+						</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -1072,7 +1076,7 @@
 								<c:otherwise>
 									<div class="alert alert-warning alert-sm" role="alert">
 										<s:url value="/collections/${collection.entityId}" var="latest_link" />
-										<s:message code="~eu.dariah.de.colreg.view.collection.notification.deletable" arguments="" />
+										<s:message code="~eu.dariah.de.colreg.view.collection.notification.deletable" arguments="${collection.entityId}" />
 									</div>		
 									<button id="btn-delete-collection" class="btn btn-danger cancel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></button>					
 								</c:otherwise>

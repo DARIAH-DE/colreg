@@ -380,7 +380,7 @@
 			<!-- Child agents -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.child_agents" /></label>
-				<div class="col-sm-9">
+				<div id="child-agents" class="col-sm-9">
 					<c:choose>
 						<c:when test="${childAgents!=null && fn:length(childAgents)>0}">
 							<c:forEach items="${childAgents}" var="child" varStatus="status" >
@@ -393,7 +393,9 @@
 							</c:forEach>		
 						</c:when>
 						<c:otherwise>
-							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_children_assigned" /></em></label>
+							<label class="control-label">
+								<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_children_assigned" /></em></a> 
+							</label>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -408,7 +410,7 @@
 			<!-- Associated collections -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.associated_collections" /></label>
-				<div class="col-sm-9">
+				<div id="associated-collections" class="col-sm-9">
 					<c:choose>
 						<c:when test="${collections!=null && fn:length(collections)>0}">
 							<c:forEach items="${collections}" var="collection" varStatus="status" >
@@ -421,7 +423,9 @@
 							</c:forEach>		
 						</c:when>
 						<c:otherwise>
-							<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_collections_assigned" /></em></label>
+							<label class="control-label">
+								<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_collections_assigned" /></em></a> 
+							</label>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -443,7 +447,7 @@
 				<!-- Entity id -->
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.agent_identifier" /></label>
-					<div id="collection-identifier" class="col-sm-9">
+					<div id="agent-identifier" class="col-sm-9">
 						<label class="content-label">
 							<a href="<s:url value="/agents/${agent.entityId}" />">${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}<s:url value="/agents/${agent.entityId}" /></a>
 						</label>
@@ -476,8 +480,9 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.current_version" /></label>
 					<div id="current-version" class="col-sm-9">
-						<label class="content-label"><joda:format value="${agent.versionTimestamp}" style="LM" /></label><br />
-						<label class="content-label">${agent.versionCreator}</label>
+						<label class="control-label">
+							<a href="javascript:void(0)"><joda:format value="${agent.versionTimestamp}" style="LM" /> (${agent.versionCreator})</a> 
+						</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -491,8 +496,9 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.created" /></label>
 					<div id="initially-created" class="col-sm-9">
-						<label class="content-label"><joda:format value="${agent.entityTimestamp}" style="LM" /></label><br />
-						<label class="content-label">${agent.entityCreator}</label>
+						<label class="control-label">
+							<a href="javascript:void(0)"><joda:format value="${agent.entityTimestamp}" style="LM" /> (${agent.entityCreator})</a> 
+						</label>
 					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
@@ -510,7 +516,7 @@
 								<c:when test="${activeChildAgents==false && activeCollectionRelation==false}">
 									<div class="alert alert-warning alert-sm" role="alert">
 										<s:url value="/agents/${agent.entityId}" var="latest_link" />
-										<s:message code="~eu.dariah.de.colreg.view.agent.notification.deletable" arguments="" />
+										<s:message code="~eu.dariah.de.colreg.view.agent.notification.deletable" arguments="${agent.entityId}" />
 									</div>
 									<div>
 										<button id="btn-delete-agent" class="btn btn-danger cancel"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <s:message code="~eu.dariah.de.colreg.common.actions.delete" /></button>

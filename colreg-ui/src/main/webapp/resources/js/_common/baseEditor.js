@@ -19,6 +19,7 @@ function BaseEditor() {
 	$("#chk-toggle-hints").trigger("change");
 	
 	$(".form-btn-submit").on("click", function(e) { _this.submit(); });
+
 };
 
 BaseEditor.prototype.sort = function() {
@@ -108,9 +109,21 @@ BaseEditor.prototype.registerNavFormControlEvents = function() {
 			$.scrollTo(href, 300, {
 				onAfter: function(target, settings) { $(target).focus() }
 			});		
-		} else {
-			$(href).focus();
 		}
+		
+		var selectedElement = $(href);
+		
+		if (selectedElement.find(".btn-collection-editor-add").length>0) {
+			selectedElement = selectedElement.find(".btn-collection-editor-add").first();
+		} else if (selectedElement.find("a").length>0) { 
+			selectedElement = selectedElement.find("a").first();
+		}
+		selectedElement.focus();
+		
+		if (!_this.isScrolledIntoView(selectedElement)) {
+			$.scrollTo(href, 300);		
+		}
+		
 		e.stopPropagation(); 
 		return false;
 	});
@@ -118,7 +131,28 @@ BaseEditor.prototype.registerNavFormControlEvents = function() {
 
 BaseEditor.prototype.registerFormControlSelectionEvents = function(element) {
 	var _this = this;
-	element.find("input").focus(function() {		
+	
+	element.find(".btn-collection-editor-add").focus(function() {
+		$(".nav-form-controls li").removeClass("active");
+		
+		var selector = $(this).closest(".collection-editor-table, .collection-editor-list").attr("id");
+		if (selector!==undefined) {
+			select = $(".nav-form-controls a[href='#" + selector + "']");
+			select.parent().addClass("active");
+		}
+	});
+	
+	element.find(".editor-section a").focus(function() {
+		var selector = $(this).closest("div[id]").attr("id");
+		if (selector!==undefined) {
+			$(".nav-form-controls li").removeClass("active");
+			
+			select = $(".nav-form-controls a[href='#" + selector + "']");
+			select.parent().addClass("active");
+		}
+	});
+	
+	element.find(".form-control").focus(function() {		
 		$(".nav-form-controls li").removeClass("active");
 		
 		var select = $(".nav-form-controls a[href='#" + $(this).attr("id") + "']");

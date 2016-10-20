@@ -47,14 +47,14 @@
 		</li>
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.agent.groups.contextual" /></a>
 			<ul class="nav">
+				<s:bind path="agent.providedIdentifier*">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-agent-provided-identifiers"><s:message code="~eu.dariah.de.colreg.model.agent.provided_identifiers" /></a></li>
+				</s:bind>
 				<s:bind path="agent.parentAgentId">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#parentAgentIdSelector"><s:message code="~eu.dariah.de.colreg.model.agent.parent_agent" /></a></li>
 				</s:bind>
 				<li><a href="#child-agents"><s:message code="~eu.dariah.de.colreg.model.agent.child_agents" /></a></li>
 				<li><a href="#associated-collections"><s:message code="~eu.dariah.de.colreg.model.agent.associated_collections" /></a></li>
-				<s:bind path="agent.providedIdentifier*">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-agent-provided-identifiers"><s:message code="~eu.dariah.de.colreg.model.agent.provided_identifiers" /></a></li>
-				</s:bind>
 			</ul>
 		</li>
 		<c:if test="${!isNew}">

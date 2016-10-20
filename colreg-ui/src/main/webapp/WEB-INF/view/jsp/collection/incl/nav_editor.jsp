@@ -40,7 +40,7 @@
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#eMail"><s:message code="~eu.dariah.de.colreg.model.collection.email" /></a></li>
 				</s:bind>
 				<s:bind path="collection.locations*">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-locations"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></a></li>
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-locations"><s:message code="~eu.dariah.de.colreg.model.collection.locations" /></a></li>
 				</s:bind>
 				<s:bind path="collection.agentRelations*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-agents"><s:message code="~eu.dariah.de.colreg.model.collection.agents" /></a></li>
@@ -108,7 +108,7 @@
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.access" /></a>
 			<ul class="nav">
 				<s:bind path="collection.accessMethods*">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-access-anchor"><s:message code="~eu.dariah.de.colreg.model.collection.access" /></a></li>
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-access"><s:message code="~eu.dariah.de.colreg.model.collection.access" /></a></li>
 				</s:bind>
 			</ul>
 		</li>

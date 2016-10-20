@@ -611,6 +611,16 @@ label.control-label {
 	font-style: italic;
 }
 
+label.control-label a,
+label.control-label a:link,
+label.control-label a:visited,
+label.control-label a:hover, 
+label.control-label a:active {
+	color: #333;
+	cursor: default;
+	text-decoration: none;
+}
+
 .content-label {
 	margin-bottom: 0;
     padding-top: 7px;
