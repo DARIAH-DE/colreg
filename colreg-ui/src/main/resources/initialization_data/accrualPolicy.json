@@ -1,24 +1,34 @@
-{ 
-    "_id" : ObjectId("56af3605e4b02def7959f48f"), 
-    "identifier" : "http://purl.org/cld/accpol/closed ", 
-    "label" : "Closed", 
-    "description" : "A policy that items are no longer added to the collection."
-}
-{ 
-    "_id" : ObjectId("56af3605e4b02def7959f490"), 
-    "identifier" : "http://purl.org/cld/accpol/passive", 
-    "label" : "Passive", 
-    "description" : "A policy that items are added to the collection only in response to the initiative of an external agent."
-}
-{ 
-    "_id" : ObjectId("56af3605e4b02def7959f491"), 
-    "identifier" : "http://purl.org/cld/accpol/active", 
-    "label" : "Active", 
-    "description" : "A policy that items are actively sought for addition to the collection."
-}
-{ 
-    "_id" : ObjectId("56af3605e4b02def7959f492"), 
-    "identifier" : "http://purl.org/cld/accpol/partial ", 
-    "label" : "Partial", 
-    "description" : "A policy that items are actively sought for addition to a specific part of the collection."
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f6"
+		},
+		"identifier": "http://purl.org/cld/accpol/closed ",
+		"label": "Closed",
+		"description": "A policy that items are no longer added to the collection."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1fc"
+		},
+		"identifier": "http://purl.org/cld/accpol/passive",
+		"label": "Passive",
+		"description": "A policy that items are added to the collection only in response to the initiative of an external agent."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b201"
+		},
+		"identifier": "http://purl.org/cld/accpol/active",
+		"label": "Active",
+		"description": "A policy that items are actively sought for addition to the collection."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b206"
+		},
+		"identifier": "http://purl.org/cld/accpol/partial ",
+		"label": "Partial",
+		"description": "A policy that items are actively sought for addition to a specific part of the collection."
+	}
+]

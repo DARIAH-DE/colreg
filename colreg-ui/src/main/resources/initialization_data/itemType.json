@@ -1,72 +1,98 @@
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e2"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Collection", 
-    "label" : "Collection", 
-    "description" : "An aggregation of resources. A collection is described as a group; its parts may also be separately described."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e3"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Dataset", 
-    "label" : "Dataset", 
-    "description" : "Data encoded in a defined structure. Examples include lists, tables, and databases. A dataset may be useful for direct machine processing."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e4"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Event", 
-    "label" : "Event", 
-    "description" : "A non-persistent, time-based occurrence. Metadata for an event provides descriptive information that is the basis for discovery of the purpose, location, duration, and responsible agents associated with an event. Examples include an exhibition, webcast, conference, workshop, open day, performance, battle, trial, wedding, tea party, conflagration."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e5"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Image", 
-    "label" : "Image", 
-    "description" : "A visual representation other than text. Examples include images and photographs of physical objects, paintings, prints, drawings, other images and graphics, animations and moving pictures, film, diagrams, maps, musical notation. Note that Image may include both electronic and physical representations."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e6"), 
-    "identifier" : "http://purl.org/dc/dcmitype/InteractiveResource", 
-    "label" : "Interactive Resource", 
-    "description" : "A resource requiring interaction from the user to be understood, executed, or experienced. Examples include forms on Web pages, applets, multimedia learning objects, chat services, or virtual reality environments."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e7"), 
-    "identifier" : "http://purl.org/dc/dcmitype/MovingImage", 
-    "label" : "Moving Image", 
-    "description" : "A series of visual representations imparting an impression of motion when shown in succession. Examples include animations, movies, television programs, videos, zoetropes, or visual output from a simulation. Instances of the type Moving Image must also be describable as instances of the broader type Image."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e8"), 
-    "identifier" : "http://purl.org/dc/dcmitype/PhysicalObject", 
-    "label" : "Physical Object", 
-    "description" : "An inanimate, three-dimensional object or substance. Note that digital representations of, or surrogates for, these objects should use Image, Text or one of the other types."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09e9"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Service", 
-    "label" : "Service", 
-    "description" : "A system that provides one or more functions. Examples include a photocopying service, a banking service, an authentication service, interlibrary loans, a Z39.50 or Web server."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09ea"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Software", 
-    "label" : "Software", 
-    "description" : "A computer program in source or compiled form. Examples include a C source file, MS-Windows .exe executable, or Perl script."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09eb"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Sound", 
-    "label" : "Sound", 
-    "description" : "A resource primarily intended to be heard. Examples include a music playback file format, an audio compact disc, and recorded speech or sounds."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09ec"), 
-    "identifier" : "http://purl.org/dc/dcmitype/StillImage", 
-    "label" : "Still Image", 
-    "description" : "A static visual representation. Examples include paintings, drawings, graphic designs, plans and maps. Recommended best practice is to assign the type Text to images of textual materials. Instances of the type Still Image must also be describable as instances of the broader type Image."
-}
-{ 
-    "_id" : ObjectId("56b5ead2e4b079b3fc1b09ed"), 
-    "identifier" : "http://purl.org/dc/dcmitype/Text", 
-    "label" : "Text", 
-    "description" : "A resource consisting primarily of words for reading. Examples include books, letters, dissertations, poems, newspapers, articles, archives of mailing lists. Note that facsimiles or images of texts are still of the genre Text."
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b20a"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Collection",
+		"label": "Collection",
+		"description": "An aggregation of resources. A collection is described as a group; its parts may also be separately described."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b210"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Dataset",
+		"label": "Dataset",
+		"description": "Data encoded in a defined structure. Examples include lists, tables, and databases. A dataset may be useful for direct machine processing."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b214"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Event",
+		"label": "Event",
+		"description": "A non-persistent, time-based occurrence. Metadata for an event provides descriptive information that is the basis for discovery of the purpose, location, duration, and responsible agents associated with an event. Examples include an exhibition, webcast, conference, workshop, open day, performance, battle, trial, wedding, tea party, conflagration."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b217"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Image",
+		"label": "Image",
+		"description": "A visual representation other than text. Examples include images and photographs of physical objects, paintings, prints, drawings, other images and graphics, animations and moving pictures, film, diagrams, maps, musical notation. Note that Image may include both electronic and physical representations."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b21a"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/InteractiveResource",
+		"label": "Interactive Resource",
+		"description": "A resource requiring interaction from the user to be understood, executed, or experienced. Examples include forms on Web pages, applets, multimedia learning objects, chat services, or virtual reality environments."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b21d"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/MovingImage",
+		"label": "Moving Image",
+		"description": "A series of visual representations imparting an impression of motion when shown in succession. Examples include animations, movies, television programs, videos, zoetropes, or visual output from a simulation. Instances of the type Moving Image must also be describable as instances of the broader type Image."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b220"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/PhysicalObject",
+		"label": "Physical Object",
+		"description": "An inanimate, three-dimensional object or substance. Note that digital representations of, or surrogates for, these objects should use Image, Text or one of the other types."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b223"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Service",
+		"label": "Service",
+		"description": "A system that provides one or more functions. Examples include a photocopying service, a banking service, an authentication service, interlibrary loans, a Z39.50 or Web server."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b226"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Software",
+		"label": "Software",
+		"description": "A computer program in source or compiled form. Examples include a C source file, MS-Windows .exe executable, or Perl script."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c19e4b0750deb67b229"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Sound",
+		"label": "Sound",
+		"description": "A resource primarily intended to be heard. Examples include a music playback file format, an audio compact disc, and recorded speech or sounds."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c19e4b0750deb67b22c"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/StillImage",
+		"label": "Still Image",
+		"description": "A static visual representation. Examples include paintings, drawings, graphic designs, plans and maps. Recommended best practice is to assign the type Text to images of textual materials. Instances of the type Still Image must also be describable as instances of the broader type Image."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c19e4b0750deb67b22f"
+		},
+		"identifier": "http://purl.org/dc/dcmitype/Text",
+		"label": "Text",
+		"description": "A resource consisting primarily of words for reading. Examples include books, letters, dissertations, poems, newspapers, articles, archives of mailing lists. Note that facsimiles or images of texts are still of the genre Text."
+	}
+]

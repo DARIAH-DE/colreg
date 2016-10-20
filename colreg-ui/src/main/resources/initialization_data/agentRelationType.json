@@ -1,12 +1,18 @@
-{ 
-    "_id" : ObjectId("56b0d71ee4b02def795a1342"), 
-    "identifier" : "owner", 
-    "label" : "Owner", 
-    "description" : "Agent owns the collection"
-}
-{ 
-    "_id" : ObjectId("56b0d71ee4b02def795a1343"), 
-    "identifier" : "creator", 
-    "label" : "Creator", 
-    "description" : "Agent created the collection"
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f8"
+		},
+		"identifier": "owner",
+		"label": "Owner",
+		"description": "Agent owns the collection"
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1ff"
+		},
+		"identifier": "creator",
+		"label": "Creator",
+		"description": "Agent created the collection"
+	}
+]

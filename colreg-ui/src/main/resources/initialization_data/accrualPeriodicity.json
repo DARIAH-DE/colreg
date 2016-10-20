@@ -1,102 +1,138 @@
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7607"), 
-    "identifier" : "http://purl.org/cld/freq/triennial", 
-    "label" : "Triennial", 
-    "description" : "The event occurs every three years."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7608"), 
-    "identifier" : "http://purl.org/cld/freq/biennial", 
-    "label" : "Biennial", 
-    "description" : "The event occurs every two years."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7609"), 
-    "identifier" : "http://purl.org/cld/freq/annual", 
-    "label" : "Annual", 
-    "description" : "The event occurs once a year."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe760a"), 
-    "identifier" : "http://purl.org/cld/freq/semiannual", 
-    "label" : "Semiannual", 
-    "description" : "The event occurs twice a year."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe760b"), 
-    "identifier" : "http://purl.org/cld/freq/threeTimesAYear", 
-    "label" : "Three times a year", 
-    "description" : "The event occurs three times a year."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe760c"), 
-    "identifier" : "http://purl.org/cld/freq/quarterly", 
-    "label" : "Quarterly", 
-    "description" : "The event occurs every three months."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe760d"), 
-    "identifier" : "http://purl.org/cld/freq/bimonthly", 
-    "label" : "Bimonthly", 
-    "description" : "The event occurs every two months."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe760e"), 
-    "identifier" : "http://purl.org/cld/freq/monthly", 
-    "label" : "Monthly", 
-    "description" : "The event occurs once a month."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe760f"), 
-    "identifier" : "http://purl.org/cld/freq/semimonthly", 
-    "label" : "Semimonthly", 
-    "description" : "The event occurs twice a month."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7610"), 
-    "identifier" : "http://purl.org/cld/freq/biweekly", 
-    "label" : "Biweekly", 
-    "description" : "The event occurs every two weeks."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7611"), 
-    "identifier" : "http://purl.org/cld/freq/threeTimesAMonth", 
-    "label" : "Three times a month", 
-    "description" : "The event occurs three times a month."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7612"), 
-    "identifier" : "http://purl.org/cld/freq/weekly", 
-    "label" : "Weekly", 
-    "description" : "The event occurs once a week."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7613"), 
-    "identifier" : "http://purl.org/cld/freq/semiweekly", 
-    "label" : "Semiweekly", 
-    "description" : "The event occurs twice a week."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7614"), 
-    "identifier" : "http://purl.org/cld/freq/threeTimesAWeek", 
-    "label" : "Three times a week", 
-    "description" : "The event occurs three times a week."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7615"), 
-    "identifier" : "http://purl.org/cld/freq/daily", 
-    "label" : "Daily", 
-    "description" : "The event occurs once a day."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7616"), 
-    "identifier" : "http://purl.org/cld/freq/continuous", 
-    "label" : "Continuous", 
-    "description" : "The event repeats without interruption."
-}
-{ 
-    "_id" : ObjectId("56bb4e04e4b05022adbe7617"), 
-    "identifier" : "http://purl.org/cld/freq/completelyIrregular", 
-    "label" : "Irregular", 
-    "description" : "The event occurs at uneven intervals."
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f5"
+		},
+		"identifier": "http://purl.org/cld/freq/triennial",
+		"label": "Triennial",
+		"description": "The event occurs every three years."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1fd"
+		},
+		"identifier": "http://purl.org/cld/freq/biennial",
+		"label": "Biennial",
+		"description": "The event occurs every two years."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b202"
+		},
+		"identifier": "http://purl.org/cld/freq/annual",
+		"label": "Annual",
+		"description": "The event occurs once a year."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b208"
+		},
+		"identifier": "http://purl.org/cld/freq/semiannual",
+		"label": "Semiannual",
+		"description": "The event occurs twice a year."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b20c"
+		},
+		"identifier": "http://purl.org/cld/freq/threeTimesAYear",
+		"label": "Three times a year",
+		"description": "The event occurs three times a year."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b211"
+		},
+		"identifier": "http://purl.org/cld/freq/quarterly",
+		"label": "Quarterly",
+		"description": "The event occurs every three months."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b213"
+		},
+		"identifier": "http://purl.org/cld/freq/bimonthly",
+		"label": "Bimonthly",
+		"description": "The event occurs every two months."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b215"
+		},
+		"identifier": "http://purl.org/cld/freq/monthly",
+		"label": "Monthly",
+		"description": "The event occurs once a month."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b218"
+		},
+		"identifier": "http://purl.org/cld/freq/semimonthly",
+		"label": "Semimonthly",
+		"description": "The event occurs twice a month."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b21b"
+		},
+		"identifier": "http://purl.org/cld/freq/biweekly",
+		"label": "Biweekly",
+		"description": "The event occurs every two weeks."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b21e"
+		},
+		"identifier": "http://purl.org/cld/freq/threeTimesAMonth",
+		"label": "Three times a month",
+		"description": "The event occurs three times a month."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b221"
+		},
+		"identifier": "http://purl.org/cld/freq/weekly",
+		"label": "Weekly",
+		"description": "The event occurs once a week."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b225"
+		},
+		"identifier": "http://purl.org/cld/freq/semiweekly",
+		"label": "Semiweekly",
+		"description": "The event occurs twice a week."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b227"
+		},
+		"identifier": "http://purl.org/cld/freq/threeTimesAWeek",
+		"label": "Three times a week",
+		"description": "The event occurs three times a week."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c19e4b0750deb67b22b"
+		},
+		"identifier": "http://purl.org/cld/freq/daily",
+		"label": "Daily",
+		"description": "The event occurs once a day."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c19e4b0750deb67b22d"
+		},
+		"identifier": "http://purl.org/cld/freq/continuous",
+		"label": "Continuous",
+		"description": "The event repeats without interruption."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c19e4b0750deb67b231"
+		},
+		"identifier": "http://purl.org/cld/freq/completelyIrregular",
+		"label": "Irregular",
+		"description": "The event occurs at uneven intervals."
+	}
+]

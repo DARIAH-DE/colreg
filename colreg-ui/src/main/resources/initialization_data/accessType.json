@@ -1,42 +1,65 @@
-{ 
-    "_id" : ObjectId("56af373be4b02def7959f493"), 
-    "identifier" : "oaipmh", 
-    "label" : "OAI-PMH", 
-    "description" : "Collection provides OAI-PMH interface",
-    "machineAccessible": true
-}
-{ 
-    "_id" : ObjectId("56af373be4b02def7959f494"), 
-    "identifier" : "rest", 
-    "label" : "REST API", 
-    "description" : "Collection provides Restful API",
-    "machineAccessible": true
-}
-{ 
-    "_id" : ObjectId("56af373be4b02def7959f495"), 
-    "identifier" : "sparql", 
-    "label" : "SPARQL", 
-    "description" : "Collection provides SPARQL interface",
-    "machineAccessible": true
-}
-{ 
-    "_id" : ObjectId("56af373be4b02def7959f496"), 
-    "identifier" : "opac", 
-    "label" : "OPAC", 
-    "description" : "Collection has OPAC",
-    "machineAccessible": true
-}
-{ 
-    "_id" : ObjectId("56af373be4b02def7959f497"), 
-    "identifier" : "beacon", 
-    "label" : "Beacon", 
-    "description" : "Collection has Beacon interface",
-    "machineAccessible": true
-}
-{ 
-    "_id" : ObjectId("56af373be4b02def7959f498"), 
-    "identifier" : "readingRoom", 
-    "label" : "Reading Room", 
-    "description" : "Collection provides a reading room",
-    "machineAccessible": false
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f3"
+		},
+		"identifier": "oaipmh",
+		"label": "OAI-PMH",
+		"description": "Collection provides OAI-PMH interface",
+		"machineAccessible": true
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f7"
+		},
+		"identifier": "rest",
+		"label": "REST API",
+		"description": "Collection provides Restful API",
+		"machineAccessible": true
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f9"
+		},
+		"identifier": "sparql",
+		"label": "SPARQL",
+		"description": "Collection provides SPARQL interface",
+		"machineAccessible": true
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1fa"
+		},
+		"identifier": "opac",
+		"label": "OPAC",
+		"description": "Collection has OPAC",
+		"machineAccessible": true
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1fe"
+		},
+		"identifier": "beacon",
+		"label": "Beacon",
+		"description": "Collection has Beacon interface",
+		"machineAccessible": true
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b203"
+		},
+		"identifier": "readingRoom",
+		"label": "Reading Room",
+		"description": "Collection provides a reading room",
+		"machineAccessible": false
+	},
+	{
+		"_id": {
+			"$oid": "5808ae19c3c6002a42867d09"
+		},
+		"identifier": "onlinefile",
+		"label": "XML/Text file (online)",
+		"description": "A URL to a web accessible file",
+		"machineAccessible": false
+	}
+]

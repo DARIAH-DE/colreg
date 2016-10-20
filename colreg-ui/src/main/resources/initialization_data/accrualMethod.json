@@ -1,36 +1,50 @@
-{ 
-    "_id" : ObjectId("56af3553e4b02def7959f489"), 
-    "identifier" : "http://purl.org/cld/accmeth/deposit ", 
-    "label" : "Deposit", 
-    "description" : "The permanent addition of items to the collection, where the transfer of ownership is conditional on certain requirements or restrictions, but without financial payment or reciprocal transfer of items."
-}
-{ 
-    "_id" : ObjectId("56af3553e4b02def7959f48a"), 
-    "identifier" : "http://purl.org/cld/accmeth/donation ", 
-    "label" : "Donation", 
-    "description" : "The permanent addition of items to the collection through the transfer of ownership, without financial payment."
-}
-{ 
-    "_id" : ObjectId("56af3553e4b02def7959f48b"), 
-    "identifier" : "http://purl.org/cld/accmeth/purchase ", 
-    "label" : "Purchase", 
-    "description" : "The permanent addition of items to the collection through the transfer of ownership, accompanied by one or more financial payments."
-}
-{ 
-    "_id" : ObjectId("56af3553e4b02def7959f48c"), 
-    "identifier" : "http://purl.org/cld/accmeth/loan ", 
-    "label" : "Loan", 
-    "description" : "The temporary addition of items to the collection with no transfer of ownership, without financial payment."
-}
-{ 
-    "_id" : ObjectId("56af3553e4b02def7959f48d"), 
-    "identifier" : "http://purl.org/cld/accmeth/license ", 
-    "label" : "License", 
-    "description" : "The temporary addition of items to the collection with no transfer of ownership, accompanied by one or more financial payments."
-}
-{ 
-    "_id" : ObjectId("56af3553e4b02def7959f48e"), 
-    "identifier" : "http://purl.org/cld/accmeth/itemcreation ", 
-    "label" : "Item Creation", 
-    "description" : "The permanent addition of items to the collection as a result of item creation by the owner of the collection."
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1f4"
+		},
+		"identifier": "http://purl.org/cld/accmeth/deposit ",
+		"label": "Deposit",
+		"description": "The permanent addition of items to the collection, where the transfer of ownership is conditional on certain requirements or restrictions, but without financial payment or reciprocal transfer of items."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b1fb"
+		},
+		"identifier": "http://purl.org/cld/accmeth/donation ",
+		"label": "Donation",
+		"description": "The permanent addition of items to the collection through the transfer of ownership, without financial payment."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b200"
+		},
+		"identifier": "http://purl.org/cld/accmeth/purchase ",
+		"label": "Purchase",
+		"description": "The permanent addition of items to the collection through the transfer of ownership, accompanied by one or more financial payments."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b205"
+		},
+		"identifier": "http://purl.org/cld/accmeth/loan ",
+		"label": "Loan",
+		"description": "The temporary addition of items to the collection with no transfer of ownership, without financial payment."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b20b"
+		},
+		"identifier": "http://purl.org/cld/accmeth/license ",
+		"label": "License",
+		"description": "The temporary addition of items to the collection with no transfer of ownership, accompanied by one or more financial payments."
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b20f"
+		},
+		"identifier": "http://purl.org/cld/accmeth/itemcreation ",
+		"label": "Item Creation",
+		"description": "The permanent addition of items to the collection as a result of item creation by the owner of the collection."
+	}
+]

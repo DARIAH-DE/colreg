@@ -1,13 +1,19 @@
-{ 
-    "_id" : ObjectId("56af5610e4b02def795a1340"), 
-    "identifier" : "organization", 
-    "label" : "Organization", 
-    "description" : "Agent is an organization"
-}
-{ 
-    "_id" : ObjectId("56af5610e4b02def795a1341"), 
-    "identifier" : "person", 
-    "label" : "Person", 
-    "description" : "Agent is a person", 
-    "naturalPerson" : true
-}
+[
+	{
+		"_id": {
+			"$oid": "56bf6c17e4b0750deb67b204"
+		},
+		"identifier": "organization",
+		"label": "Organization",
+		"description": "Agent is an organization"
+	},
+	{
+		"_id": {
+			"$oid": "56bf6c18e4b0750deb67b209"
+		},
+		"identifier": "person",
+		"label": "Person",
+		"description": "Agent is a person",
+		"naturalPerson": true
+	}
+]
