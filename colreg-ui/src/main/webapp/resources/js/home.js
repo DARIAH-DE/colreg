@@ -71,11 +71,11 @@ Dashboard.prototype.initGraph = function(data) {
 		},
 		container : 'graph-container'
 	});
-	s.startForceAtlas2({
-		gravity: 1,
-		slowDown: 10,
+	/*s.startForceAtlas2({
+		gravity: 5,
+		slowDown: 1,
 		adjustSizes: true
-	});
+	});*/
 	s.bind('doubleClickNode rightClickNode', function(e) {
 		window.location = __util.composeUrl((e.data.node.nodeType==="collection" ? "collections/" : "agents/") + e.data.node.id);
 	});
