@@ -30,6 +30,10 @@
 	white-space: nowrap;
 }
 
+.dataTable tbody tr td {
+	cursor: pointer;
+}
+
 /*!
  *	data-details-container (the reactor to activations in dataTable) -> reused in editor
  */

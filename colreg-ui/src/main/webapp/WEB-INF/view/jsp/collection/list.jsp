@@ -49,12 +49,11 @@
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.access" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></th>
-							<th><!-- ~Actions --></th>
 						</tr>
 					</thead>
 					<tbody>
 					<tr>
-						<td colspan="6" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+						<td colspan="5" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
 					</tr>
 					</tbody>
 				</table>

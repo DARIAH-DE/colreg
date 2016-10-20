@@ -39,12 +39,11 @@
 							<th><s:message code="~eu.dariah.de.colreg.model.agent.name" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.agent.type" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.agent.current_version" /></th>
-							<th><!-- ~Actions --></th>
 						</tr>
 					</thead>
 					<tbody>
 					<tr>
-						<td colspan="5" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+						<td colspan="4" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
 					</tr>
 					</tbody>
 				</table>

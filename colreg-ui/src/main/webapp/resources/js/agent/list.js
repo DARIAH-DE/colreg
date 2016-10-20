@@ -14,6 +14,7 @@ var AgentTable = function() {
 AgentTable.prototype = new BaseTable(__util.composeUrl("agents/list"), "#agent-table-container");
 
 AgentTable.prototype.createTable = function() {
+	var _this = this;
 	this._base.table = $('#agent-table').DataTable($.extend(true, {
 		"order": [[1, "asc"]],
 		"columnDefs": [
@@ -33,16 +34,14 @@ AgentTable.prototype.createTable = function() {
 	    	   "targets": [3],
 	    	   "data": "entity.lastChanged",
 	    	  /* "visible" : false*/
-	       }, {
-	    	   "targets": [4],
-	           "searchable": false,
-	           "sortable" : false,
-	           "class" : "td-no-wrap",
-	           "data": function (row, type, val, meta) { return agentTable.renderActionColumn(row, type, val, meta); }
-	       }
-	       
+	       }	       
 	   ]
 	}, this.baseSettings));
+	
+	$('#agent-table').on('click', 'tr', function () {
+        var entityId = _this._base.table.row(this).data().entity.entityId;
+        location.href = __util.composeUrl("agents/" + entityId);
+    } );
 };
 
 AgentTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
@@ -67,14 +66,6 @@ AgentTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 		} else {
 			result += __translator.translate("~eu.dariah.de.colreg.common.labels.draft");
 		} 
-	}
-	return result;
-};
-
-AgentTable.prototype.renderActionColumn = function(row, type, val, meta) {
-	var result = "";	
-	if (type==="display") {
-		return 	"<a href=\"" + __util.composeUrl("agents/" + row.entity.entityId) + "\"><span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span></a>";
 	}
 	return result;
 };

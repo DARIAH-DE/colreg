@@ -48,16 +48,14 @@ CollectionTable.prototype.createTable = function() {
 	    	   "data": "entity.lastChanged",
 	    	   /*"class" : "td-no-wrap",*/
 	    	  /* "visible" : false*/
-	       }, {
-	    	   "targets": [5],
-	           "searchable": false,
-	           "sortable" : false,
-	           "class" : "td-no-wrap",
-	           "data": function (row, type, val, meta) { return _this.renderActionColumn(row, type, val, meta); }
-	       }
-	       
+	       }	       
 	   ]
 	}, this.baseSettings));
+	
+	$(_this.selector).on('click', 'tr', function () {
+        var entityId = _this._base.table.row(this).data().entity.entityId;
+        location.href = __util.composeUrl("collections/" + entityId);
+    } );
 };
 
 CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
@@ -82,14 +80,6 @@ CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 		} else {
 			result += __translator.translate("~eu.dariah.de.colreg.common.labels.draft");
 		} 
-	}
-	return result;
-};
-
-CollectionTable.prototype.renderActionColumn = function(row, type, val, meta) {
-	var result = "";	
-	if (type==="display") {
-		return 	"<a href=\"" + __util.composeUrl("collections/" + row.entity.entityId) + "\"><span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span></a>";
 	}
 	return result;
 };
