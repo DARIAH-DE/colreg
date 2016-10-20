@@ -629,7 +629,7 @@
 					<div class="col-sm-3">
 						<c:choose>
 							<c:when test="${editMode}">
-								<input type="number" id="size" name="size" class="form-control" />
+								<input type="number" id="size" name="size" value="${collection.size}" class="form-control" />
 							</c:when>
 							<c:otherwise>
 								<label class="content-label">${collection.size}</label>
