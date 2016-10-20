@@ -58,6 +58,11 @@
 						</div>
 					</c:if>
 					</s:bind>
+					<c:forEach items="${entityWarnings}" var="warning">
+						<div class="alert alert-warning">
+							<s:message code="${warning}" />
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

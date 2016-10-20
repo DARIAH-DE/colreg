@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 
 public interface AgentService {
@@ -21,4 +22,5 @@ public interface AgentService {
 	public List<AgentPojo> convertToPojos(List<Agent> agents, Locale locale);
 	public AgentPojo convertToPojo(Agent agent, Locale locale);
 	public List<Agent> findLatestChanges(int i);
+	public AgentType findAgentTypeById(String agentTypeId);
 }

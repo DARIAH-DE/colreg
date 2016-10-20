@@ -52,6 +52,20 @@ public class AgentValidator extends BaseValidator<Agent> {
 		}
 	}
 
+	public List<String> getEntityWarnings(Agent agent) {
+		List<String> warnings = new ArrayList<String>();
+		
+		// Unique names of agents (warning for natural persons)
+		Agent compareAgent = agentService.findCurrentByName(agent.getName(), agent.getForeName());
+		if (compareAgent!=null && !compareAgent.getEntityId().equals(agent.getEntityId())) {
+			if (agentService.findAgentTypeById(compareAgent.getAgentTypeId()).isNaturalPerson() && 
+					agentService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson()) {
+				warnings.add("~eu.dariah.de.colreg.validation.agent.natural_name_not_unique");
+			}
+		}
+		return warnings;
+	}
+	
 	@Override
 	public void innerValidate(Agent agent, Errors errors) {
 		
@@ -60,11 +74,14 @@ public class AgentValidator extends BaseValidator<Agent> {
 			errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.first_name");
 		}
 		
-		// Unique names of agents
+		// Unique names of agents (error for organizations)
 		Agent compareAgent = agentService.findCurrentByName(agent.getName(), agent.getForeName());
 		if (compareAgent!=null && !compareAgent.getEntityId().equals(agent.getEntityId())) {
-			errors.rejectValue("name", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
-			errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
+			if (!agentService.findAgentTypeById(compareAgent.getAgentTypeId()).isNaturalPerson() || 
+					!agentService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson()) {
+				errors.rejectValue("name", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
+				errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
+			}
 		}
 	}
 }

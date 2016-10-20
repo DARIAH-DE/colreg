@@ -22,6 +22,7 @@ import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 
 @Service
@@ -44,6 +45,11 @@ public class AgentServiceImpl implements AgentService {
 		a.setAgentTypeId(agentTypeDao.findAll().get(0).getId());
 
 		return a;
+	}
+	
+	@Override
+	public AgentType findAgentTypeById(String agentTypeId) {
+		return agentTypeDao.findById(agentTypeId);
 	}
 
 	@Override

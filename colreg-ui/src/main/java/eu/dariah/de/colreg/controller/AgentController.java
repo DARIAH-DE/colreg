@@ -93,6 +93,9 @@ public class AgentController extends VersionedEntityController {
 			model.addAttribute("lastSavedVersion", inputFlashMap.get("lastSavedVersion"));
 			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
 		}
+		if (inputFlashMap!=null && inputFlashMap.containsKey("entityWarnings")) {
+			model.addAttribute("entityWarnings", inputFlashMap.get("entityWarnings"));
+		}
 		
 		return this.fillAgentEditorModel(a.getEntityId(), a, auth, model);
 	}
@@ -164,12 +167,17 @@ public class AgentController extends VersionedEntityController {
 			return "redirect:/" + this.getLoginUrl();
 		}
 		agent.setEntityId(id);
+				
 		validator.validate(agent, bindingResult);
+		
+		List<String> entityWarnings = validator.getEntityWarnings(agent);
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("entityWarnings", entityWarnings);
 			return this.fillAgentEditorModel(id, agent, authInfoHelper.getAuth(request), model);
 		} 
 		agentService.save(agent, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", agent.getId());
+		redirectAttributes.addFlashAttribute("entityWarnings", entityWarnings);
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", agent.getVersionTimestamp());
 		return "redirect:/agents/" + agent.getEntityId();
 	}

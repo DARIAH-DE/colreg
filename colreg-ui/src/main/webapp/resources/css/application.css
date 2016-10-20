@@ -653,8 +653,9 @@ label.control-label {
 .validation-error {
 	clear: both;
 	color: #a94442;
-	margin-bottom: 8px;
+	margin-bottom: 5px;
     margin-top: -3px;
+    padding-top: 6px;
 }
 
 .container-error {
