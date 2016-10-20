@@ -41,12 +41,14 @@
 							</ul>
 						</li>
 
-						<li id="login"<c:if test="${_auth!=null && _auth.auth==true}"> style="display: none;"</c:if>><a href="<s:url value='${_loginUrl}' />" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;<s:message code="~eu.dariah.de.colreg.common.login" /></a></li>
-						<li id="logout"<c:if test="${_auth==null || _auth.auth==false}"> style="display: none;"</c:if>><a href="<s:url value='${_logoutUrl}' />" ><span class="glyphicon glyphicon-log-out"></span>&nbsp;<s:message code="~eu.dariah.de.colreg.common.logout" /><c:if test="${_auth!=null || _auth.auth==true}"> (${_auth.displayName})</c:if></a></li>		
+						<c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}" />
+						<li id="login"<c:if test="${_auth!=null && _auth.auth==true}"> style="display: none;"</c:if>><a href="<s:url value='${_loginUrl}?url=${currentUrl}' />" ><span class="glyphicon glyphicon-log-in"></span>&nbsp;<s:message code="~eu.dariah.de.colreg.common.login" /></a></li>
+						<li id="logout"<c:if test="${_auth==null || _auth.auth==false}"> style="display: none;"</c:if>><a href="<s:url value='${_logoutUrl}' />" ><span class="glyphicon glyphicon-log-out"></span>&nbsp;<s:message code="~eu.dariah.de.colreg.common.logout" /><c:if test="${_auth!=null || _auth.auth==true}"> (${_auth.displayName})</c:if></a></li>
 					</ul>
 		    	</nav>
 			</div>
 		</div>
+		<input id="currentUrl" type="hidden" value="${requestScope['javax.servlet.forward.request_uri']}" />
 		<input id="baseUrl" type="hidden" value="<s:url value="/" />" />
 		<input id="baseUrl2" type="hidden" value="<s:url value="/{}" />" />
 	</div>

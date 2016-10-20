@@ -16,12 +16,12 @@ import eu.dariah.de.colreg.service.CollectionService;
 public class UserContextInterceptor extends HandlerInterceptorAdapter {
 	@Autowired private CollectionService collectionService;
 	
-	@Value(value="${url.login:null}")
+	/*@Value(value="${url.login:null}")
 	private String loginUrl;
 	
 	@Value(value="${url.logout:null}")
 	private String logoutUrl;
-	
+	*/
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -34,8 +34,8 @@ public class UserContextInterceptor extends HandlerInterceptorAdapter {
 			int draftCount = collectionService.findAllDrafts(user.getId()).size();
 			session.setAttribute("_draftCount", draftCount);
 		}
-		session.setAttribute("_loginUrl", loginUrl);
-		session.setAttribute("_logoutUrl", logoutUrl);
+		//session.setAttribute("_loginUrl", loginUrl);
+		//session.setAttribute("_logoutUrl", logoutUrl);
 		return super.preHandle(request, response, handler);
 	}
 }

@@ -111,6 +111,15 @@ public class HomeController extends VersionedEntityController {
 		return "logout";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String getLogin(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "url", defaultValue = "/") String url, HttpServletResponse response, Model model) throws IOException  {
+		if (error != null) {
+			model.addAttribute("error", true);
+		}
+		model.addAttribute("redirectUrl", url);
+		return "login";
+	}
+	
 	@RequestMapping(value="/async/graph", method=RequestMethod.GET)
 	public @ResponseBody GraphPojo getGraph() {
 		// TODO: Just for now...should query th id only
