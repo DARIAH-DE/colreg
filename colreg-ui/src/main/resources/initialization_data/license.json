@@ -1,0 +1,115 @@
+[
+{ 
+    "_id": {
+			"$oid": "5808ad14c3c6002a42867d06"
+		}, 
+    "licenses" : [
+        {
+            "url" : "https://creativecommons.org/publicdomain/zero/1.0/", 
+            "license_id" : "l1", 
+            "name_abbreviated" : "CC0", 
+            "named_expanded" : "Creative Commons Zero"
+        }, 
+        {
+            "license_id" : "l2", 
+            "name_abbreviated" : "CC0 plus", 
+            "named_expanded" : "Creative Commons Zero plus"
+        }, 
+        {
+            "url" : "https://creativecommons.org/licenses/by/2.0/", 
+            "license_id" : "l3", 
+            "name_abbreviated" : "CC BY", 
+            "named_expanded" : "Creative Commons Attribution"
+        }, 
+        {
+            "url" : "https://creativecommons.org/licenses/by-sa/3.0/", 
+            "license_id" : "l4", 
+            "name_abbreviated" : "CC BY-SA", 
+            "named_expanded" : "Creative Commons Attribution Share Alike"
+        }, 
+        {
+            "url" : "http://opendatacommons.org/licenses/odbl/", 
+            "license_id" : "l5", 
+            "name_abbreviated" : "ODbl", 
+            "named_expanded" : "Open Database License"
+        }, 
+        {
+            "url" : "http://opendatacommons.org/licenses/by/", 
+            "license_id" : "l6", 
+            "name_abbreviated" : "ODC-BY", 
+            "named_expanded" : "Open Data Commons Attribution License"
+        }, 
+        {
+            "url" : "https://www.gnu.org/licenses/fdl-1.3.de", 
+            "license_id" : "l7", 
+            "name_abbreviated" : "GFDL", 
+            "named_expanded" : "GNU Free Documentation License"
+        }, 
+        {
+            "url" : "https://www.hbz-nrw.de/produkte/open-access/lizenzen/dppl/fdppl/f-DPPL_v3_en_11-2008", 
+            "license_id" : "l8", 
+            "name_abbreviated" : "fDPPL", 
+            "named_expanded" : "free Digital Peer Publishing License"
+        }, 
+        {
+            "url" : "http://opendatacommons.org/licenses/pddl/", 
+            "license_id" : "l9", 
+            "name_abbreviated" : "PDDL", 
+            "named_expanded" : "Public Domain Dedication and License"
+        }
+    ], 
+    "group_id" : "g1", 
+    "group_label" : {
+        "de" : "Offene Lizenzen", 
+        "en" : "Open licenses"
+    }
+},
+{ 
+    "_id": {
+			"$oid": "5808ad14c3c6002a42867d07"
+		}, 
+    "licenses" : [
+        {
+            "url" : "?", 
+            "license_id" : "l10", 
+            "name_abbreviated" : "CC-BY-NC", 
+            "named_expanded" : "Creative Commons Attribution Share Alike Non-commercial"
+        }, 
+        {
+            "url" : "?", 
+            "license_id" : "l11", 
+            "name_abbreviated" : "CC-BY-ND", 
+            "named_expanded" : "Creative Commons Attribution Share Alike Non-derivatives"
+        }, 
+        {
+            "url" : "?", 
+            "license_id" : "l12", 
+            "name_abbreviated" : "CC BY-NC-ND", 
+            "named_expanded" : "Creative Commons Attribution Non-commercial Non-derivatives"
+        }, 
+        {
+            "url" : "?", 
+            "license_id" : "l13", 
+            "name_abbreviated" : "CC BY-NC-SA", 
+            "named_expanded" : "Creative Commons Attribution Non-commercial Share Alike"
+        }, 
+        {
+            "url" : "https://www.hbz-nrw.de/produkte/open-access/lizenzen/dppl/dppl/DPPL_v3_en_11-2008", 
+            "license_id" : "l14", 
+            "name_abbreviated" : "DPPL", 
+            "named_expanded" : "Digital Peer Publishing License"
+        }, 
+        {
+            "url" : "https://www.hbz-nrw.de/produkte/open-access/lizenzen/dppl/mdppl/m-DPPL_v3_en_11-2008", 
+            "license_id" : "l15", 
+            "name_abbreviated" : "mDPPL", 
+            "named_expanded" : "modular Digital Peer Publishing License"
+        }
+    ], 
+    "group_id" : "g2", 
+    "group_label" : {
+        "de" : "Restriktive Lizenzen", 
+        "en" : "Restrictive licenses"
+    }
+}
+]
