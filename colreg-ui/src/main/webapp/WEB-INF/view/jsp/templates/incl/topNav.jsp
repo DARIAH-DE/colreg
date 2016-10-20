@@ -14,7 +14,7 @@
 		        		<span class="icon-bar"></span>
 		        		<span class="icon-bar"></span>
 		      		</button>
-		      		<a class="navbar-brand" href="../">DARIAH-DE</a>
+		      		<a class="navbar-brand" href="http://de.dariah.eu">DARIAH-DE</a>
 		    	</div>
 		    	<nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
 		    		<!-- Main top navigation built from configuration -->
