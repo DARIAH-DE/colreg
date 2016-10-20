@@ -50,6 +50,12 @@ public class AgentValidator extends BaseValidator<Agent> {
 			}
 			agent.setProvidedIdentifier(retainIdentifiers);
 		}
+		
+		// Prefix http://
+		if (agent.getWebPage()!=null && !agent.getWebPage().trim().isEmpty() && 
+				!agent.getWebPage().toLowerCase().trim().startsWith("http")) {
+			agent.setWebPage("http://" + agent.getWebPage().trim());
+		}
 	}
 
 	public List<String> getEntityWarnings(Agent agent) {

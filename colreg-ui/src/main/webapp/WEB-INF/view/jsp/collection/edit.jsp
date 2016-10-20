@@ -233,7 +233,9 @@
 								<sf:input path="webPage" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.webPage}</label>
+								<label class="content-label">
+									<a href="${collection.webPage}">${collection.webPage}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -257,7 +259,9 @@
 								<sf:input path="eMail" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.EMail}</label>
+								<label class="content-label">
+									<a href="mailto:${collection.EMail}">${collection.EMail}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>

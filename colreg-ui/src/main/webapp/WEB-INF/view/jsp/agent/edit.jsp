@@ -231,7 +231,9 @@
 								<sf:input path="eMail" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${agent.EMail}</label>
+								<label class="content-label">
+									<a href="mailto:${agent.EMail}">${agent.EMail}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -255,7 +257,9 @@
 								<sf:input path="webPage" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${agent.webPage}</label>
+								<label class="content-label">
+									<a href="${agent.webPage}">${agent.webPage}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
