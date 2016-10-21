@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import eu.dariah.de.colreg.dao.vocabulary.EncodingSchemeDao;
 import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
 import eu.dariah.de.minfba.core.metamodel.serialization.SerializableSchemaContainer;
 
@@ -18,6 +19,10 @@ public class SchemaServiceImpl implements SchemaService {
 	protected static final Logger logger = LoggerFactory.getLogger(SchemaServiceImpl.class);
 	
 	@Autowired private RestTemplate restTemplate;
+	
+	// This is merely for caching schemata once the SR is down
+	// TODO: Two level cache to reduce traffic?!
+	@Autowired private EncodingSchemeDao encodingSchemeDao;
 	
 	@Value("${api.schereg.schemas}")
 	private String fetchAllUrl;
@@ -43,10 +48,13 @@ public class SchemaServiceImpl implements SchemaService {
 				
 				s.add(pojo);
 			}
+			
+			encodingSchemeDao.deleteAll();
+			encodingSchemeDao.saveAll(s);
 			return s;
 		} catch (Exception e) {
-			logger.error(String.format("Error while executing [%s]", fetchAllUrl), e);
-			return null;
+			logger.error(String.format("Error while fetching schemata: [%s]", fetchAllUrl), e);
+			return encodingSchemeDao.findAll();
 		}
 	}
 }
