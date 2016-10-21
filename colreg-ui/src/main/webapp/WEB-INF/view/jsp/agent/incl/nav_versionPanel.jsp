@@ -14,9 +14,11 @@
 						<span class="version-action">
 							<c:choose>
 								<c:when test="${version.deleted}">
+									<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> 
 									<s:message code="~eu.dariah.de.colreg.common.labels.deleted" />
 								</c:when>
 								<c:otherwise>
+									<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> 
 									<s:message code="~eu.dariah.de.colreg.common.labels.published" />
 								</c:otherwise>
 							</c:choose>
@@ -33,9 +35,11 @@
 							<span class="version-action">
 								<c:choose>
 									<c:when test="${version.deleted}">
+										<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> 
 										<s:message code="~eu.dariah.de.colreg.common.labels.deleted" />
 									</c:when>
 									<c:otherwise>
+										<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span> 
 										<s:message code="~eu.dariah.de.colreg.common.labels.published" />
 									</c:otherwise>
 								</c:choose>

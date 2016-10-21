@@ -231,6 +231,11 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("activeChildCollections", childCollections!=null && childCollections.size()>0);
 		model.addAttribute("isDraft", (c.getDraftUserId()!=null && !c.getDraftUserId().equals("")) || c.getId().equals("new"));
 		model.addAttribute("isNew", c.getId().equals("new"));
+		if (auth!=null) {		
+			model.addAttribute("currentUserId", auth.getUserId());
+		} else {
+			model.addAttribute("currentUserId", "-1");
+		}
 		
 		if (c.getSucceedingVersionId()==null) {
 			model.addAttribute("isDeleted", c.isDeleted());
