@@ -81,7 +81,6 @@
 			<version>${org.springsecurity-version}</version>
 		</dependency>
 		
-		
 		<dependency>
 			<groupId>eu.dariah.de</groupId>
 			<artifactId>dariah-javasp-core</artifactId>
