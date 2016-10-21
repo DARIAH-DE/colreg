@@ -53,7 +53,7 @@ public class SchemaServiceImpl implements SchemaService {
 			encodingSchemeDao.saveAll(s);
 			return s;
 		} catch (Exception e) {
-			logger.error(String.format("Error while fetching schemata: [%s]", fetchAllUrl), e);
+			logger.warn(String.format("Error while fetching schemata from Schema Registry: [%s]", fetchAllUrl));
 			return encodingSchemeDao.findAll();
 		}
 	}
