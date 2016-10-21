@@ -25,7 +25,7 @@
 					<li class="agent-natural-only ${status.error ? ' has-error' : ''}" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>><a href="#name"><s:message code="~eu.dariah.de.colreg.model.agent.last_name" /></a></li>
 				</s:bind>
 				<s:bind path="agent.foreName">
-					<li class="agent-natural-only ${status.error ? ' has-error' : ''}" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>><a  href="#foreName"><s:message code="~eu.dariah.de.colreg.model.agent.first_name" /></a></li>
+					<li class="agent-natural-only ${status.error ? ' has-error' : ''}" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>><a href="#foreName"><s:message code="~eu.dariah.de.colreg.model.agent.first_name" /></a></li>
 				</s:bind>
 			</ul>
 		</li>
@@ -64,7 +64,7 @@
 					<li><a href="#version-identifier"><s:message code="~eu.dariah.de.colreg.model.agent.version_identifier" /></a></li>
 					<li><a href="#current-version"><s:message code="~eu.dariah.de.colreg.model.agent.current_version" /></a></li>
 					<li><a href="#initially-created"><s:message code="~eu.dariah.de.colreg.model.agent.created" /></a></li>
-					<c:if test="${!isDeleted}">
+					<c:if test="${!isDeleted && editMode}">
 						<li><a href="#agent-administration"><s:message code="~eu.dariah.de.colreg.model.agent.groups.administration" /></a></li>
 					</c:if>
 				</ul>

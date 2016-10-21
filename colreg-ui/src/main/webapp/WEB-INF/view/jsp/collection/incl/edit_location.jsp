@@ -7,7 +7,9 @@
 	<tr class="list${status.error ? ' has-error' : ' '}">
 		<td class="locations_place" onclick="editor.tables['locations'].editEntry(this); return false;">
 			<c:choose>
-				<c:when test="${currAddr!=null}">${currAddr.place}</c:when>
+				<c:when test="${currAddr!=null}">
+					<a class="control-link" href="javascript:void(0);">${currAddr.place}</a>
+				</c:when>
 				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>

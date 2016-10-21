@@ -85,11 +85,10 @@
 			</div>
 			
 			<!-- Agent Type -->
-			<s:bind path="agentTypeId">
-				<c:set var="agentIsNatural" value="${agentTypes[0].naturalPerson}" scope="request" />		
+			<s:bind path="agentTypeId">		
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="agentTypeId" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.agent.type" /></label>
-					<div class="col-sm-4">
+					<div id="agentTypeId-container" class="col-sm-4">
 						<c:choose>
 							<c:when test="${editMode}">
 								<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
@@ -104,7 +103,7 @@
 							<c:otherwise>
 								<c:forEach items="${agentTypes}" var="type">
 									<c:if test="${agent.agentTypeId==type.id}">
-										<label class="content-label">${type.label}</label>
+										<label class="control-label"><a href="javascript:void(0)">${type.label}</a></label>
 									</c:if>
 								</c:forEach>
 							</c:otherwise>
@@ -125,9 +124,11 @@
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="name" class="col-sm-3 control-label mandatory agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>><s:message code="~eu.dariah.de.colreg.model.agent.name" /></label>
 					<label for="name" class="col-sm-3 control-label mandatory agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>><s:message code="~eu.dariah.de.colreg.model.agent.last_name" /></label>
-					<div class="col-sm-9">
+					<div id="name-container" class="col-sm-9">
 						<c:if test="${editMode}"><sf:input path="name" class="form-control" /></c:if>
-						<c:if test="${!editMode}"><label class="content-label">${agent.name}</label></c:if>
+						<c:if test="${!editMode}">
+							<label class="control-label"><a href="javascript:void(0)">${agent.name}</a></label>
+						</c:if>
 					</div>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="name" />
 					<div class="col-sm-9 col-sm-offset-3 agent-nonnatural-only" <c:if test="${agentIsNatural}"> style="display: none;"</c:if>>
@@ -149,13 +150,13 @@
 			<s:bind path="foreName">
 				<div class="form-group${status.error ? ' has-error' : ' '} agent-natural-only" <c:if test="${!agentIsNatural}"> style="display: none;"</c:if>>
 					<label for="foreName" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.first_name" /></label>
-					<div class="col-sm-9">
+					<div id="foreName-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="foreName" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${agent.foreName}</label>
+								<label class="control-label"><a href="javascript:void(0)">${agent.foreName}</a></label>
 							</c:otherwise>
 						</c:choose>		
 					</div>
@@ -185,7 +186,16 @@
 						<table id="tbl-agent-addresses" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.address.place" /></th>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(agent.addresses)==0}">
+												<a class="control-link" href="javascript:void(0);"><s:message code="~eu.dariah.de.colreg.model.address.place" /></a>
+											</c:when>
+											<c:otherwise>
+												<s:message code="~eu.dariah.de.colreg.model.address.place" />
+											</c:otherwise>
+										</c:choose>
+									</th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.address.country" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
 								</tr>
@@ -225,7 +235,7 @@
 			<s:bind path="eMail">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="eMail" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.email" /></label>
-					<div class="col-sm-9">
+					<div id="eMail-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="eMail" class="form-control" />
@@ -251,7 +261,7 @@
 			<s:bind path="webPage">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="webPage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.webpage" /></label>
-					<div class="col-sm-9">
+					<div id="webPage-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="webPage" class="form-control" />
@@ -277,13 +287,13 @@
 			<s:bind path="phone">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="phone" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.phone" /></label>
-					<div class="col-sm-9">
+					<div id="phone-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="phone" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${agent.phone}</label>
+								<label class="content-label"><a href="javascript:void(0);">${agent.phone}</a></label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -306,7 +316,7 @@
 			<!-- Identifiers -->
 			<div class="form-group">
 				<label for="lst-agent-provided-identifiers" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.provided_identifiers" /></label>
-				<div class="col-sm-9">
+				<div id="lst-agent-provided-identifiers-container" class="col-sm-9">
 					<c:choose>
 						<c:when test="${editMode}">
 							<ul id="lst-agent-provided-identifiers" class="collection-editor-list">
@@ -328,8 +338,11 @@
 							</ul>
 						</c:when>
 						<c:otherwise>
-							<label class="content-label">
-								<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >${identifier}<br /></c:forEach>
+							<label class="control-label">
+								<c:forEach items="${agent.providedIdentifier}" var="identifier" varStatus="status" >
+									<a href="javascript:void(0)">${identifier}</a><br/>
+								</c:forEach>
+								<a href="javascript:void(0)"></a>
 							</label>
 						</c:otherwise>
 					</c:choose>
@@ -345,7 +358,7 @@
 			<!-- Parent agent -->
 			<div class="form-group">
 				<label for="parentAgentId" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.parent_agent" /></label>
-				<div class="col-sm-9">
+				<div id="parentAgentIdSelector-container" class="col-sm-9">
 					<c:if test="${editMode}">
 						<div class="row">
 							<div class="col-sm-5">
@@ -357,7 +370,7 @@
 				
 					<div class="row">
 						<div class="col-sm-12">
-							<div id="parentAgent-display" class="alert alert-default <c:if test="${parentAgent==null}">hide</c:if>">
+							<div class="parentAgent-display alert alert-default <c:if test="${parentAgent==null}">hide</c:if>">
 								<c:if test="${editMode}">
 									<button id="parentAgentIdReset" type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 									</c:if>
@@ -368,8 +381,8 @@
 								</c:if>	
 								</p>
 							</div>
-							<div id="parentAgent-display-null" class="<c:if test="${parentAgent!=null}">hide</c:if>">
-								<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label>
+							<div class="parentAgent-display-null <c:if test="${parentAgent!=null}">hide</c:if>">
+								<a href="javascript:void(0)"><label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.agent.labels.no_parent_agent_set" /></em></label></a>
 							</div>
 						
 							<div class="editor-hint">

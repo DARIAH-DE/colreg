@@ -105,6 +105,10 @@ BaseEditor.prototype.registerNavFormControlEvents = function() {
 			href = $(this).next().find("a").first().attr("href"); 
 		}
 		
+		if ($(href).length==0) {
+			href = href + "-container";
+		}
+				
 		if (!_this.isScrolledIntoView(href)) {
 			$.scrollTo(href, 300, {
 				onAfter: function(target, settings) { $(target).focus() }
@@ -144,10 +148,24 @@ BaseEditor.prototype.registerFormControlSelectionEvents = function(element) {
 		}
 	});
 	
-	element.find(".editor-section a, .form-control.form-control-subcontrol").focus(function() {
+	element.find(".collection-editor-table a.control-link").focus(function() {
+		var selector = $(this).closest("table").attr("id");
+		
+		if (selector!==undefined) {
+			$(".nav-form-controls li").removeClass("active");
+			var s = $(".nav-form-controls a[href='#" + selector + "']");
+			s.parent().addClass("active");		
+		}
+	});
+	
+	element.find(".editor-section a:not('.control-link'), .form-control.form-control-subcontrol").focus(function() {
 		var selector = $(this).closest("div[id]").attr("id");
 		
 		if (selector!==undefined) {
+			if (selector.endsWith("-container")) {
+				selector = selector.replace("-container", "");
+			}
+			
 			$(".nav-form-controls li").removeClass("active");
 			var s = $(".nav-form-controls a[href='#" + selector + "']");
 			s.parent().addClass("active");	

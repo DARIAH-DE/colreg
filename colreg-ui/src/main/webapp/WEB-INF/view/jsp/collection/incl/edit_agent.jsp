@@ -6,7 +6,9 @@
 	<tr class="list${status.error ? ' has-error' : ' '}">
 		<td class="agentRelationTable_agentName" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">
 			<c:choose>
-				<c:when test="${currAgentRelation!=null}">${currAgentRelation.agent.name} ${currAgentRelation.agent.foreName}</c:when>
+				<c:when test="${currAgentRelation!=null}">
+					<a class="control-link" href="javascript:void(0);">${currAgentRelation.agent.name} ${currAgentRelation.agent.foreName}</a>
+				</c:when>
 				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>

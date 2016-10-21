@@ -34,6 +34,7 @@ import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
+import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.security.UserDetailsService;
@@ -104,7 +105,16 @@ public class AgentController extends VersionedEntityController {
 		model.addAttribute("agent", a);
 		model.addAttribute("selectedVersionId", a.getId());
 		
-		model.addAttribute("agentTypes", vocabularyService.findAllAgentTypes());
+		List<AgentType> agentTypes = vocabularyService.findAllAgentTypes();
+		model.addAttribute("agentTypes", agentTypes);
+		
+		for (AgentType agentType : agentTypes) {
+			if (agentType.getId().equals(a.getAgentTypeId())) {
+				model.addAttribute("agentIsNatural", agentType.isNaturalPerson());
+				break;
+			}
+		}
+		
 		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
 		
 		List<Agent> children = agentService.findCurrentByParentAgentId(entityId);

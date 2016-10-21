@@ -615,8 +615,13 @@ label.control-label a,
 label.control-label a:link,
 label.control-label a:visited,
 label.control-label a:hover, 
-label.control-label a:active {
-	color: #333;
+label.control-label a:active,
+a.control-link,
+a.control-link:link,
+a.control-link:visited,
+a.control-link:hover, 
+a.control-link:active {
+	color: inherit;
 	cursor: default;
 	text-decoration: none;
 }

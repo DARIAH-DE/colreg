@@ -7,7 +7,9 @@
 	<tr class="list${status.error ? ' has-error' : ' '}">
 		<td class="description_title" onclick="editor.tables['descriptionTable'].editEntry(this); return false;">
 			<c:choose>
-				<c:when test="${currDesc!=null}">${currDesc.title}</c:when>
+				<c:when test="${currDesc!=null}">
+					<a class="control-link" href="javascript:void(0);">${currDesc.title}</a>
+				</c:when>
 				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>

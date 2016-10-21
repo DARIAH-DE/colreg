@@ -4,10 +4,12 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <s:bind path="accessMethods[${currIndex}].*">
-	<tr class="list${status.error ? ' has-error' : ' '}"">
+	<tr class="list${status.error ? ' has-error' : ' '}">
 		<td class="accessMethodTable_uri" onclick="editor.tables['accessMethodTable'].editEntry(this); return false;">
 			<c:choose>
-				<c:when test="${currMethod!=null}">${currMethod.uri}</c:when>
+				<c:when test="${currMethod!=null}">
+					<a class="control-link" href="javascript:void(0);">${currMethod.uri}</a>
+				</c:when>
 				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>

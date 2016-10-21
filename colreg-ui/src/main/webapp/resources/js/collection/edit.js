@@ -218,14 +218,14 @@ CollectionEditor.prototype.initRightsContainer = function() {
 
 CollectionEditor.prototype.handleParentCollectionSelection = function(select, entityId, html) {
 	$("#parentCollectionId").val(entityId);
-	$("#parentCollection-display p").html(html);
+	$(".parentCollection-display p").html(html);
 	
 	if (select) {
-		$("#parentCollection-display").removeClass("hide");
-		$("#parentCollection-display-null").addClass("hide");
+		$(".parentCollection-display").removeClass("hide");
+		$(".parentCollection-display-null").addClass("hide");
 	} else {
-		$("#parentCollection-display").addClass("hide");
-		$("#parentCollection-display-null").removeClass("hide");
+		$(".parentCollection-display").addClass("hide");
+		$(".parentCollection-display-null").removeClass("hide");
 	}
 };
 

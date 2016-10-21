@@ -103,7 +103,16 @@
 						<table id="tbl-collection-description-sets" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></th>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(collection.localizedDescriptions)==0}">
+												<a class="control-link" href="javascript:void(0);"><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></a>
+											</c:when>
+											<c:otherwise>
+												<s:message code="~eu.dariah.de.colreg.model.localized_description.title" />
+											</c:otherwise>
+										</c:choose>
+									</th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.localized_description.acronym" /></th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.localized_description.language" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
@@ -144,13 +153,13 @@
 			<s:bind path="collectionType">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="collectionType" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></label>
-					<div class="col-sm-9">
+					<div id="collectionType-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="collectionType" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.collectionType}</label>
+								<label class="control-label"><a href="javascript:void(0)">${collection.collectionType}</a></label>
 							</c:otherwise>
 						</c:choose>		
 					</div>
@@ -215,7 +224,7 @@
 			<s:bind path="webPage">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="webPage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.webpage" /></label>
-					<div class="col-sm-9">
+					<div id="webPage-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="webPage" class="form-control" />
@@ -241,7 +250,7 @@
 			<s:bind path="eMail">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="eMail" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.email" /></label>
-					<div class="col-sm-9">
+					<div id="eMail-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="eMail" class="form-control" />
@@ -271,7 +280,16 @@
 						<table id="tbl-collection-locations" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.address.place" /></th>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(collection.locations)==0}">
+												<a class="control-link" href="javascript:void(0);"><s:message code="~eu.dariah.de.colreg.model.address.place" /></a>
+											</c:when>
+											<c:otherwise>
+												<s:message code="~eu.dariah.de.colreg.model.address.place" />
+											</c:otherwise>
+										</c:choose>
+									</th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.address.country" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
 								</tr>
@@ -316,7 +334,16 @@
 						<table id="tbl-collection-agents" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent_relation.agent_name" /></th>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(collection.agentRelations)==0}">
+												<a class="control-link" href="javascript:void(0);"><s:message code="~eu.dariah.de.colreg.model.agent_relation.agent_name" /></a>
+											</c:when>
+											<c:otherwise>
+												<s:message code="~eu.dariah.de.colreg.model.agent_relation.agent_name" />
+											</c:otherwise>
+										</c:choose>
+									</th>
 									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.agent_relation.relation" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
 								</tr>
@@ -364,7 +391,7 @@
 			<s:bind path="itemLanguages*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
 					<label for="lst-collection-item-languages" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_languages" /></label>
-					<div class="col-sm-9">
+					<div id="lst-collection-item-languages-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-item-languages" class="collection-editor-list">
@@ -386,8 +413,11 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">
-									<c:forEach items="${collection.itemLanguages}" var="lang" varStatus="status" >${lang}<br/></c:forEach>
+								<label class="control-label">
+									<c:forEach items="${collection.itemLanguages}" var="lang" varStatus="status" >
+										<a href="javascript:void(0)">${lang}</a><br/>
+									</c:forEach>
+									<a href="javascript:void(0)"></a>
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -405,7 +435,7 @@
 			<s:bind path="subjects*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
 					<label for="lst-collection-subjects" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.subjects" /></label>
-					<div class="col-sm-9">
+					<div id="lst-collection-subjects-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-subjects" class="collection-editor-list">
@@ -427,8 +457,11 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">
-									<c:forEach items="${collection.subjects}" var="subj" varStatus="status" >${subj}<br/></c:forEach>
+								<label class="control-label">
+									<c:forEach items="${collection.subjects}" var="subj" varStatus="status" >
+										<a href="javascript:void(0)">${subj}</a><br/>
+									</c:forEach>
+									<a href="javascript:void(0)"></a>
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -446,7 +479,7 @@
 			<s:bind path="temporals*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
 					<label for="lst-collection-temporals" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.temporals" /></label>
-					<div class="col-sm-9">
+					<div id="lst-collection-temporals-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-temporals" class="collection-editor-list">
@@ -468,8 +501,11 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">
-									<c:forEach items="${collection.temporals}" var="temp" varStatus="status" >${temp}<br/></c:forEach>
+								<label class="control-label">
+									<c:forEach items="${collection.temporals}" var="subj" varStatus="status" >
+										<a href="javascript:void(0)">${temp}</a><br/>
+									</c:forEach>
+									<a href="javascript:void(0)"></a>
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -487,7 +523,7 @@
 			<s:bind path="spatials*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
 					<label for="lst-collection-spatials" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.spatials" /></label>
-					<div class="col-sm-9">
+					<div id="lst-collection-spatials-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-spatials" class="collection-editor-list">
@@ -509,8 +545,11 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">
-									<c:forEach items="${collection.spatials}" var="spat" varStatus="status" >${spat}<br/></c:forEach>
+								<label class="control-label">
+									<c:forEach items="${collection.spatials}" var="spatial" varStatus="status" >
+										<a href="javascript:void(0)">${spatial}</a><br/>
+									</c:forEach>
+									<a href="javascript:void(0)"></a>
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -524,9 +563,9 @@
 				</div>
 			</s:bind>
 
-			<!-- Collection Created* -->
+			<!-- Collection Created -->
 			<s:bind path="collectionCreated">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
+				<div id="collectionCreated-container" class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="collectionCreated" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_created" /></label>
 					<div class="col-sm-9">
 						<c:choose>
@@ -534,7 +573,9 @@
 								<sf:input path="collectionCreated" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.collectionCreated}</label>
+								<label class="control-label">
+									<a href="javascript:void(0)">${collection.collectionCreated}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -550,7 +591,7 @@
 			
 			<!-- Items Created* -->
 			<s:bind path="itemsCreated">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
+				<div id="itemsCreated-container" class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="itemsCreated" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.items_created" /></label>
 					<div class="col-sm-9">
 						<c:choose>
@@ -558,7 +599,9 @@
 								<sf:input path="itemsCreated" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.itemsCreated}</label>
+								<label class="control-label">
+									<a href="javascript:void(0)">${collection.itemsCreated}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -574,7 +617,7 @@
 			
 			<!-- Item type* -->
 			<s:bind path="itemTypeIds">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
+				<div id="itemTypeIds-container" class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="itemTypeIds" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></label>
 					<c:choose>
 						<c:when test="${editMode}">
@@ -593,11 +636,13 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div class="col-sm-9">
-								<label class="content-label">
+							<div class="col-sm-9">							
+								<label class="control-label">
 								<c:forEach items="${itemTypes}" var="type">
 									<c:forEach items="${collection.itemTypeIds}" var="typeId">
-										<c:if test="${typeId==type.id}">${type.label}<br /></c:if>
+										<c:if test="${typeId==type.id}">
+											<a href="javascript:void(0)">${type.label}</a><br/>
+										</c:if>
 									</c:forEach>
 								</c:forEach>
 								</label>
@@ -616,7 +661,7 @@
 			
 			<!-- Size -->
 			<s:bind path="size">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
+				<div id="size-container" class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="size" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.size" /></label>
 					<div class="col-sm-3">
 						<c:choose>
@@ -624,7 +669,9 @@
 								<input type="number" id="size" name="size" value="${collection.size}" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.size}</label>
+								<label class="control-label">
+									<a href="javascript:void(0)">${collection.size}</a>
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -650,7 +697,7 @@
 			<s:bind path="parentCollectionId">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="parentCollectionIdSelector" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.parent_collection" /></label>
-					<div class="col-sm-9">
+					<div id="parentCollectionIdSelector-container" class="col-sm-9">
 						<c:if test="${editMode}">
 							<div class="row">
 								<div class="col-sm-5">
@@ -661,7 +708,7 @@
 						</c:if>
 						<div class="row">
 							<div class="col-sm-12">
-								<div id="parentCollection-display" class="alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
+								<div class="parentCollection-display alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
 									<c:if test="${editMode}">
 										<button type="button" class="btn btn-xs btn-link pull-right collection-reset"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
 									</c:if>
@@ -672,8 +719,10 @@
 									</c:if>	
 									</p>
 								</div>
-								<div id="parentCollection-display-null" class="<c:if test="${parentCollection!=null}">hide</c:if>">
-									<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></label>
+								<div class="parentCollection-display-null <c:if test="${parentCollection!=null}">hide</c:if>">
+									<label class="control-label" style="text-align: left;">
+										<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></a>
+									</label>
 								</div>
 							
 								<sf:errors element="div" cssClass="validation-error" path="parentCollectionId" />
@@ -691,7 +740,7 @@
 			<!-- Has part of -->
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></label>
-				<div id="lst-child-collections" class="col-sm-9">
+				<div id="lst-child-collections-container" class="col-sm-9">
 					<c:choose>
 						<c:when test="${childCollections!=null && fn:length(childCollections)>0}">
 							<c:forEach items="${childCollections}" var="child" varStatus="status" >
@@ -722,7 +771,7 @@
 			<s:bind path="providedIdentifier*">
 				<div class="form-group">
 					<label for="lst-collection-provided-identifiers" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.collection.provided_identifiers" /></label>
-					<div class="col-sm-9">
+					<div id="lst-collection-provided-identifiers-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-provided-identifiers" class="collection-editor-list">
@@ -744,8 +793,11 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">
-									<c:forEach items="${collection.providedIdentifier}" var="ident" varStatus="status" >${ident}<br/></c:forEach>
+								<label class="control-label">
+									<c:forEach items="${collection.providedIdentifier}" var="ident" varStatus="status" >
+										<a href="javascript:void(0)">${ident}</a><br/>
+									</c:forEach>
+									<a href="javascript:void(0)"></a><br/>
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -764,7 +816,7 @@
 			<s:bind path="audiences*">
 				<div class="form-group${status.error ? ' container-error' : ' '}">
 					<label for="lst-collection-audiences" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.audiences" /></label>
-					<div class="col-sm-9">
+					<div id="lst-collection-audiences-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-audiences" class="collection-editor-list">
@@ -786,8 +838,11 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">
-									<c:forEach items="${collection.audiences}" var="audi" varStatus="status" >${audi}<br/></c:forEach>
+								<label class="control-label">
+									<c:forEach items="${collection.audiences}" var="audience" varStatus="status" >
+										<a href="javascript:void(0)">${audience}</a><br/>
+									</c:forEach>
+									<a href="javascript:void(0)"></a><br/>
 								</label>
 							</c:otherwise>
 						</c:choose>
@@ -801,17 +856,19 @@
 				</div>
 			</s:bind>
 			
-			<!-- Provenance* -->
+			<!-- Provenance -->
 			<s:bind path="provenanceInfo">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for=provenanceInfo class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.provenance" /></label>
-					<div class="col-sm-9">
+					<div id="provenanceInfo-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:input path="provenanceInfo" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.provenanceInfo}</label>
+								<label class="control-label">
+									<a href="javascript:void(0)">${collection.provenanceInfo}</a> 
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -831,13 +888,15 @@
 			<s:bind path="associatedProject">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="associatedProject" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.associated_project" /></label>
-					<div class="col-sm-9">
+					<div id="associatedProject-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
 								<sf:textarea class="form-control" rows="3" path="associatedProject"></sf:textarea>
 							</c:when>
 							<c:otherwise>
-								<label class="content-label">${collection.associatedProject}</label>
+								<label class="control-label">
+									<a href="javascript:void(0)">${collection.associatedProject}</a> 
+								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -868,7 +927,16 @@
 						<table id="tbl-collection-accrual" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></th>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(collection.accrualMethods)==0}">
+												<a class="control-link" href="javascript:void(0);"><s:message code="~eu.dariah.de.colreg.model.accrual.method" /></a>
+											</c:when>
+											<c:otherwise>
+												<s:message code="~eu.dariah.de.colreg.model.accrual.method" />
+											</c:otherwise>
+										</c:choose>
+									</th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.accrual.policy" /></th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.accrual.periodicity" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
@@ -884,7 +952,6 @@
 										</c:forEach>
 										<c:remove var="currMethod" />	
 									</c:when>
-									
 								</c:choose>
 								<c:if test="${editMode}">
 									<tr class="collection-editor-table-buttons">
@@ -939,7 +1006,16 @@
 						<table id="tbl-collection-access" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode"><s:message code="~eu.dariah.de.colreg.model.access.uri" /></th>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(collection.accessMethods)==0}">
+												<a class="control-link" href="javascript:void(0);"><s:message code="~eu.dariah.de.colreg.model.access.uri" /></a>
+											</c:when>
+											<c:otherwise>
+												<s:message code="~eu.dariah.de.colreg.model.access.uri" />
+											</c:otherwise>
+										</c:choose>
+									</th>
 									<th class="nowrap"><s:message code="~eu.dariah.de.colreg.model.access.type" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
 								</tr>

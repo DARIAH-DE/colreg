@@ -8,7 +8,9 @@
 			<c:choose>
 				<c:when test="${currMethod!=null}">
 					<c:forEach items="${accrualMethods}" var="method">
-						<c:if test="${currMethod.accrualMethod==method.id}">${method.label}</c:if>
+						<c:if test="${currMethod.accrualMethod==method.id}">
+							<a class="control-link" href="javascript:void(0);">${method.label}</a>
+						</c:if>
 					</c:forEach>
 				</c:when>
 				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>

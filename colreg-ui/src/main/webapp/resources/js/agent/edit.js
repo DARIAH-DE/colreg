@@ -76,14 +76,14 @@ AgentEditor.prototype.registerParentAgentTypeahead = function(element) {
 
 AgentEditor.prototype.handleParentAgentSelection = function(select, entityId, html) {
 	$("#parentAgentId").val(entityId);
-	$("#parentAgent-display p").html(html);
+	$(".parentAgent-display p").html(html);
 	
 	if (select) {
-		$("#parentAgent-display").removeClass("hide");
-		$("#parentAgent-display-null").addClass("hide");
+		$(".parentAgent-display").removeClass("hide");
+		$(".parentAgent-display-null").addClass("hide");
 	} else {
-		$("#parentAgent-display").addClass("hide");
-		$("#parentAgent-display-null").removeClass("hide");
+		$(".parentAgent-display").addClass("hide");
+		$(".parentAgent-display-null").removeClass("hide");
 	}
 };
 	
