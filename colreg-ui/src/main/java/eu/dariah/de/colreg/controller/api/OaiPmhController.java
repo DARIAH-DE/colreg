@@ -27,7 +27,7 @@ import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
 
 @Controller
-@RequestMapping("/oaipmh/")
+@RequestMapping({"/oaipmh", "/OAIHandler", "/colreg/OAIHandler"})
 public class OaiPmhController {
 	public static DateTimeFormatter OAI_DATESTAMP_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 	public static DateTimeFormatter OAI_TIMESTAMP_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withLocale(Locale.ROOT).withChronology(ISOChronology.getInstanceUTC());
@@ -63,7 +63,7 @@ public class OaiPmhController {
 				response.setStatus(HttpServletResponse.SC_OK);
 			}
 		} else if (verb.trim().toLowerCase().equals("identify")) {
-			result = this.processIdentify();
+			return this.processIdentify();
 		} else if (verb.trim().toLowerCase().equals("listidentifiers")) {
 			result = this.processListIdentifiers(from, until, scheme, set, resumptionToken);
 		} else if (verb.trim().toLowerCase().equals("listmetadataformats")) {
@@ -109,8 +109,19 @@ public class OaiPmhController {
 		return container;
 	}
 	
-	private OaiPmhResponseContainer processIdentify() {
-		return null;
+	private String processIdentify() {
+		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+			"	<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" " +
+				   "      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
+				   "      xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/" +
+				  "       http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">" +
+				 " <responseDate>2002-02-08T12:00:01Z</responseDate>" +
+				 " <request verb=\"Identify\">DARIAH Collection Registry</request>" +
+				 " <Identify>" +
+				  "  <repositoryName>Library of Congress Open Archive Initiative " +
+				 "                   Repository 1</repositoryName>" +
+				" </Identify>" +
+				"</OAI-PMH>";
 	}
 	
 	private OaiPmhResponseContainer processListIdentifiers(String from, String until, String scheme, String set, String resumptionToken) {
