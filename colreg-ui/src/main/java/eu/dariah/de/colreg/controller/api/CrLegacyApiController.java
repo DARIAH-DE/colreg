@@ -106,7 +106,7 @@ public class CrLegacyApiController {
 				
 				// Creator and draft user
 				String username = null;
-				String endpoint = "https://ldap-dariah.esc.rzg.mpg.de/idp/shibboleth";
+				String endpoint = "https://idp.de.dariah.eu/idp/shibboleth";
 				if (draft.getContributors()!=null) {
 					for (String contr : draft.getContributors()) {
 						if (contr.toLowerCase().endsWith("@dariah.eu")) {
