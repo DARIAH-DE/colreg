@@ -2,7 +2,7 @@ node {
    def mvnHome
    stage('Preparation') {
       git 'https://github.com/DARIAH-DE/colreg.git'
-      mvnHome = tool 'M3'
+      mvnHome = tool 'Maven 3.0.4'
    }
    stage('Build') {
       if (isUnix()) {
