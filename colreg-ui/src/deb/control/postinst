@@ -1,0 +1,5 @@
+#!/bin/bash
+# invoke-rc.d tomcat7 start
+# return success, even if service not installed
+exit 0
+

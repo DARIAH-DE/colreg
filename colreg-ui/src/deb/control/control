@@ -1,0 +1,7 @@
+Package: [[artifactId]]
+Version: [[version]]
+Section: misc
+Priority: low
+Architecture: all
+Description: [[description]]
+Maintainer: info@de.dariah.eu
