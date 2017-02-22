@@ -239,4 +239,44 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>dariah.deb</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>jdeb</artifactId>
+						<groupId>org.vafer</groupId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jdeb</goal>
+								</goals>
+								<configuration>
+									<snapshotExpand>true</snapshotExpand>
+									<dataSet>
+										<data>
+											<type>directory</type>
+											<src>${project.build.directory}/${project.build.finalName}</src>
+											<mapper>
+												<type>perm</type>
+												<prefix>/var/textgrid/webapps/${project.build.finalName}</prefix>
+												<user>root</user>
+												<group>tomcat7</group>
+												<filemode>755</filemode>
+											</mapper>
+										</data>
+									</dataSet>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
