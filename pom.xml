@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<eu.dariah.de.minfba.core-web.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
-		<eu.dariah.de.minfba.core-metamodel.version>3.1.0-SNAPSHOT</eu.dariah.de.minfba.core-metamodel.version>
+		<eu.dariah.de.minfba.core-metamodel.version>3.2.0</eu.dariah.de.minfba.core-metamodel.version>
 		
 		<org.springframework-version>4.2.6.RELEASE</org.springframework-version>
 		<org.springsecurity-version>4.1.0.RELEASE</org.springsecurity-version>
