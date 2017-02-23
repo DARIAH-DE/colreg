@@ -4,9 +4,14 @@ node {
   stage('Preparation') {
     git 'https://github.com/DARIAH-DE/colreg.git'
     mvnHome = tool 'Maven 3.0.4'
+    def urgl = $POM_ARTIFACTID
+    deg argl = $POM_VERSION
   }
 
   stage('Build') {
+    echo 'urgl'
+    echo urgl
+    echo ${urgl}
     sh "'${mvnHome}/bin/mvn' -U -Pdariah.deb -Dmaven.test.failure.ignore clean package"
   }
 
