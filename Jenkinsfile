@@ -12,7 +12,7 @@ node {
 
   stage('Publish') {
     sh 'aptly repo add snapshots colreg-ui/target/*.deb'
-    sh 'aptly publish update xenia'
+    sh 'aptly publish update xenial'
     sh 'rm colreg-ui/target/*.deb'
   }
 }
