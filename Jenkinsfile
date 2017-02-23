@@ -10,7 +10,7 @@ node {
 
     echo "Building ${env.BUILD_ID} on ${env.JENKINS_URL}"
     def username = 'fu'
-    echo "I said, Hello Mr ${username} ${env.POM_VERSION}"
+    echo "I said, Hello Mr ${username} ${POM_VERSION}"
 
     sh "'${mvnHome}/bin/mvn' -U -Pdariah.deb -Dmaven.test.failure.ignore clean package"
   }
