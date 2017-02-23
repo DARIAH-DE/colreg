@@ -8,11 +8,6 @@ node {
 
   stage('Build') {
     sh "'${mvnHome}/bin/mvn' -U -Pdariah.deb -Dmaven.test.failure.ignore clean package"
-
-    env.PACKAGE_VERSION = getBuildVersion()
-    sh "echo ${env.PACKAGE_VERSION}"
-    env.PACKAGE_NAME = getBuildName()
-    sh "echo ${env.PACKAGE_NAME}"
   }
 
   stage('Publish') {
