@@ -8,7 +8,8 @@ node {
 
   stage('Build') {
     def username = 'fu'
-    echo "I said, Hello Mr ${username}"
+    def version = $POM_VERSION
+    echo "I said, Hello Mr ${username} ${version}"
 
     sh "'${mvnHome}/bin/mvn' -U -Pdariah.deb -Dmaven.test.failure.ignore clean package"
   }
