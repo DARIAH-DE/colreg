@@ -269,20 +269,17 @@
 									      <filemode>755</filemode>
 									    </mapper>
 									  </data>
-<!--
 									  <data>
 									    <src>${basedir}/src/main/resources/initialization_data</src>
 									    <type>directory</type>
-									    <includes/>
 									    <mapper>
 									      <type>perm</type>
-									      <prefix>/var/dfa/webapp/${artifactId}/initialization_data</prefix>
+									      <prefix>/var/dfa/webapp/${artifactId}/data</prefix>
 									      <user>root</user>
 									      <group>tomcat7</group>
 									      <filemode>755</filemode>
 									    </mapper>
 									  </data>
--->
 									</dataSet>
 								</configuration>
 							</execution>
