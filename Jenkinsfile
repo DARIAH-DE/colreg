@@ -7,11 +7,6 @@ node {
   }
 
   stage('Build') {
-
-    echo "Building ${env.BUILD_ID} on ${env.JENKINS_URL}"
-    def username = 'fu'
-    echo "I said, Hello Mr ${username} ${POM_VERSION}"
-
     sh "'${mvnHome}/bin/mvn' -U -Pdariah.deb -Dmaven.test.failure.ignore clean package"
   }
 
