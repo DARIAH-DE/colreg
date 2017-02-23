@@ -4,8 +4,8 @@ node {
   stage('Preparation') {
     git 'https://github.com/DARIAH-DE/colreg.git'
     mvnHome = tool 'Maven 3.0.4'
-    def urgl = $POM_ARTIFACTID
-    deg argl = $POM_VERSION
+    def urgl = ${env.POM_ARTIFACTID}
+    deg argl = ${env.POM_VERSION}
   }
 
   stage('Build') {
