@@ -269,6 +269,7 @@
 									      <filemode>755</filemode>
 									    </mapper>
 									  </data>
+									  <!--
 									  <data>
 									    <src>${basedir}/src/main/resources/initialization_data</src>
 									    <type>directory</type>
@@ -280,6 +281,7 @@
 									      <filemode>755</filemode>
 									    </mapper>
 									  </data>
+									  -->
 									</dataSet>
 								</configuration>
 							</execution>

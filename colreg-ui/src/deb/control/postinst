@@ -2,14 +2,14 @@
 # invoke-rc.d tomcat7 start
 # init mongo db
 # FIXME do we need any checks here before adding this data to the database?
-mongoimport /var/dfa/colreg-ui/data/accessType.json
-mongoimport /var/dfa/colreg-ui/data/accrualPeriodicity.json
-mongoimport /var/dfa/colreg-ui/data/agentRelationType.json
-mongoimport /var/dfa/colreg-ui/data/itemType.json
-mongoimport /var/dfa/colreg-ui/data/licenseGroup.json
-mongoimport /var/dfa/colreg-ui/data/accrualMethod.json
-mongoimport /var/dfa/colreg-ui/data/accrualPolicy.json
-mongoimport /var/dfa/colreg-ui/data/agentType.json
-mongoimport /var/dfa/colreg-ui/data/language.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accessType.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accrualPeriodicity.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/agentRelationType.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/itemType.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/licenseGroup.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accrualMethod.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accrualPolicy.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/agentType.json
+mongoimport /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/language.json
 # return success, even if service not installed
 #exit 0
