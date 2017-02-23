@@ -7,6 +7,8 @@ node {
   }
 
   stage('Build') {
+
+    echo "Building ${env.BUILD_ID} on ${env.JENKINS_URL}"
     def username = 'fu'
     def version = ${env.POM_VERSION}
     echo "I said, Hello Mr ${username} ${version}"
