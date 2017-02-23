@@ -4,11 +4,11 @@ node {
   stage('Preparation') {
     git 'https://github.com/DARIAH-DE/colreg.git'
     mvnHome = tool 'Maven 3.0.4'
-    def username = 'fu'
   }
 
   stage('Build') {
-    echo "I said, Hello Mr. ${username}"
+    def username = 'fu'
+    echo "I said, Hello Mr ${username}"
 
     sh "'${mvnHome}/bin/mvn' -U -Pdariah.deb -Dmaven.test.failure.ignore clean package"
   }
