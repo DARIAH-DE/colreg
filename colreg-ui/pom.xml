@@ -263,7 +263,7 @@
 											<src>${project.build.directory}/${project.build.finalName}</src>
 											<mapper>
 												<type>perm</type>
-												<prefix>/var/textgrid/webapps/${project.build.finalName}</prefix>
+												<prefix>/var/dfa/webapps/${project.build.finalName}</prefix>
 												<user>root</user>
 												<group>tomcat7</group>
 												<filemode>755</filemode>
