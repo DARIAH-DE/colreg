@@ -1,7 +1,7 @@
 #!/bin/bash
 # invoke-rc.d tomcat7 start
 # init mongo db
-echo "updating mongo db init files ..."
+echo "Updating mongo db init files ..."
 for I in /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/*; do mongoimport --jsonArray --quiet $I; done &&
 # return success, even if service not installed
 exit 0
