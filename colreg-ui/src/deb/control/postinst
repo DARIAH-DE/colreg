@@ -1,14 +1,14 @@
 #!/bin/bash
 # invoke-rc.d tomcat7 start
 # init mongo db
-mongoimport accessType.json
-mongoimport accrualPeriodicity.json
-mongoimport agentRelationType.json
-mongoimport itemType.json
-mongoimport licenseGroup.json
-mongoimport accrualMethod.json
-mongoimport accrualPolicy.json
-mongoimport agentType.json
-mongoimport language.json
+mongoimport ./WEB-INF/classes/initialization_data/accessType.json
+mongoimport ./WEB-INF/classes/initialization_data/accrualPeriodicity.json
+mongoimport ./WEB-INF/classes/initialization_data/agentRelationType.json
+mongoimport ./WEB-INF/classes/initialization_data/itemType.json
+mongoimport ./WEB-INF/classes/initialization_data/licenseGroup.json
+mongoimport ./WEB-INF/classes/initialization_data/accrualMethod.json
+mongoimport ./WEB-INF/classes/initialization_data/accrualPolicy.json
+mongoimport ./WEB-INF/classes/initialization_data/agentType.json
+mongoimport ./WEB-INF/classes/initialization_data/language.json
 # return success, even if service not installed
 exit 0
