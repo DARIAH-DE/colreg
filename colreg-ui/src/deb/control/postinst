@@ -1,6 +1,9 @@
 #!/bin/bash
 # invoke-rc.d tomcat7 start
 # init mongo db
+echo "testitest"
+for I in * do; echo $I; done
+# FIXME do we need any checks here before adding this data to the database?
 mongoimport ./WEB-INF/classes/initialization_data/accessType.json
 mongoimport ./WEB-INF/classes/initialization_data/accrualPeriodicity.json
 mongoimport ./WEB-INF/classes/initialization_data/agentRelationType.json
