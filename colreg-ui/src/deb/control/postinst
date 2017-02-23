@@ -1,15 +1,7 @@
 #!/bin/bash
 # invoke-rc.d tomcat7 start
 # init mongo db
-echo "updating mongo db init files"
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accessType.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accrualPeriodicity.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/agentRelationType.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/itemType.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/licenseGroup.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accrualMethod.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/accrualPolicy.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/agentType.json
-mongoimport --jsonArray /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/language.json
+echo "updating mongo db init files ..."
+for I in /var/dfa/webapps/colreg-ui/WEB-INF/classes/initialization_data/*; do mongoimport --jsonArray --quiet $I; done &&
 # return success, even if service not installed
-#exit 0
+exit 0
