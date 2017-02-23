@@ -274,7 +274,7 @@
 									    <type>directory</type>
 									    <mapper>
 									      <type>perm</type>
-									      <prefix>/var/dfa/webapp/${artifactId}/data</prefix>
+									      <prefix>/var/dfa/webapps/${artifactId}/data</prefix>
 									      <user>root</user>
 									      <group>tomcat7</group>
 									      <filemode>755</filemode>
@@ -289,5 +289,4 @@
 			</build>
 		</profile>
 	</profiles>
-
 </project>
