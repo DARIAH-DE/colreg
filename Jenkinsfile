@@ -11,6 +11,8 @@ node {
   }
 
   stage('Publish') {
+    sh 'echo testitest'
+    sh 'echo ${env.POM_VERSION}'
     sh 'aptly repo add snapshots colreg-ui/target/*.deb'
     sh 'aptly publish update trusty'
     sh 'rm colreg-ui/target/*.deb'
