@@ -258,17 +258,31 @@
 								<configuration>
 									<snapshotExpand>true</snapshotExpand>
 									<dataSet>
-										<data>
-											<type>directory</type>
-											<src>${project.build.directory}/${project.build.finalName}</src>
-											<mapper>
-												<type>perm</type>
-												<prefix>/var/dfa/webapps/${artifactId}</prefix>
-												<user>root</user>
-												<group>tomcat7</group>
-												<filemode>755</filemode>
-											</mapper>
-										</data>
+									  <data>
+									    <type>directory</type>
+									    <src>${project.build.directory}/${project.build.finalName}</src>
+									    <mapper>
+									      <type>perm</type>
+									      <prefix>/var/dfa/webapps/${artifactId}</prefix>
+									      <user>root</user>
+									      <group>tomcat7</group>
+									      <filemode>755</filemode>
+									    </mapper>
+									  </data>
+<!--
+									  <data>
+									    <src>${basedir}/src/main/resources/initialization_data</src>
+									    <type>directory</type>
+									    <includes/>
+									    <mapper>
+									      <type>perm</type>
+									      <prefix>/var/dfa/webapp/${artifactId}/initialization_data</prefix>
+									      <user>root</user>
+									      <group>tomcat7</group>
+									      <filemode>755</filemode>
+									    </mapper>
+									  </data>
+-->
 									</dataSet>
 								</configuration>
 							</execution>
