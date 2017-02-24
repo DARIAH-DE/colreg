@@ -25,8 +25,8 @@
 		<eu.dariah.de.minfba.core-web.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
 		<eu.dariah.de.minfba.core-metamodel.version>3.2.0</eu.dariah.de.minfba.core-metamodel.version>
 		
-		<org.springframework-version>4.2.6.RELEASE</org.springframework-version>
-		<org.springsecurity-version>4.1.0.RELEASE</org.springsecurity-version>
+		<org.springframework-version>4.3.6.RELEASE</org.springframework-version>
+		<org.springsecurity-version>4.2.1.RELEASE</org.springsecurity-version>
 		
 		<org.apache.tiles-version>3.0.5</org.apache.tiles-version>
 		<org.slf4j-version>1.7.10</org.slf4j-version>
@@ -35,7 +35,7 @@
 		<com.fasterxml.jackson-version>2.7.4</com.fasterxml.jackson-version>
 		<org.hibernate.hibernate-validator-version>5.2.2.Final</org.hibernate.hibernate-validator-version>
 		<joda-time-version>2.9.2</joda-time-version>
-		<org.springframework.data.spring-data-mongodb-version>1.8.2.RELEASE</org.springframework.data.spring-data-mongodb-version>
+		<org.springframework.data.spring-data-mongodb-version>1.10.0.RELEASE</org.springframework.data.spring-data-mongodb-version>
 		<eu.dariah.de.javasp-version>0.0.4-SNAPSHOT</eu.dariah.de.javasp-version>
 	</properties>
 

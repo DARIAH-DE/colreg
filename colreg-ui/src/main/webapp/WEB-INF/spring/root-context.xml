@@ -3,15 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.10.xsd">
 
 
 	<import resource="common-config.xml"/>
 	
-	<mongo:mongo host="${db.host}" port="${db.port}" />
-	<mongo:db-factory dbname="${db.database}" />
+	<mongo:mongo id="mongoc" host="${db.host}" port="${db.port}" />
+	<mongo:db-factory dbname="${db.database}" mongo-ref="mongoc" />
  
  
 	<bean id="mongoMoxydomainConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
