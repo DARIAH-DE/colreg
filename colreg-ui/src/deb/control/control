@@ -5,3 +5,4 @@ Priority: low
 Architecture: all
 Description: [[description]]
 Maintainer: info@de.dariah.eu
+Depends: mongodb-clients
