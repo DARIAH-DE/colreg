@@ -18,9 +18,12 @@ node {
     if (!snapshot) {
         echo "publishing deb package colreg-ui for non SNAPSHOT version ${uiVersion}"
 
-        sh "aptly repo add snapshots colreg-ui/target/*.deb"
-        sh "aptly publish update trusty"
+        sh "PLOC=\$(ls colreg-ui/target/*.deb); curl -X POST -F file=@\${PLOC} http://localhost:8008/api/files/colreg-ui-${uiVersion}"
+        sh "curl -X POST http://localhost:8008/api/repos/snapshots/file/colreg-ui-${uiVersion}"
+        sh "curl -X PUT -H 'Content-Type: application/json' --data '{}' http://localhost:8008/api/publish/:./trusty"
         sh "rm colreg-ui/target/*.deb"
+        sh "rm colreg-ui/target/*.changes"
+
     }
     else {
         echo "deb package colreg-ui for SNAPSHOT version ${uiVersion} will not be published"
