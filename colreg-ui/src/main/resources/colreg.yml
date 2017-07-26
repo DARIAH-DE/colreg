@@ -1,0 +1,32 @@
+paths:
+  main: /data/_srv/colreg
+  logging: ${paths.main}/log
+
+api:
+  schereg:
+    baseUrl: https://minfba.de.dariah.eu/schereg/
+    schemaLink: ${api.schereg.baseUrl}schema/editor/%s/
+    schemas: ${api.schereg.baseUrl}api/schemas
+
+mongo:
+  host: 127.0.0.1
+  port: 27017
+  database: cosmotool
+  
+auth:
+  local: 
+    forceHttps: false
+    users:  
+      - username: 'admin'
+        passhash: '$2a$10$nbXRnAx5wKurTrbaUkT/MOLXKAJgpT8R71/jujzPwgXXrG.OqlBKW'
+        roles: ["ROLE_ADMINISTRATOR"]
+      - username: 'tgradl'
+        passhash: '$2a$10$EeajSQQUepa7H7.g4xQCaeO.hjUwh0yzYCMrfOkWCZGe1IiWaexa6'
+        roles: ["ROLE_CONTRIBUTOR"]
+  saml:
+    keystore:
+      path: ${paths.main}/key/dfa-de-dariah-eu.jks
+      # Uncomment if keystore is protected by password
+      #pass: 'somepass'
+      alias: dfa.de.dariah.eu
+      aliaspass: ''

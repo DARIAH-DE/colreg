@@ -6,7 +6,7 @@
 
     <groupId>eu.dariah.de</groupId>
 	<artifactId>colreg-parent</artifactId>
-	<version>3.2.1-SNAPSHOT</version>
+	<version>3.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>DARIAH-DE Collection Registry Parent Project</name>
 
@@ -22,8 +22,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<eu.dariah.de.minfba.core-web.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
-		<eu.dariah.de.minfba.core-metamodel.version>3.2.0</eu.dariah.de.minfba.core-metamodel.version>
+		<eu.dariah.de.minfba.core-web.version>1.5.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
+		<eu.dariah.de.minfba.core-metamodel.version>3.4.0-SNAPSHOT</eu.dariah.de.minfba.core-metamodel.version>
+		<eu.dariah.de.minfba.core-util.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-util.version>
+		
+		<eu.dariah.de-dariahsp-core.version>1.0.0-SNAPSHOT</eu.dariah.de-dariahsp-core.version>
 		
 		<org.springframework-version>4.3.6.RELEASE</org.springframework-version>
 		<org.springsecurity-version>4.2.1.RELEASE</org.springsecurity-version>
@@ -36,17 +39,16 @@
 		<org.hibernate.hibernate-validator-version>5.2.2.Final</org.hibernate.hibernate-validator-version>
 		<joda-time-version>2.9.2</joda-time-version>
 		<org.springframework.data.spring-data-mongodb-version>1.10.0.RELEASE</org.springframework.data.spring-data-mongodb-version>
-		<eu.dariah.de.javasp-version>0.0.4-SNAPSHOT</eu.dariah.de.javasp-version>
 	</properties>
 
 	<distributionManagement>
 		<repository>
-			<id>dariah-releases</id>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-releases/</url>
+			<id>central</id>
+			<url>https://minfba.de.dariah.eu/artifactory/dariah-release-proxy</url>
 		</repository>
 		<snapshotRepository>
-			<id>dariah-snapshots</id>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-snapshots/</url>
+			<id>snapshots</id>
+			<url>https://minfba.de.dariah.eu/artifactory/dariah-snapshot-proxy</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -54,7 +56,7 @@
 		<repository>
 			<id>dariah-releases</id>
 			<name>DARIAH MInf Release Repository</name>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-releases/</url>
+			<url>https://minfba.de.dariah.eu/artifactory/dariah-release-proxy</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -65,7 +67,7 @@
 		<repository>
 			<id>dariah-snapshots</id>
 			<name>DARIAH MInf Snapshot Repository</name>
-			<url>http://dev3.dariah.eu/archiva/repository/dariah-snapshots/</url>
+			<url>https://minfba.de.dariah.eu/artifactory/dariah-snapshot-proxy</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>

@@ -1,6 +1,6 @@
 package eu.dariah.de.colreg.model.vocabulary;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
 
 public class CollectionAgentRelationType extends BaseIdentifiable {
 	private static final long serialVersionUID = -5636572505149778721L;

@@ -3,7 +3,7 @@
  	<parent>
 		<groupId>eu.dariah.de</groupId>
 		<artifactId>colreg-parent</artifactId>
-		<version>3.2.1-SNAPSHOT</version>
+		<version>3.3.0-SNAPSHOT</version>
     </parent>
 	<artifactId>colreg-ui</artifactId>
 	<packaging>war</packaging>
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>eu.dariah.de</groupId>
   			<artifactId>colreg-model</artifactId>
-  			<version>1.0.0-SNAPSHOT</version>
+  			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.dariah.de.minfba.core</groupId>
@@ -26,6 +26,16 @@
 			<groupId>eu.dariah.de.minfba.core</groupId>
 			<artifactId>core-web</artifactId>
 			<version>${eu.dariah.de.minfba.core-web.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.dariah.de.minfba.core</groupId>
+			<artifactId>core-util</artifactId>
+			<version>${eu.dariah.de.minfba.core-util.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.dariah.de</groupId>
+			<artifactId>dariahsp-core</artifactId>
+			<version>${eu.dariah.de-dariahsp-core.version}</version>
 		</dependency>
 		
 		<!-- Generic Search legacy integration -->
@@ -81,22 +91,7 @@
 			<version>${org.springsecurity-version}</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>eu.dariah.de</groupId>
-			<artifactId>dariah-javasp-core</artifactId>
-			<version>${eu.dariah.de.javasp-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>eu.dariah.de</groupId>
-			<artifactId>dariah-javasp-web</artifactId>
-			<version>${eu.dariah.de.javasp-version}</version>
-		</dependency>
-		<dependency>
-	        <groupId>eu.dariah.de</groupId>
-	        <artifactId>spring-security-saml2-core</artifactId>
-	        <version>1.0.2-SNAPSHOT</version>
-	    </dependency>
-		
+
 		<!-- Persistence -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>

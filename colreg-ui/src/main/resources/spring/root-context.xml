@@ -10,8 +10,8 @@
 
 	<import resource="common-config.xml"/>
 	
-	<mongo:mongo id="mongoc" host="${db.host}" port="${db.port}" />
-	<mongo:db-factory dbname="${db.database}" mongo-ref="mongoc" />
+	<mongo:mongo id="mongoc" host="${mongo.host}" port="${mongo.port}" />
+	<mongo:db-factory dbname="${mongo.database}" mongo-ref="mongoc" />
  
  
 	<bean id="mongoMoxydomainConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
@@ -88,10 +88,9 @@
     	</property>
 	</bean>
 	
+    <context:component-scan base-package="eu.dariah.de.dariahsp.configuration" />
     
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.model.validation"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.service"/>
-	
-	<import resource="${colreg3.security:security/security-context-dev.xml}" />
 </beans>

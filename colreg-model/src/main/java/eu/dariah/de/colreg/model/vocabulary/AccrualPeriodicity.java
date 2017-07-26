@@ -1,6 +1,6 @@
 package eu.dariah.de.colreg.model.vocabulary;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
 
 public class AccrualPeriodicity extends BaseIdentifiable {
 	private static final long serialVersionUID = 185206577085697521L;

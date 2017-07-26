@@ -2,8 +2,8 @@ package eu.dariah.de.colreg.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import eu.dariah.de.colreg.model.base.Identifiable;
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
+import eu.dariah.de.minfba.core.metamodel.interfaces.Identifiable;
 
 public class TableObjectPojo<T extends Identifiable> {
 	private final T entity;

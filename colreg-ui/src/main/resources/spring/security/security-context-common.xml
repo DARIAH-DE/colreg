@@ -1,0 +1,127 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd 
+              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Enable auto-wiring -->
+    <context:annotation-config/>
+    
+    <security:global-method-security access-decision-manager-ref="accessDecisionManager" pre-post-annotations="enabled" secured-annotations="enabled" />
+    
+    <!-- Unsecured pages and prefixes -->
+    <security:http security="none" pattern="/favicon.ico"/>
+    <security:http security="none" pattern="/logout.jsp"/>
+    <security:http security="none" pattern="/resources/**"/>
+    
+    
+    <security:http entry-point-ref="securityEntryPoint" use-expressions="false" access-decision-manager-ref="accessDecisionManager" >
+        <security:intercept-url pattern="/saml/web/**" access="IS_AUTHENTICATED_FULLY"/>
+        <!-- <security:intercept-url pattern="/saml/web/**" access="ROLE_ADMIN"/> -->
+        
+        
+        <security:custom-filter after="BASIC_AUTH_FILTER" ref="authFilter"/>
+        <security:custom-filter before="REQUEST_CACHE_FILTER" ref="checkUserFilter"/>
+        
+        <security:custom-filter ref="redirectionAwareFilter" before="PRE_AUTH_FILTER" />
+		<security:custom-filter ref="redirectionAwareFilter" after="REQUEST_CACHE_FILTER" />
+        
+        <security:request-cache ref="requestCache"/>
+        
+        <security:custom-filter before="FIRST" ref="metadataGeneratorFilter"/>
+        
+        <!-- Disable only for /saml/SSO** ?? -->
+        <security:csrf disabled="true" />
+    </security:http>
+    
+    
+    <!-- Handler for successful logout -->
+    <bean id="successLogoutHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
+        <property name="defaultTargetUrl" value="/logout"/>
+    </bean>
+    
+    <bean id="checkUserFilter" class="eu.dariah.de.dariahsp.web.CheckUserFilter">
+    	<property name="localRedirect" value="/user/incompleteProfile" />
+    	<property name="incompleteAttributesRedirect" value="${auth.saml.sp.attributeQuery.incompleteAttributesRedirect:#{null}}" />
+    	<property name="hostedEntityId" value="${auth.saml.sp.entityId:#{null}}" />
+    	<property name="attributeAggregation" value="${auth.saml.sp.attributeQuery.enabled:false}" />
+    	<property name="requestCache" ref="requestCache" />	
+    </bean>   
+    
+    <!-- Provider of default SAML Context -->
+    <bean id="contextProvider" class="eu.dariah.de.dariahsp.saml.AttributeContextProvider"/>
+    
+    <!-- The filter is waiting for connections on URL suffixed with filterSuffix and presents SP metadata there -->
+    <bean id="metadataDisplayFilter" class="org.springframework.security.saml.metadata.MetadataDisplayFilter"/>
+    
+    <!-- This probably needs to be changed to a persisting extension of BaseUserService -->
+    <bean id="userDetailsService" class="eu.dariah.de.colreg.service.UserServiceImpl">
+    	<property name="defaultAuthority" value="Authenticated User" />
+    </bean>
+    
+    <!-- Filter automatically generates default SP metadata -->
+    <!-- Utilized only if no path to external metadata has been set (compare bean id="metadata") -->
+    <bean id="metadataGeneratorFilter" class="eu.dariah.de.dariahsp.saml.metadata.ConditionalMetadataGeneratorFilter">
+        <constructor-arg ref="metadataGenerator" />
+        <constructor-arg value="#{'${auth.saml.sp.externalMetadata:null}'!='null'}" />
+    </bean>
+    
+    <bean id="requiredAttributes" class="eu.dariah.de.dariahsp.saml.attributequery.options.SAMLRequiredAttributesList">
+    	<constructor-arg ref="objectMapper" />
+    	<constructor-arg value="${auth.saml.sp.requiredAttributes:#{null}}" />
+    </bean>
+    
+    <bean id="redirectionAwareFilter" class="eu.dariah.de.dariahsp.web.RedirectionAwareFilterBean" />
+	<bean id="redirectCache" class="eu.dariah.de.dariahsp.web.RedirectCache" />
+	<bean id="requestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache" />
+	
+	<bean id="successRedirectHandler" class="eu.dariah.de.dariahsp.web.RedirectingAuthenticationHandler">
+        <property name="defaultTargetUrl" value="/"/>
+        <property name="redirectCache" ref="redirectCache" />
+        <property name="logoutUrl" value="/logout" />
+    </bean>
+    
+	<bean id="authInfoHelper" class="eu.dariah.de.dariahsp.web.AuthInfoHelper">
+		<property name="roleLevelVoter" ref="roleLevelVoter" />
+	</bean>
+	
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+				<ref bean="roleLevelVoter" />
+			</list>
+		</constructor-arg>
+		<property name="allowIfAllAbstainDecisions" value="false" />
+	</bean>
+	
+	<bean id="roleLevelVoter" class="eu.dariah.de.dariahsp.web.RoleLevelVoter">
+		<property name="roleLevels">
+			<map>
+				<!-- First role for demonstration only, remove in implementations -->
+				<entry key="ROLE_UBERROLE" value="1000" />
+				<entry key="ROLE_ADMINISTRATOR" value="100" />
+				<entry key="ROLE_CONTRIBUTOR" value="60" />
+				<entry key="ROLE_USER" value="20" />
+			</map>
+		</property>
+	</bean>
+	
+	    <!-- Initialization of OpenSAML library-->
+    <bean class="org.springframework.security.saml.SAMLBootstrap"/>
+
+	<!-- Central storage of cryptographic keys -->
+    <bean id="keyManager" class="org.springframework.security.saml.key.JKSKeyManager">
+        <constructor-arg value="file:${auth.saml.keystore.path:#{null}}"/>
+        <constructor-arg type="java.lang.String" value="${auth.saml.keystore.pass:#{null}}"/>
+        <constructor-arg>
+            <map>
+                <entry key="${auth.saml.keystore.alias:noalias}" value="${auth.saml.keystore.aliaspass:#{null}}"/>
+            </map>
+        </constructor-arg>
+        <constructor-arg type="java.lang.String" value="${auth.saml.keystore.alias:#{null}}"/>
+    </bean>
+
+</beans>

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import de.dariah.aai.javasp.web.helper.AuthInfoHelper;
+import eu.dariah.de.dariahsp.web.AuthInfoHelper;
 
 public class BaseController {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());

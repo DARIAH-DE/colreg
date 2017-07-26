@@ -3,7 +3,7 @@ package eu.dariah.de.colreg.pojo;
 import java.util.List;
 import java.util.Map;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
 
 public class CollectionPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5544026876984535637L;

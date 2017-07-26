@@ -1,0 +1,106 @@
+<beans xmlns:security="http://www.springframework.org/schema/security"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+				
+	<import resource="security-context-common.xml"/>	
+
+
+	
+
+	
+	<!-- <security:http disable-url-rewriting="true" auto-config="true" use-expressions="false" access-decision-manager-ref="accessDecisionManager" >
+		<security:csrf disabled="true"/>
+		<security:intercept-url pattern="/test/jumboFluid" requires-channel="http" access="IS_AUTHENTICATED_FULLY" />
+		
+		<security:custom-filter ref="redirectionAwareFilter" before="PRE_AUTH_FILTER" />
+		<security:custom-filter ref="redirectionAwareFilter" after="REQUEST_CACHE_FILTER" />
+		
+		 <security:intercept-url pattern="/saml/web/**" access="IS_AUTHENTICATED_FULLY"/>
+		
+		<security:form-login 
+			authentication-success-handler-ref="successRedirectHandler"
+			login-page="/login" 
+			authentication-failure-url="/login?error"
+			username-parameter="username"
+			password-parameter="password"
+			/>
+		<security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/" />
+		
+		<security:request-cache ref="requestCache"/>
+	</security:http> -->
+	    
+    <bean id="metadataGenerator" class="eu.dariah.de.dariahsp.saml.metadata.AttributeMetadataGenerator" scope="prototype">
+        <property name="requiredAttributes" ref="requiredAttributes" />
+    </bean>
+        
+	   
+    <!-- Filters for processing of local authentication -->
+    <bean id="authFilter" class="org.springframework.security.web.FilterChainProxy">
+    	<security:filter-chain-map request-matcher="ant">
+    		<security:filter-chain pattern="/saml/metadata/**" filters="metadataDisplayFilter"/>
+        	<security:filter-chain pattern="/localsec/login/**" filters="loginFilter"/>
+        	<security:filter-chain pattern="/localsec/logout/**" filters="logoutFilter"/>
+        </security:filter-chain-map>
+    </bean>
+    
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+    	<constructor-arg ref="successLogoutHandler" />
+    	<constructor-arg ref="logoutHandler" />
+    
+    	<property name="filterProcessesUrl" value="/localsec/logout" />
+    </bean>
+    
+    <bean id="loginFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter" >
+    	<property name="authenticationManager" ref="authenticationManager" />
+    	<property name="filterProcessesUrl" value="/localsec/login" />
+    	
+    	<property name="authenticationSuccessHandler" ref="successRedirectHandler" />
+    	<property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+    </bean>
+    
+    <bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    	<property name="defaultFailureUrl" value="/errors/loginFailed" />
+    </bean>
+    
+    <bean id="logoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler">
+        <property name="invalidateHttpSession" value="true"/>
+        <property name="clearAuthentication" value="true" />
+    </bean>
+    
+    <security:authentication-manager id="authenticationManager" alias="authenticationManager">
+	  <security:authentication-provider ref="localAuthenticationProvider" />
+	</security:authentication-manager>
+    
+	<bean id="securityEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<constructor-arg value="/login" />
+		<property name="forceHttps" value="${auth.local.forceHttps:true}" />
+	</bean>
+	
+	
+ 	<!-- Map only for ajax calls; how??? entry-point-ref="ajaxEntryPoint"  -->
+  	<bean id="ajaxEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
+	</bean>
+	
+	<bean id="localAuthenticationProvider" class="eu.dariah.de.dariahsp.local.LocalAuthenticationProvider">
+		<property name="localUserDb">
+			<bean class="eu.dariah.de.dariahsp.local.LocalUserConfService">
+				<property name="userConf" value="${auth.local.users:#{null}}" />
+			</bean>
+		</property>
+		<property name="userService" ref="userDetailsService" />
+		<property name="encoder"><bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/></property>
+	</bean>
+	
+	<!-- IDP Metadata configuration - paths to metadata of IDPs in circle of trust is here -->
+    <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager">
+    	<constructor-arg>
+            <list>
+            </list>
+     	</constructor-arg>
+    </bean>
+	
+</beans>

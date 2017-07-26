@@ -1,19 +1,16 @@
 package eu.dariah.de.colreg.controller.base;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import eu.dariah.de.colreg.model.PersistedUserDetails;
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
-import eu.dariah.de.colreg.service.PersistedUserDetailsService;
+import eu.dariah.de.colreg.service.UserServiceImpl;
+import eu.dariah.de.dariahsp.model.User;
 
 public class VersionedEntityController extends BaseController {
-	@Autowired protected PersistedUserDetailsService userDetailsService;
+	@Autowired protected UserServiceImpl userService;
 	
 	
 	protected <T extends VersionedEntityImpl> void setUsers(List<T> ves) {
@@ -30,20 +27,20 @@ public class VersionedEntityController extends BaseController {
 			}
 		}
 		
-		List<PersistedUserDetails> uds = userDetailsService.findByIds(fetchedUserIds);
+		List<User> uds = userService.findByIds(fetchedUserIds);
 		if (uds==null || uds.size()==0) {
 			return;
 		}
 		for (VersionedEntityImpl ve : ves) {
 			if (ve.getVersionCreator()!=null && fetchedUserIds.contains(ve.getVersionCreator())) {
-				for (PersistedUserDetails ud : uds) {
+				for (User ud : uds) {
 					if (ud.getId().equals(ve.getVersionCreator())) {
 						ve.setVersionCreator(ud.getUsername());
 					}
 				}
 			}
 			if (ve.getEntityCreator()!=null && fetchedUserIds.contains(ve.getEntityCreator())) {
-				for (PersistedUserDetails ud : uds) {
+				for (User ud : uds) {
 					if (ud.getId().equals(ve.getEntityCreator())) {
 						ve.setEntityCreator(ud.getUsername());
 					}
@@ -58,13 +55,13 @@ public class VersionedEntityController extends BaseController {
 		}
 		UserDetails ud;
 		if (ve.getVersionCreator()!=null) {
-			ud = userDetailsService.findById(ve.getVersionCreator());
+			ud = userService.findById(ve.getVersionCreator());
 			if (ud!=null) {
 				ve.setVersionCreator(ud.getUsername());
 			}
 		}
 		if (ve.getEntityCreator()!=null) {
-			ud = userDetailsService.findById(ve.getEntityCreator());
+			ud = userService.findById(ve.getEntityCreator());
 			if (ud!=null) {
 				ve.setEntityCreator(ud.getUsername());
 			}

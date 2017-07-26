@@ -5,7 +5,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
+
 
 public abstract class BaseValidator<T extends BaseIdentifiable> implements Validator, ValidationPreprocessor<T> {
 	protected final Class<T> clazz;

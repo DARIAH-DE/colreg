@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>eu.dariah.de</groupId>
 		<artifactId>colreg-parent</artifactId>
-		<version>3.2.1-SNAPSHOT</version>
+		<version>3.3.0-SNAPSHOT</version>
     </parent>
 	<artifactId>colreg-model</artifactId>
 	<packaging>jar</packaging>
@@ -11,6 +11,12 @@
 	<description>DARIAH-DE Collection Registry - Model</description>
 	
 	<dependencies>
+		<dependency>
+			<groupId>eu.dariah.de.minfba.core</groupId>
+			<artifactId>core-metamodel</artifactId>
+			<version>${eu.dariah.de.minfba.core-metamodel.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -27,15 +33,9 @@
 			<version>${com.fasterxml.jackson-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.dariah.de</groupId>
-			<artifactId>dariah-javasp-core</artifactId>
-			<version>${eu.dariah.de.javasp-version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
 			<version>${org.springframework.data.spring-data-mongodb-version}</version>
 		</dependency>
 	</dependencies>
-	<version>1.0.0-SNAPSHOT</version>
 </project>

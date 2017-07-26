@@ -2,7 +2,7 @@ package eu.dariah.de.colreg.model.vocabulary;
 
 import java.beans.Transient;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
 
 public class License extends BaseIdentifiable {
 	private static final long serialVersionUID = 8705409920105900752L;

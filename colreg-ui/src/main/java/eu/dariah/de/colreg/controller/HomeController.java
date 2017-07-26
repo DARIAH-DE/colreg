@@ -67,13 +67,23 @@ public class HomeController extends VersionedEntityController {
 			entities.addAll(latestAgents);
 		}
 		
-		Collections.sort(entities, new Comparator<VersionedEntityImpl>() {
-			@Override
-			public int compare(VersionedEntityImpl o1, VersionedEntityImpl o2) {
-				return o1.getVersionTimestamp().compareTo((o2.getVersionTimestamp()));
-			}
-		});
-		Collections.reverse(entities);
+		if (entities!=null && entities.size()>0) {
+			Collections.sort(entities, new Comparator<VersionedEntityImpl>() {
+				@Override
+				public int compare(VersionedEntityImpl o1, VersionedEntityImpl o2) {
+					if (o1.getVersionTimestamp()==null && o2.getVersionTimestamp()==null) {
+						return 0;
+					} else if (o1.getVersionTimestamp()==null) {
+						return -1;
+					} else if (o2.getVersionTimestamp()==null) {
+						return 1;
+					}
+					
+					return o1.getVersionTimestamp().compareTo((o2.getVersionTimestamp()));
+				}
+			});
+			Collections.reverse(entities);
+		}
 		
 		this.setUsers(entities);
 		model.addAttribute("latest", entities);

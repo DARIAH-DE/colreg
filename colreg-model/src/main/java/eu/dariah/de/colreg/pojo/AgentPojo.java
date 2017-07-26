@@ -2,7 +2,7 @@ package eu.dariah.de.colreg.pojo;
 
 import org.joda.time.DateTime;
 
-import eu.dariah.de.colreg.model.base.BaseIdentifiable;
+import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
 
 public class AgentPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5544026876984535637L;

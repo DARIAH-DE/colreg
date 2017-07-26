@@ -18,15 +18,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.LocalizedDescription;
-import eu.dariah.de.colreg.model.PersistedUserDetails;
 import eu.dariah.de.colreg.model.api.repository.RepositoryDraft;
 import eu.dariah.de.colreg.model.api.repository.RepositoryDraftContainer;
 import eu.dariah.de.colreg.model.api.repository.RepositoryResponse;
 import eu.dariah.de.colreg.model.marshalling.XMLConverter;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.PersistedUserDetailsService;
 import eu.dariah.de.colreg.service.VocabularyService;
+import eu.dariah.de.dariahsp.model.User;
+import eu.dariah.de.dariahsp.model.UserImpl;
+import eu.dariah.de.dariahsp.service.UserService;
 
 @Controller
 @RequestMapping("/colreg")
@@ -36,7 +37,7 @@ public class CrLegacyApiController {
 
 	@Autowired private XMLConverter xmlConverter;
 
-	@Autowired private PersistedUserDetailsService userDetailsService;
+	@Autowired private UserService userService;
 	@Autowired private CollectionValidator collectionValidator;
 	@Autowired private CollectionService collectionService;
 	@Autowired private VocabularyService vocabularyService;
@@ -115,13 +116,13 @@ public class CrLegacyApiController {
 						}
 					}
 				}
-				PersistedUserDetails ud = userDetailsService.loadUserByUsername(endpoint, username);
+				User ud = userService.loadUserByUsername(endpoint, username);
 				if (ud==null) {
-					ud = new PersistedUserDetails();
+					ud = new UserImpl();
 					ud.setEndpointId(endpoint);
 					ud.setEndpointName(endpoint);
 					ud.setUsername(username);
-					userDetailsService.saveUser(ud);
+					userService.saveUser(ud);
 				}
 				c.setDraftUserId(ud.getId());
 

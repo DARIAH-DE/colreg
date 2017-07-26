@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import eu.dariah.de.colreg.model.base.Identifiable;
+import eu.dariah.de.minfba.core.metamodel.interfaces.Identifiable;
 
 public abstract class DaoImpl<T extends Identifiable> implements Dao {
 	protected static final String ID_FIELD = "_id";

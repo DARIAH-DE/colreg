@@ -3,7 +3,8 @@ package eu.dariah.de.colreg.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.dariah.de.colreg.model.base.Identifiable;
+import eu.dariah.de.minfba.core.metamodel.interfaces.Identifiable;
+
 
 
 public class TableListPojo<T extends Identifiable> {
