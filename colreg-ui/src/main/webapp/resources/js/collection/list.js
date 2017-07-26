@@ -40,7 +40,7 @@ CollectionTable.prototype.createTable = function() {
 	    	   "data": "entity.type"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": "entity.access",
+	    	   "data": function (row, type, val, meta) { return _this.renderAccessColumn(row, type, val, meta); },
 	    	   "width" : "20%",
 	    	  /* "visible" : false*/
 	       }, {	
@@ -56,6 +56,10 @@ CollectionTable.prototype.createTable = function() {
         var entityId = _this._base.table.row(this).data().entity.entityId;
         location.href = __util.composeUrl("collections/" + entityId);
     } );
+};
+
+CollectionTable.prototype.renderAccessColumn = function(row, type, val, meta) {
+	return row.entity.access===undefined ? "" : row.entity.access;
 };
 
 CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
