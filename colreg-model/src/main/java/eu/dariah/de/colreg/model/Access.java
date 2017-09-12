@@ -3,7 +3,6 @@ package eu.dariah.de.colreg.model;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class Access {
 	@NotBlank

@@ -1,6 +1,6 @@
 package eu.dariah.de.colreg.model.vocabulary;
 
-import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
+import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
 public class EncodingScheme extends BaseIdentifiable {
 	private static final long serialVersionUID = 8904831004241137209L;

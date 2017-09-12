@@ -3,10 +3,10 @@ paths:
   logging: ${paths.main}/log
 
 api:
-  schereg:
+  dme:
     baseUrl: https://minfba.de.dariah.eu/schereg/
-    schemaLink: ${api.schereg.baseUrl}schema/editor/%s/
-    schemas: ${api.schereg.baseUrl}api/schemas
+    modelLink: ${api.dme.baseUrl}model/editor/%s/
+    models: ${api.dme.baseUrl}api/models
 
 mongo:
   host: 127.0.0.1

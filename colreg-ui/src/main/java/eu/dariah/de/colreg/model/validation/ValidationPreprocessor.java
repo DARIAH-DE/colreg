@@ -1,6 +1,6 @@
 package eu.dariah.de.colreg.model.validation;
 
-import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
+import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
 public interface ValidationPreprocessor<T extends BaseIdentifiable> {
 	public void preprocess(T object);

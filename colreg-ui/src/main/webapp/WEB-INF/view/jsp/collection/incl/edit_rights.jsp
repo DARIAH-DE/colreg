@@ -29,7 +29,8 @@
 					</c:forEach>
 					<optgroup label="${groupLabel}">
 					<c:forEach items="${licenseGroup.licenses}" var="license">
-						<option value="${license.id}" <c:if test="${currRightsValue==license.id}">selected="selected" </c:if>>${license.identifier} (${license.label})</option>
+						<c:if test="${currRightsValue==license.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+						<option value="${license.id}" ${selected}>${license.identifier} (${license.label})</option>
 					</c:forEach>	
 				</optgroup>
 				

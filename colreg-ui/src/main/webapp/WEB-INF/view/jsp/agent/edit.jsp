@@ -93,7 +93,11 @@
 							<c:when test="${editMode}">
 								<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
 									<c:forEach items="${agentTypes}" var="type">
-										<option <c:if test="${agent.agentTypeId==type.id}">selected="selected"</c:if> value="${type.id}" data-natural="${type.naturalPerson}">${type.label}</option>
+										
+										<c:if test="${agent.agentTypeId==type.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+
+										
+										<option ${selected} value="${type.id}" data-natural="${type.naturalPerson}">${type.label}</option>
 										<c:if test="${agent.agentTypeId==type.id}">
 											<c:set var="agentIsNatural" value="${type.naturalPerson}" scope="request" />
 										</c:if>

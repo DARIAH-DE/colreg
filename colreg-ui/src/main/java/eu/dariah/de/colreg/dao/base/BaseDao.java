@@ -7,7 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import eu.dariah.de.minfba.core.metamodel.interfaces.Identifiable;
+import de.unibamberg.minf.dme.model.base.Identifiable;
+
 
 
 public interface BaseDao<T extends Identifiable> extends Dao {

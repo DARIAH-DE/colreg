@@ -53,7 +53,8 @@
 							<select class="form-control" name="accrualMethods[${currIndex}].accrualMethod" id="accrualMethods${currIndex}.accrualMethod" 
 								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualMethod');" autocomplete="off">
 								<c:forEach items="${accrualMethods}" var="accMethod">
-									<option <c:if test="${currMethod.accrualMethod==accMethod.id}">selected="selected"</c:if> value="${accMethod.id}">${accMethod.label}</option>
+									<c:if test="${currMethod.accrualMethod==accMethod.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+									<option ${selected} value="${accMethod.id}">${accMethod.label}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -91,7 +92,8 @@
 							<select class="form-control" name="accrualMethods[${currIndex}].accrualPolicy" id="accrualMethods${currIndex}.accrualPolicy" 
 								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPolicy');" autocomplete="off">
 								<c:forEach items="${accrualPolicies}" var="accPolicy">
-									<option <c:if test="${currMethod.accrualPolicy==accPolicy.id}">selected="selected"</c:if> value="${accPolicy.id}">${accPolicy.label}</option>
+									<c:if test="${currMethod.accrualPolicy==accPolicy.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+									<option ${selected} value="${accPolicy.id}">${accPolicy.label}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -128,7 +130,8 @@
 							<select class="form-control" name="accrualMethods[${currIndex}].accrualPeriodicity" id="accrualMethods${currIndex}.accrualPeriodicity" 
 								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPeriodicity');" autocomplete="off">
 								<c:forEach items="${accrualPeriodicities}" var="accPeriodicity">
-									<option <c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}">selected="selected"</c:if> value="${accPeriodicity.id}">${accPeriodicity.label}</option>
+									<c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+									<option ${selected} value="${accPeriodicity.id}">${accPeriodicity.label}</option>
 								</c:forEach>
 							</select>
 						</div>

@@ -3,7 +3,8 @@ package eu.dariah.de.colreg.model.base;
 import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
+import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+
 
 public abstract class VersionedEntityImpl extends BaseIdentifiable {
 	private static final long serialVersionUID = 4943714699707768827L;

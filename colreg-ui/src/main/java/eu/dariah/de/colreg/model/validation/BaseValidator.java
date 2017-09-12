@@ -5,7 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
+import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
 
 public abstract class BaseValidator<T extends BaseIdentifiable> implements Validator, ValidationPreprocessor<T> {

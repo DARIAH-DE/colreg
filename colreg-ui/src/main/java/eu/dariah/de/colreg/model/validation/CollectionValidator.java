@@ -146,7 +146,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			String schemeId;
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
 				acc = collection.getAccessMethods().get(i);
-				if (!acc.getType().equals(oaiTypeId)) {
+				if (acc.getType()!=null && !acc.getType().equals(oaiTypeId)) {
 					acc.setOaiSet(null);
 				}
 				

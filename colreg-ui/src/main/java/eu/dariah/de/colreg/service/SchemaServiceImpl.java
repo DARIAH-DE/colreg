@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import de.unibamberg.minf.dme.model.serialization.DatamodelContainer;
 import eu.dariah.de.colreg.dao.vocabulary.EncodingSchemeDao;
 import eu.dariah.de.colreg.model.vocabulary.EncodingScheme;
-import eu.dariah.de.minfba.core.metamodel.serialization.SerializableSchemaContainer;
 
 @Component
 public class SchemaServiceImpl implements SchemaService {
@@ -24,17 +24,17 @@ public class SchemaServiceImpl implements SchemaService {
 	// TODO: Two level cache to reduce traffic?!
 	@Autowired private EncodingSchemeDao encodingSchemeDao;
 	
-	@Value("${api.schereg.schemas}")
+	@Value("${api.dme.models}")
 	private String fetchAllUrl;
 	
-	@Value("${api.schereg.schemaLink}")
+	@Value("${api.dme.modelLink}")
 	private String schemaLinkUrl;
 		
 	
 	@Override
 	public List<EncodingScheme> findAllSchemas() {
 		try {
-			SerializableSchemaContainer[] result = restTemplate.getForObject(fetchAllUrl, (new SerializableSchemaContainer[0]).getClass());
+			DatamodelContainer[] result = restTemplate.getForObject(fetchAllUrl, (new DatamodelContainer[0]).getClass());
 			if (result==null) {
 				return null;
 			}
@@ -42,9 +42,9 @@ public class SchemaServiceImpl implements SchemaService {
 			EncodingScheme pojo;
 			for (int i=0; i<result.length;i++) {
 				pojo = new EncodingScheme();
-				pojo.setId(result[i].getSchema().getId());
-				pojo.setUrl(String.format(schemaLinkUrl, result[i].getSchema().getId()));
-				pojo.setName(result[i].getSchema().getLabel());
+				pojo.setId(result[i].getModel().getId());
+				pojo.setUrl(String.format(schemaLinkUrl, result[i].getModel().getId()));
+				pojo.setName(result[i].getModel().getName());
 				
 				s.add(pojo);
 			}

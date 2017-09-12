@@ -3,7 +3,7 @@ package eu.dariah.de.colreg.model.vocabulary;
 import java.util.List;
 import java.util.Map;
 
-import eu.dariah.de.minfba.core.metamodel.BaseIdentifiable;
+import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
 public class LicenseGroup extends BaseIdentifiable {
 	private static final long serialVersionUID = 3221594182077684205L;

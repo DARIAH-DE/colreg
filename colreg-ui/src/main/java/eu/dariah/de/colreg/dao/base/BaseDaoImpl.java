@@ -9,7 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import eu.dariah.de.minfba.core.metamodel.interfaces.Identifiable;
+
+import de.unibamberg.minf.dme.model.base.Identifiable;
 
 public abstract class BaseDaoImpl<T extends Identifiable> extends DaoImpl<T> implements BaseDao<T> {	
 	public BaseDaoImpl(Class<?> clazz) {
