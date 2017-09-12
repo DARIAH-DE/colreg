@@ -42,6 +42,7 @@
 							<select class="form-control" name="accessMethods[${currIndex}].type" id="accessMethods${currIndex}.type" 
 								onchange="editor.handleAccessTypeChange(this); editor.tables['accessMethodTable'].handleSelectChange(this, 'accessMethodTable_type');" autocomplete="off">
 								<c:forEach items="${accessTypes}" var="type">
+									<c:set var="selected"></c:set>
 									<c:if test="${currMethod.type==type.id}"><c:set var="selected">selected="selected"</c:set></c:if>
 									<option ${selected} value="${type.id}">${type.label}</option>
 								</c:forEach>
@@ -146,6 +147,7 @@
 											<c:set var="contains" value="true" />
 										</c:if>
 									</c:forEach>
+									<c:set var="selected"></c:set>
 									<c:if test="${contains}"><c:set var="selected">selected="selected"</c:set></c:if>
 									<option ${selected} value="${scheme.id}">${scheme.name} [${scheme.id}]</option>
 								</c:forEach>

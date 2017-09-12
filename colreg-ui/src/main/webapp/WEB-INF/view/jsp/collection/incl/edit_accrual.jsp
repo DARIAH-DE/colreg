@@ -53,6 +53,7 @@
 							<select class="form-control" name="accrualMethods[${currIndex}].accrualMethod" id="accrualMethods${currIndex}.accrualMethod" 
 								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualMethod');" autocomplete="off">
 								<c:forEach items="${accrualMethods}" var="accMethod">
+									<c:set var="selected"></c:set>
 									<c:if test="${currMethod.accrualMethod==accMethod.id}"><c:set var="selected">selected="selected"</c:set></c:if>
 									<option ${selected} value="${accMethod.id}">${accMethod.label}</option>
 								</c:forEach>
@@ -92,6 +93,7 @@
 							<select class="form-control" name="accrualMethods[${currIndex}].accrualPolicy" id="accrualMethods${currIndex}.accrualPolicy" 
 								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPolicy');" autocomplete="off">
 								<c:forEach items="${accrualPolicies}" var="accPolicy">
+									<c:set var="selected"></c:set>
 									<c:if test="${currMethod.accrualPolicy==accPolicy.id}"><c:set var="selected">selected="selected"</c:set></c:if>
 									<option ${selected} value="${accPolicy.id}">${accPolicy.label}</option>
 								</c:forEach>
@@ -130,6 +132,7 @@
 							<select class="form-control" name="accrualMethods[${currIndex}].accrualPeriodicity" id="accrualMethods${currIndex}.accrualPeriodicity" 
 								onchange="editor.tables['accrualMethodTable'].handleSelectChange(this, 'accrualMethodTable_accrualPeriodicity');" autocomplete="off">
 								<c:forEach items="${accrualPeriodicities}" var="accPeriodicity">
+									<c:set var="selected"></c:set>
 									<c:if test="${currMethod.accrualPeriodicity==accPeriodicity.id}"><c:set var="selected">selected="selected"</c:set></c:if>
 									<option ${selected} value="${accPeriodicity.id}">${accPeriodicity.label}</option>
 								</c:forEach>

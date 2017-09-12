@@ -51,6 +51,7 @@
 											<c:set var="contains" value="true" />
 										</c:if>
 									</c:forEach>
+									<c:set var="selected"></c:set>
 									<c:if test="${contains}"><c:set var="selected">selected="selected"</c:set></c:if>
 									<option ${selected} value="${type.id}">${type.label}</option>
 								</c:forEach>

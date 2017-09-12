@@ -93,7 +93,7 @@
 							<c:when test="${editMode}">
 								<select class="form-control" name="agentTypeId" id="agentTypeId" onchange="editor.handleAgentTypeChange(this);" autocomplete="off">
 									<c:forEach items="${agentTypes}" var="type">
-										
+										<c:set var="selected"></c:set>
 										<c:if test="${agent.agentTypeId==type.id}"><c:set var="selected">selected="selected"</c:set></c:if>
 
 										
