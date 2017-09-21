@@ -98,3 +98,124 @@ Once the CR has successfully started up (check the logs of the respective web ap
 
 ![Generate new SP](https://github.com/DARIAH-DE/colreg/raw/master/img/installation_saml_metatata.png "Generate new SP")
 
+
+
+![SP metadata](https://github.com/DARIAH-DE/colreg/raw/master/img/result_saml_metatata.png "Resulting SP metadata")
+
+### DARIAH Sample configuration
+
+```yaml
+paths:
+  main: /etc/dfa/colreg
+  
+api:
+  dme:
+    baseUrl: https://minfba.de.dariah.eu/schereg/
+    modelLink: ${api.dme.baseUrl}model/editor/%s/
+    models: ${api.dme.baseUrl}api/models
+
+mongo:
+  host: 127.0.0.1
+  port: 27017
+  database: colreg
+  
+auth:
+  local: 
+    forceHttps: true
+    users:  
+      - username: 'admin'
+        passhash: '$2a$10$nbXRnAx5wKurTrbaUkT/MOLXKAJgpT8R71/jujzPwgXXrG.OqlBKW'
+        roles: ["ROLE_ADMINISTRATOR"]
+  saml:
+    keystore:
+      path: ${paths.main}/key/dfa-de-dariah-eu.jks
+      # Uncomment if keystore is protected by password
+      #pass: 'somepass'
+      alias: dfa.de.dariah.eu
+      aliaspass: ''
+    metadata:
+      url: https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-test-metadata.xml
+      \#url: https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-basic-metadata.xml
+    sp:
+      externalMetadata: ${paths.main}/colreg_sp_metadata.xml
+      alias: colreg
+      baseUrl: https://colreg.de.dariah.eu/
+      entityId: colreg.de.dariah.eu
+      securityProfile: metaiop
+      sslSecurityProfile: pkix
+      sslHostnameVerification: default
+      signMetadata: true
+      signingAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
+      signingKey: dfa.de.dariah.eu
+      encryptionKey: dfa.de.dariah.eu
+      tlsKey: dfa.de.dariah.eu
+      requireArtifactResolveSigned: true
+      requireAttributeQuerySigned: false
+      requireLogoutRequestSigned: true
+      requireLogoutResponseSigned: false
+      discovery:
+        enabled: true
+        url: https://wayf.aai.dfn.de/DFN-AAI-Test/wayf
+        \#url: https://auth.dariah.eu/CDS/WAYF
+        return: https://colreg.de.dariah.eu/saml/login/alias/schereg?disco:true
+      allowedNameIds : EMAIL, TRANSIENT, PERSISTENT, UNSPECIFIED, X509_SUBJECT
+    
+      # Attribute querying
+      attributeQuery:
+        enabled: true
+        excludedEndpoints: 
+          urls: ["https://ldap-dariah-clone.esc.rzg.mpg.de/idp/shibboleth", "https://idp.de.dariah.eu/idp/shibboleth"]
+          assumeAttributesComplete: true
+        queryIdp: https://ldap-dariah-clone.esc.rzg.mpg.de/idp/shibboleth
+        #queryIdp: https://idp.de.dariah.eu/idp/shibboleth
+        queryByNameID: false
+        queryAttribute:
+          friendlyName: eduPersonPrincipalName
+          name: urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+          nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        # For now without parameters bc DARIAH Self Service is broken 
+        incompleteAttributesRedirect: "https://dariah.daasi.de/Shibboleth.sso/Login?target=/cgi-bin/selfservice/ldapportal.pl"
+        #incompleteAttributesRedirect: "https://dariah.daasi.de/Shibboleth.sso/Login?target=/cgi-bin/selfservice/ldapportal.pl%3Fmode%3Dauthenticate%3Bshibboleth%3D1%3Bnextpage%3Dregistration%3Breturnurl%3D{returnUrl}&entityID={entityId}"
+        #incompleteAttributesRedirect: "https://auth.dariah.eu/Shibboleth.sso/Login?target=/cgi-bin/selfservice/ldapportal.pl%3Fmode%3Dauthenticate%3Bshibboleth%3D1%3Bnextpage%3Dregistration%3Breturnurl%3D{returnUrl}&entityID={entityId}"
+      requiredAttributes:
+        - stage: ATTRIBUTES
+          required: true
+          attributeGroup:
+            - check: AND
+              attributes:
+                - friendlyName: mail
+                  name: urn:oid:0.9.2342.19200300.100.1.3
+                  nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        - stage: ATTRIBUTES
+          required: true
+          attributeGroup:
+            - check: OR
+              attributes:
+                - friendlyName: dariahTermsOfUse
+                  name: urn:oid:1.3.6.1.4.1.10126.1.52.4.15
+                  nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+                  value: Terms_of_Use_v5.pdf
+                - friendlyName: dariahTermsOfUse
+                  name: urn:oid:1.3.6.1.4.1.10126.1.52.4.15
+                  nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+                  value: foobar-service-agreement_version1.pdf     
+        - stage: AUTHENTICATION
+          required: true
+          attributeGroup:
+            - check: AND
+              attributes:
+                - friendlyName: eduPersonPrincipalName
+                  name: urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+                  nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        - stage: AUTHENTICATION
+          required: false
+          attributeGroup:
+            - check: OPTIONAL
+              attributes:
+                - friendlyName: mail
+                  name: urn:oid:0.9.2342.19200300.100.1.3
+                  nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+                - friendlyName: displayName
+                  name: urn:oid:2.16.840.1.113730.3.1.241
+                  nameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+```
