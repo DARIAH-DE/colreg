@@ -96,3 +96,5 @@ In its developer portal, DARIAH-DE automatically generates and provides Debian p
 
 Once the CR has successfully started up (check the logs of the respective web application server), metadata for registering the CR instance as SAML Service Provider can be generated. In order to generate such metadata, navigate to the /saml/web/metadata path (e. g. http://localhost:8080/saml/web/metadata) and click on *Generate new SP*.   
 
+![Generate new SP](https://github.com/DARIAH-DE/colreg/raw/master/img/installation_saml_metatata.png "Generate new SP")
+
