@@ -68,7 +68,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Dcolreg.yml=/path/to/colreg.yml"
 export CATALINA_OPTS="$CATALINA_OPTS -Dsaml=false"
 ```
 
-### Security (part 1)
+### Security (part 1: setup)
 
 For security, the CR relies on a Java/Spring-based implementation of the SAML protocol. While this installation guide contains only the necessary steps to install the CR, further information on the security component can be found here: https://github.com/tgradl/dariahsp
 
@@ -100,17 +100,25 @@ You can login as *admin*, username *password* and are ready to fill your collect
 
 If SAML authentication as e.g. with the DFN-AAI should be used instead, continue with the following section.
 
-## Security (part 2)
+## Security (part 2: SAML)
 
 Once the CR has successfully started up (check the logs of the respective web application server), metadata for registering the CR instance as SAML Service Provider can be generated. In order to generate such metadata, navigate to the /saml/web/metadata path (e. g. http://localhost:8080/saml/web/metadata) and click on *Generate new SP*.   
 
+Some basic SAML protocol related parameters need to be set in this dialog. See https://github.com/tgradl/dariahsp#metadata-generation on how these parameters are set in the DARIAH-DE context or see the section auth.saml.sp in the DARIAH-DE configuration sample below.
+
+Make sure to set the *Store for current session* to *Yes*. This way, when entering metadata in the DFN AAI administration interface, you can provide a link to https://yourserver/colreg/saml/metadata in order to autofill the input elements.
+
 ![Generate new SP](https://github.com/DARIAH-DE/colreg/raw/master/img/installation_saml_metatata.png "Generate new SP")
 
+Once generated, copy the text highlighted below as *XML* into a file on your server's file system. In the sample configuration below, this file would be expected at `/etc/dfa/colreg/colreg_sp_metadata.xml`. The *YML* highlighted section denotes configuration parameters for the CR configuration file.
 
+Again, see the sample configuration below or the DARIAHSP project for reference.
 
 ![SP metadata](https://github.com/DARIAH-DE/colreg/raw/master/img/result_saml_metatata.png "Resulting SP metadata")
 
 ### DARIAH Sample configuration
+
+In case a DARIAH-DE service provider needs to be configured, only a small set of parameters need to be changed in comparison to the sample configuration below. Please note that especially the lengthy configuration of the required attributes under ´auth.saml.sp.attributeQuery´ can remain unchanged on all DARIAH-DE based installations. 
 
 ```yaml
 paths:
