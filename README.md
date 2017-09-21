@@ -120,6 +120,8 @@ Again, see the sample configuration below or the DARIAHSP project for reference.
 
 In case a DARIAH-DE service provider needs to be configured, only a small set of parameters need to be changed in comparison to the sample configuration below. Please note that especially the lengthy configuration of the required attributes under ´auth.saml.sp.attributeQuery´ can remain unchanged on all DARIAH-DE based installations. 
 
+In conclusion: typically only the sections *paths*, *api*, *mongo*, *auth.saml.keystore*, *auth.saml.metadata* and *auth.saml.sp* need to be adapted. 
+
 ```yaml
 paths:
   main: /etc/dfa/colreg
