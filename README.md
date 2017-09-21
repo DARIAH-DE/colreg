@@ -92,6 +92,14 @@ The WAR container files for a custom installation of the CR can be found at:
 
 In its developer portal, DARIAH-DE automatically generates and provides Debian packages. The repository (both for snapshots and releases) can be found at: https://ci.de.dariah.eu/packages/
 
+Once installed and successfully started as (within a Java web application server) an empty CR dashboard is presented - with default ports and installed on a local machine as http://localhost:8080
+
+![Empty CR dashboard](https://github.com/DARIAH-DE/colreg/raw/master/img/empty_cr_dashboard.png "Empty CR dashboard")
+
+You can login as *admin*, username *password* and are ready to fill your collections and agents. In case local user accounts should be used, see https://github.com/tgradl/dariahsp#local-user-accounts on how to create such local accounts.
+
+If SAML authentication as e.g. with the DFN-AAI should be used instead, continue with the following section.
+
 ## Security (part 2)
 
 Once the CR has successfully started up (check the logs of the respective web application server), metadata for registering the CR instance as SAML Service Provider can be generated. In order to generate such metadata, navigate to the /saml/web/metadata path (e. g. http://localhost:8080/saml/web/metadata) and click on *Generate new SP*.   
