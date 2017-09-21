@@ -61,8 +61,8 @@ auth:
 The CR needs to be aware of its configuration file location. Currently, this is done by handing an environment parameter to the web application server. In the case of a Tomcat-based installation, simply create or modify the setenv.sh (or the appenv.sh file) in the ./bin subdirectory of the Tomcat installation:
 
 ```
-\#!/bin/sh
-\# Application specific environment variables
+#!/bin/sh
+# Application specific environment variables
 
 export CATALINA_OPTS="$CATALINA_OPTS -Dcolreg.yml=/path/to/colreg.yml"
 export CATALINA_OPTS="$CATALINA_OPTS -Dsaml=false"
@@ -128,7 +128,7 @@ paths:
   
 api:
   dme:
-    baseUrl: https://minfba.de.dariah.eu/schereg/
+    baseUrl: https://minfba.de.dariah.eu/dme/
     modelLink: ${api.dme.baseUrl}model/editor/%s/
     models: ${api.dme.baseUrl}api/models
 
@@ -153,7 +153,7 @@ auth:
       aliaspass: ''
     metadata:
       url: https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-test-metadata.xml
-      \#url: https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-basic-metadata.xml
+      #url: https://www.aai.dfn.de/fileadmin/metadata/dfn-aai-basic-metadata.xml
     sp:
       externalMetadata: ${paths.main}/colreg_sp_metadata.xml
       alias: colreg
@@ -174,7 +174,7 @@ auth:
       discovery:
         enabled: true
         url: https://wayf.aai.dfn.de/DFN-AAI-Test/wayf
-        \#url: https://auth.dariah.eu/CDS/WAYF
+        #url: https://auth.dariah.eu/CDS/WAYF
         return: https://colreg.de.dariah.eu/saml/login/alias/schereg?disco:true
       allowedNameIds : EMAIL, TRANSIENT, PERSISTENT, UNSPECIFIED, X509_SUBJECT
     
