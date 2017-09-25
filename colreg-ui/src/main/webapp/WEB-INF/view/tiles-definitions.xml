@@ -122,5 +122,32 @@
 	</definition>
 	<definition name="agent/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/agent/incl/edit_identifier.jsp" />
 	<definition name="agent/edit/incl/edit_address" template="/WEB-INF/view/jsp/agent/incl/edit_address.jsp" />
+	
+	<!-- SAML Administration -->
+	<definition name="saml/provider_view" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/saml/providerView.jsp" />
+	</definition>
+	<definition name="saml/metadata_generator" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/saml/metadataGenerator.jsp" />
+	</definition>
+	<definition name="saml/metadata_list" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/saml/metadataList.jsp" />
+	</definition>
+	<definition name="saml/metadata_view" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/saml/metadataView.jsp" />
+	</definition>
+	
+	<!-- Errors -->
+	<definition name="error" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/common/error.jsp" />
+	</definition>
+	
+	<!-- User profile -->
+	<definition name="user" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/common/user_home.jsp" />
+	</definition>
+	<definition name="user/incomplete_profile" extends="template_simple">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/common/user_incomplete_profile.jsp" />
+	</definition>
 
 </tiles-definitions>
