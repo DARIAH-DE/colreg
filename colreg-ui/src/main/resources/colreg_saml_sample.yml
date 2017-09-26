@@ -50,7 +50,7 @@ auth:
         enabled: true
         url: https://wayf.aai.dfn.de/DFN-AAI-Test/wayf
         #url: https://auth.dariah.eu/CDS/WAYF
-        return: https://colreg.de.dariah.eu/saml/login/alias/schereg?disco:true
+        return: https://colreg.de.dariah.eu/colreg-ui/saml/login/alias/colreg?disco:true
       allowedNameIds : EMAIL, TRANSIENT, PERSISTENT, UNSPECIFIED, X509_SUBJECT
     
       # Attribute querying

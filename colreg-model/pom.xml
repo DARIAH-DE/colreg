@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>eu.dariah.de</groupId>
 		<artifactId>colreg-parent</artifactId>
-		<version>3.5.2-RELEASE</version>
+		<version>3.5.3-RELEASE</version>
     </parent>
 	<artifactId>colreg-model</artifactId>
 	<packaging>jar</packaging>

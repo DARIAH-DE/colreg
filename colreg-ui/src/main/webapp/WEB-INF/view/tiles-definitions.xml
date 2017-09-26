@@ -68,11 +68,11 @@
 			<add-attribute type="string" value="home.js" />
 		</put-list-attribute>
 	</definition>
-	<definition name="logout" extends="template_simple">
+	<definition name="common/logout" extends="template_simple">
 		<put-attribute name="fluidLayout" cascade="true" value="true" />
 		<put-attribute name="content" value="/WEB-INF/view/jsp/common/logout.jsp" />
 	</definition>
-	<definition name="login" extends="template_simple">
+	<definition name="common/login" extends="template_simple">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/common/login.jsp" />
 	</definition>
 	
