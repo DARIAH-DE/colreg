@@ -6,7 +6,7 @@
 
     <groupId>eu.dariah.de</groupId>
 	<artifactId>colreg-parent</artifactId>
-	<version>3.5.3-RELEASE</version>
+	<version>3.5.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>DARIAH-DE Collection Registry Parent Project</name>
 
