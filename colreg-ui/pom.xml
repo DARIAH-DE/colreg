@@ -3,9 +3,10 @@
  	<parent>
 		<groupId>eu.dariah.de</groupId>
 		<artifactId>colreg-parent</artifactId>
-		<version>3.5.3-SNAPSHOT</version>
+		<version>3.6.0-SNAPSHOT</version>
     </parent>
 	<artifactId>colreg-ui</artifactId>
+	<version>${eu.dariah.de.colreg.colreg-ui}</version>
 	<packaging>war</packaging>
 	<name>DARIAH-DE Collection Registry - UI</name>
 	<description>DARIAH-DE Collection Registry - UI</description>
@@ -18,19 +19,19 @@
   			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.dariah.de.minfba.core</groupId>
+			<groupId>de.unibamberg.minf.core</groupId>
 			<artifactId>core-metamodel</artifactId>
-			<version>${eu.dariah.de.minfba.core-metamodel.version}</version>
+			<version>${de.unibamberg.minf.core.core-metamodel.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.dariah.de.minfba.core</groupId>
+			<groupId>de.unibamberg.minf.core</groupId>
 			<artifactId>core-web</artifactId>
-			<version>${eu.dariah.de.minfba.core-web.version}</version>
+			<version>${de.unibamberg.minf.core.core-web.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.dariah.de.minfba.core</groupId>
+			<groupId>de.unibamberg.minf.core</groupId>
 			<artifactId>core-util</artifactId>
-			<version>${eu.dariah.de.minfba.core-util.version}</version>
+			<version>${de.unibamberg.minf.core.core-util.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.dariah.de</groupId>

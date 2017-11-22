@@ -12,7 +12,7 @@
 	<mvc:annotation-driven />
 	<mvc:resources location="/resources/" mapping="/resources/**" cache-period="31556926"/>
 	
-	<bean id="initService" class="eu.dariah.de.minfba.core.web.init.LocaleAwareInitializationServiceImpl">
+	<bean id="initService" class="de.unibamberg.minf.core.web.init.LocaleAwareInitializationServiceImpl">
 		<property name="basename" value="classpath:i18n/messages" />
 	</bean>
 	
@@ -32,7 +32,7 @@
 		<property name="defaultLocale" value="de" />
 	</bean>
 	<mvc:interceptors>
-		<bean class="eu.dariah.de.minfba.core.web.interceptor.UserLocaleChangeInterceptor">
+		<bean class="de.unibamberg.minf.core.web.interceptor.UserLocaleChangeInterceptor">
 			<property name="paramName" value="lang" />
 			<property name="initService" ref="initService" />
 		</bean>

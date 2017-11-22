@@ -6,7 +6,7 @@
 
     <groupId>eu.dariah.de</groupId>
 	<artifactId>colreg-parent</artifactId>
-	<version>3.5.3-SNAPSHOT</version>
+	<version>3.6.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>DARIAH-DE Collection Registry Parent Project</name>
 
@@ -21,13 +21,16 @@
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		<eu.dariah.de.colreg.colreg-model>3.6.0-SNAPSHOT</eu.dariah.de.colreg.colreg-model>
+		<eu.dariah.de.colreg.colreg-ui>3.6.0-SNAPSHOT</eu.dariah.de.colreg.colreg-ui>
 
-		<eu.dariah.de.minfba.core-web.version>1.6.0-SNAPSHOT</eu.dariah.de.minfba.core-web.version>
-		<eu.dariah.de.minfba.core-metamodel.version>4.0.1-SNAPSHOT</eu.dariah.de.minfba.core-metamodel.version>
-		<eu.dariah.de.minfba.core-util.version>1.1.0-SNAPSHOT</eu.dariah.de.minfba.core-util.version>
+		<de.unibamberg.minf.core.core-metamodel.version>4.2.4-SNAPSHOT</de.unibamberg.minf.core.core-metamodel.version>
+		<de.unibamberg.minf.core.core-util.version>2.0.0-SNAPSHOT</de.unibamberg.minf.core.core-util.version>
+		<de.unibamberg.minf.core.core-web.version>2.0.2-SNAPSHOT</de.unibamberg.minf.core.core-web.version>
 		
-		<eu.dariah.de-dariahsp-core.version>1.0.0-SNAPSHOT</eu.dariah.de-dariahsp-core.version>
-		
+		<eu.dariah.de-dariahsp-core.version>1.2.2-SNAPSHOT</eu.dariah.de-dariahsp-core.version>
+				
 		<org.springframework-version>4.3.6.RELEASE</org.springframework-version>
 		<org.springsecurity-version>4.2.1.RELEASE</org.springsecurity-version>
 		

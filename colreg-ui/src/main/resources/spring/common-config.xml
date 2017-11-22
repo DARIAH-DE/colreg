@@ -10,7 +10,7 @@
 	    <property name="resources" ref="configLocation"/>
 	</bean>
 
-	<bean class="eu.dariah.de.minfba.core.util.init.ListAwarePropertySourcesPlaceholderConfigurer">
+	<bean class="de.unibamberg.minf.core.util.init.ListAwarePropertySourcesPlaceholderConfigurer">
 	    <property name="properties" ref="properties" />
 	    <property name="objectMapper" ref="objectMapper" />
 	    <property name="conversionService" ref="conversionService" />
@@ -19,7 +19,7 @@
 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
             <list>
-                <bean class="eu.dariah.de.minfba.core.util.conversion.JsonToStringConverter" />
+                <bean class="de.unibamberg.minf.core.util.conversion.JsonToStringConverter" />
             </list>
         </property>
     </bean>

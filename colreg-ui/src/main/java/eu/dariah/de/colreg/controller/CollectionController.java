@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
@@ -36,7 +37,7 @@ import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
-import eu.dariah.de.minfba.core.web.pojo.ModelActionPojo;
+
 
 @Controller
 @RequestMapping(value={"/collections/", "/drafts/"})
