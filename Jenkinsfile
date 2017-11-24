@@ -12,7 +12,7 @@ node {
 
   stage('Publish') { 
     def pom = readMavenPom file: 'pom.xml'
-    def uiVersion = pom.properties.eu.dariah.de.colreg.colreg-model
+    def uiVersion = pom.project.properties.eu.dariah.de.colreg.colreg-model
     def release = uiVersion.contains("RELEASE")
     def snapshot = uiVersion.contains("SNAPSHOT")
 
