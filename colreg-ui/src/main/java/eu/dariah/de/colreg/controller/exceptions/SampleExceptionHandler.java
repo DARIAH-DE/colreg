@@ -40,6 +40,8 @@ public class SampleExceptionHandler {
 		m.addAttribute("errorMsg", e.getMessage());
 		m.addAttribute("url", req.getRequestURL());
 		m.addAttribute("exception", e);
+
+		logger.error("Caught server runtime (500) error:", e); 
 		
 		return DEFAULT_ERROR_VIEW;
 	}

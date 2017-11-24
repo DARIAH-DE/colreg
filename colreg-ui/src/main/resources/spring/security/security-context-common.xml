@@ -18,6 +18,11 @@
     
     
     <security:http entry-point-ref="securityEntryPoint" use-expressions="false" access-decision-manager-ref="accessDecisionManager" >
+		<security:intercept-url pattern="/user/**" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/protected/**" access="IS_AUTHENTICATED_FULLY"/>
+        
+        <security:intercept-url pattern="/overprotected/**" access="ROLE_UBERROLE"/>
+        
         <security:intercept-url pattern="/saml/web/**" access="IS_AUTHENTICATED_FULLY"/>
         <!-- <security:intercept-url pattern="/saml/web/**" access="ROLE_ADMIN"/> -->
         
@@ -56,11 +61,6 @@
     <!-- The filter is waiting for connections on URL suffixed with filterSuffix and presents SP metadata there -->
     <bean id="metadataDisplayFilter" class="org.springframework.security.saml.metadata.MetadataDisplayFilter"/>
     
-    <!-- This probably needs to be changed to a persisting extension of BaseUserService -->
-    <bean id="userDetailsService" class="eu.dariah.de.colreg.service.UserServiceImpl">
-    	<property name="defaultAuthority" value="Authenticated User" />
-    </bean>
-    
     <!-- Filter automatically generates default SP metadata -->
     <!-- Utilized only if no path to external metadata has been set (compare bean id="metadata") -->
     <bean id="metadataGeneratorFilter" class="eu.dariah.de.dariahsp.saml.metadata.ConditionalMetadataGeneratorFilter">
@@ -85,6 +85,7 @@
     
 	<bean id="authInfoHelper" class="eu.dariah.de.dariahsp.web.AuthInfoHelper">
 		<property name="roleLevelVoter" ref="roleLevelVoter" />
+		<property name="authenticationProvider" ref="authenticationProvider" />
 	</bean>
 	
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
@@ -113,7 +114,7 @@
     <bean class="org.springframework.security.saml.SAMLBootstrap"/>
 
 	<!-- Central storage of cryptographic keys -->
-    <bean id="keyManager" class="org.springframework.security.saml.key.JKSKeyManager">
+    <bean id="keyManager" class="eu.dariah.de.dariahsp.saml.key.KeyManagerWrapper">
         <constructor-arg value="file:${auth.saml.keystore.path:#{null}}"/>
         <constructor-arg type="java.lang.String" value="${auth.saml.keystore.pass:#{null}}"/>
         <constructor-arg>

@@ -12,6 +12,7 @@
     
 
 	<import resource="security-context-common.xml"/>
+	<import resource="security-context-service-specific.xml"/>
 
     <!-- Scan for auto-wiring classes in spring saml packages -->
     <context:component-scan base-package="org.springframework.security.saml"/>  
@@ -38,7 +39,7 @@
     </bean>
 
     <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider ref="samlAuthenticationProvider"/>
+        <security:authentication-provider ref="authenticationProvider"/>
     </security:authentication-manager>
     
     <!-- Logger for SAML messages and events -->
@@ -176,7 +177,7 @@
     </bean>
 
     <!-- SAML Authentication Provider responsible for validating of received SAML messages -->
-    <bean id="samlAuthenticationProvider" class="eu.dariah.de.dariahsp.saml.SAMLAuthenticationProvider">
+    <bean id="authenticationProvider" class="eu.dariah.de.dariahsp.saml.SAMLAuthenticationProvider">
         <property name="userDetails" ref="userDetailsService" />
         <property name="attributeAggregationService" ref="attributeAggregationService" />
     </bean>
