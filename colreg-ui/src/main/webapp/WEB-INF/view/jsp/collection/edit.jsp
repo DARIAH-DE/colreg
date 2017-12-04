@@ -668,7 +668,7 @@
 					<div class="col-sm-3">
 						<c:choose>
 							<c:when test="${editMode}">
-								<input type="number" id="size" name="size" value="${collection.size}" class="form-control" />
+								<input type="number" id="size" name="size" value="${collection.size}" class="form-control" />								
 							</c:when>
 							<c:otherwise>
 								<label class="control-label">
@@ -677,6 +677,29 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+					<div class="col-sm-3">
+						<c:choose>
+							<c:when test="${editMode}">
+								<select id="uomId" name="uomId" class="form-control form-control-subcontrol">
+									<c:forEach items="${unitsOfMeasurement}" var="unitOfMeasurement">
+										<c:set var="selected"></c:set>
+										<c:if test="${uomId==unitOfMeasurement.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+										<option value="${unitOfMeasurement.id}" ${selected}>${unitOfMeasurement.name}</option>
+									</c:forEach>
+								</select>
+							</c:when>
+							<c:otherwise>
+								<label class="control-label">
+									<a href="javascript:void(0)">~Placeholder</a>
+								</label>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<c:if test="${editMode}">
+						<div class="col-sm-3">
+							<button onclick="editor.triggerAddUnitOfMeasurement(this);" class="btn btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+						</div>
+					</c:if>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="size" />
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">

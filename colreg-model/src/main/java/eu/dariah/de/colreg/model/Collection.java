@@ -51,6 +51,7 @@ public class Collection extends VersionedEntityImpl {
 	private String itemsCreated;
 	
 	private Long size;
+	private String uomId;
 	
 	// Legal information
 	@Valid private List<CollectionAgentRelation> agentRelations;
@@ -95,6 +96,9 @@ public class Collection extends VersionedEntityImpl {
 	
 	public Long getSize() { return size; }
 	public void setSize(Long size) { this.size = size; }
+	
+	public String getUomId() { return uomId; }
+	public void setUomId(String uomId) { this.uomId = uomId; }
 	
 	public List<CollectionAgentRelation> getAgentRelations() { return agentRelations; }
 	public void setAgentRelations(List<CollectionAgentRelation> agentRelations) { this.agentRelations = agentRelations; }

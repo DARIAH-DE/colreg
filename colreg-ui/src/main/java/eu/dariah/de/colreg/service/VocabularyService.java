@@ -10,6 +10,7 @@ import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
+import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 
 public interface VocabularyService {
 	public List<Language> queryLanguages(String query);
@@ -30,4 +31,6 @@ public interface VocabularyService {
 	public AccessType findAccessTypeById(String id);
 	public AccessType findAccessTypeByIdentfier(String string);
 	public AgentType findAgentTypeById(String agentTypeId);
+
+	public List<UnitOfMeasurement> findAllUnitsOfMeasurement();
 }

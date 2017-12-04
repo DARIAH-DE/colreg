@@ -206,6 +206,8 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		
+		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
+		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
 		}
