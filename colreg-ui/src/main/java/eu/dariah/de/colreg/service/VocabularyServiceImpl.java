@@ -134,4 +134,14 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public List<UnitOfMeasurement> findAllUnitsOfMeasurement() {
 		return uomDao.findAll();
 	}
+
+	@Override
+	public UnitOfMeasurement findUnitOfMeasurementByName(String uom) {
+		return uomDao.findOne(Query.query(Criteria.where("name").is(uom.trim())));
+	}
+
+	@Override
+	public void saveUnitOfMeasurement(UnitOfMeasurement unit) {
+		uomDao.save(unit);
+	}
 }

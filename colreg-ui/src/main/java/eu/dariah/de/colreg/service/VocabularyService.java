@@ -33,4 +33,6 @@ public interface VocabularyService {
 	public AgentType findAgentTypeById(String agentTypeId);
 
 	public List<UnitOfMeasurement> findAllUnitsOfMeasurement();
+	public UnitOfMeasurement findUnitOfMeasurementByName(String uom);
+	public void saveUnitOfMeasurement(UnitOfMeasurement unit);
 }

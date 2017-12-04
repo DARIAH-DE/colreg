@@ -16,7 +16,9 @@ $(document).ready(function() {
 });
 
 var CollectionEditor = function() {
-	this.prepareTranslations([]);
+	this.prepareTranslations([
+		"~eu.dariah.de.colreg.view.collection.labels.add_uom"
+	]);
 	this.initVocabularySources();
 	this.initEditorComponents();
 	
@@ -268,3 +270,28 @@ CollectionEditor.prototype.renderAgentSuggestion = function(agent) {
 	return  "<strong>" + agent.name + " " + (agent.foreName!==undefined ? agent.foreName : "") + "</strong><br />" +
 			"<small><em>ID:" + agent.entityId + "</em></small>";
 };
+
+CollectionEditor.prototype.triggerAddUnitOfMeasurement = function() {
+	bootbox.prompt(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.add_uom"), function(result){ 
+		$.ajax({
+	        url: __util.composeUrl("vocabulary/uom/async/add"),
+	        data: { uom: result },
+	        type: "GET",
+	        async: false,
+	        encoding: "UTF-8",
+	        dataType: "json",
+	        success: function(data) {
+	        	if (!data.success) {
+	        		$("#uom-hint .uom-error-text").html("<small>" + data.message.messageBody + "</small>")
+	        		$("#uom-hint").show();
+	        	} else {
+	        		var newoption = $("<option>").prop("value", data.pojo.id).text(data.pojo.name);
+	        		$("#uomId").append(newoption);
+	        		$("#uomId option[value=" + data.pojo.id + "]").attr("selected", "selected");
+	        		$("#uom-hint").hide();
+	        	}
+	        }
+	    });
+	});
+}
+

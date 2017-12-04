@@ -672,35 +672,54 @@
 							</c:when>
 							<c:otherwise>
 								<label class="control-label">
-									<a href="javascript:void(0)">${collection.size}</a>
+									<a href="javascript:void(0)">${collection.size}</a> 
+									
+									<c:set var="uomCode">~eu.dariah.de.colreg.model.vocabulary.uom.not_specified</c:set>
+									<c:set var="uomText"><s:message code="${uomCode}" /></c:set>
+									<c:if test="${uomText==uomCode}">
+										<c:set var="uomText">Not specified</c:set>
+									</c:if>
+									<c:forEach items="${unitsOfMeasurement}" var="unitOfMeasurement">
+										<c:if test="${collection.uomId==unitOfMeasurement.id}">
+											<c:set var="uomCode">~eu.dariah.de.colreg.model.vocabulary.uom.${unitOfMeasurement.messageCode}</c:set>
+											<c:set var="uomText"><s:message code="${uomCode}" /></c:set>
+											<c:if test="${uomText==uomCode}">
+												<c:set var="uomText">${unitOfMeasurement.name}</c:set>
+											</c:if>
+										</c:if>
+									</c:forEach>
+									<a href="javascript:void(0)">${uomText}</a>
 								</label>
 							</c:otherwise>
 						</c:choose>
 					</div>
 					<div class="col-sm-3">
-						<c:choose>
-							<c:when test="${editMode}">
-								<select id="uomId" name="uomId" class="form-control form-control-subcontrol">
-									<c:forEach items="${unitsOfMeasurement}" var="unitOfMeasurement">
-										<c:set var="selected"></c:set>
-										<c:if test="${uomId==unitOfMeasurement.id}"><c:set var="selected">selected="selected"</c:set></c:if>
-										<option value="${unitOfMeasurement.id}" ${selected}>${unitOfMeasurement.name}</option>
-									</c:forEach>
-								</select>
-							</c:when>
-							<c:otherwise>
-								<label class="control-label">
-									<a href="javascript:void(0)">~Placeholder</a>
-								</label>
-							</c:otherwise>
-						</c:choose>
+						<c:if test="${editMode}">
+							<select id="uomId" name="uomId" class="form-control form-control-subcontrol">
+								<c:forEach items="${unitsOfMeasurement}" var="unitOfMeasurement">
+									<c:set var="selected" />
+									<c:set var="uomCode">~eu.dariah.de.colreg.model.vocabulary.uom.${unitOfMeasurement.messageCode}</c:set>
+									<c:set var="uomText"><s:message code="${uomCode}" /></c:set>
+									<c:if test="${uomText==uomCode}">
+										<c:set var="uomText">${unitOfMeasurement.name}</c:set>
+									</c:if>
+									
+									<c:if test="${collection.uomId==unitOfMeasurement.id}"><c:set var="selected">selected="selected"</c:set></c:if>
+									<option value="${unitOfMeasurement.id}" ${selected}>${uomText}</option>
+								</c:forEach>
+							</select>
+						</c:if>
 					</div>
 					<c:if test="${editMode}">
 						<div class="col-sm-3">
-							<button onclick="editor.triggerAddUnitOfMeasurement(this);" class="btn btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+							<button onclick="editor.triggerAddUnitOfMeasurement();" class="btn btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 						</div>
 					</c:if>
 					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="size" />
+					<div id="uom-hint" class="col-sm-6 col-sm-offset-6" style="display: none; margin-top: 4px;">
+						<span class="glyphicon glyphicon-warning-sign glyphicon-color-warning" aria-hidden="true"></span> 
+						<span class="uom-error-text"></span>
+					</div>
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
 							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
