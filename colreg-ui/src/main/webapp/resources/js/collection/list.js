@@ -31,20 +31,24 @@ CollectionTable.prototype.createTable = function() {
 	           "targets": [0],
 	           "class" : "td-no-wrap",
 	           "data": function (row, type, val, meta) { return _this.renderBadgeColumn(row, type, val, meta); }
+	       }, {
+	           "targets": [1],
+	           "data": function (row, type, val, meta) { return _this.renderImageColumn(row, type, val, meta); },
+	           "class" : "td-center"
 	       }, {	
-	    	   "targets": [1],
+	    	   "targets": [2],
 	    	   "data": "entity.title",
 	    	   "width" : "80%"
 	       }, {	
-	    	   "targets": [2],
+	    	   "targets": [3],
 	    	   "data": "entity.type"
 	       }, {	
-	    	   "targets": [3],
+	    	   "targets": [4],
 	    	   "data": function (row, type, val, meta) { return _this.renderAccessColumn(row, type, val, meta); },
 	    	   "width" : "20%",
 	    	  /* "visible" : false*/
 	       }, {	
-	    	   "targets": [4],
+	    	   "targets": [5],
 	    	   "data": function (row, type, val, meta) { return _this.renderVersionColumn(row, type, val, meta); }
 	    	   //"data": "entity.lastChanged",
 	    	   /*"class" : "td-no-wrap",*/
@@ -71,7 +75,15 @@ CollectionTable.prototype.renderVersionColumn = function(row, type, val, meta) {
 	}
 };
 
-CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
+CollectionTable.prototype.renderImageColumn = function(row, type, val, meta) {
+	if (row.entity.imageUrl!==undefined && row.entity.imageUrl!==null) {
+		return "<img class='collection-list-thumb' src=\"" + row.entity.imageUrl + "\" />";
+	} else {
+		return "<img src=\"" + __util.composeUrl("resources/img/page_icon.png") + "\" />";
+	}
+};
+
+CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {	
 	var result = "";
 	if (type=="display") {
 		if (row.entity.state==="deleted") {

@@ -682,7 +682,7 @@
 									<c:forEach items="${unitsOfMeasurement}" var="unitOfMeasurement">
 										<c:if test="${collection.uomId==unitOfMeasurement.id}">
 											<c:set var="uomCode">~eu.dariah.de.colreg.model.vocabulary.uom.${unitOfMeasurement.messageCode}</c:set>
-											<c:set var="uomText"><s:message code="${uomCode}" /></c:set>
+											<c:set var="uomText"><s:message code="${uomCode}" text="~eu.dariah.de.colreg.model.vocabulary.uom.${unitOfMeasurement.messageCode}" /></c:set>
 											<c:if test="${uomText==uomCode}">
 												<c:set var="uomText">${unitOfMeasurement.name}</c:set>
 											</c:if>
@@ -699,7 +699,7 @@
 								<c:forEach items="${unitsOfMeasurement}" var="unitOfMeasurement">
 									<c:set var="selected" />
 									<c:set var="uomCode">~eu.dariah.de.colreg.model.vocabulary.uom.${unitOfMeasurement.messageCode}</c:set>
-									<c:set var="uomText"><s:message code="${uomCode}" /></c:set>
+									<c:set var="uomText"><s:message code="${uomCode}" text="~eu.dariah.de.colreg.model.vocabulary.uom.${unitOfMeasurement.messageCode}" /></c:set>
 									<c:if test="${uomText==uomCode}">
 										<c:set var="uomText">${unitOfMeasurement.name}</c:set>
 									</c:if>

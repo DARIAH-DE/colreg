@@ -6,6 +6,10 @@
 	border: 1px solid #000;
 }
 
+.collection-list-thumb {
+	border: 1px solid #999;
+}
+
 /*!
  *	Data Tables
  */
@@ -33,6 +37,11 @@
 .td-no-wrap {
 	white-space: nowrap;
 }
+
+.td-center {
+	text-align: center;
+}
+
 
 .dataTable tbody tr td {
 	cursor: pointer;

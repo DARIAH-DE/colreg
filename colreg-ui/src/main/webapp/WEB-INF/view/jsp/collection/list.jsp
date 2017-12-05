@@ -46,6 +46,7 @@
 						<tr>
 							<th><!-- ~Badges --></th> 
 							<th><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.access" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></th>
@@ -53,7 +54,7 @@
 					</thead>
 					<tbody>
 					<tr>
-						<td colspan="5" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+						<td colspan="6" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
 					</tr>
 					</tbody>
 				</table>

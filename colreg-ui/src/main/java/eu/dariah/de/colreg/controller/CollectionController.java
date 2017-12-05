@@ -215,7 +215,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
 		
-		if (c.getCollectionImage()!=null) {
+		if (c.getCollectionImage()!=null && !c.getCollectionImage().isEmpty()) {
 			try {
 				File image = imageService.findImage(c.getCollectionImage());
 				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();

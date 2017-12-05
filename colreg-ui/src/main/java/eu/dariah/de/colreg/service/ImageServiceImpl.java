@@ -35,10 +35,10 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 	@Value("${paths.images_backup:#{null}}")
 	private String imageBackupPath;
 	
-	@Value("${images.width:280}") 
+	@Value("${images.width:150}") 
 	private int imagesWidth;
 	
-	@Value("${images.height:140}") 
+	@Value("${images.height:150}") 
 	private int imagesHeight;
 	
 	

@@ -1,5 +1,7 @@
 package eu.dariah.de.colreg.service;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
@@ -31,6 +34,8 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired private CollectionDao collectionDao;
 	@Autowired private AgentDao agentDao;
 	@Autowired private AccessTypeDao accessTypeDao;
+	
+	@Autowired private ImageService imageService;
 
 	@Override
 	public Collection createCollection(String userId) {
@@ -240,6 +245,16 @@ public class CollectionServiceImpl implements CollectionService {
 			}
 			pojo.setAccess(accessTypes);
 			pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
+		}
+		
+		if (collection.getCollectionImage()!=null) {
+			try {
+				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
+				builder.path("/image/" + collection.getCollectionImage());
+				URI imageUri = builder.build().toUri();		
+				
+				pojo.setImageUrl(imageUri.toString());
+			} catch (Exception e) {	}
 		}
 		
 		pojo.setType(collection.getCollectionType());
