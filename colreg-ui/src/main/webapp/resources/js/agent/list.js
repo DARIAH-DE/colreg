@@ -32,7 +32,7 @@ AgentTable.prototype.createTable = function() {
 	    	   "class" : "td-no-wrap"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": "entity.lastChanged",
+	    	   "data": function (row, type, val, meta) { return _this.renderVersionColumn(row, type, val, meta); }
 	    	  /* "visible" : false*/
 	       }	       
 	   ]
@@ -42,6 +42,14 @@ AgentTable.prototype.createTable = function() {
         var entityId = _this._base.table.row(this).data().entity.entityId;
         location.href = __util.composeUrl("agents/" + entityId);
     } );
+};
+
+AgentTable.prototype.renderVersionColumn = function(row, type, val, meta) {
+	if (type=="display") {
+		return row.entity.lastChanged;
+	} else {
+		return row.entity.versionTimestamp;
+	}
 };
 
 AgentTable.prototype.renderBadgeColumn = function(row, type, val, meta) {

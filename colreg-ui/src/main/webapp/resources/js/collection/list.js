@@ -45,7 +45,8 @@ CollectionTable.prototype.createTable = function() {
 	    	  /* "visible" : false*/
 	       }, {	
 	    	   "targets": [4],
-	    	   "data": "entity.lastChanged",
+	    	   "data": function (row, type, val, meta) { return _this.renderVersionColumn(row, type, val, meta); }
+	    	   //"data": "entity.lastChanged",
 	    	   /*"class" : "td-no-wrap",*/
 	    	  /* "visible" : false*/
 	       }	       
@@ -60,6 +61,14 @@ CollectionTable.prototype.createTable = function() {
 
 CollectionTable.prototype.renderAccessColumn = function(row, type, val, meta) {
 	return row.entity.access===undefined ? "" : row.entity.access;
+};
+
+CollectionTable.prototype.renderVersionColumn = function(row, type, val, meta) {
+	if (type=="display") {
+		return row.entity.lastChanged;
+	} else {
+		return row.entity.versionTimestamp;
+	}
 };
 
 CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
