@@ -2,6 +2,8 @@ package eu.dariah.de.colreg.model;
 
 import java.util.List;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -32,6 +34,9 @@ public class Agent extends VersionedEntityImpl {
 	@URL(message="{~eu.dariah.de.colreg.validation.agent.webpage}")
 	private String webPage;
 	private String phone;
+	
+	private String gndId;
+	
 	private List<String> providedIdentifier;
 	private String parentAgentId;
 	private boolean deleted;
@@ -56,6 +61,9 @@ public class Agent extends VersionedEntityImpl {
 	
 	public String getPhone() { return phone; }
 	public void setPhone(String phone) { this.phone = phone; }
+	
+	public String getGndId() { return gndId; }
+	public void setGndId(String gndId) { this.gndId = gndId; }
 	
 	public List<String> getProvidedIdentifier() { return providedIdentifier; }
 	public void setProvidedIdentifier(List<String> providedIdentifier) { this.providedIdentifier = providedIdentifier; }

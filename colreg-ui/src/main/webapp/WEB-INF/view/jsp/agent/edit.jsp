@@ -172,8 +172,7 @@
 						</div>
 					</div>
 				</div>
-			</s:bind>
-			
+			</s:bind>			
 		</div>
 				
 		
@@ -181,7 +180,7 @@
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.agent.groups.extended_description" /></h4>
 			</div>
-			
+						
 			<!-- Agent address -->
 			<s:bind path="addresses*">
 				<div class="form-group" >
@@ -316,6 +315,26 @@
 			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.agent.groups.contextual" /></h4>
 			</div>
+			
+			<!-- GndId -->
+			<s:bind path="gndId">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="gndId" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.gnd_id" /></label>
+					<div id="gnd-id-container" class="col-sm-9">
+						<c:if test="${editMode}"><sf:input path="gndId" class="form-control" /></c:if>
+						<c:if test="${!editMode}">
+							<label class="control-label"><a href="javascript:void(0)">${agent.gndId}</a></label>
+						</c:if>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="gndId" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.gnd_id" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
 			
 			<!-- Identifiers -->
 			<div class="form-group">
