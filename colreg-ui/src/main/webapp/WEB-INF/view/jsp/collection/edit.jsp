@@ -22,7 +22,7 @@
 <div id="main-content">
 	<h1><s:message code="~eu.dariah.de.colreg.titles.collection_editor" /></h1>
 	<input type="hidden" id="js-form-action" value="${actionPath}" />
-	<sf:form method="POST" action="javascript:void(0);" modelAttribute="collection" class="form-horizontal" autocomplete="off">
+	<sf:form method="POST" action="javascript:void(0);" modelAttribute="collection" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
 		<span id="entityId" style="display: none;">${collection.entityId}</span>
 		
 		<div class="form-group">
@@ -951,6 +951,62 @@
 							<s:message code="~eu.dariah.de.colreg.editorhint.collection.associated_project" />
 						</div>
 					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Collection image -->
+			<s:bind path="collectionImage">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="collectionImage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></label>
+					<c:choose>
+						<c:when test="${editMode}">
+							<div class="col-sm-9">
+								<input type="hidden" name="collectionImage" id="collectionImage" value="${collection.collectionImage}" />
+								<input id="collectionImageFile" name="collectionImageFile" type="file" />						
+							</div>
+							<div class="col-sm-9 col-sm-offset-3">
+								<label class="control-label">
+									<c:choose>
+										<c:when test="${collectionImageUrl!=null}">
+											<img id="collection-image-preview" src="${collectionImageUrl}" />
+										</c:when>
+										<c:otherwise>
+											<img id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />
+										</c:otherwise>
+									</c:choose>
+									<button id="btn-remove-collection-image" <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> onclick="editor.triggerRemoveCollectionImage();" class="btn btn-xs pull-right btn-link">
+										<span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span>
+									</button>
+								</label>
+							</div>
+							<div class="col-sm-9 col-sm-offset-3">
+								<label class="control-label">
+									<c:choose>
+										<c:when test="${collectionImageUrl!=null}">
+											<a id="collection-image-hint" href="javascript:void(0)">${collectionImageUrl} - ${collectionImageSize} bytes</a>
+										</c:when>
+										<c:otherwise>
+											<a id="collection-image-hint" href="javascript:void(0)"><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_image" /></a>
+										</c:otherwise>
+									</c:choose>	 
+								</label>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-sm-9">
+								<label class="control-label">
+									<c:choose>
+										<c:when test="${collectionImageUrl!=null}">
+											<img id="collection-image-preview" src="${collectionImageUrl}" />
+										</c:when>
+										<c:otherwise>
+											<img id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />
+										</c:otherwise>
+									</c:choose>
+								</label>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</s:bind>
 			

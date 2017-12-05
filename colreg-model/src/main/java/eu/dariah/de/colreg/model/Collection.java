@@ -53,6 +53,8 @@ public class Collection extends VersionedEntityImpl {
 	private Long size;
 	private String uomId;
 	
+	private String collectionImage;
+	
 	// Legal information
 	@Valid private List<CollectionAgentRelation> agentRelations;
 	
@@ -147,6 +149,9 @@ public class Collection extends VersionedEntityImpl {
 	
 	public String getItemsCreated() { return itemsCreated; }
 	public void setItemsCreated(String itemsCreated) { this.itemsCreated = itemsCreated; }
+	
+	public String getCollectionImage() { return collectionImage; }
+	public void setCollectionImage(String collectionImage) { this.collectionImage = collectionImage; }
 	
 	public List<String> getItemTypeIds() { return itemTypeIds; }
 	public void setItemTypeIds(List<String> itemTypeIds) { this.itemTypeIds = itemTypeIds; }

@@ -12,6 +12,8 @@
 	<mvc:annotation-driven />
 	<mvc:resources location="/resources/" mapping="/resources/**" cache-period="31556926"/>
 	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
 	<bean id="initService" class="de.unibamberg.minf.core.web.init.LocaleAwareInitializationServiceImpl">
 		<property name="basename" value="classpath:i18n/messages" />
 	</bean>

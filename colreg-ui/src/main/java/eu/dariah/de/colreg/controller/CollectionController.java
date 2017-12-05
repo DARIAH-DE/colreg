@@ -2,6 +2,8 @@ package eu.dariah.de.colreg.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.io.File;
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
@@ -33,6 +36,7 @@ import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.ImageService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -48,6 +52,8 @@ public class CollectionController extends VersionedEntityController {
 	
 	@Autowired private CollectionValidator validator;
 	@Autowired private LicenseService licenseService;
+	
+	@Autowired private ImageService imageService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale, HttpServletRequest request) {		
@@ -128,6 +134,7 @@ public class CollectionController extends VersionedEntityController {
 		if (!auth.isAuth()) {
 			return "redirect:/" + this.getLoginUrl();
 		}
+		
 		return this.doSave(collection, id, false, bindingResult, auth, model, redirectAttributes);
 	}
 	
@@ -138,13 +145,14 @@ public class CollectionController extends VersionedEntityController {
 		if (!auth.isAuth()) {
 			return "redirect:/" + this.getLoginUrl();
 		}
+		
 		return this.doSave(collection, id, true, bindingResult, auth, model, redirectAttributes);
-	}
-	
+	}	
 	
 	private String doSave(Collection collection, String entityId, boolean doPublish, BindingResult bindingResult, AuthPojo auth, Model model, final RedirectAttributes redirectAttributes) {
 		collection.setEntityId(entityId);
 		validator.validate(collection, bindingResult);
+				
 		if (bindingResult.hasErrors()) {
 			return this.fillCollectionEditorModel(collection.getEntityId(), collection, auth, model);
 		}
@@ -205,8 +213,22 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
 		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
-		
 		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
+		
+		if (c.getCollectionImage()!=null) {
+			try {
+				File image = imageService.findImage(c.getCollectionImage());
+				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
+				builder.path("/image/" + image.getName());
+				URI imageUri = builder.build().toUri();		
+				
+				model.addAttribute("collectionImageUrl", imageUri);
+				model.addAttribute("collectionImageSize", image.length());
+			} catch (Exception e) {
+				logger.warn("Failed to load collection image", e);
+			}
+		}
+		
 		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));

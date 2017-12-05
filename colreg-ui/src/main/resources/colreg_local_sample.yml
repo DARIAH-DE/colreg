@@ -1,5 +1,6 @@
 paths:
   main: /etc/dfa/colreg
+  images: /var/lib/dfa/colreg
 
 api:
   dme:

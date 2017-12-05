@@ -20,12 +20,10 @@ import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
 import eu.dariah.de.colreg.model.Access;
-import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.pojo.AccessPojo;
-import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 
 @Service
@@ -62,6 +60,10 @@ public class CollectionServiceImpl implements CollectionService {
 		} else {
 			c.setEntityCreator(c.getVersionCreator());
 			c.setEntityTimestamp(c.getVersionTimestamp());
+		}
+		
+		if (c.getCollectionImage().isEmpty()) {
+			c.setCollectionImage(null);
 		}
 		
 		// Save new object first...just to be sure

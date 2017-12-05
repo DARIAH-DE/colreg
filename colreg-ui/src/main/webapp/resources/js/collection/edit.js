@@ -16,8 +16,14 @@ $(document).ready(function() {
 });
 
 var CollectionEditor = function() {
+	this.collectionId = $("#entityId").text();
+	this.imageMaxFileSize = 2097152;
+	
 	this.prepareTranslations([
-		"~eu.dariah.de.colreg.view.collection.labels.add_uom"
+		"~eu.dariah.de.colreg.view.collection.labels.add_uom",
+		"~eu.dariah.de.colreg.view.collection.labels.no_image",
+		"~eu.dariah.de.colreg.view.collection.labels.image_not_an_image",
+		"~eu.dariah.de.colreg.view.collection.labels.image_too_large"
 	]);
 	this.initVocabularySources();
 	this.initEditorComponents();
@@ -31,6 +37,8 @@ var CollectionEditor = function() {
 	this.registerNavFormControlEvents();
 	this.registerFormControlSelectionEvents($("form"));
 	this.initRightsContainer();
+	
+	$("#collectionImageFile").bind("change", this.triggerUploadImage);
 };
 
 CollectionEditor.prototype = new BaseEditor();
@@ -293,5 +301,64 @@ CollectionEditor.prototype.triggerAddUnitOfMeasurement = function() {
 	        }
 	    });
 	});
-}
+};
 
+CollectionEditor.prototype.triggerUploadImage = function(e) {
+	var _this = editor;
+	
+	// Check for the various File API support.
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		var files = e.target.files; // FileList object
+
+	    // files is a FileList of File objects. List some properties.
+	    var output = [];
+	    for (var i = 0, f; f = files[i]; i++) {
+	    	// Only process image files.
+	        if (!f.type.match('image.*')) {
+	        	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.image_not_an_image"));
+	        	continue;
+	        }
+	        if (f.size>_this.imageMaxFileSize) {
+	        	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.image_too_large") + " 2 MB");
+	        	continue;
+	        }	        
+	        var formData = new FormData();
+	        formData.append("file", f, f.name);
+	        formData.append("collectionId", _this.collectionId);
+	        
+	        $.ajax({
+		        url: __util.composeUrl("image/async/upload"),
+		        data: formData,
+		        type: "POST",
+		        beforeSend: function( xhr ) {
+		        	xhr.setRequestHeader("X-File-Name", f.name);
+		        	xhr.setRequestHeader("X-File-Size", f.size);
+		        	xhr.setRequestHeader("X-File-Type", f.type);
+		        },
+		        cache: false,
+		        contentType: false,
+		        processData: false,
+		        timeout: 20000,
+		        success: function(data) {
+		        	if (data.success) {
+			        	$("#collection-image-preview").prop("src", data.pojo.uri);
+			        	$("#collectionImage").val(data.pojo.id);
+			        	$("#collection-image-hint").html((data.pojo.uri || 'n/a') + ') - ' + data.pojo.size + ' bytes');
+			        	$("#btn-remove-collection-image").show();
+		        	} else {
+		        		_this.triggerRemoveCollectionImage();
+		        		$("#collection-image-hint").html(data.objectErrors[0]);
+		        	}
+		        }
+		    });
+	    }
+	}
+};
+
+CollectionEditor.prototype.triggerRemoveCollectionImage = function() {
+	$("#collection-image-preview").prop("src", __util.composeUrl("resources/img/page_icon.png"));
+	$("#collectionImage").val(null);
+	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.no_image"));
+	
+	$("#btn-remove-collection-image").hide();
+};
