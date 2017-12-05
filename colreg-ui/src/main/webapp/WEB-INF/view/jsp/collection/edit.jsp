@@ -968,10 +968,10 @@
 								<label class="control-label">
 									<c:choose>
 										<c:when test="${collectionImageUrl!=null}">
-											<img id="collection-image-preview" src="${collectionImageUrl}" />
+											<img class="collection-image-thumb" id="collection-image-preview" src="${collectionImageUrl}" />
 										</c:when>
 										<c:otherwise>
-											<img id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />
+											<img class="collection-image-thumb" id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />
 										</c:otherwise>
 									</c:choose>
 									<button id="btn-remove-collection-image" <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> onclick="editor.triggerRemoveCollectionImage();" class="btn btn-xs pull-right btn-link">
