@@ -98,7 +98,6 @@ BaseTable.prototype.handleAjaxError = function(xhr, textStatus, error) {
     } else {
         //alert(__translator.translate("~eu.dariah.de.colreg.common.view.notifications.async_general_error"));
     }
-	alert(textStatus);
 	this.error = true;
 	if (this.table.fnProcessingIndicator!=undefined) {
 		this.table.fnProcessingIndicator(false);
