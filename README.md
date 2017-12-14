@@ -4,6 +4,8 @@ The DARIAH-DE Collection Registry (CR) is a web application that serves as centr
 
 Further information on the concept of the Collection Registry can be accessed following https://de.dariah.eu/collection-registry.
 
+Bugs are tracked at: https://minfba.de.dariah.eu/mantisbt/set_project.php?project_id=21
+
 ## Prerequisites
 
 The installation of a CR instance requires the setup of some required components:
