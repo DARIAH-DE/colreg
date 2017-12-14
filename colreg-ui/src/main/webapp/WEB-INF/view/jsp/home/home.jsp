@@ -28,8 +28,15 @@
 			<div id="main-content">
 				<div class="row">
 					<div class="col-sm-12 col-md-8">
-						<h2><s:message code="~eu.dariah.de.colreg.common.labels.object_network" /></h2>
-						<p><em><small><s:message code="~eu.dariah.de.colreg.common.labels.object_network_double_click" /></em></small></p>						
+						<div class="clearfix">
+							<h2 class="pull-left"><s:message code="~eu.dariah.de.colreg.common.labels.object_network" /></h2>
+							<div class="pull-left">
+								<button type="button" class="btn btn-link btn-lg" data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="focus" 
+								data-content="<s:message code="~eu.dariah.de.colreg.common.labels.object_network_info" />"><i class="fa fa-info-circle fa-color-info" aria-hidden="true"></i></button>
+								<button type="button" id="btn-download-svg" class="btn btn-link btn-sm" data-placement="top"><i class="fa fa-download" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.graph.download_svg" /></button>
+							</div>
+						</div>
+					
 						<div id="graph-container"></div>
 					</div>
 					<div class="col-sm-12 col-md-4">

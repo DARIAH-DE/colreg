@@ -13,6 +13,7 @@
 			<add-attribute type="string" value="bootstrap/bootstrap-customization.css" />
 			<add-attribute type="string" value="bootstrap/bootstrap-modal-bs3patch.css" />
 			<add-attribute type="string" value="bootstrap/bootstrap-modal.css" />
+			<add-attribute type="string" value="font-awesome.min.css" />
 			<add-attribute type="string" value="application.css" />
         </put-list-attribute>
 		<put-list-attribute name="scripts">
@@ -65,6 +66,9 @@
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="sigma/sigma.min.js" />
 			<add-attribute type="string" value="sigma/plugins/sigma.layout.forceAtlas2.min.js" />
+			<add-attribute type="string" value="sigma/plugins/sigma.renderers.customShapes.min.js" />
+			<add-attribute type="string" value="sigma/plugins/sigma.plugins.dragNodes.min.js" />
+			<add-attribute type="string" value="sigma/plugins/sigma.exporters.svg.min.js" />
 			<add-attribute type="string" value="home.js" />
 		</put-list-attribute>
 	</definition>

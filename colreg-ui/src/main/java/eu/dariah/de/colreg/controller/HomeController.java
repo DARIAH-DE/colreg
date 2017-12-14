@@ -174,7 +174,12 @@ public class HomeController extends VersionedEntityController {
 		for (Agent agent : agents) {
 			node = new NodePojo();
 			node.setId(agent.getEntityId());
-			node.setType("agent");
+			
+			if (agent.getForeName()==null) {
+				node.setType("organization");
+			} else {
+				node.setType("person");
+			}
 			
 			String name = (agent.getForeName()==null? "": (agent.getForeName() + " ")) + agent.getName() ;
 			node.setLabel(name);

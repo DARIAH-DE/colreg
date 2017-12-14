@@ -73,19 +73,19 @@
 	cursor: pointer;
 }
 
-.glyphicon-color-info {
+.glyphicon-color-info, .fa-color-info {
 	color: #2AABD2;
 }
 
-.glyphicon-color-success {
+.glyphicon-color-success, .fa-color-success {
 	color: #419641;
 }
 
-.glyphicon-color-warning {
+.glyphicon-color-warning, .fa-color-warning {
 	color: #EB9316;
 }
 
-.glyphicon-color-danger {
+.glyphicon-color-danger, .fa-color-danger {
 	color: #AC2925;
 }
 
