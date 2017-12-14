@@ -33,16 +33,17 @@
 							<div class="pull-left">
 								<button type="button" class="btn btn-link btn-lg" data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="focus" 
 								data-content="<s:message code="~eu.dariah.de.colreg.common.labels.object_network_info" />"><i class="fa fa-info-circle fa-color-info" aria-hidden="true"></i></button>
-								<button type="button" id="btn-download-svg" class="btn btn-link btn-sm" data-placement="top"><i class="fa fa-download" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.graph.download_svg" /></button>
+								<button type="button" id="btn-download-svg" class="btn btn-link btn-lg" data-placement="top" title="<s:message code="~eu.dariah.de.colreg.view.graph.download_svg" />"><i class="fa fa-download" aria-hidden="true"></i></button>
 							</div>
 						</div>
-					
+						<div>
+							<a href="<s:url value="/collections/" />"><i class="fa fa-angle-double-right" aria-hidden="true"></i> <strong>${collectionCount}</strong> <s:message code="~eu.dariah.de.colreg.common.labels.link_to_collections" /></a><br />  
+							<a href="<s:url value="/agents/" />"><i class="fa fa-angle-double-right" aria-hidden="true"></i> <strong>${agentCount}</strong> <s:message code="~eu.dariah.de.colreg.common.labels.link_to_agents" /></a>
+						</div>
 						<div id="graph-container"></div>
 					</div>
 					<div class="col-sm-12 col-md-4">
 						<h2><s:message code="~eu.dariah.de.colreg.common.labels.latest_activities" /></h2>
-						<a href="<s:url value="/collections/" />"><s:message code="~eu.dariah.de.colreg.common.labels.link_to_collections" /></a><br/>
-						<a href="<s:url value="/agents/" />"><s:message code="~eu.dariah.de.colreg.common.labels.link_to_agents" /></a><br />
 						<div id="editor-version-panel">
 							<ul>
 								<c:forEach items="${latest}" var="version">

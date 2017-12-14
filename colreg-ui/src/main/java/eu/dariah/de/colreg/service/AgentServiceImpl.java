@@ -204,4 +204,9 @@ public class AgentServiceImpl implements AgentService {
 		
 		return agentDao.find(q);
 	}
+
+	@Override
+	public long countAgents() {
+		return agentDao.count();
+	}
 }

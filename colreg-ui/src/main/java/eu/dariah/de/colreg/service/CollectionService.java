@@ -25,4 +25,5 @@ public interface CollectionService {
 	public CollectionPojo convertToPojo(Collection collection, Locale locale);
 	public List<Collection> findAllDrafts(String userId);
 	public List<Collection> findLatestChanges(int i, AuthPojo auth);
+	public long countCollections();
 }

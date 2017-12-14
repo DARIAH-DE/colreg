@@ -13,4 +13,5 @@ public interface VersionedEntityDao<T extends VersionedEntityImpl> extends BaseD
 	public List<T> findAllCurrent();
 	public List<T> findAllCurrent(boolean includeDeleted);
 	
+	public long count();
 }

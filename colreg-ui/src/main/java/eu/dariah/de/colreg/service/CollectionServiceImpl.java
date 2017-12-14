@@ -299,4 +299,9 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		return aPojo;
 	}
+
+	@Override
+	public long countCollections() {
+		return collectionDao.count();
+	}
 }

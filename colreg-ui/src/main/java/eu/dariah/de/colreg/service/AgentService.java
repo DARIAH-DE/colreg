@@ -24,4 +24,5 @@ public interface AgentService {
 	public AgentPojo convertToPojo(Agent agent, Locale locale);
 	public List<Agent> findLatestChanges(int i);
 	public AgentType findAgentTypeById(String agentTypeId);
+	public long countAgents();
 }

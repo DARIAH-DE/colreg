@@ -96,6 +96,10 @@ public class HomeController extends VersionedEntityController {
 		
 		this.setUsers(entities);
 		model.addAttribute("latest", entities);
+		
+		model.addAttribute("collectionCount", collectionService.countCollections());
+		model.addAttribute("agentCount", agentService.countAgents());
+		
 		return "home";
 	}
 	

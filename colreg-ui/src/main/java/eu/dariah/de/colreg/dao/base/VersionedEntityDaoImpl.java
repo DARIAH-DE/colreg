@@ -14,6 +14,13 @@ public abstract class VersionedEntityDaoImpl<T extends VersionedEntityImpl> exte
 	}
 	
 	@Override
+	public long count() {
+		Criteria c = Criteria.where("succeedingVersionId").is(null);
+		Query q = new Query(c);
+		return mongoTemplate.count(q, clazz);
+	}
+	
+	@Override
 	public <S extends T> S save(S entity) {
 		return super.save(entity);
 	}

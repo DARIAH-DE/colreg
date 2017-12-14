@@ -16,6 +16,13 @@ public class CollectionDaoImpl extends VersionedEntityDaoImpl<Collection> implem
 	}
 	
 	@Override
+	public long count() {
+		Criteria c = Criteria.where("succeedingVersionId").is(null).and("draftUserId").exists(false);
+		Query q = new Query(c);
+		return mongoTemplate.count(q, clazz);
+	}
+	
+	@Override
 	public List<Collection> findCurrentByParentCollectionId(String id) {
 		return this.find(Query.query(Criteria
 				.where("parentCollectionId").is(id)
