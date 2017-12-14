@@ -28,6 +28,7 @@ import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
+import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
@@ -263,8 +264,11 @@ public class CollectionServiceImpl implements CollectionService {
 	}
 
 	@Override
-	public List<Collection> findLatestChanges(int i) {
-		Query q = new Query();
+	public List<Collection> findLatestChanges(int i, AuthPojo auth) {
+		Criteria c = new Criteria();
+		c.orOperator(Criteria.where("draftUserId").exists(false), Criteria.where("draftUserId").is(auth.getUserId()));
+		
+		Query q = new Query(c);
 		q.limit(i);
 		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
 		

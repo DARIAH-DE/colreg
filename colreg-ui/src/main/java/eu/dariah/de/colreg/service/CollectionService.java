@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
+import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 public interface CollectionService {
 	public Collection createCollection(String userId);
@@ -23,5 +24,5 @@ public interface CollectionService {
 	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale);
 	public CollectionPojo convertToPojo(Collection collection, Locale locale);
 	public List<Collection> findAllDrafts(String userId);
-	public List<Collection> findLatestChanges(int i);
+	public List<Collection> findLatestChanges(int i, AuthPojo auth);
 }

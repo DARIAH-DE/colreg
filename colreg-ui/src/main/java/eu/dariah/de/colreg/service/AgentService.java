@@ -6,6 +6,7 @@ import java.util.Locale;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.pojo.AgentPojo;
+import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 public interface AgentService {
 	public List<Agent> findAllCurrent();

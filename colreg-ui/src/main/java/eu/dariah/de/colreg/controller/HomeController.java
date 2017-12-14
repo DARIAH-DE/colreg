@@ -35,6 +35,7 @@ import eu.dariah.de.colreg.pojo.NodePojo;
 import eu.dariah.de.colreg.pojo.TranslationPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Controller
 @RequestMapping("")
@@ -60,15 +61,17 @@ public class HomeController extends VersionedEntityController {
 	
 	// Just for now
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	public String showHome(Model model, HttpServletResponse response, Locale locale) throws IOException  {
+	public String showHome(Model model, HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException  {
 		List<VersionedEntityImpl> entities = new ArrayList<VersionedEntityImpl>();
 		
-		List<Collection> latestCollections = collectionService.findLatestChanges(5);
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		
+		List<Collection> latestCollections = collectionService.findLatestChanges(10, auth);
 		if (latestCollections!=null && latestCollections.size()>0) {
 			entities.addAll(latestCollections);
 		}
 		
-		List<Agent> latestAgents = agentService.findLatestChanges(5);
+		List<Agent> latestAgents = agentService.findLatestChanges(10);
 		if (latestAgents!=null && latestAgents.size()>0) {
 			entities.addAll(latestAgents);
 		}
