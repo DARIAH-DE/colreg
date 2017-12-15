@@ -48,13 +48,6 @@
 		<bean class="eu.dariah.de.dariahsp.web.AuthInfoHandlerInterceptor">
 			<property name="authInfoHelper" ref="authInfoHelper" />
 		</bean>
-		<mvc:interceptor>
-			<mvc:mapping path="/collections/"/>
-			<mvc:mapping path="/collections/*"/>
-			<mvc:mapping path="/agents/"/>
-			<mvc:mapping path="/agents/*"/>
-			<bean class="eu.dariah.de.colreg.security.UserContextInterceptor" />
-		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<context:component-scan base-package="eu.dariah.de.colreg.controller" />
