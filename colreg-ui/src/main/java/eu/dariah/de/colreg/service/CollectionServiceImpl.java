@@ -304,4 +304,9 @@ public class CollectionServiceImpl implements CollectionService {
 	public long countCollections() {
 		return collectionDao.count();
 	}
+	
+	@Override
+	public long countDrafts(String userId) {
+		return collectionDao.countDrafts(userId);
+	}
 }

@@ -26,4 +26,5 @@ public interface CollectionService {
 	public List<Collection> findAllDrafts(String userId);
 	public List<Collection> findLatestChanges(int i, AuthPojo auth);
 	public long countCollections();
+	public long countDrafts(String userId);
 }

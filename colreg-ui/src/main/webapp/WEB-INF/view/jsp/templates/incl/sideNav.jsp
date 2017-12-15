@@ -12,8 +12,8 @@
 	<c:choose>
 		<c:when test="${_auth!=null && _auth.auth==true}">
 			<h5 class="list-group-header"><s:message code="~eu.dariah.de.colreg.titles.collections" /></h5>
-			<a class="list-group-item${_navigationAttribute=='collections' ? ' active' : ''}" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.public_collections" /></a>
 			<a class="list-group-item${_navigationAttribute=='drafts' ? ' active' : ''}" href="<s:url value='/drafts/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.drafts" arguments="${_draftCount}" /></a>
+			<a class="list-group-item${_navigationAttribute=='collections' ? ' active' : ''}" href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.public_collections" /></a>
 			<hr />
 		</c:when>
 		<c:otherwise>
