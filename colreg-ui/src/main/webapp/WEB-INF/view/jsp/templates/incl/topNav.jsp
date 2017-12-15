@@ -31,6 +31,23 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 							<a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<span class="glyphicon glyphicon-question-sign"></span> <s:message code="~eu.dariah.de.colreg.view.help" /> <span class="caret"></span>
+							</a>
+							<ul role="menu" class="dropdown-menu">
+			    				<li role="presentation"><a href="https://de.dariah.eu/collection-registry" target="_blank"><i class="fa fa-home" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.portal" /></a></li>
+			    				<li role="presentation"><a href="https://wiki.de.dariah.eu/display/publicde/FAQs+zur+Collection+Registry" target="_blank"><i class="fa fa-question-circle" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.faq" /></a></li>
+			    				<li role="presentation"><a href="https://wiki.de.dariah.eu/display/publicde/Die+Collection+Registry" target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.user_guide" /></a></li>
+			    				<li role="presentation"><a href="https://wiki.de.dariah.eu/display/publicde/Best-Practice-Empfehlungen" target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.best_practices" /></a></li>
+			    				<li role="separator" class="divider"></li>
+			    				<li role="presentation"><a href="https://github.com/DARIAH-DE/colreg" target="_blank"><i class="fa fa-github" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.github" /></a></li>
+			    				<li role="presentation"><a href="https://github.com/DARIAH-DE/DCDDM" target="_blank"><i class="fa fa-github" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.dcddm" /></a></li>
+			    				<li role="separator" class="divider"></li>
+			    				<li role="presentation"><a href="https://minfba.de.dariah.eu/mantisbt/changelog_page.php?project_id=21" target="_blank"><i class="fa fa-wrench" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.changelog" /></a></li>
+			    				<li role="presentation"><a href="https://minfba.de.dariah.eu/mantisbt/roadmap_page.php?project_id=21" target="_blank"><i class="fa fa-road" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.view.help.roadmap" /></a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<span class="glyphicon glyphicon-globe"></span> <s:message code="~eu.dariah.de.colreg.titles.languages" /> <span class="caret"></span>
 							</a>
 							<ul role="menu" class="dropdown-menu">
