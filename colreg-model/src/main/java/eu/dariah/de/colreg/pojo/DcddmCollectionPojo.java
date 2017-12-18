@@ -2,9 +2,6 @@ package eu.dariah.de.colreg.pojo;
 
 import java.util.List;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
-@JacksonXmlRootElement(localName = "collection")
 public class DcddmCollectionPojo extends CollectionPojo {
 	private static final long serialVersionUID = 5030563485613906700L;
 	
