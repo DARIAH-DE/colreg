@@ -184,19 +184,19 @@ public class CollectionController extends VersionedEntityController {
 	private String fillCollectionEditorModel(String entityId, Collection c, AuthPojo auth, Model model) {
 		model.addAttribute("collection", c);
 		
-		if (c.getAccessRights()!=null && ObjectId.isValid(c.getAccessRights())) {
+		if (c.getAccessRights()==null || ObjectId.isValid(c.getAccessRights())) {
 			model.addAttribute("accessRightsIsLicenseId", true);
 		} else {
 			model.addAttribute("accessRightsIsLicenseId", false);
 		}
 		
-		if (c.getCollectionDescriptionRights()!=null && ObjectId.isValid(c.getCollectionDescriptionRights())) {
+		if (c.getCollectionDescriptionRights()==null || ObjectId.isValid(c.getCollectionDescriptionRights())) {
 			model.addAttribute("collectionDescriptionRightsIsLicenseId", true);
 		} else {
 			model.addAttribute("collectionDescriptionRightsIsLicenseId", false);
 		}
 
-		if (c.getItemRights()!=null && ObjectId.isValid(c.getItemRights())) {
+		if (c.getItemRights()==null || ObjectId.isValid(c.getItemRights())) {
 			model.addAttribute("itemRightsIsLicenseId", true);
 		} else {
 			model.addAttribute("itemRightsIsLicenseId", false);
