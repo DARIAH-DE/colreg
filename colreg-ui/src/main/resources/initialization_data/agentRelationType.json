@@ -14,5 +14,13 @@
 		"identifier": "creator",
 		"label": "Creator",
 		"description": "Agent created the collection"
+	},
+	{
+		"_id": {
+			"$oid": "5a37c39cff239628221ba091"
+		},
+    	"identifier" : "sponsor", 
+    	"label" : "Sponsor", 
+    	"description" : "Agent funding the collection"
 	}
 ]
