@@ -1,6 +1,5 @@
 package eu.dariah.de.colreg.service;
 
-import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +21,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccrualPeriodicityDao;
+import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
 import eu.dariah.de.colreg.model.Access;
+import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
+import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
+import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.pojo.AccessPojo;
+import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
+import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
@@ -36,7 +44,9 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired private AgentDao agentDao;
 	@Autowired private AccessTypeDao accessTypeDao;
 	
-	@Autowired private ImageService imageService;
+	@Autowired private AccrualMethodDao accMethodDao;
+	@Autowired private AccrualPeriodicityDao accPeriodicityDao;
+	@Autowired private AccrualPolicyDao accPolicyDao;
 
 	@Override
 	public Collection createCollection(String userId) {
@@ -192,22 +202,62 @@ public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale) {
-		if (collections==null) {
-			return null;
-		}
-		List<CollectionPojo> pojos = new ArrayList<CollectionPojo>(collections.size());
-		for (Collection c : collections) {
-			pojos.add(this.convertToPojo(c, locale));
-		}
-		return pojos;
+		return this.convertToPojos(CollectionPojo.class, collections, locale);
 	}
 	
 	@Override
-	public CollectionPojo convertToPojo(Collection collection, Locale locale) {
+	public <T extends CollectionPojo> List<T> convertToPojos(Class<T> clazz, List<Collection> collections, Locale locale) {
+		if (collections==null) {
+			return null;
+		}
+		List<T> pojos = new ArrayList<T>(collections.size());
+		for (Collection c : collections) {
+			pojos.add(this.convertToPojo(clazz, c, locale));
+		}
+		return pojos;
+	}
+
+	@Override
+	public <T extends CollectionPojo> T convertToPojo(Class<T> clazz, Collection collection, Locale locale) {
 		if (collection==null) {
 			return null;
 		}
-		CollectionPojo pojo = new CollectionPojo();
+		
+		if (!DcddmCollectionPojo.class.isAssignableFrom(clazz)) {
+			return clazz.cast(this.fillCollectionPojo(new CollectionPojo(), collection, locale));
+		}
+		DcddmCollectionPojo pojo = this.fillCollectionPojo(new DcddmCollectionPojo(), collection, locale);
+		
+		pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
+		pojo.setAccrualPojos(convertAccrualToPojos(collection.getAccrualMethods()));
+		
+		if (collection.getCollectionImage()!=null) {
+			try {
+				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
+				builder.path("/image/" + collection.getCollectionImage());
+				URI imageUri = builder.build().toUri();		
+				
+				pojo.setImageUrl(imageUri.toString());
+			} catch (Exception e) {	}
+		}
+		return clazz.cast(pojo);
+	}
+	
+	@Override
+	public List<Collection> findLatestChanges(int i, AuthPojo auth) {
+		Criteria c = new Criteria();
+		c.orOperator(Criteria.where("draftUserId").exists(false), Criteria.where("draftUserId").is(auth.getUserId()));
+		
+		Query q = new Query(c);
+		q.limit(i);
+		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
+		
+		return collectionDao.find(q);
+	}
+	
+
+	private <T extends CollectionPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
+		//CollectionPojo pojo = new CollectionPojo();
 		pojo.setVersionId(collection.getId());
 		pojo.setVersionTimestamp(collection.getVersionTimestamp().toInstant().getMillis());
 		pojo.setEntityId(collection.getEntityId());
@@ -245,34 +295,12 @@ public class CollectionServiceImpl implements CollectionService {
 				}
 			}
 			pojo.setAccess(accessTypes);
-			pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
-		}
-		
-		if (collection.getCollectionImage()!=null) {
-			try {
-				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-				builder.path("/image/" + collection.getCollectionImage());
-				URI imageUri = builder.build().toUri();		
-				
-				pojo.setImageUrl(imageUri.toString());
-			} catch (Exception e) {	}
+			
 		}
 		
 		pojo.setType(collection.getCollectionType());
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");
 		return pojo;
-	}
-
-	@Override
-	public List<Collection> findLatestChanges(int i, AuthPojo auth) {
-		Criteria c = new Criteria();
-		c.orOperator(Criteria.where("draftUserId").exists(false), Criteria.where("draftUserId").is(auth.getUserId()));
-		
-		Query q = new Query(c);
-		q.limit(i);
-		q.with(new Sort(Sort.Direction.DESC, "versionTimestamp"));
-		
-		return collectionDao.find(q);
 	}
 	
 	private List<AccessPojo> convertAccessToPojos (List<Access> as) {
@@ -284,6 +312,37 @@ public class CollectionServiceImpl implements CollectionService {
 			}
 		}
 		return aPojos;
+	}
+	
+	private List<AccrualPojo> convertAccrualToPojos(List<Accrual> accrualMethods) {
+		if (accrualMethods==null || accrualMethods.size()==0) {
+			return null;
+		}
+		List<AccrualPojo> accrualPojos = new ArrayList<AccrualPojo>();
+		AccrualPojo accPojo;
+		AccrualMethod accMethod;
+		AccrualPolicy accPolicy;
+		AccrualPeriodicity accPeriodicity;
+		
+		for (Accrual acc : accrualMethods) {
+			accPojo = new AccrualPojo();
+			
+			accMethod = accMethodDao.findById(acc.getAccrualMethod());
+			if (accMethod!=null) {
+				accPojo.setAccrualMethod(accMethod.getIdentifier());
+			}
+			accPolicy = accPolicyDao.findById(acc.getAccrualPolicy());
+			if (accPolicy!=null) {
+				accPojo.setAccrualPolicy(accPolicy.getIdentifier());
+			}
+			accPeriodicity = accPeriodicityDao.findById(acc.getAccrualPeriodicity());
+			if (accPeriodicity!=null) {
+				accPojo.setAccrualPeriodicity(accPeriodicity.getIdentifier());	
+			}
+			accrualPojos.add(accPojo);
+		}
+		
+		return accrualPojos;
 	}
 	
 	private AccessPojo convertAccessToPojo (Access a) {

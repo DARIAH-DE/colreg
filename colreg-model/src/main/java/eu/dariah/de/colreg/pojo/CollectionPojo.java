@@ -1,6 +1,5 @@
 package eu.dariah.de.colreg.pojo;
 
-import java.util.List;
 import java.util.Map;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
@@ -15,11 +14,10 @@ public class CollectionPojo extends BaseIdentifiable {
 	private String state;
 	private String type;
 	private String title;
-	private String imageUrl;
+	
 	private Map<String, String> titles;
 	private String access;
 	private String lastChanged;
-	private List<AccessPojo> accessPojos;
 	
 	
 	public String getVersionId() { return versionId; }
@@ -43,9 +41,6 @@ public class CollectionPojo extends BaseIdentifiable {
 	public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
 	
-	public String getImageUrl() { return imageUrl; }
-	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-	
 	public Map<String, String> getTitles() { return titles; }
 	public void setTitles(Map<String, String> titles) { this.titles = titles; }
 	
@@ -54,7 +49,4 @@ public class CollectionPojo extends BaseIdentifiable {
 	
 	public String getLastChanged() { return lastChanged; }
 	public void setLastChanged(String lastChanged) { this.lastChanged = lastChanged; }
-	
-	public List<AccessPojo> getAccessPojos() { return accessPojos; }
-	public void setAccessPojos(List<AccessPojo> accessPojos) { this.accessPojos = accessPojos; }
 }

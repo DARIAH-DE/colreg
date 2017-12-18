@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
+import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.ImageService;
 
@@ -30,12 +31,12 @@ public class ApiController {
 	@RequestMapping(value="collections", method=RequestMethod.GET)
 	public @ResponseBody List<CollectionPojo> getAllPublic() {
 		List<Collection> collections = collectionService.findAllCurrent();
-		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, null);
+		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(CollectionPojo.class, collections, null);
 		return collectionPojos;
 	}
 	
 	@RequestMapping(value="collections/{collectionId}", method=RequestMethod.GET)
-	public @ResponseBody Collection getCollection(@PathVariable String collectionId) {
+	public @ResponseBody DcddmCollectionPojo getCollection(@PathVariable String collectionId) {
 		Collection c = collectionService.findCurrentByCollectionId(collectionId);
 		if (c.getCollectionImage()!=null) {
 			try {
@@ -50,6 +51,6 @@ public class ApiController {
 				c.setCollectionImage(null);
 			}
 		}
-		return c;
+		return collectionService.convertToPojo(DcddmCollectionPojo.class, c, null);
 	}
 }
