@@ -18,6 +18,7 @@ public class CollectionPojo extends BaseIdentifiable {
 	private String state;
 	private String type;
 	private String title;
+	private String imageUrl;
 	
 	private Map<String, String> titles;
 	private String access;
@@ -49,6 +50,9 @@ public class CollectionPojo extends BaseIdentifiable {
 	
 	public String getTitle() { return title; }
 	public void setTitle(String title) { this.title = title; }
+	
+	public String getImageUrl() { return imageUrl; }
+	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 	
 	public Map<String, String> getTitles() { return titles; }
 	public void setTitles(Map<String, String> titles) { this.titles = titles; }

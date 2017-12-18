@@ -8,6 +8,13 @@ api:
     modelLink: ${api.dme.baseUrl}model/editor/%s/
     models: ${api.dme.baseUrl}api/models
 
+images:
+  width: 1000
+  height: 1000
+  thumbnails:
+    width: 150
+    height: 150
+
 mongo:
   host: 127.0.0.1
   port: 27017

@@ -32,24 +32,22 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 	@Value("${paths.images}")
 	private String imagePath;
 	
-	@Value("${paths.images_backup:#{null}}")
-	private String imageBackupPath;
-	
-	@Value("${images.width:150}") 
+	@Value("${images.width:1000}") 
 	private int imagesWidth;
 	
-	@Value("${images.height:150}") 
+	@Value("${images.height:1000}") 
 	private int imagesHeight;
+	
+	@Value("${images.thumbnails.width:150}") 
+	private int thumbnailsWidth;
+	
+	@Value("${images.thumbnails.height:150}") 
+	private int thumbnailsHeight;
 	
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if (imageBackupPath==null) {
-			imageBackupPath = imagePath + File.separator + "backup";
-		}
-		
 		Files.createDirectories(Paths.get(new File(imagePath).toURI()), new FileAttribute<?>[0]);
-		Files.createDirectories(Paths.get(new File(imageBackupPath).toURI()), new FileAttribute<?>[0]);
 	}
 	
 	@Override
@@ -85,9 +83,17 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 		    String ext = reader.getFormatName().toLowerCase();
 		    String newPath = importFile.getAbsolutePath().toString() + "." + ext;
 		    
+		    /* TODO: - Leave original as collectionId.originalExtension
+		     * 		 - Create regular, (potentially resized) version as collectionId.jpeg
+		     * 		 - Create thumbnail as collectionId_tmb.jpeg
+		     */
+		    
 		    Files.move(Paths.get(importFile.getAbsolutePath().toString()), Paths.get(newPath), StandardCopyOption.REPLACE_EXISTING);
-		    Files.copy(Paths.get(newPath), Paths.get(imageBackupPath + importFile.getName()), StandardCopyOption.REPLACE_EXISTING);
-		    this.resizeImage(image, ext, newPath);		    
+		   // Files.copy(Paths.get(newPath), Paths.get(imageBackupPath + importFile.getName()), StandardCopyOption.REPLACE_EXISTING);
+		    
+		    this.resizeImage(image, imagesWidth, imagesHeight, ext, newPath);		    
+		    this.resizeImage(image, imagesWidth, imagesHeight, ext, newPath);
+		    
 		    return new File(newPath);
 		    
 		} catch(IOException ex) {
@@ -95,7 +101,7 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 		}
 	}
 	
-	private void resizeImage(BufferedImage originalImage, String format, String path) throws IOException{
+	private void resizeImage(BufferedImage originalImage, int maxWidth, int maxHeight, String format, String path) throws IOException{
 		if (format.toLowerCase().equals("jpeg")) {
 			format = "jpg";
 		}
@@ -104,17 +110,17 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 		int height;
 		int width;
 		
-		if ((double)originalImage.getHeight() <= imagesHeight && (double)originalImage.getWidth() <= imagesWidth) {
+		if ((double)originalImage.getHeight() <= maxHeight && (double)originalImage.getWidth() <= maxWidth) {
 			return;
 		}
 		
-		if ( ((double)imagesHeight / (double)originalImage.getHeight() ) <
-			  ((double)imagesWidth / (double)originalImage.getWidth() ) ) {
-			height = imagesHeight;
-			width = (int)Math.floor((double)imagesHeight / (double)originalImage.getHeight() * originalImage.getWidth());
+		if ( ((double)maxHeight / (double)originalImage.getHeight() ) <
+			  ((double)maxWidth / (double)originalImage.getWidth() ) ) {
+			height = maxHeight;
+			width = (int)Math.floor((double)maxHeight / (double)originalImage.getHeight() * originalImage.getWidth());
 		} else {
-			height = (int)Math.floor((double)imagesWidth / (double)originalImage.getWidth() * originalImage.getHeight());
-			width = imagesWidth;
+			height = (int)Math.floor((double)maxWidth / (double)originalImage.getWidth() * originalImage.getHeight());
+			width = maxWidth;
 		}
 		
 		

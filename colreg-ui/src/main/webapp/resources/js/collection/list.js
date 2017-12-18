@@ -79,7 +79,7 @@ CollectionTable.prototype.renderImageColumn = function(row, type, val, meta) {
 	if (row.entity.imageUrl!==undefined && row.entity.imageUrl!==null) {
 		return "<img class='collection-list-thumb' src=\"" + row.entity.imageUrl + "\" />";
 	} else {
-		return "<img src=\"" + __util.composeUrl("resources/img/page_icon.png") + "\" />";
+		return "<img src=\"" + __util.composeUrl("resources/img/page_icon_bw.png") + "\" />";
 	}
 };
 

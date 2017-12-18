@@ -231,15 +231,6 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
 		pojo.setAccrualPojos(convertAccrualToPojos(collection.getAccrualMethods()));
 		
-		if (collection.getCollectionImage()!=null) {
-			try {
-				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-				builder.path("/image/" + collection.getCollectionImage());
-				URI imageUri = builder.build().toUri();		
-				
-				pojo.setImageUrl(imageUri.toString());
-			} catch (Exception e) {	}
-		}
 		return clazz.cast(pojo);
 	}
 	
@@ -296,6 +287,16 @@ public class CollectionServiceImpl implements CollectionService {
 			}
 			pojo.setAccess(accessTypes);
 			
+		}
+		
+		if (collection.getCollectionImage()!=null) {
+			try {
+				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
+				builder.path("/image/" + collection.getCollectionImage());
+				URI imageUri = builder.build().toUri();		
+				
+				pojo.setImageUrl(imageUri.toString());
+			} catch (Exception e) {	}
 		}
 		
 		pojo.setType(collection.getCollectionType());

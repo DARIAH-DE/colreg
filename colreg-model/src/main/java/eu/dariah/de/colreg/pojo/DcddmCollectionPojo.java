@@ -8,13 +8,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DcddmCollectionPojo extends CollectionPojo {
 	private static final long serialVersionUID = 5030563485613906700L;
 	
-	private String imageUrl;
 	private List<AccessPojo> accessPojos;
 	private List<AccrualPojo> accrualPojos;
 	
-	
-	public String getImageUrl() { return imageUrl; }
-	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 	
 	public List<AccessPojo> getAccessPojos() { return accessPojos; }
 	public void setAccessPojos(List<AccessPojo> accessPojos) { this.accessPojos = accessPojos; }
