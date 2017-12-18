@@ -43,6 +43,15 @@
 		<constructor-arg name="validator" ref="validator" />
 	</bean>
 	
+
+	
+	<!-- Configure bean to convert JSON to POJO and vice versa -->
+	<bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	</bean>	
+	
+	<bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter">
+	</bean>
+	
 	<bean id="xmlConverter" class="eu.dariah.de.colreg.model.marshalling.XMLConverter">
 		<property name="marshaller" ref="jaxb2Marshaller" />
 		<property name="unmarshaller" ref="jaxb2Marshaller" />

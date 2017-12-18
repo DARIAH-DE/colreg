@@ -78,7 +78,7 @@ public class CollectionServiceImpl implements CollectionService {
 			c.setEntityTimestamp(c.getVersionTimestamp());
 		}
 		
-		if (c.getCollectionImage().isEmpty()) {
+		if (c.getCollectionImage()!=null && c.getCollectionImage().isEmpty()) {
 			c.setCollectionImage(null);
 		}
 		

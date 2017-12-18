@@ -18,6 +18,17 @@
 		<property name="basename" value="classpath:i18n/messages" />
 	</bean>
 	
+	<!-- Configure to plugin JSON as request and response in method handler -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonMessageConverter"/>
+				<ref bean="xmlMessageConverter"/>
+			</list>
+		</property>
+	</bean>
+	
+	
 	<!-- View resolution and dispatching -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />

@@ -2,8 +2,12 @@ package eu.dariah.de.colreg.pojo;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
+@XmlRootElement(name="collection")
 public class CollectionPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5544026876984535637L;
 
@@ -19,6 +23,11 @@ public class CollectionPojo extends BaseIdentifiable {
 	private String access;
 	private String lastChanged;
 	
+	
+	
+	@XmlElement(name="id")
+	@Override
+	public String getId() { return super.getId(); }
 	
 	public String getVersionId() { return versionId; }
 	public void setVersionId(String versionId) { this.versionId = versionId; }
