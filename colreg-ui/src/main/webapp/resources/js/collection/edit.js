@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 var CollectionEditor = function() {
 	this.collectionId = $("#entityId").text();
-	this.imageMaxFileSize = 2097152;
+	this.imageMaxFileSize = 5242880;
 	
 	this.prepareTranslations([
 		"~eu.dariah.de.colreg.view.collection.labels.add_uom",
@@ -343,7 +343,7 @@ CollectionEditor.prototype.triggerUploadImage = function(e) {
 		        	if (data.success) {
 			        	$("#collection-image-preview").prop("src", data.pojo.uri);
 			        	$("#collectionImage").val(data.pojo.id);
-			        	$("#collection-image-hint").html((data.pojo.uri || 'n/a') + ') - ' + data.pojo.size + ' bytes');
+			        	$("#collection-image-hint").html((data.pojo.uri || 'n/a'));
 			        	$("#btn-remove-collection-image").show();
 		        	} else {
 		        		_this.triggerRemoveCollectionImage();

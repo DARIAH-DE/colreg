@@ -968,7 +968,7 @@
 								<label class="control-label">
 									<c:choose>
 										<c:when test="${collectionImageUrl!=null}">
-											<img class="collection-image-thumb" id="collection-image-preview" src="${collectionImageUrl}" />
+											<img class="collection-image-thumb" id="collection-image-preview" src="${collectionImageThumbUrl}" />
 										</c:when>
 										<c:otherwise>
 											<img class="collection-image-thumb" id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />

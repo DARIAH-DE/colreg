@@ -8,9 +8,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.FileAttribute;
 import java.util.Iterator;
 
@@ -18,16 +18,30 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.io.FileUtils;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Component
 public class ImageServiceImpl implements ImageService, InitializingBean {
 	protected static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
+		
+	public enum ImageTypes {
+		ORIGINAL("orig"),
+		DISPLAY("lg"),
+		THUMBNAIL("tb");
+
+	    private final String suffix;
+
+	    private ImageTypes(final String suffix) { this.suffix = suffix; }
+	    @Override public String toString() { return suffix; }
+	}
 	
 	@Value("${paths.images}")
 	private String imagePath;
@@ -51,18 +65,77 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 	}
 	
 	@Override
-	public File findImage(String name) {
-		File imageDir = new File(imagePath);
-		for (File f : imageDir.listFiles()) {
-			if (f.getName().equals(name) || f.getName().startsWith(name + ".")) {
-				return f;
-			}
+	public String getImageURI(String fileId, ImageTypes imageType) {
+		if (fileId==null) {
+			return null;
 		}
-		return null;
+		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
+		if (imageType==null) {
+			builder.path("/image/" + fileId);
+		} else {
+			builder.path("/image/" + fileId + "/" + imageType.toString());
+		}
+		
+		return builder.build().toUri().toString();
 	}
 	
 	@Override
-	public File checkAndResizeImage(String name) throws IOException {
+	public String importImage(MultipartFile file) throws IOException {
+		FileOutputStream fos = null;
+		BufferedOutputStream bos = null;
+		if (file==null) {
+			return null;
+		}
+		
+		String fileId = new ObjectId().toString();
+		int extIndex = file.getOriginalFilename().lastIndexOf(".");
+		
+		String ext = "";
+		if (extIndex>0) {
+			ext = file.getOriginalFilename().substring(extIndex); 
+		}
+		
+		File result = new File(String.format("%s%s%s%s%s%s", imagePath, File.separator, fileId, File.separator, ImageTypes.ORIGINAL.toString(), ext));
+		FileUtils.forceMkdirParent(result);
+		
+		try {
+			fos = new FileOutputStream(result);
+			bos = new BufferedOutputStream(fos);
+			bos.write(file.getBytes());
+			
+			return fileId;
+		} catch (IOException e) {
+			logger.error("Failed to write file", e);
+			throw e;
+		} finally {
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (Exception e) {}
+			}
+		}
+	}
+	
+	@Override
+	public File findImage(String name) {
+		if (name==null) {
+			return null;
+		}
+		
+		File imageDir;
+		String filePrefix;
+		if (name.contains(File.separator)) {
+			imageDir = new File(imagePath + File.separator + name.substring(0, name.indexOf(File.separator)));
+			filePrefix = name.substring(0, name.indexOf(File.separator)+1);
+		} else {
+			imageDir = new File(imagePath + File.separator + name);
+			filePrefix = ImageTypes.THUMBNAIL.toString();
+		}
+		return this.innerFindImage(imageDir, filePrefix);
+	}
+	
+	@Override
+	public void checkAndResizeImage(String name) throws IOException {
 		File importFile = this.findImage(name);
 		
 		try {
@@ -81,24 +154,34 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 		    }
 			
 		    String ext = reader.getFormatName().toLowerCase();
-		    String newPath = importFile.getAbsolutePath().toString() + "." + ext;
+		    String targetPath = importFile.getParentFile().getAbsolutePath() + File.separator + "%s." + ext;
 		    
-		    /* TODO: - Leave original as collectionId.originalExtension
-		     * 		 - Create regular, (potentially resized) version as collectionId.jpeg
-		     * 		 - Create thumbnail as collectionId_tmb.jpeg
-		     */
-		    
-		    Files.move(Paths.get(importFile.getAbsolutePath().toString()), Paths.get(newPath), StandardCopyOption.REPLACE_EXISTING);
-		   // Files.copy(Paths.get(newPath), Paths.get(imageBackupPath + importFile.getName()), StandardCopyOption.REPLACE_EXISTING);
-		    
-		    this.resizeImage(image, imagesWidth, imagesHeight, ext, newPath);		    
-		    this.resizeImage(image, imagesWidth, imagesHeight, ext, newPath);
-		    
-		    return new File(newPath);
-		    
+		    this.resizeImage(image, imagesWidth, imagesHeight, ext, String.format(targetPath, ImageTypes.DISPLAY.toString()));		    
+		    this.resizeImage(image, thumbnailsWidth, thumbnailsHeight, ext, String.format(targetPath, ImageTypes.THUMBNAIL.toString()));		    
 		} catch(IOException ex) {
 			throw new IOException("The file could not be opened, an error occurred", ex);
 		}
+	}
+	
+	private File innerFindImage(File parent, String name) {
+		for (File f : parent.listFiles()) {
+			if (f.getName().equals(name) || f.getName().startsWith(name)) {
+				return f;
+			}
+		}
+		
+		/* If the original has dimensions smaller or equal to the defined maxima for
+		 *  our large and thumbnail images, no reduced-size images are necessary. 
+		 *  The following code works the image query up to the next best size 
+		 */
+		if (name.equals(ImageTypes.THUMBNAIL.toString()) || name.startsWith(ImageTypes.THUMBNAIL.toString())) {
+			return this.innerFindImage(parent, ImageTypes.DISPLAY.toString());
+		}
+		if (name.equals(ImageTypes.DISPLAY.toString()) || name.startsWith(ImageTypes.DISPLAY.toString())) {
+			return this.innerFindImage(parent, ImageTypes.ORIGINAL.toString());
+		}
+		
+		return null;
 	}
 	
 	private void resizeImage(BufferedImage originalImage, int maxWidth, int maxHeight, String format, String path) throws IOException{
@@ -123,7 +206,6 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 			width = maxWidth;
 		}
 		
-		
 		BufferedImage resizedImage = new BufferedImage(width, height, imageType);
 		
 		Graphics2D g = resizedImage.createGraphics();
@@ -137,29 +219,4 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 	 
 		ImageIO.write(resizedImage, format, new File(path)); 
 	}
-
-	@Override
-	public File writeFile(MultipartFile file, String name) throws IOException {
-		FileOutputStream fos = null;
-		BufferedOutputStream bos = null;
-		File result = new File(imagePath + File.separator + name);
-		
-		try {
-			fos = new FileOutputStream(result);
-			bos = new BufferedOutputStream(fos);
-			bos.write(file.getBytes());
-			
-			return result;
-		} catch (IOException e) {
-			logger.error("Failed to write file", e);
-			throw e;
-		} finally {
-			if (bos != null) {
-				try {
-					bos.close();
-				} catch (Exception e) {}
-			}
-		}
-	}
-	
 }

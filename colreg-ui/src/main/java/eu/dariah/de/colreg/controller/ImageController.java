@@ -8,7 +8,6 @@ import java.net.URLConnection;
 import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,6 +29,7 @@ import de.unibamberg.minf.core.web.localization.MessageSource;
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.BaseController;
 import eu.dariah.de.colreg.service.ImageService;
+import eu.dariah.de.colreg.service.ImageServiceImpl.ImageTypes;
 
 @Controller
 @RequestMapping("/image")
@@ -39,8 +39,8 @@ public class ImageController extends BaseController {
 	@Autowired private ObjectMapper objectMapper;
 	@Autowired private ImageService imageService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/{collectionId}")
-	public @ResponseBody ResponseEntity<byte[]> getImage(@PathVariable String collectionId) {
+	@RequestMapping(method = RequestMethod.GET, value = {"/{collectionId}", "/{collectionId}/{type}"})
+	public @ResponseBody ResponseEntity<byte[]> getImage(@PathVariable String collectionId, @PathVariable(required=false) ImageTypes imageType) {
 		Assert.notNull(collectionId);
 		try {
 			File f = imageService.findImage(collectionId);
@@ -65,22 +65,20 @@ public class ImageController extends BaseController {
 	@RequestMapping(method = RequestMethod.POST, value = "/async/upload", produces = "application/json; charset=utf-8")
 	public @ResponseBody ModelActionPojo uploadImage(@RequestParam("file") MultipartFile uploadfile, @RequestParam String collectionId, Locale locale) {
 		ModelActionPojo result = new ModelActionPojo();
-		String fileId = new ObjectId().toString();
 		
 		try {
-			File file = imageService.writeFile(uploadfile, fileId);
-			file = imageService.checkAndResizeImage(file.getName());
+			String fileId = imageService.importImage(uploadfile);
+			imageService.checkAndResizeImage(fileId);
 
 			ObjectNode f = objectMapper.createObjectNode();
-			f.put("name", file.getName());
+			f.put("name", fileId);
 			
 			ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-			builder.path("/image/" + file.getName());
+			builder.path("/image/" + fileId + "/" + ImageTypes.ORIGINAL);
 			URI newUri = builder.build().toUri();
 			f.put("uri", newUri.toString());
 			f.put("id", fileId);
-			f.put("size", file.length());
-			
+
 			result.setSuccess(true);
 			result.setPojo(f);
 		} catch (Exception e) {

@@ -37,6 +37,7 @@ import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.ImageService;
+import eu.dariah.de.colreg.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -214,21 +215,9 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
-		
-		if (c.getCollectionImage()!=null && !c.getCollectionImage().isEmpty()) {
-			try {
-				File image = imageService.findImage(c.getCollectionImage());
-				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-				builder.path("/image/" + image.getName());
-				URI imageUri = builder.build().toUri();		
-				
-				model.addAttribute("collectionImageUrl", imageUri);
-				model.addAttribute("collectionImageSize", image.length());
-			} catch (Exception e) {
-				logger.warn("Failed to load collection image", e);
-			}
-		}
-		
+	
+		model.addAttribute("collectionImageUrl", imageService.getImageURI(c.getCollectionImage(), null));
+		model.addAttribute("collectionImageThumbUrl", imageService.getImageURI(c.getCollectionImage(), ImageTypes.THUMBNAIL));
 		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));

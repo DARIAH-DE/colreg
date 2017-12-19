@@ -38,19 +38,7 @@ public class ApiController {
 	@RequestMapping(value="collections/{collectionId}", method=RequestMethod.GET)
 	public @ResponseBody DcddmCollectionPojo getCollection(@PathVariable String collectionId) {
 		Collection c = collectionService.findCurrentByCollectionId(collectionId);
-		if (c.getCollectionImage()!=null) {
-			try {
-				File image = imageService.findImage(c.getCollectionImage());
-				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-				builder.path("/image/" + image.getName());
-				URI imageUri = builder.build().toUri();		
-				c.setCollectionImage(imageUri.toString());
-				
-			} catch (Exception e) {
-				logger.warn("Failed to load collection image", e);
-				c.setCollectionImage(null);
-			}
-		}
+		
 		return collectionService.convertToPojo(DcddmCollectionPojo.class, c, null);
 	}
 }

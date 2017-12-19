@@ -1,5 +1,6 @@
 package eu.dariah.de.colreg.service;
 
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
+import eu.dariah.de.colreg.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
@@ -48,6 +50,8 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired private AccrualPeriodicityDao accPeriodicityDao;
 	@Autowired private AccrualPolicyDao accPolicyDao;
 
+	@Autowired private ImageService imageService;
+	
 	@Override
 	public Collection createCollection(String userId) {
 		Collection c = new Collection();
@@ -289,7 +293,11 @@ public class CollectionServiceImpl implements CollectionService {
 			
 		}
 		
+		pojo.setImageUrl(imageService.getImageURI(collection.getCollectionImage(), ImageTypes.THUMBNAIL));
+		
 		if (collection.getCollectionImage()!=null) {
+			
+			
 			try {
 				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
 				builder.path("/image/" + collection.getCollectionImage());
