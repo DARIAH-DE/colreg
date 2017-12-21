@@ -45,7 +45,7 @@ public class AgentController extends VersionedEntityController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
-		model.addAttribute("agents", agentService.findAllCurrent());
+		//model.addAttribute("agents", agentService.findAllCurrent());
 		model.addAttribute(NAVIGATION_ELEMENT_ATTRIBUTE, "agents");
 		return "agent/list";
 	}

@@ -183,6 +183,7 @@ public class AgentServiceImpl implements AgentService {
 		pojo.setEntityId(agent.getEntityId());
 		pojo.setParentEntityId(agent.getParentAgentId());
 		pojo.setId(agent.getId());
+		pojo.setVersionTimestamp(agent.getVersionTimestamp().toInstant().getMillis());
 		pojo.setLastChanged(
 				"<span style=\"white-space: nowrap;\">" + 
 						agent.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +

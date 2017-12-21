@@ -7,6 +7,7 @@ public class AgentPojo extends BaseIdentifiable {
 
 	private String entityId;
 	private String parentEntityId;
+	private Long versionTimestamp;
 	private String state;
 	private String type;
 	private String name;
@@ -18,6 +19,9 @@ public class AgentPojo extends BaseIdentifiable {
 	
 	public String getParentEntityId() { return parentEntityId; }
 	public void setParentEntityId(String parentEntityId) { this.parentEntityId = parentEntityId; }
+	
+	public Long getVersionTimestamp() { return versionTimestamp; }
+	public void setVersionTimestamp(Long versionTimestamp) { this.versionTimestamp = versionTimestamp; }
 	
 	public String getState() { return state; }
 	public void setState(String state) { this.state = state; }

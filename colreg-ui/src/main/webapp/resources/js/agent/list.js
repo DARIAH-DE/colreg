@@ -32,7 +32,8 @@ AgentTable.prototype.createTable = function() {
 	    	   "class" : "td-no-wrap"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": function (row, type, val, meta) { return _this.renderVersionColumn(row, type, val, meta); }
+	    	   "data": "entity.type",
+	    	   "data": function (row, type, val, meta) { return agentTable.renderVersionColumn(row, type, val, meta); }
 	    	  /* "visible" : false*/
 	       }	       
 	   ]
