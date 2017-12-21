@@ -2,8 +2,6 @@ package eu.dariah.de.colreg.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import java.io.File;
-import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
@@ -217,6 +214,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
 	
 		model.addAttribute("collectionImageUrl", imageService.getImageURI(c.getCollectionImage(), null));
+		model.addAttribute("collectionImageDisplayUrl", imageService.getImageURI(c.getCollectionImage(), ImageTypes.DISPLAY));
 		model.addAttribute("collectionImageThumbUrl", imageService.getImageURI(c.getCollectionImage(), ImageTypes.THUMBNAIL));
 		
 		if (c.getParentCollectionId()!=null) {

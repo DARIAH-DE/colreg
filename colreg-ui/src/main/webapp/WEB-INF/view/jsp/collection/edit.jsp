@@ -958,55 +958,41 @@
 			<s:bind path="collectionImage">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="collectionImage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></label>
-					<c:choose>
-						<c:when test="${editMode}">
-							<div class="col-sm-9">
-								<input type="hidden" name="collectionImage" id="collectionImage" value="${collection.collectionImage}" />
-								<input id="collectionImageFile" name="collectionImageFile" type="file" />						
-							</div>
-							<div class="col-sm-9 col-sm-offset-3">
-								<label class="control-label">
-									<c:choose>
-										<c:when test="${collectionImageUrl!=null}">
-											<img class="collection-image-thumb" id="collection-image-preview" src="${collectionImageThumbUrl}" />
-										</c:when>
-										<c:otherwise>
-											<img class="collection-image-thumb" id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />
-										</c:otherwise>
-									</c:choose>
-									<button id="btn-remove-collection-image" <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> onclick="editor.triggerRemoveCollectionImage();" class="btn btn-xs pull-right btn-link">
-										<span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span>
-									</button>
-								</label>
-							</div>
-							<div class="col-sm-9 col-sm-offset-3">
-								<label class="control-label">
-									<c:choose>
-										<c:when test="${collectionImageUrl!=null}">
-											<a id="collection-image-hint" href="javascript:void(0)">${collectionImageUrl} - ${collectionImageSize} bytes</a>
-										</c:when>
-										<c:otherwise>
-											<a id="collection-image-hint" href="javascript:void(0)"><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_image" /></a>
-										</c:otherwise>
-									</c:choose>	 
-								</label>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="col-sm-9">
-								<label class="control-label">
-									<c:choose>
-										<c:when test="${collectionImageUrl!=null}">
-											<img id="collection-image-preview" src="${collectionImageUrl}" />
-										</c:when>
-										<c:otherwise>
-											<img id="collection-image-preview" src="<s:url value="/resources/img/page_icon.png" />" />
-										</c:otherwise>
-									</c:choose>
-								</label>
-							</div>
-						</c:otherwise>
-					</c:choose>
+					
+					<div class="col-sm-9">
+						<div class="collection-image-container">
+							<a <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> id="collection-image-preview" href="${collectionImageDisplayUrl}" data-lightbox="collectionImage" data-title="<s:message code="~eu.dariah.de.colreg.model.collection.collection_image_l" />">
+								<img class="collection-image-thumb" src="${collectionImageThumbUrl}" />
+							</a>
+							<img <c:if test="${collectionImageUrl!=null}">style="display: none;"</c:if> id="collection-image-placeholder" src='<s:url value="/resources/img/page_icon_faded.png"></s:url>' />
+						</div>
+						<c:if test="${editMode}">
+							<button id="btn-remove-collection-image" <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> onclick="editor.triggerRemoveCollectionImage();" class="btn btn-xs pull-left btn-link">
+								<span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span>
+							</button>
+						</c:if>
+					</div>
+					
+					<div class="col-sm-9 col-sm-offset-3">
+						<label id="collection-image-hint">
+							<c:choose>
+								<c:when test="${collectionImageUrl!=null}">
+									<a target='_blank' href="${collectionImageUrl}">${collectionImageUrl}</a>
+								</c:when>
+								<c:otherwise>
+									<s:message code="~eu.dariah.de.colreg.view.collection.labels.no_image" />
+								</c:otherwise>
+							</c:choose>
+						</label>
+					</div>
+					
+					<c:if test="${editMode}">
+						<div class="col-sm-9 col-sm-offset-3">
+							<input type="hidden" name="collectionImage" id="collectionImage" value="${collection.collectionImage}" />
+							<input id="collectionImageFile" name="collectionImageFile" type="file" />						
+						</div>
+					</c:if>
+					
 				</div>
 			</s:bind>
 			

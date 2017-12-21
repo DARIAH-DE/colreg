@@ -92,7 +92,11 @@
 		<put-attribute name="content" value="/WEB-INF/view/jsp/collection/edit.jsp" />
 		<put-attribute name="collapsePanel" value="/WEB-INF/view/jsp/collection/incl/nav_versionPanel.jsp" />
 		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/collection/incl/nav_editor.jsp" />
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute type="string" value="lightbox2/lightbox.min.css" />
+        </put-list-attribute>
 		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="lightbox2/lightbox.min.js" />
 			<add-attribute type="string" value="collection/edit.js" />
 		</put-list-attribute>
 	</definition>

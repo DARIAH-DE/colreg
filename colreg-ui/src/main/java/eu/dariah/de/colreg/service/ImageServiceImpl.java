@@ -8,7 +8,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileAttribute;
@@ -33,14 +32,9 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 	protected static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
 		
 	public enum ImageTypes {
-		ORIGINAL("orig"),
-		DISPLAY("lg"),
-		THUMBNAIL("tb");
-
-	    private final String suffix;
-
-	    private ImageTypes(final String suffix) { this.suffix = suffix; }
-	    @Override public String toString() { return suffix; }
+		ORIGINAL,
+		DISPLAY,
+		THUMBNAIL;
 	}
 	
 	@Value("${paths.images}")
@@ -118,20 +112,20 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 	
 	@Override
 	public File findImage(String name) {
+		return this.findImage(name, null);
+	}
+	
+	@Override
+	public File findImage(String name, ImageTypes imageType) {
 		if (name==null) {
 			return null;
 		}
 		
-		File imageDir;
-		String filePrefix;
-		if (name.contains(File.separator)) {
-			imageDir = new File(imagePath + File.separator + name.substring(0, name.indexOf(File.separator)));
-			filePrefix = name.substring(0, name.indexOf(File.separator)+1);
-		} else {
-			imageDir = new File(imagePath + File.separator + name);
-			filePrefix = ImageTypes.THUMBNAIL.toString();
+		File imageDir = new File(imagePath + File.separator + name);
+		if (imageType==null) {
+			imageType = ImageTypes.DISPLAY;
 		}
-		return this.innerFindImage(imageDir, filePrefix);
+		return this.innerFindImage(imageDir, imageType);
 	}
 	
 	@Override
@@ -163,9 +157,9 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 		}
 	}
 	
-	private File innerFindImage(File parent, String name) {
+	private File innerFindImage(File parent, ImageTypes imageType) {
 		for (File f : parent.listFiles()) {
-			if (f.getName().equals(name) || f.getName().startsWith(name)) {
+			if (f.getName().equals(imageType.toString()) || f.getName().startsWith(imageType.toString())) {
 				return f;
 			}
 		}
@@ -174,11 +168,11 @@ public class ImageServiceImpl implements ImageService, InitializingBean {
 		 *  our large and thumbnail images, no reduced-size images are necessary. 
 		 *  The following code works the image query up to the next best size 
 		 */
-		if (name.equals(ImageTypes.THUMBNAIL.toString()) || name.startsWith(ImageTypes.THUMBNAIL.toString())) {
-			return this.innerFindImage(parent, ImageTypes.DISPLAY.toString());
+		if (imageType.equals(ImageTypes.THUMBNAIL)) {
+			return this.innerFindImage(parent, ImageTypes.DISPLAY);
 		}
-		if (name.equals(ImageTypes.DISPLAY.toString()) || name.startsWith(ImageTypes.DISPLAY.toString())) {
-			return this.innerFindImage(parent, ImageTypes.ORIGINAL.toString());
+		if (imageType.equals(ImageTypes.DISPLAY)) {
+			return this.innerFindImage(parent, ImageTypes.ORIGINAL);
 		}
 		
 		return null;

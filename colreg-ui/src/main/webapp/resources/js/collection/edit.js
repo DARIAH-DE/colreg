@@ -319,7 +319,7 @@ CollectionEditor.prototype.triggerUploadImage = function(e) {
 	        	continue;
 	        }
 	        if (f.size>_this.imageMaxFileSize) {
-	        	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.image_too_large") + " 2 MB");
+	        	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.image_too_large") + " 5 MB");
 	        	continue;
 	        }	        
 	        var formData = new FormData();
@@ -341,9 +341,13 @@ CollectionEditor.prototype.triggerUploadImage = function(e) {
 		        timeout: 20000,
 		        success: function(data) {
 		        	if (data.success) {
-			        	$("#collection-image-preview").prop("src", data.pojo.uri);
+		        		$("#collection-image-preview").prop("href", data.pojo.imageUri);
+		        		$("#collection-image-preview img").prop("src", data.pojo.thumbUri);
+		        		$("#collection-image-hint").html("<a href='" + data.pojo.baseUri + "' target='_blank'>" + data.pojo.baseUri + "</a>");
+		        		$("#collection-image-preview").show();
+		        		$("#collection-image-placeholder").hide();
+			        	
 			        	$("#collectionImage").val(data.pojo.id);
-			        	$("#collection-image-hint").html((data.pojo.uri || 'n/a'));
 			        	$("#btn-remove-collection-image").show();
 		        	} else {
 		        		_this.triggerRemoveCollectionImage();
@@ -356,9 +360,13 @@ CollectionEditor.prototype.triggerUploadImage = function(e) {
 };
 
 CollectionEditor.prototype.triggerRemoveCollectionImage = function() {
-	$("#collection-image-preview").prop("src", __util.composeUrl("resources/img/page_icon.png"));
-	$("#collectionImage").val(null);
+	$("#collection-image-preview").prop("href", "");
+	$("#collection-image-preview img").prop("src", "");
 	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.no_image"));
+	$("#collection-image-preview").hide();
+	$("#collection-image-placeholder").show();
 	
+	$("#collectionImageFile").val(null);
+	$("#collectionImage").val(null);
 	$("#btn-remove-collection-image").hide();
 };

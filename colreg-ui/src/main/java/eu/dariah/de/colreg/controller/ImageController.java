@@ -39,11 +39,11 @@ public class ImageController extends BaseController {
 	@Autowired private ObjectMapper objectMapper;
 	@Autowired private ImageService imageService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = {"/{collectionId}", "/{collectionId}/{type}"})
-	public @ResponseBody ResponseEntity<byte[]> getImage(@PathVariable String collectionId, @PathVariable(required=false) ImageTypes imageType) {
-		Assert.notNull(collectionId);
+	@RequestMapping(method = RequestMethod.GET, value = {"/{imageId}", "/{imageId}/{imageType}"})
+	public @ResponseBody ResponseEntity<byte[]> getImage(@PathVariable String imageId, @PathVariable(required=false) ImageTypes imageType) {
+		Assert.notNull(imageId);
 		try {
-			File f = imageService.findImage(collectionId);
+			File f = imageService.findImage(imageId, imageType);
 			if (f!=null && f.exists()) {
 				InputStream fStream = new FileInputStream(f.getAbsolutePath());
 				String type = URLConnection.guessContentTypeFromName(f.getName());
@@ -57,7 +57,7 @@ public class ImageController extends BaseController {
 				return new ResponseEntity<byte[]>(out, responseHeaders, HttpStatus.OK);
 			} 
 		} catch (Exception e) {
-			logger.error(String.format("Failed to load collection image [%s]", collectionId), e);
+			logger.error(String.format("Failed to load collection image [%s]", imageId), e);
 		}
 		return new ResponseEntity<byte[]>(new byte[0], HttpStatus.NOT_FOUND);
 	}
@@ -74,9 +74,11 @@ public class ImageController extends BaseController {
 			f.put("name", fileId);
 			
 			ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-			builder.path("/image/" + fileId + "/" + ImageTypes.ORIGINAL);
-			URI newUri = builder.build().toUri();
-			f.put("uri", newUri.toString());
+			builder.path("/image/" + fileId + "/");
+			String baseUri = builder.build().toUri().toString();
+			f.put("baseUri", baseUri);
+			f.put("imageUri", baseUri + ImageTypes.DISPLAY);
+			f.put("thumbUri", baseUri + ImageTypes.THUMBNAIL);
 			f.put("id", fileId);
 
 			result.setSuccess(true);

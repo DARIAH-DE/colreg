@@ -14,7 +14,8 @@ var CollectionTable = function(url, containerSelector, selector) {
 	this.prepareTranslations(["~eu.dariah.de.colreg.common.labels.deleted",
 	                          "~eu.dariah.de.colreg.common.labels.draft",
 	                          "~eu.dariah.de.colreg.common.labels.published",
-	                          "~eu.dariah.de.colreg.common.labels.valid"]);
+	                          "~eu.dariah.de.colreg.common.labels.valid",
+	                          "~eu.dariah.de.colreg.view.collection.labels.no_image"]);
 	this.createTable();
 	
 };
@@ -76,10 +77,10 @@ CollectionTable.prototype.renderVersionColumn = function(row, type, val, meta) {
 };
 
 CollectionTable.prototype.renderImageColumn = function(row, type, val, meta) {
-	if (row.entity.imageUrl!==undefined && row.entity.imageUrl!==null) {
-		return "<img class='collection-list-thumb' src=\"" + row.entity.imageUrl + "\" />";
+	if (row.entity.thumbnailUrl!==undefined && row.entity.thumbnailUrl!==null) {
+		return "<img class='collection-list-thumb' src=\"" + row.entity.thumbnailUrl + "\" />";
 	} else {
-		return "<img src=\"" + __util.composeUrl("resources/img/page_icon_bw.png") + "\" />";
+		return "<img title=\"" + __translator.translate("~eu.dariah.de.colreg.view.collection.labels.no_image") + "\" src=\"" + __util.composeUrl("resources/img/page_icon_faded.png") + "\" />";
 	}
 };
 

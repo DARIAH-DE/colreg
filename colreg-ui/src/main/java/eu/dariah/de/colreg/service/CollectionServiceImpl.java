@@ -293,19 +293,7 @@ public class CollectionServiceImpl implements CollectionService {
 			
 		}
 		
-		pojo.setImageUrl(imageService.getImageURI(collection.getCollectionImage(), ImageTypes.THUMBNAIL));
-		
-		if (collection.getCollectionImage()!=null) {
-			
-			
-			try {
-				ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-				builder.path("/image/" + collection.getCollectionImage());
-				URI imageUri = builder.build().toUri();		
-				
-				pojo.setImageUrl(imageUri.toString());
-			} catch (Exception e) {	}
-		}
+		pojo.setThumbnailUrl(imageService.getImageURI(collection.getCollectionImage(), ImageTypes.THUMBNAIL));
 		
 		pojo.setType(collection.getCollectionType());
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");

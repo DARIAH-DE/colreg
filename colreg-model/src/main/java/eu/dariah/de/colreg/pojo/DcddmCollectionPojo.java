@@ -10,11 +10,14 @@ public class DcddmCollectionPojo extends CollectionPojo {
 	
 	private List<AccessPojo> accessPojos;
 	private List<AccrualPojo> accrualPojos;
-	
+	private String imageUrl;
 	
 	public List<AccessPojo> getAccessPojos() { return accessPojos; }
 	public void setAccessPojos(List<AccessPojo> accessPojos) { this.accessPojos = accessPojos; }
 	
 	public List<AccrualPojo> getAccrualPojos() { return accrualPojos; }
 	public void setAccrualPojos(List<AccrualPojo> accrualPojos) { this.accrualPojos = accrualPojos; }
+	
+	public String getImageUrl() { return imageUrl; }
+	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }
