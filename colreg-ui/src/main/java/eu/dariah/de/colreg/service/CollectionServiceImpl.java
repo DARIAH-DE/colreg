@@ -234,6 +234,7 @@ public class CollectionServiceImpl implements CollectionService {
 		
 		pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
 		pojo.setAccrualPojos(convertAccrualToPojos(collection.getAccrualMethods()));
+		pojo.setImageUrl(imageService.getImageURI(collection.getCollectionImage(), null));
 		
 		return clazz.cast(pojo);
 	}
