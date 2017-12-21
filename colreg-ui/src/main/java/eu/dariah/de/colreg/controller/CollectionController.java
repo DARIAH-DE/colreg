@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import de.unibamberg.minf.core.web.controller.ResourceNotFoundException;
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Access;
@@ -106,8 +107,7 @@ public class CollectionController extends VersionedEntityController {
 		
 		 
 		if (c==null) {
-			// Should be 404
-			return "redirect:/collections/";
+			throw new ResourceNotFoundException();
 		}
 		
 		if (c.getDraftUserId()!=null && !c.getDraftUserId().trim().isEmpty() &&

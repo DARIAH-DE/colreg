@@ -62,6 +62,7 @@ Dashboard.prototype.initGraph = function(data) {
 			x : Math.random(),
 			y : Math.random(),
 			size : 1,
+			nodeType : data.nodes[i].type,
 			color : colors[data.nodes[i].type],
 			type : 'circle',
 			image : {

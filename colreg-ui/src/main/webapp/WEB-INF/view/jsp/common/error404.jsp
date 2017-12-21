@@ -30,24 +30,18 @@
 				<li class="active">Home</li>
 			</ul>
 			<div id="main-content">
-				<h2>${errorHeading}</h2>
-				<c:if test="${errorMsg!=null}">
-					<p>
-						<em>Message</em>: ${errorMsg}
-					</p>
-				</c:if>
-				<c:if test="${errorDetail!=null}">
-					<div class="alert alert-${errorLevel==null ? 'error' : errorLevel}" role="alert">${errorDetail}</div>
-				</c:if>
-				
-				<c:if test="${hideHelpText==null||hideHelpText==false}">
-					<p>Please try to reproduce the steps that led to this error and notify the DARIAH-DE helpdesk if the problem persists</p>
-				</c:if>
-				<pre style="display: none;">Failed URL: ${url}
-Exception: ${exception.message}
-<c:forEach items="${exception.stackTrace}" var="ste">
-${ste}</c:forEach>
-</pre>		
+				<h2><s:message code="~eu.dariah.de.colreg.common.exception.not_found.title" /></h2>
+				<p>
+					<s:message code="~eu.dariah.de.colreg.common.exception.not_found.message" arguments="${url}" />
+					<ul>
+						<li><a href="<s:url value='/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.dashboard" /></a></li>
+		    			<c:if test="${_draftCount > 0}">
+		    				<li><a href="<s:url value='/drafts/' />"><s:message code="~eu.dariah.de.colreg.view.common.labels.drafts" arguments="${_draftCount}" /></a></li>
+		    			</c:if>
+		    			<li><a href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a></li>
+		    			<li><a href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a></li>
+					</ul>
+				</p>
 			</div>
 		</div>
 	</div>

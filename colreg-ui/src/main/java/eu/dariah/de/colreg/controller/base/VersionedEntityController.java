@@ -12,7 +12,6 @@ import eu.dariah.de.dariahsp.model.User;
 public class VersionedEntityController extends BaseController {
 	@Autowired protected UserServiceImpl userService;
 	
-	
 	protected <T extends VersionedEntityImpl> void setUsers(List<T> ves) {
 		if (ves==null || ves.size()==0) {
 			return;
