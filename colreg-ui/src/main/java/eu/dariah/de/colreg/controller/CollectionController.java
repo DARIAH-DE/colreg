@@ -188,6 +188,12 @@ public class CollectionController extends VersionedEntityController {
 			model.addAttribute("accessRightsIsLicenseId", false);
 		}
 		
+		if (c.getCollectionImageRights()==null || ObjectId.isValid(c.getCollectionImageRights())) {
+			model.addAttribute("collectionImageRightsIsLicenseId", true);
+		} else {
+			model.addAttribute("collectionImageRightsIsLicenseId", false);
+		}
+		
 		if (c.getCollectionDescriptionRights()==null || ObjectId.isValid(c.getCollectionDescriptionRights())) {
 			model.addAttribute("collectionDescriptionRightsIsLicenseId", true);
 		} else {

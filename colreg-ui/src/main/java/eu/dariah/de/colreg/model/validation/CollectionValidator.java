@@ -3,6 +3,7 @@ package eu.dariah.de.colreg.model.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.codecs.CollectibleCodec;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -179,6 +180,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 		this.validateParentCollection(collection, errors);
 		this.validateRelatedAgents(collection, errors);
 		this.validateAccess(collection, errors);
+		this.validateImage(collection, errors);
 	}
 	
 	private void validateContact(Collection collection, Errors errors) {
@@ -258,6 +260,16 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 						//}
 					}	
 				}
+			}
+		}
+	}
+	
+	private void validateImage(Collection collection, Errors errors) {
+		// If an image is set, we need a image rights specification
+		if (collection.getCollectionImage()!=null && !collection.getCollectionImage().trim().isEmpty()) {
+			
+			if (collection.getCollectionImageRights()==null || collection.getCollectionImageRights().trim().isEmpty()) {
+				errors.rejectValue("collectionImageRights", "~eu.dariah.de.colreg.validation.collection.need_image_rights");
 			}
 		}
 	}

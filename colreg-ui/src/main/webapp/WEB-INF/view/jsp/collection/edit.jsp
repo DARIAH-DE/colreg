@@ -956,7 +956,7 @@
 			
 			<!-- Collection image -->
 			<s:bind path="collectionImage">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
+				<div id="collectionImage-container" class="form-group${status.error ? ' has-error' : ' '}">
 					<label for="collectionImage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></label>
 					
 					<div class="col-sm-9">
@@ -996,6 +996,23 @@
 				</div>
 			</s:bind>
 			
+			<!-- Image rights -->
+			<s:bind path="collectionImageRights">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="collectionImageRights" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image_rights" /></label>
+					<c:set var="currRightsLicenseId" value="${collectionImageRightsIsLicenseId}" scope="request" />
+					<c:set var="currRightsName" value="collectionImageRights" scope="request" />
+					<c:set var="currRightsValue" value="${collection.collectionImageRights}" scope="request" />
+					<jsp:include page="incl/edit_rights.jsp" />	
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionImageRights" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.collection_image_rights" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
 			
 		</div>
 		
