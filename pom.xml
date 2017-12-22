@@ -24,7 +24,7 @@
 		
 		<eu.dariah.de.colreg.colreg-model>3.6.3-SNAPSHOT</eu.dariah.de.colreg.colreg-model>
 
-		<de.unibamberg.minf.core.core-metamodel.version>4.2.4-SNAPSHOT</de.unibamberg.minf.core.core-metamodel.version>
+		<de.unibamberg.minf.core.core-metamodel.version>4.2.5-SNAPSHOT</de.unibamberg.minf.core.core-metamodel.version>
 		<de.unibamberg.minf.core.core-util.version>2.0.0-SNAPSHOT</de.unibamberg.minf.core.core-util.version>
 		<de.unibamberg.minf.core.core-web.version>2.0.4-SNAPSHOT</de.unibamberg.minf.core.core-web.version>
 		
