@@ -6,7 +6,7 @@
 		<version>3.6.0-SNAPSHOT</version>
     </parent>
 	<artifactId>colreg-ui</artifactId>
-	<version>3.7.0.1-RELEASE</version>
+	<version>3.7.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>DARIAH-DE Collection Registry - UI</name>
 	<description>DARIAH-DE Collection Registry - UI</description>
