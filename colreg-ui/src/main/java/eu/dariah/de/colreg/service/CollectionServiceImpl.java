@@ -32,6 +32,7 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AccrualPojo;
+import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
 import eu.dariah.de.colreg.service.ImageServiceImpl.ImageTypes;
@@ -42,6 +43,8 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired private CollectionDao collectionDao;
 	@Autowired private AgentDao agentDao;
 	@Autowired private AccessTypeDao accessTypeDao;
+	
+	@Autowired private AgentService agentService;
 	
 	@Autowired private AccrualMethodDao accMethodDao;
 	@Autowired private AccrualPeriodicityDao accPeriodicityDao;
@@ -231,7 +234,21 @@ public class CollectionServiceImpl implements CollectionService {
 		
 		pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
 		pojo.setAccrualPojos(convertAccrualToPojos(collection.getAccrualMethods()));
-		pojo.setImageUrl(imageService.getImageURI(collection.getCollectionImage(), null));
+		pojo.setWebPage(collection.getWebPage());
+		pojo.seteMail(collection.getEMail());
+
+		if (locale!=null) {
+			// TODO: Actually use the one we need not the first
+			pojo.setDescription(collection.getLocalizedDescriptions().get(0).getDescription());
+		} else {
+			Map<String, String> descriptions = new HashMap<String, String>();
+			for (LocalizedDescription desc : collection.getLocalizedDescriptions()) {
+				if (desc.getDescription()!=null && !desc.getDescription().isEmpty()) {
+					descriptions.put(desc.getLanguageId(), desc.getDescription());
+				}
+			}
+			pojo.setDecriptions(descriptions);
+		}
 		
 		return clazz.cast(pojo);
 	}
@@ -267,17 +284,18 @@ public class CollectionServiceImpl implements CollectionService {
 			
 			// TODO: Actually use the one we need not the first
 			pojo.setTitle(collection.getLocalizedDescriptions().get(0).getTitle());
-			if (collection.getLocalizedDescriptions().get(0).getAcronym()!=null && 
-					!collection.getLocalizedDescriptions().get(0).getAcronym().trim().isEmpty()) {
-				pojo.setTitle(pojo.getTitle() + " (" + collection.getLocalizedDescriptions().get(0).getAcronym() + ")");
-			}
+			pojo.setAcronym(collection.getLocalizedDescriptions().get(0).getAcronym());
 		} else {
 			Map<String, String> titles = new HashMap<String, String>();
+			Map<String, String> acronyms = new HashMap<String, String>();
 			for (LocalizedDescription desc : collection.getLocalizedDescriptions()) {
 				titles.put(desc.getLanguageId(), desc.getTitle());
+				if (desc.getAcronym()!=null && !desc.getAcronym().isEmpty()) {
+					acronyms.put(desc.getLanguageId(), desc.getAcronym());
+				}
 			}
 			pojo.setTitles(titles);
-		}		
+		}	
 			
 		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
 			String accessTypes = "";
@@ -291,7 +309,15 @@ public class CollectionServiceImpl implements CollectionService {
 			
 		}
 		
+		if (collection.getAgentRelations()!=null && collection.getAgentRelations().size()>0) {
+			pojo.setAgents(new ArrayList<AgentPojo>());
+			for (CollectionAgentRelation ar : collection.getAgentRelations()) {
+				pojo.getAgents().add(agentService.convertToPojo(agentService.findCurrentByAgentId(ar.getAgentId()), locale));
+			}
+		}
+		
 		pojo.setThumbnailUrl(imageService.getImageURI(collection.getCollectionImage(), ImageTypes.THUMBNAIL));
+		pojo.setImageUrl(imageService.getImageURI(collection.getCollectionImage(), null));
 		
 		pojo.setType(collection.getCollectionType());
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");

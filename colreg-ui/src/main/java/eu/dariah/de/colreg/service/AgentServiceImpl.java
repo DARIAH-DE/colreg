@@ -184,13 +184,14 @@ public class AgentServiceImpl implements AgentService {
 		pojo.setParentEntityId(agent.getParentAgentId());
 		pojo.setId(agent.getId());
 		pojo.setVersionTimestamp(agent.getVersionTimestamp().toInstant().getMillis());
-		pojo.setLastChanged(
-				"<span style=\"white-space: nowrap;\">" + 
-						agent.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +
-				"</span> <span style=\"white-space: nowrap;\">" + 
-					agent.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("-M", locale), locale) +
-				"</span>");
-		
+		if (locale!=null) {
+			pojo.setLastChanged(
+					"<span style=\"white-space: nowrap;\">" + 
+							agent.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +
+					"</span> <span style=\"white-space: nowrap;\">" + 
+						agent.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("-M", locale), locale) +
+					"</span>");
+		}
 		pojo.setName(agent.getName() + ((agent.getForeName()!=null && !agent.getForeName().trim().isEmpty()) ? ", " + agent.getForeName(): ""));
 		pojo.setType(agentTypeDao.findById(agent.getAgentTypeId()).getLabel());
 		pojo.setState(agent.isDeleted() ? "deleted" : "valid");

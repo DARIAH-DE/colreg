@@ -1,6 +1,5 @@
 package eu.dariah.de.colreg.controller.api;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
