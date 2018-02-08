@@ -26,6 +26,7 @@ CollectionTable.prototype.constructor = BaseTable;
 CollectionTable.prototype.createTable = function() {
 	var _this = this;
 	this._base.table = $(_this.selector).DataTable($.extend(true, {
+		"responsive": true,
 		"order": [[1, "asc"]],
 		"columnDefs": [
 	       {
@@ -35,6 +36,7 @@ CollectionTable.prototype.createTable = function() {
 	       }, {
 	           "targets": [1],
 	           "data": function (row, type, val, meta) { return _this.renderImageColumn(row, type, val, meta); },
+	           "responsivePriority": 10001,
 	           "class" : "td-center"
 	       }, {	
 	    	   "targets": [2],

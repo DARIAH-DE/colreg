@@ -39,7 +39,7 @@
         </put-list-attribute>
 		<put-list-attribute name="scripts" inherit="true">
 			<add-attribute type="string" value="dataTables/dataTables.js" />
-			<add-attribute type="string" value="dataTables/dataTables.fnReloadAjax.js" />
+			<!-- <add-attribute type="string" value="dataTables/dataTables.fnReloadAjax.js" /> -->
 			<add-attribute type="string" value="dataTables/dataTables.i18n.js" />
 			<add-attribute type="string" value="_common/baseTable.js" />
         </put-list-attribute>
