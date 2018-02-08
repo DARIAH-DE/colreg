@@ -37,7 +37,7 @@ public class CollectionDaoImpl extends VersionedEntityDaoImpl<Collection> implem
 
 	@Override
 	public long countDrafts(String userId) {
-		Criteria c = Criteria.where("succeedingVersionId").is(null).and("draftUserId").is(userId);
+		Criteria c = Criteria.where("succeedingVersionId").is(null).and("deleted").ne(true).and("draftUserId").is(userId);
 		Query q = new Query(c);
 		return mongoTemplate.count(q, clazz);
 	}
