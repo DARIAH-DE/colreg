@@ -294,6 +294,7 @@ public class CollectionServiceImpl implements CollectionService {
 					acronyms.put(desc.getLanguageId(), desc.getAcronym());
 				}
 			}
+			pojo.setAcronyms(acronyms);
 			pojo.setTitles(titles);
 		}	
 			
