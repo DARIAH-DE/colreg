@@ -23,6 +23,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import de.unibamberg.minf.core.web.controller.ResourceNotFoundException;
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
+import de.unibamberg.minf.core.web.service.ImageService;
+import de.unibamberg.minf.core.web.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Accrual;
@@ -34,8 +36,6 @@ import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.ImageService;
-import eu.dariah.de.colreg.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.VocabularyService;

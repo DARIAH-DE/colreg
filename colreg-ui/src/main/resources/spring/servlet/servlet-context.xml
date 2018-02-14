@@ -61,6 +61,8 @@
 		</bean>
 	</mvc:interceptors>
 	
+	<bean id="imageController" class="de.unibamberg.minf.core.web.controller.ImageController" />
+	
 	<context:component-scan base-package="eu.dariah.de.colreg.controller" />
 	<context:component-scan base-package="eu.dariah.de.dariahsp.saml.web.controller" />
 </beans>

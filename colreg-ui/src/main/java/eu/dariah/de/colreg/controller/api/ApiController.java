@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.unibamberg.minf.core.web.service.ImageService;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.ImageService;
 
 @Controller
 @RequestMapping(value="/api/")

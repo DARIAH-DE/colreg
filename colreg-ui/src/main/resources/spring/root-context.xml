@@ -99,6 +99,14 @@
     	</property>
 	</bean>
 	
+	<bean id="imageService" class="de.unibamberg.minf.core.web.service.ImageServiceImpl">
+		<property name="imagePath" value="${paths.images}" />
+		<property name="imagesWidth" value="${images.width:1000}" />
+		<property name="imagesHeight" value="${images.height:1000}" />
+		<property name="thumbnailsWidth" value="${images.thumbnails.width:150}" />
+		<property name="thumbnailsHeight" value="${images.thumbnails.height:150}" />
+	</bean>
+	
     <context:component-scan base-package="eu.dariah.de.dariahsp.configuration" />
     
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>

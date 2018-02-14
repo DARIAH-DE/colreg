@@ -16,6 +16,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import de.unibamberg.minf.core.web.service.ImageService;
+import de.unibamberg.minf.core.web.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
@@ -35,7 +37,6 @@ import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
-import eu.dariah.de.colreg.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
