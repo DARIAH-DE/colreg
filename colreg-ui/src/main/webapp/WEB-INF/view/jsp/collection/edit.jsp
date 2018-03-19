@@ -728,6 +728,44 @@
 					</div>
 				</div>
 			</s:bind>
+		
+			<!-- Research / curation driven --> 
+			<s:bind path="researchDriven">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="researchCurationDriven" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.researchCurationDriven" /></label>
+					<c:choose>
+						<c:when test="${editMode}">
+							<div class="col-sm-9">
+								<label class="radio-inline">
+								  <input type="checkbox" <c:if test="${collection.researchDriven}">checked="checked" </c:if>name="researchDriven" value="true"> <s:message code="~eu.dariah.de.colreg.model.collection.research_driven" />
+								</label> 
+								<label class="radio-inline">
+								  <input type="checkbox" <c:if test="${collection.curationDriven}">checked="checked" </c:if>name="curationDriven" value="true"> <s:message code="~eu.dariah.de.colreg.model.collection.curation_driven" />
+								</label>
+							</div>
+							<div class="col-sm-9 col-sm-offset-3" style="margin-top: 5px;">
+								<em><s:message code="~eu.dariah.de.colreg.common.labels.explanation" /></em>: <input type="text" name="accrualDescription" id="accrualDescription" value="${collection.accrualDescription}" />
+							</div>
+						</c:when>
+						<c:otherwise>
+							<label class="control-label" style="text-align: left;">
+								<c:if test="${collection.researchDriven}"><i class="fa fa-check" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.model.collection.research_driven" /></c:if> 
+								<c:if test="${collection.curationDriven}"><i class="fa fa-check" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.model.collection.curation_driven" /></c:if>
+								<c:if test="${collection.accrualDescription!=null && fn:length(collection.accrualDescription)>0}">
+									<br /><em><s:message code="~eu.dariah.de.colreg.common.labels.explanation" /></em>: ${collection.accrualDescription}
+								</c:if>
+							</label>
+						</c:otherwise>
+					</c:choose>
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.researchCurationDriven" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
 		</div>
 			
 		

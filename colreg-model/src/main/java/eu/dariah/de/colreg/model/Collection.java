@@ -76,6 +76,10 @@ public class Collection extends VersionedEntityImpl {
 	@Valid private List<Access> accessMethods;
 	@Valid private List<Accrual> accrualMethods;
 	
+	private boolean researchDriven;
+	private boolean curationDriven;
+	private String accrualDescription;
+	
 	private boolean deleted;
 	private String draftUserId;
 		
@@ -129,6 +133,15 @@ public class Collection extends VersionedEntityImpl {
 	
 	public List<Accrual> getAccrualMethods() { return accrualMethods; }
 	public void setAccrualMethods(List<Accrual> accrualMethods) { this.accrualMethods = accrualMethods; }
+	
+	public boolean isResearchDriven() { return researchDriven; }
+	public void setResearchDriven(boolean researchDriven) { this.researchDriven = researchDriven; }
+	
+	public boolean isCurationDriven() { return curationDriven; }
+	public void setCurationDriven(boolean curationDriven) { this.curationDriven = curationDriven; }
+	
+	public String getAccrualDescription() { return accrualDescription; }
+	public void setAccrualDescription(String accrualDescription) { this.accrualDescription = accrualDescription; }
 	
 	public boolean isDeleted() { return deleted; }
 	public void setDeleted(boolean deleted) { this.deleted = deleted; }

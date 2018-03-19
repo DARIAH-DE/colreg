@@ -22,6 +22,8 @@ public class CollectionPojo extends BaseIdentifiable {
 	private String acronym;
 	private String thumbnailUrl;
 	private String imageUrl;
+	private boolean researchDriven;
+	private boolean curationDriven;
 	
 	private Map<String, String> titles;
 	private Map<String, String> acronyms;
@@ -59,6 +61,12 @@ public class CollectionPojo extends BaseIdentifiable {
 	public String getAcronym() { return acronym; }
 	public void setAcronym(String acronym) { this.acronym = acronym; }
 
+	public boolean isResearchDriven() { return researchDriven; }
+	public void setResearchDriven(boolean researchDriven) { this.researchDriven = researchDriven; }
+	
+	public boolean isCurationDriven() { return curationDriven; }
+	public void setCurationDriven(boolean curationDriven) { this.curationDriven = curationDriven; }
+	
 	public Map<String, String> getTitles() { return titles; }
 	public void setTitles(Map<String, String> titles) { this.titles = titles; }
 	
