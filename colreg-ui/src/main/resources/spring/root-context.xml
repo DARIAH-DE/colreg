@@ -112,4 +112,5 @@
 	<context:component-scan base-package="eu.dariah.de.colreg.dao"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.model.validation"/>
 	<context:component-scan base-package="eu.dariah.de.colreg.service"/>
+	<context:component-scan base-package="eu.dariah.de.colreg.migration"/>
 </beans>
