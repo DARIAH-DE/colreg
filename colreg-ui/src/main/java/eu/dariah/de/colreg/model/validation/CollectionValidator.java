@@ -2,6 +2,7 @@ package eu.dariah.de.colreg.model.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.codecs.CollectibleCodec;
 import org.springframework.beans.factory.InitializingBean;
@@ -265,9 +266,10 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	}
 	
 	private void validateImage(Collection collection, Errors errors) {
+		Map<Integer, String> imageMap = collectionService.getOrderedImageMap(collection.getCollectionImages());
+		
 		// If an image is set, we need a image rights specification
-		if (collection.getCollectionImage()!=null && !collection.getCollectionImage().trim().isEmpty()) {
-			
+		if (imageMap!=null && !imageMap.isEmpty()) {
 			if (collection.getCollectionImageRights()==null || collection.getCollectionImageRights().trim().isEmpty()) {
 				errors.rejectValue("collectionImageRights", "~eu.dariah.de.colreg.validation.collection.need_image_rights");
 			}

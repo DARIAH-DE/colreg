@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
@@ -37,6 +38,7 @@ import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
+import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
@@ -83,10 +85,8 @@ public class CollectionServiceImpl implements CollectionService {
 			c.setEntityTimestamp(c.getVersionTimestamp());
 		}
 		
-		if (c.getCollectionImage()!=null && c.getCollectionImage().isEmpty()) {
-			c.setCollectionImage(null);
-		}
-		
+		c.setCollectionImages(this.getOrderedImageMap(c.getCollectionImages()));
+
 		// Save new object first...just to be sure
 		collectionDao.save(c);
 		
@@ -95,7 +95,7 @@ public class CollectionServiceImpl implements CollectionService {
 			collectionDao.save(prev);
 		}		
 	}
-
+	
 	@Override
 	public Collection findCurrentByCollectionId(String id) {
 		return collectionDao.findCurrentById(id);
@@ -266,6 +266,65 @@ public class CollectionServiceImpl implements CollectionService {
 		return collectionDao.find(q);
 	}
 	
+	@Override
+	public long countCollections() {
+		return collectionDao.count();
+	}
+	
+	@Override
+	public long countDrafts(String userId) {
+		return collectionDao.countDrafts(userId);
+	}
+	
+	@Override
+	public Map<Integer, String> getOrderedImageMap(Map<Integer, String> imageMap) {
+		if (imageMap!=null) {
+			List<Integer> dropImages = new ArrayList<Integer>();
+			
+			String imageId;
+			for (Integer index : imageMap.keySet()) {
+				imageId = imageMap.get(index);
+				if (imageId==null || imageId.trim().isEmpty()) {
+					dropImages.add(index);
+				}
+			}
+			if (dropImages.size()>0) {
+				for (Integer dropIndex : dropImages) {
+					imageMap.remove(dropIndex.intValue());
+				}
+			}
+			if (imageMap.size()==0) {
+				return null;
+			}
+			
+			imageMap = new TreeMap<Integer, String>(imageMap);
+			Map<Integer, String> result = new TreeMap<Integer, String>();
+			int idxNew = 0;
+			for (Integer index : imageMap.keySet()) {
+				result.put(idxNew++, imageMap.get(index));
+			}
+			imageMap = result;
+		}
+		return imageMap;
+	}
+	
+	@Override
+	public List<ImagePojo> convertImageMapToPojos(Map<Integer, String> imageMap) {
+		if (imageMap==null || imageMap.size()==0) {
+			return null;
+		}
+		List<ImagePojo> result = new ArrayList<ImagePojo>();
+		ImagePojo pImage;
+		for (Integer index : imageMap.keySet()) {
+			pImage = new ImagePojo();
+			pImage.setIndex(index);
+			pImage.setId(imageMap.get(index));
+			pImage.setThumbnailUrl((imageService.getImageURI(pImage.getId(), ImageTypes.THUMBNAIL)));
+			pImage.setImageUrl((imageService.getImageURI(pImage.getId(), null)));
+			result.add(pImage);
+		}	
+		return result;
+	}
 
 	private <T extends CollectionPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
 		//CollectionPojo pojo = new CollectionPojo();
@@ -318,8 +377,7 @@ public class CollectionServiceImpl implements CollectionService {
 			}
 		}
 		
-		pojo.setThumbnailUrl(imageService.getImageURI(collection.getCollectionImage(), ImageTypes.THUMBNAIL));
-		pojo.setImageUrl(imageService.getImageURI(collection.getCollectionImage(), null));
+		pojo.setImages(this.convertImageMapToPojos(collection.getCollectionImages()));
 		
 		pojo.setType(collection.getCollectionType());
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");
@@ -381,14 +439,6 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		return aPojo;
 	}
-
-	@Override
-	public long countCollections() {
-		return collectionDao.count();
-	}
 	
-	@Override
-	public long countDrafts(String userId) {
-		return collectionDao.countDrafts(userId);
-	}
+	
 }

@@ -219,9 +219,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
 	
-		model.addAttribute("collectionImageUrl", imageService.getImageURI(c.getCollectionImage(), null));
-		model.addAttribute("collectionImageDisplayUrl", imageService.getImageURI(c.getCollectionImage(), ImageTypes.DISPLAY));
-		model.addAttribute("collectionImageThumbUrl", imageService.getImageURI(c.getCollectionImage(), ImageTypes.THUMBNAIL));
+		model.addAttribute("collectionImages", collectionService.convertImageMapToPojos(c.getCollectionImages()));
 		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));

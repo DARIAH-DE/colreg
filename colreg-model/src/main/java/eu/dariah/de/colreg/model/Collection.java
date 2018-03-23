@@ -1,6 +1,8 @@
 package eu.dariah.de.colreg.model;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.Email;
@@ -53,7 +55,7 @@ public class Collection extends VersionedEntityImpl {
 	private Long size;
 	private String uomId;
 	
-	private String collectionImage;
+	private Map<Integer, String> collectionImages;
 	private String collectionImageRights;
 	
 	// Legal information
@@ -164,8 +166,8 @@ public class Collection extends VersionedEntityImpl {
 	public String getItemsCreated() { return itemsCreated; }
 	public void setItemsCreated(String itemsCreated) { this.itemsCreated = itemsCreated; }
 	
-	public String getCollectionImage() { return collectionImage; }
-	public void setCollectionImage(String collectionImage) { this.collectionImage = collectionImage; }
+	public Map<Integer, String> getCollectionImages() { return collectionImages; }
+	public void setCollectionImages(Map<Integer, String> collectionImages) { this.collectionImages = collectionImages; }
 	
 	public String getCollectionImageRights() { return collectionImageRights; }
 	public void setCollectionImageRights(String collectionImageRights) { this.collectionImageRights = collectionImageRights; }
