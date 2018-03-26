@@ -34,6 +34,7 @@ import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
+import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.LicenseService;
@@ -393,5 +394,20 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("locations[0]", a);
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_location";
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editImage"})
+	public String getImageForm(Model model, @RequestParam(name="q") String imageId) {
+		
+		ImagePojo p = new ImagePojo();
+		p.setId(imageId);
+		p.setThumbnailUrl((imageService.getImageURI(p.getId(), ImageTypes.THUMBNAIL)));
+		p.setImageUrl((imageService.getImageURI(p.getId(), null)));
+		
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currImage", p);
+		model.addAttribute("collectionImages[0]", p);
+		model.addAttribute("editMode", true);
+		return "collection/edit/incl/edit_image";
 	}
 }

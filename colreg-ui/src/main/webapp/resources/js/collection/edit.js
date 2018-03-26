@@ -38,7 +38,7 @@ var CollectionEditor = function() {
 	this.registerFormControlSelectionEvents($("form"));
 	this.initRightsContainer();
 	
-	$("#collectionImageFile").bind("change", this.triggerUploadImage);
+	//$("#collectionImageFile").bind("change", this.triggerUploadImage);
 };
 
 CollectionEditor.prototype = new BaseEditor();
@@ -150,6 +150,13 @@ CollectionEditor.prototype.initEditorComponents = function() {
 	this.lists["audiences"] = new CollectionEditorList({
 		listSelector: "#lst-collection-audiences",
 		newRowUrl: __util.composeUrl("collections/includes/editAudience"),
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
+	});
+	this.lists["collectionImages"] = new CollectionEditorList({
+		listSelector: "#lst-collection-images",
+		newRowUrl: __util.composeUrl("collections/includes/editImage"),
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
 		}
@@ -303,7 +310,7 @@ CollectionEditor.prototype.triggerAddUnitOfMeasurement = function() {
 	});
 };
 
-CollectionEditor.prototype.triggerUploadImage = function(e) {
+CollectionEditor.prototype.triggerUploadImage = function(e, container) {
 	var _this = editor;
 	
 	// Check for the various File API support.
@@ -325,7 +332,7 @@ CollectionEditor.prototype.triggerUploadImage = function(e) {
 	        var formData = new FormData();
 	        formData.append("file", f, f.name);
 	        formData.append("collectionId", _this.collectionId);
-	        
+	    	        
 	        $.ajax({
 		        url: __util.composeUrl("image/async/upload"),
 		        data: formData,
@@ -338,35 +345,19 @@ CollectionEditor.prototype.triggerUploadImage = function(e) {
 		        cache: false,
 		        contentType: false,
 		        processData: false,
+		        aysnc: false,
 		        timeout: 20000,
 		        success: function(data) {
 		        	if (data.success) {
-		        		$("#collection-image-preview").prop("href", data.pojo.imageUri);
-		        		$("#collection-image-preview img").prop("src", data.pojo.thumbUri);
-		        		$("#collection-image-hint").html("<a href='" + data.pojo.baseUri + "' target='_blank'>" + data.pojo.baseUri + "</a>");
-		        		$("#collection-image-preview").show();
-		        		$("#collection-image-placeholder").hide();
-			        	
-			        	$("#collectionImage").val(data.pojo.id);
-			        	$("#btn-remove-collection-image").show();
+		        		_this.lists['collectionImages'].triggerAddListElement(container, data.pojo.id);
+		        		$("#collection-image-hint").text("");
+		        		$("#collection-image-hint").hide();
 		        	} else {
-		        		_this.triggerRemoveCollectionImage();
 		        		$("#collection-image-hint").html(data.objectErrors[0]);
+		        		$("#collection-image-hint").show();
 		        	}
 		        }
 		    });
 	    }
 	}
-};
-
-CollectionEditor.prototype.triggerRemoveCollectionImage = function() {
-	$("#collection-image-preview").prop("href", "");
-	$("#collection-image-preview img").prop("src", "");
-	$("#collection-image-hint").html(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.no_image"));
-	$("#collection-image-preview").hide();
-	$("#collection-image-placeholder").show();
-	
-	$("#collectionImageFile").val(null);
-	$("#collectionImage").val(null);
-	$("#btn-remove-collection-image").hide();
 };

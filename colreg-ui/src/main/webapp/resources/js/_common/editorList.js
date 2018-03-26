@@ -19,11 +19,12 @@ var CollectionEditorList = function(options) {
 	this.sort();
 }
 
-CollectionEditorList.prototype.triggerAddListElement = function(btn) {
+CollectionEditorList.prototype.triggerAddListElement = function(btn, data) {
 	var _this = this;
 	$.ajax({
         url: _this.options.newRowUrl,
         type: "GET",
+        data: {q : data},
         dataType: "html",
         success: function(data) {
         	var r = $(data);

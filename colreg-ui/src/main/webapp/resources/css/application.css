@@ -19,7 +19,11 @@
     border-radius: 5px;
 }
 
-#collection-image-placeholder {
+#lst-collection-images {
+	padding-left: 15px;
+}
+
+/*#collection-image-placeholder {
 	margin: 10px;
 }
 
@@ -30,7 +34,7 @@
 #collection-image-hint {
 	font-style: italic;
 	font-weight: normal;
-}
+}*/
 
 /*!
  *	Data Tables

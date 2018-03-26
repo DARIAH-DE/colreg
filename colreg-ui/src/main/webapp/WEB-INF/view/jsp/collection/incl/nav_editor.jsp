@@ -93,8 +93,8 @@
 				<s:bind path="collection.associatedProject">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#associatedProject"><s:message code="~eu.dariah.de.colreg.model.collection.associated_project" /></a></li>
 				</s:bind>
-				<s:bind path="collection.collectionImage">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionImage"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></a></li>
+				<s:bind path="collection.collectionImages">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionImages"><s:message code="~eu.dariah.de.colreg.model.collection.collection_images" /></a></li>
 				</s:bind>
 				<s:bind path="collection.collectionImageRights">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionImageRights"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image_rights" /></a></li>

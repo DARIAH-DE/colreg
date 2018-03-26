@@ -992,47 +992,44 @@
 				</div>
 			</s:bind>
 			
-			<!-- Collection image -->
-			<s:bind path="collectionImage">
-				<div id="collectionImage-container" class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="collectionImage" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></label>
-					
-					<div class="col-sm-9">
-						<div class="collection-image-container">
-							<a <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> id="collection-image-preview" href="${collectionImageDisplayUrl}" data-lightbox="collectionImage" data-title="<s:message code="~eu.dariah.de.colreg.model.collection.collection_image_l" />">
-								<img class="collection-image-thumb" src="${collectionImageThumbUrl}" />
-							</a>
-							<img <c:if test="${collectionImageUrl!=null}">style="display: none;"</c:if> id="collection-image-placeholder" src='<s:url value="/resources/img/page_icon_faded.png"></s:url>' />
-						</div>
-						<c:if test="${editMode}">
-							<button id="btn-remove-collection-image" <c:if test="${collectionImageUrl==null}">style="display: none;"</c:if> onclick="editor.triggerRemoveCollectionImage();" class="btn btn-xs pull-left btn-link">
-								<span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span>
-							</button>
-						</c:if>
-					</div>
-					
+			<!-- Collection images* -->
+			<s:bind path="collectionImages*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="lst-collection-images" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_images" /></label>
+					<div id="lst-collection-images-container" class="col-sm-9">
+						<ul id="lst-collection-images" class="collection-editor-list">
+							<c:if test="${fn:length(collectionImages)>0}">
+								<c:forEach var="image" items="${collectionImages}" varStatus="status">
+									<c:set var="currImage" value="${image}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_image.jsp" />
+								</c:forEach>
+								<c:remove var="currImage" />	
+							</c:if>
+							<c:if test="${editMode}">
+								<li class="collection-editor-list-buttons">
+									<div class="col-sm-12">
+										<input id="upload-collection-image-file" onchange="editor.triggerUploadImage(event, this);" type="file" style="visibility: hidden; height: 0px; position: absolute;" />	
+										<button onclick="$('#upload-collection-image-file').click();" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_image" /></button>
+										
+										<div id="collection-image-hint" class="alert alert-warn">
+										
+										</div>
+										
+									</div>
+								</li>
+							</c:if>
+						</ul>
+					</div>					
 					<div class="col-sm-9 col-sm-offset-3">
-						<label id="collection-image-hint">
-							<c:choose>
-								<c:when test="${collectionImageUrl!=null}">
-									<a target='_blank' href="${collectionImageUrl}">${collectionImageUrl}</a>
-								</c:when>
-								<c:otherwise>
-									<s:message code="~eu.dariah.de.colreg.view.collection.labels.no_image" />
-								</c:otherwise>
-							</c:choose>
-						</label>
-					</div>
-					
-					<c:if test="${editMode}">
-						<div class="col-sm-9 col-sm-offset-3">
-							<input type="hidden" name="collectionImage" id="collectionImage" value="${collection.collectionImage}" />
-							<input id="collectionImageFile" name="collectionImageFile" type="file" />						
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.collection_image" />
 						</div>
-					</c:if>
-					
+					</div>
 				</div>
 			</s:bind>
+			
 			
 			<!-- Image rights -->
 			<s:bind path="collectionImageRights">
