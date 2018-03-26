@@ -1,6 +1,8 @@
 paths:
   main: /etc/dfa/colreg
-  images: /var/lib/dfa/colreg
+  data: /var/lib/dfa/colreg
+  images: ${paths.data}/images
+  backups: ${paths.data}/backups
   
 api:
   dme:

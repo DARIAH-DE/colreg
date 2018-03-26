@@ -21,11 +21,15 @@ public abstract class DaoImpl<T extends Identifiable> implements Dao {
 	
 	public DaoImpl(Class<?> clazz) {
 		this.clazz = (Class<T>)clazz;
-		this.collectionName = clazz.getSimpleName().substring(0,1).toLowerCase() + clazz.getSimpleName().substring(1);
+		this.collectionName = getCollectionName(clazz);
 	}
 	
 	public DaoImpl(Class<?> clazz, String collectionName) {
 		this.clazz = (Class<T>)clazz;
 		this.collectionName = collectionName;
+	}
+	
+	public static String getCollectionName(Class<?> clazz) {
+		return clazz.getSimpleName().substring(0,1).toLowerCase() + clazz.getSimpleName().substring(1);
 	}
 }
