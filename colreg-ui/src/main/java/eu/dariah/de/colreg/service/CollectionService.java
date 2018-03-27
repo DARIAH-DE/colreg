@@ -32,4 +32,5 @@ public interface CollectionService {
 	public long countDrafts(String userId);
 	public Map<Integer, String> getOrderedImageMap(Map<Integer, String> imageMap);
 	public List<ImagePojo> convertImageMapToPojos(Map<Integer, String> imageMap);
+	public ImagePojo convertImageIdToPojo(String imageId, int index);
 }

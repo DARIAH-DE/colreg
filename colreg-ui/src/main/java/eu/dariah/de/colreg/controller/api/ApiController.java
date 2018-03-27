@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.unibamberg.minf.core.web.service.ImageService;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.DcddmCollectionPojo;
@@ -23,8 +22,7 @@ public class ApiController {
 	protected static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 	
 	@Autowired private CollectionService collectionService;
-	@Autowired private ImageService imageService;
-	
+
 	@RequestMapping(value="collections", method=RequestMethod.GET)
 	public @ResponseBody List<CollectionPojo> getAllPublic() {
 		List<Collection> collections = collectionService.findAllCurrent();

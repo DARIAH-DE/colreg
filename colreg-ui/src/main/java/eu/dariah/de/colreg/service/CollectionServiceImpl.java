@@ -237,7 +237,11 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.setAccrualPojos(convertAccrualToPojos(collection.getAccrualMethods()));
 		pojo.setWebPage(collection.getWebPage());
 		pojo.seteMail(collection.getEMail());
+		pojo.setCurationDriven(collection.isCurationDriven());
+		pojo.setResearchDriven(collection.isResearchDriven());
 
+		pojo.setImages(this.convertImageMapToPojos(collection.getCollectionImages()));
+		
 		if (locale!=null) {
 			// TODO: Actually use the one we need not the first
 			pojo.setDescription(collection.getLocalizedDescriptions().get(0).getDescription());
@@ -314,16 +318,21 @@ public class CollectionServiceImpl implements CollectionService {
 			return null;
 		}
 		List<ImagePojo> result = new ArrayList<ImagePojo>();
-		ImagePojo pImage;
 		for (Integer index : imageMap.keySet()) {
-			pImage = new ImagePojo();
-			pImage.setIndex(index);
-			pImage.setId(imageMap.get(index));
-			pImage.setThumbnailUrl((imageService.getImageURI(pImage.getId(), ImageTypes.THUMBNAIL)));
-			pImage.setImageUrl((imageService.getImageURI(pImage.getId(), null)));
-			result.add(pImage);
+			result.add(this.convertImageIdToPojo(imageMap.get(index), index));
 		}	
 		return result;
+	}
+	
+	@Override
+	public ImagePojo convertImageIdToPojo(String imageId, int index) {
+		ImagePojo pImage = new ImagePojo();
+		pImage.setIndex(index);
+		pImage.setId(imageId);
+		pImage.setThumbnailUrl((imageService.getImageURI(pImage.getId(), ImageTypes.THUMBNAIL)));
+		pImage.setImageUrl((imageService.getImageURI(pImage.getId(), null)));
+		
+		return pImage;
 	}
 
 	private <T extends CollectionPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
@@ -377,7 +386,11 @@ public class CollectionServiceImpl implements CollectionService {
 			}
 		}
 		
-		pojo.setImages(this.convertImageMapToPojos(collection.getCollectionImages()));
+		if (collection.getCollectionImages()!=null && collection.getCollectionImages().size()>0) {
+			ImagePojo pImage = this.convertImageIdToPojo(collection.getCollectionImages().get(collection.getCollectionImages().keySet().iterator().next()), 0);
+			pojo.setImageUrl(pImage.getImageUrl());
+			pojo.setThumbnailUrl(pImage.getThumbnailUrl());
+		}
 		
 		pojo.setType(collection.getCollectionType());
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");

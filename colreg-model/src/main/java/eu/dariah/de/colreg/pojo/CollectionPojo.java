@@ -21,11 +21,9 @@ public class CollectionPojo extends BaseIdentifiable {
 	private String title;
 	private String acronym;
 	
-	private List<ImagePojo> images;
-	
-	private boolean researchDriven;
-	private boolean curationDriven;
-	
+	private String thumbnailUrl;
+	private String imageUrl;
+
 	private Map<String, String> titles;
 	private Map<String, String> acronyms;
 	private String access;
@@ -61,12 +59,6 @@ public class CollectionPojo extends BaseIdentifiable {
 	
 	public String getAcronym() { return acronym; }
 	public void setAcronym(String acronym) { this.acronym = acronym; }
-
-	public boolean isResearchDriven() { return researchDriven; }
-	public void setResearchDriven(boolean researchDriven) { this.researchDriven = researchDriven; }
-	
-	public boolean isCurationDriven() { return curationDriven; }
-	public void setCurationDriven(boolean curationDriven) { this.curationDriven = curationDriven; }
 	
 	public Map<String, String> getTitles() { return titles; }
 	public void setTitles(Map<String, String> titles) { this.titles = titles; }
@@ -74,8 +66,11 @@ public class CollectionPojo extends BaseIdentifiable {
 	public Map<String, String> getAcronyms() { return acronyms; }
 	public void setAcronyms(Map<String, String> acronyms) { this.acronyms = acronyms; }
 
-	public List<ImagePojo> getImages() { return images; }
-	public void setImages(List<ImagePojo> images) { this.images = images; }
+	public String getThumbnailUrl() { return thumbnailUrl; }
+	public void setThumbnailUrl(String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }
+
+	public String getImageUrl() { return imageUrl; }
+	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
 	public String getAccess() { return access; }
 	public void setAccess(String access) { this.access = access; }

@@ -16,6 +16,10 @@ public class DcddmCollectionPojo extends CollectionPojo {
 	private Map<String, String> decriptions;
 	private String webPage;
 	private String eMail;
+	private boolean researchDriven;
+	private boolean curationDriven;
+	private List<ImagePojo> images;
+	
 	
 	public List<AccessPojo> getAccessPojos() { return accessPojos; }
 	public void setAccessPojos(List<AccessPojo> accessPojos) { this.accessPojos = accessPojos; }
@@ -34,4 +38,13 @@ public class DcddmCollectionPojo extends CollectionPojo {
 	
 	public String geteMail() { return eMail; }
 	public void seteMail(String eMail) { this.eMail = eMail; }
+	
+	public boolean isResearchDriven() { return researchDriven; }
+	public void setResearchDriven(boolean researchDriven) { this.researchDriven = researchDriven; }
+	
+	public boolean isCurationDriven() { return curationDriven; }
+	public void setCurationDriven(boolean curationDriven) { this.curationDriven = curationDriven; }
+	
+	public List<ImagePojo> getImages() { return images; }
+	public void setImages(List<ImagePojo> images) { this.images = images; }
 }
