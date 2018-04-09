@@ -29,7 +29,10 @@ public class Collection extends VersionedEntityImpl {
 	// Collection description
 	@Valid private List<LocalizedDescription> localizedDescriptions;
 	
+	/** Replaced by collectionTypes container for vocabulary IDs
+	 *  stays in code to support migration */
 	@NotBlank(message="{~eu.dariah.de.colreg.validation.collection.type}")
+	@Deprecated
 	private String collectionType;
 	
 	@URL(message="{~eu.dariah.de.colreg.validation.collection.webpage}")
@@ -41,6 +44,7 @@ public class Collection extends VersionedEntityImpl {
 	private List<String> audiences;
 	private List<Address> locations;
 	
+	private List<String> collectionTypes;
 	private List<String> itemLanguages;
 	
 	private List<String> subjects;
@@ -85,6 +89,9 @@ public class Collection extends VersionedEntityImpl {
 	private boolean deleted;
 	private String draftUserId;
 		
+	public List<String> getCollectionTypes() { return collectionTypes; }
+	public void setCollectionTypes(List<String> collectionTypes) { this.collectionTypes = collectionTypes; }
+	
 	public List<String> getProvidedIdentifier() { return providedIdentifier; }
 	public void setProvidedIdentifier(List<String> providedIdentifier) { this.providedIdentifier = providedIdentifier; }
 	
