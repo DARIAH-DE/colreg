@@ -410,4 +410,12 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_image";
 	}
+	
+	@RequestMapping(method=GET, value={"/includes/editCollectionType"})
+	public String getEditCollectionTypeForm(Model model) {
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currType", "");
+		model.addAttribute("collectionTypes[0]", "");
+		return "collection/edit/incl/edit_collectiontype";
+	}
 }

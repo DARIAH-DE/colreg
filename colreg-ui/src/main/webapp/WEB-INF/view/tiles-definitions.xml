@@ -113,6 +113,7 @@
 	<definition name="collection/edit/incl/edit_audience" template="/WEB-INF/view/jsp/collection/incl/edit_audience.jsp" />
 	<definition name="collection/edit/incl/edit_location" template="/WEB-INF/view/jsp/collection/incl/edit_location.jsp" />
 	<definition name="collection/edit/incl/edit_image" template="/WEB-INF/view/jsp/collection/incl/edit_image.jsp" />
+	<definition name="collection/edit/incl/edit_collectiontype" template="/WEB-INF/view/jsp/collection/incl/edit_collection_type.jsp" />
 
 	<!-- Agent -->
 	<definition name="agent/list" extends="template_tables">

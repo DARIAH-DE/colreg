@@ -22,8 +22,15 @@ public class VocabularyController {
 	@Autowired private VocabularyService vocabularyService;
 	@Autowired private MessageSource messageSource;
 	
-	@RequestMapping(value="uom/async/add", method=RequestMethod.GET)
-	public @ResponseBody ModelActionPojo addUom(@RequestParam String uom, Locale locale) {
+	@RequestMapping(value="{vocabularyId}/async/add", method=RequestMethod.GET)
+	public @ResponseBody ModelActionPojo addVocabularyItem(@RequestParam String vocabularyId, @RequestParam String value, Locale locale) {
+		if (vocabularyId.equals("uom")) {
+			return this.addUom(value, locale);
+		}		
+		return null;
+	}
+	
+	private ModelActionPojo addUom(String uom, Locale locale) {
 		ModelActionPojo result = new ModelActionPojo();
 		
 		UnitOfMeasurement unit = vocabularyService.findUnitOfMeasurementByName(uom);
@@ -40,5 +47,4 @@ public class VocabularyController {
 		}
 		return result;
 	}
-	
 }

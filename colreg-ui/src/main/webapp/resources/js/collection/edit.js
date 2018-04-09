@@ -161,6 +161,13 @@ CollectionEditor.prototype.initEditorComponents = function() {
 			_this.registerFormControlSelectionEvents($(row));
 		}
 	});
+	this.lists["collectionTypes"] = new CollectionEditorList({
+		listSelector: "#lst-collection-collectionTypes",
+		newRowUrl: __util.composeUrl("collections/includes/editCollectionType"),
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
+	});
 };
 
 CollectionEditor.prototype.registerLanguageTypeahead = function(element) {
@@ -290,7 +297,7 @@ CollectionEditor.prototype.triggerAddUnitOfMeasurement = function() {
 	bootbox.prompt(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.add_uom"), function(result){ 
 		$.ajax({
 	        url: __util.composeUrl("vocabulary/uom/async/add"),
-	        data: { uom: result },
+	        data: { value: result },
 	        type: "GET",
 	        async: false,
 	        encoding: "UTF-8",

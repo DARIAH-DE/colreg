@@ -98,8 +98,8 @@ public class Collection extends VersionedEntityImpl {
 	public List<LocalizedDescription> getLocalizedDescriptions() { return localizedDescriptions; }
 	public void setLocalizedDescriptions(List<LocalizedDescription> localizedDescriptions) { this.localizedDescriptions = localizedDescriptions; }
 	
-	public String getCollectionType() { return collectionType; }
-	public void setCollectionType(String collectionType) { this.collectionType = collectionType; }
+	@Deprecated public String getCollectionType() { return collectionType; }
+	@Deprecated public void setCollectionType(String collectionType) { this.collectionType = collectionType; }
 	
 	public String getWebPage() { return webPage; }
 	public void setWebPage(String webPage) { this.webPage = webPage; }
