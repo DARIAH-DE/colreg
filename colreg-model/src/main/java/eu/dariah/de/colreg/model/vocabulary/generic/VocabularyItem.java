@@ -1,8 +1,8 @@
-package eu.dariah.de.colreg.model.vocabulary;
+package eu.dariah.de.colreg.model.vocabulary.generic;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
-public class GenericVocabularyItem extends BaseIdentifiable {
+public class VocabularyItem extends BaseIdentifiable {
 	private static final long serialVersionUID = 942372659078068387L;
 	
 	private String vocabulary;
