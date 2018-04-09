@@ -114,7 +114,7 @@ public class MigrationServiceImpl implements MigrationService {
 		
 		try {
 			vocabularyDao.save(v);
-			this.saveVersionInfo("3.8", false);
+			this.saveVersionInfo("3.8.1", false);
 			logger.info("Collection types vocabulary migration completed WITHOUT errors (version: 3.8.1)");
 		} catch (Exception e) {
 			logger.error("Failed to update database to version 3.8.1", e);
