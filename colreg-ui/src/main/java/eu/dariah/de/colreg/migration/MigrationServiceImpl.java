@@ -30,7 +30,9 @@ import de.unibamberg.minf.dme.model.version.VersionInfo;
 import de.unibamberg.minf.dme.model.version.VersionInfoImpl;
 import eu.dariah.de.colreg.dao.VersionDao;
 import eu.dariah.de.colreg.dao.base.DaoImpl;
+import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyDao;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 
 @Component
 public class MigrationServiceImpl implements MigrationService {
@@ -45,9 +47,11 @@ public class MigrationServiceImpl implements MigrationService {
 	
 	private final MessageDigest md;
 	
-	@Autowired private VersionDao versionDao;
 	@Autowired private MongoTemplate mongoTemplate;
 	@Autowired private ObjectMapper objectMapper;
+	
+	@Autowired private VersionDao versionDao;
+	@Autowired private VocabularyDao vocabularyDao;
 	
 	public MigrationServiceImpl() throws NoSuchAlgorithmException {
 		md = MessageDigest.getInstance("MD5");
@@ -82,10 +86,43 @@ public class MigrationServiceImpl implements MigrationService {
 				this.backupDb();
 				backedUp = true;
 			}
+			this.migrateCollectionTypesVocabulary();
+		}
+		if (!existingVersions.contains("3.8.2")) {
+			if (!backedUp) {
+				this.backupDb();
+				backedUp = true;
+			}
 			this.migrateCollectionTypes();
 		}
 	}
 	
+	private void migrateCollectionTypesVocabulary() {
+		logger.info("Performing collection types vocabulary migration (version: 3.8.1)");
+		
+		List<Vocabulary> vocabularies = vocabularyDao.findAll();
+		for (Vocabulary v : vocabularies) {
+			if (v.getIdentifier().equals("collectionTypes")) {
+				logger.warn("Vocabulary [collectionTypes] exists despite db versions not containing 3.8.1; consider updating manually");
+				return;
+			}
+		}
+		
+		Vocabulary v = new Vocabulary();
+		v.setIdentifier("collectionTypes");
+		v.setDefaultName("Collection Types");
+		
+		try {
+			vocabularyDao.save(v);
+			this.saveVersionInfo("3.8", false);
+			logger.info("Collection types vocabulary migration completed WITHOUT errors (version: 3.8.1)");
+		} catch (Exception e) {
+			logger.error("Failed to update database to version 3.8.1", e);
+			this.saveVersionInfo("3.8.1", true);
+			logger.info("Collection types vocabulary migration completed WITH errors (version: 3.8.1)");
+		}
+	}
+
 	private void migrateCollectionTypes() {
 		
 	}
@@ -119,7 +156,7 @@ public class MigrationServiceImpl implements MigrationService {
 					mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
 				}
 			} catch (Exception e) {
-				logger.error("error", e);
+				logger.error("Failed to update database to version 3.8", e);
 				errors = true;
 			}
 		}
