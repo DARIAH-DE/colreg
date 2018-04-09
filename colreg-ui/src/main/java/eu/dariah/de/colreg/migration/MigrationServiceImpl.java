@@ -77,9 +77,19 @@ public class MigrationServiceImpl implements MigrationService {
 			}
 			this.migrateImages();
 		}
+		if (!existingVersions.contains("3.8.1")) {
+			if (!backedUp) {
+				this.backupDb();
+				backedUp = true;
+			}
+			this.migrateCollectionTypes();
+		}
 	}
 	
-
+	private void migrateCollectionTypes() {
+		
+	}
+	
 	private void migrateImages() {
 		List<String> rawCollections = this.getObjectsAsString(Collection.class);
 		boolean errors = false;
