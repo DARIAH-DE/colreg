@@ -13,7 +13,13 @@ public class VocabularyConverter extends BaseConverter<Vocabulary, VocabularyPoj
 
 	@Override
 	public VocabularyPojo convertToPojo(Vocabulary object, Locale locale) {
-		return null;
+		
+		VocabularyPojo pojo = new VocabularyPojo();
+		pojo.setId(object.getId());
+		pojo.setIdentifier(object.getIdentifier());
+		pojo.setLocalizedlabel(object.getMessageCode());
+		
+		return pojo;
 	}
 
 

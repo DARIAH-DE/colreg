@@ -36,6 +36,7 @@ import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
+import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
@@ -54,6 +55,9 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private LicenseService licenseService;
 	
 	@Autowired private ImageService imageService;
+	
+	@Autowired private VocabularyConverter vocabularyConverter;
+	
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale, HttpServletRequest request) {		
@@ -105,7 +109,7 @@ public class CollectionController extends VersionedEntityController {
 		}
 		
 		model.addAttribute("locale", locale.getLanguage());
-		model.addAttribute("vocabularies", vocabularyService.findVocabularies());
+		model.addAttribute("vocabularies", vocabularyConverter.convertToPojos(vocabularyService.findVocabularies(), locale));
 		 
 		if (c==null) {
 			throw new ResourceNotFoundException();
