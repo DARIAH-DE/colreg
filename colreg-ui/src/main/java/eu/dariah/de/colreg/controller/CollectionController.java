@@ -105,7 +105,7 @@ public class CollectionController extends VersionedEntityController {
 		}
 		
 		model.addAttribute("locale", locale.getLanguage());
-		
+		model.addAttribute("vocabularies", vocabularyService.findVocabularies());
 		 
 		if (c==null) {
 			throw new ResourceNotFoundException();

@@ -11,6 +11,7 @@ import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
+import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 
 public interface VocabularyService {
 	public List<Language> queryLanguages(String query);
@@ -35,4 +36,6 @@ public interface VocabularyService {
 	public List<UnitOfMeasurement> findAllUnitsOfMeasurement();
 	public UnitOfMeasurement findUnitOfMeasurementByName(String uom);
 	public void saveUnitOfMeasurement(UnitOfMeasurement unit);
+
+	public List<Vocabulary> findVocabularies();
 }

@@ -17,6 +17,7 @@ import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.ItemTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.dao.vocabulary.UnitOfMeasurementDao;
+import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyDao;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
@@ -26,6 +27,7 @@ import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
+import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 
 @Service
 public class VocabularyServiceImpl implements VocabularyService {
@@ -39,6 +41,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private AgentRelationTypeDao agentRelationTypeDao;
 	@Autowired private ItemTypeDao itemTypeDao;
 	@Autowired private UnitOfMeasurementDao uomDao;
+	@Autowired private VocabularyDao vocabularyDao;
 	
 	@Override
 	public List<Language> queryLanguages(String query) {
@@ -144,4 +147,11 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public void saveUnitOfMeasurement(UnitOfMeasurement unit) {
 		uomDao.save(unit);
 	}
+	
+	@Override
+	public List<Vocabulary> findVocabularies() {
+		return vocabularyDao.findAll();
+	}
+	
+	
 }
