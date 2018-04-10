@@ -25,6 +25,21 @@
 		    			</c:if>
 		    			<li><a href="<s:url value='/collections/' />"><s:message code="~eu.dariah.de.colreg.titles.collections" /></a></li>
 		    			<li><a href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a></li>
+		    			<li class="dropdown">				    			
+		    				<a aria-expanded="false" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<s:message code="~eu.dariah.de.colreg.titles.vocabularies" />
+								<span class="caret"></span>
+							</a>
+							<ul role="menu" class="dropdown-menu">
+								<c:forEach items="${_vocabularies}" var="vocabulary">
+									<li role="presentation">
+										<a role="menuitem" tabindex="-1" href="<s:url value='/vocabulary/${vocabulary.id}' />">
+											${vocabulary.localizedLabel}
+										</a>
+									</li>
+								</c:forEach>
+							</ul>
+		    			</li>
 		    		</ul>
 		    
 		    		<!-- Elements for language selection and login/logout -->

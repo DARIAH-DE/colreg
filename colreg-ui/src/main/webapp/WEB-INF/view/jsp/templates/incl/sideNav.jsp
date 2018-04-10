@@ -21,4 +21,12 @@
 		</c:otherwise>
 	</c:choose>
 	<a class="list-group-item${_navigationAttribute=='agents' ? ' active' : ''}" href="<s:url value='/agents/' />"><s:message code="~eu.dariah.de.colreg.titles.agents" /></a>
+	
+	<c:if test="${_vocabularies!=null && fn:length(_vocabularies)>0}">
+		<hr />
+		<h5 class="list-group-header"><s:message code="~eu.dariah.de.colreg.titles.vocabularies" /></h5>
+		<c:forEach items="${_vocabularies}" var="vocabulary">
+			<a class="list-group-item${_navigationAttribute==vocabulary.identifier ? ' active' : ''}" href="<s:url value='/vocabulary/${vocabulary.id}' />">${vocabulary.localizedLabel}</a>
+		</c:forEach>
+	</c:if>
 </div>

@@ -2,6 +2,7 @@ package eu.dariah.de.colreg.pojo.converter;
 
 import java.util.Locale;
 
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Component;
 
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
@@ -17,7 +18,16 @@ public class VocabularyConverter extends BaseConverter<Vocabulary, VocabularyPoj
 		VocabularyPojo pojo = new VocabularyPojo();
 		pojo.setId(object.getId());
 		pojo.setIdentifier(object.getIdentifier());
-		pojo.setLocalizedlabel(object.getMessageCode());
+		
+		
+		try {
+			pojo.setLocalizedLabel(messageSource.getMessage(object.getMessageCode(), null, locale));
+		} catch (NoSuchMessageException e) {
+			pojo.setLocalizedLabel("~" + object.getDefaultName());
+		}
+		
+		
+		
 		
 		return pojo;
 	}

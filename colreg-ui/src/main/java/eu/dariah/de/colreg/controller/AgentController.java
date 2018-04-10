@@ -31,10 +31,8 @@ import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
-import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Controller
@@ -42,11 +40,9 @@ import eu.dariah.de.dariahsp.model.web.AuthPojo;
 public class AgentController extends VersionedEntityController {
 	@Autowired private AgentService agentService;
 	@Autowired private CollectionService collectionService;
-	@Autowired private VocabularyService vocabularyService;
 	
 	@Autowired private AgentValidator validator;
 	
-	@Autowired private VocabularyConverter vocabularyConverter;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		
@@ -82,8 +78,6 @@ public class AgentController extends VersionedEntityController {
 		if (a==null) {
 			throw new ResourceNotFoundException();
 		}
-		
-		model.addAttribute("vocabularies", vocabularyConverter.convertToPojos(vocabularyService.findVocabularies(), locale));
 		
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
 		if (inputFlashMap!=null && inputFlashMap.containsKey("lastSavedVersion")) {

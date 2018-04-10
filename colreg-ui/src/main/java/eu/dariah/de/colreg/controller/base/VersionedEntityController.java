@@ -2,15 +2,29 @@ package eu.dariah.de.colreg.controller.base;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
+import eu.dariah.de.colreg.pojo.VocabularyPojo;
+import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
 import eu.dariah.de.colreg.service.UserServiceImpl;
+import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.dariahsp.model.User;
 
 public class VersionedEntityController extends BaseController {
 	@Autowired protected UserServiceImpl userService;
+	
+	@Autowired protected VocabularyService vocabularyService;	
+	@Autowired protected VocabularyConverter vocabularyConverter;
+	
+	@ModelAttribute("_vocabularies")
+	public List<VocabularyPojo> getVocabularies(Locale locale) {
+		return vocabularyConverter.convertToPojos(vocabularyService.findVocabularies(), locale);
+	}
 	
 	protected <T extends VersionedEntityImpl> void setUsers(List<T> ves) {
 		if (ves==null || ves.size()==0) {
