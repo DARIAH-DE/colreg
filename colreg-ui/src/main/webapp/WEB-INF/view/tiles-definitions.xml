@@ -133,6 +133,14 @@
 	<definition name="agent/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/agent/incl/edit_identifier.jsp" />
 	<definition name="agent/edit/incl/edit_address" template="/WEB-INF/view/jsp/agent/incl/edit_address.jsp" />
 	
+	<!-- Vocabulary -->
+	<definition name="vocabulary/list" extends="template_tables">
+		<put-attribute name="content" value="/WEB-INF/view/jsp/vocabulary/list.jsp" />
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="vocabulary/list.js" />
+		</put-list-attribute>
+	</definition>
+	
 	<!-- SAML Administration -->
 	<definition name="saml/provider_view" extends="template_simple">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/saml/providerView.jsp" />
