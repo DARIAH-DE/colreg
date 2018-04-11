@@ -22,6 +22,7 @@ import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.pojo.VocabularyPojo;
 import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
+import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
@@ -29,6 +30,9 @@ import eu.dariah.de.colreg.service.VocabularyService;
 public class VocabularyController extends VersionedEntityController {
 	@Autowired protected VocabularyService vocabularyService;	
 	@Autowired protected VocabularyConverter vocabularyConverter;
+	
+	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
+	
 	@Autowired private MessageSource messageSource;
 	
 	@RequestMapping(value="{vocabularyId}/async/add", method=RequestMethod.GET)
@@ -40,12 +44,12 @@ public class VocabularyController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(value="{vocabularyId}/", method=RequestMethod.GET)
-	public String getList(Model model, Locale locale) {		
+	public String getList(@RequestParam String vocabularyId, Model model, Locale locale) {
 		return "vocabulary/list";
 	}
 	
 	@RequestMapping(value="{vocabularyId}/list", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<VocabularyPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody TableListPojo<VocabularyPojo> getAllVocabularyItems(@RequestParam String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
 		List<Vocabulary> vocabularies = vocabularyService.findVocabularies();
 		List<VocabularyPojo> vocabularyPojos = vocabularyConverter.convertToPojos(vocabularies, locale);
 		

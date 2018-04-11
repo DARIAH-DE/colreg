@@ -6,7 +6,8 @@
 
 <ul class="breadcrumb">
 	<li><a href='<s:url value="/" />' target="_self"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></a></li>
-	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.agents" /></li>
+	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.vocabularies" /></li>
+	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.vocabularies" /></li>
 </ul>
 <div id="main-content">
 	<div class="row">
