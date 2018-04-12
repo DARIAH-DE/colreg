@@ -26,6 +26,10 @@ public class VersionedEntityController extends BaseController {
 		return vocabularyConverter.convertToPojos(vocabularyService.findVocabularies(), locale);
 	}
 	
+	public VersionedEntityController(String mainNavId) {
+		super(mainNavId);
+	}
+	
 	protected <T extends VersionedEntityImpl> void setUsers(List<T> ves) {
 		if (ves==null || ves.size()==0) {
 			return;

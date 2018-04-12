@@ -1,13 +1,17 @@
 package eu.dariah.de.colreg.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +36,7 @@ import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Controller
-@RequestMapping("/vocabulary/")
+@RequestMapping("/vocabularies/")
 public class VocabularyController extends VersionedEntityController {
 	@Autowired protected VocabularyService vocabularyService;	
 	@Autowired protected VocabularyConverter vocabularyConverter;
@@ -41,6 +45,10 @@ public class VocabularyController extends VersionedEntityController {
 	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
 	
 	@Autowired private MessageSource messageSource;
+	
+	public VocabularyController() {
+		super("vocabularies");
+	}
 	
 	@RequestMapping(value="{vocabularyId}/async/add", method=RequestMethod.GET)
 	public @ResponseBody ModelActionPojo addVocabularyItem(@PathVariable String vocabularyId, @RequestParam String value, Locale locale) {
@@ -68,9 +76,10 @@ public class VocabularyController extends VersionedEntityController {
 		return new TableListPojo<VocabularyItemPojo>(vocabularyItemPojos);
 	}
 	
-	@RequestMapping(value="{vocabularyId}/{vocabularyItemId}", method=RequestMethod.GET)
+	@RequestMapping(value="{vocabularyId}/{vocabularyItemId}/forms/edit", method=RequestMethod.GET)
 	public String getAddItemForm(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, Model model, Locale locale, HttpServletRequest request) {
 		AuthPojo auth = authInfoHelper.getAuth(request);
+		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
 		VocabularyItem vi;
 		
 		if (vocabularyItemId.toLowerCase().equals("new")) {
@@ -85,6 +94,7 @@ public class VocabularyController extends VersionedEntityController {
 			throw new ResourceNotFoundException();
 		}
 		
+		model.addAttribute("vocabulary", vocabularyConverter.convertToPojo(v, locale));
 		model.addAttribute("vocabularyItem", vi);
 		model.addAttribute("isNew", vi.getId().equals("new"));
 		
@@ -93,6 +103,12 @@ public class VocabularyController extends VersionedEntityController {
 		return "vocabulary/edit_item";
 	}
 	
+	@RequestMapping(method=POST, value="{vocabularyId}/{vocabularyItemId}/saveItem", produces = "application/json; charset=utf-8")
+	public @ResponseBody ModelActionPojo saveVocabularyItem(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, @Valid VocabularyItem vocabularyItem, BindingResult bindingResult, HttpServletRequest request, Model model, Locale locale) {
+		ModelActionPojo result = getActionResult(bindingResult, locale);
+		return result;
+	}
+
 	private ModelActionPojo addUom(String uom, Locale locale) {
 		ModelActionPojo result = new ModelActionPojo();
 		

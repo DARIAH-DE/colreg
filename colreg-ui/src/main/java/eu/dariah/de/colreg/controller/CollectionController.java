@@ -53,7 +53,9 @@ public class CollectionController extends VersionedEntityController {
 	
 	@Autowired private ImageService imageService;
 	
-	
+	public CollectionController() {
+		super("collections");
+	}
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale, HttpServletRequest request) {		

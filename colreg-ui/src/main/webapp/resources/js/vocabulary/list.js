@@ -12,7 +12,7 @@ var VocabularyTable = function() {
 	this.createTable();
 };
 
-VocabularyTable.prototype = new BaseTable(__util.composeUrl("vocabulary/list"), "#vocabulary-table-container");
+VocabularyTable.prototype = new BaseTable(__util.composeUrl("vocabulary/" + $("#vocabulary-id").val() + "/list"), "#vocabulary-table-container");
 
 VocabularyTable.prototype.createTable = function() {
 	var _this = this;
@@ -61,9 +61,9 @@ VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
 	var form_identifier = this.vocabularyId + "-new-item";
 	
 	modalFormHandler = new ModalFormHandler({
-		formUrl: __util.composeUrl(itemId),
+		formUrl: __util.composeUrl(itemId + "/forms/edit"),
 		identifier: form_identifier,
-		//additionalModalClasses: modalType,
+		//additionalModalClasses: "wide-modal",
 		//completeCallback: function(container) {},
 		//setupCallback: function() { } -> refreshList
 	});	

@@ -43,6 +43,9 @@ public class AgentController extends VersionedEntityController {
 	
 	@Autowired private AgentValidator validator;
 	
+	public AgentController() {
+		super("agents");
+	}
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getList(Model model, Locale locale) {		

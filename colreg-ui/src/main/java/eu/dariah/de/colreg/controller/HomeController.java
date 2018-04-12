@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.unibamberg.minf.core.web.pojo.TranslationPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
@@ -32,7 +33,6 @@ import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 import eu.dariah.de.colreg.pojo.EdgePojo;
 import eu.dariah.de.colreg.pojo.GraphPojo;
 import eu.dariah.de.colreg.pojo.NodePojo;
-import eu.dariah.de.colreg.pojo.TranslationPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
@@ -51,6 +51,10 @@ public class HomeController extends VersionedEntityController {
 	
 	@Value("#{environment.saml!=null?environment.saml:false}")
 	private boolean saml;
+	
+	public HomeController() {
+		super("dashboard");
+	}
 	
 	
 	@RequestMapping(value = "/collections", method = RequestMethod.GET)
@@ -233,23 +237,5 @@ public class HomeController extends VersionedEntityController {
 		graph.setEdges(edges);
 		
 		return graph;		
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, value="/translate", produces = "application/json; charset=utf-8")
-	public @ResponseBody List<TranslationPojo> getTranslations(Model model, @RequestParam String keys, Locale locale) {	
-		ObjectMapper m = new ObjectMapper();
-		List<TranslationPojo> translations = null;
-		
-		try {
-			translations = m.readValue(keys, m.getTypeFactory().constructCollectionType(List.class, TranslationPojo.class));
-			for (TranslationPojo t : translations) {
-				t.setTranslation(messageSource.getMessage(t.getKey(), t.getArgs(), locale));
-			}
-			
-		} catch (IOException e) {
-			logger.error("Message error", e);
-		}
-											
-		return translations;
 	}
 }

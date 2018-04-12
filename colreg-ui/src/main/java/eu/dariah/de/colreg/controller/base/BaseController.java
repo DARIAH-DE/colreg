@@ -8,32 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import de.unibamberg.minf.core.web.controller.BaseTranslationController;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 import eu.dariah.de.dariahsp.web.AuthInfoHelper;
 
-public class BaseController {
+public abstract class BaseController extends BaseTranslationController {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public final String NAVIGATION_ELEMENT_ATTRIBUTE = "_navigationAttribute";
 	
-	@Autowired protected AuthInfoHelper authInfoHelper;
 	@Autowired private CollectionService collectionService;
-	
-	@Value(value="${url.login:null}")
-	private String loginUrl;
-	
-	@Value(value="${url.logout:null}")
-	private String logoutUrl;
-	
-	@ModelAttribute("_loginUrl")
-	public String getLoginUrl() {
-		return loginUrl;
-	}
+	@Autowired protected AuthInfoHelper authInfoHelper;
 
-	@ModelAttribute("_logoutUrl")
-	public String getLogoutUrl() {
-		return logoutUrl;
+	public BaseController(String mainNavId) {
+		super(mainNavId);
 	}
 	
 	@ModelAttribute("_draftCount")

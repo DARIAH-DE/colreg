@@ -4,25 +4,46 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <s:url value="${actionPath}" var="saveUrl" />
-<form method="POST" action="${saveUrl}" class="form-horizontal" id="frm-add-user-collections">
+<sf:form method="POST" action="${saveUrl}" cssClass="form-horizontal" modelAttribute="vocabularyItem">
 	<div class="form-header">
 		<h2 id="form-header-title">
-			~fafa
-			<small>~fufu</small>
+			${vocabulary.localizedLabel}
+			<small>
+				<c:choose>
+					<c:when test="${vocabularyItem.id=='new'}">
+						<s:message code="~eu.dariah.de.colreg.common.labels.new_entry" />
+					</c:when>
+					<c:otherwise>
+						${vocabularyItem.identifier}
+					</c:otherwise>
+				</c:choose>
+			</small>
 		</h2>
 		<input type="hidden" id="id" name="id" value="${vocabularyItem.id}" />
 		<input type="hidden" id="vocabularyId" name="vocabularyId" value="${vocabularyItem.vocabularyId}" />
 	</div>
 	<div class="form-content">
-			
+		<fieldset>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" />:</label>
+				<div class="col-sm-8">
+					<sf:input path="identifier" class="form-control" id="vocabularyItem_identifier" />
+					<sf:errors path="identifier" cssClass="error" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="vocabularyItem_defaultName"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.default_name" />:</label>
+				<div class="col-sm-8">
+					<sf:input path="defaultName" class="form-control" id="vocabularyItem_defaultName" />
+					<sf:errors path="defaultName" cssClass="error" />
+				</div>
+			</div>
+		</fieldset>
 	</div>
 	<div class="form-footer control-group">
 		<div class="controls">
-			<button class="btn cancel form-btn-cancel" type="reset"><i class="icon-ban-circle icon-black"></i><span><s:message code="~eu.dariah.de.minfba.common.actions.cancel" /></span></button>
-			<button id="btn-add-user-collections-submit" disabled="disabled" class="btn btn-primary start form-btn-submit" type="submit"><i class="icon-upload icon-white"></i><span><s:message code="~eu.dariah.de.minfba.common.actions.add" /></span></button>
+			<button class="btn cancel form-btn-cancel" type="reset"><i class="icon-ban-circle icon-black"></i><span><s:message code="~eu.dariah.de.colreg.common.actions.cancel" /></span></button>
+			<button class="btn btn-primary start form-btn-submit" type="submit"><i class="icon-upload icon-white"></i><span><s:message code="~eu.dariah.de.colreg.common.actions.save" /></span></button>
 		</div>
 	</div>
-</form>
-
-
-
+</sf:form>
