@@ -16,7 +16,7 @@ public class VocabularyItemConverter extends BaseConverter<VocabularyItem, Vocab
 		VocabularyItemPojo pojo = new VocabularyItemPojo();
 		pojo.setId(object.getId());
 		pojo.setIdentifier(object.getIdentifier());
-		pojo.setVocabularyId(object.getVocabularyId());
+		pojo.setVocabularyId(object.getVocabularyIdentifier());
 		pojo.setDefaultName(object.getDefaultName());		
 		try {
 			pojo.setLocalizedLabel(messageSource.getMessage(object.getMessageCode(), null, locale));

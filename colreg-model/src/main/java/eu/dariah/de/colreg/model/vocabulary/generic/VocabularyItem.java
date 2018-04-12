@@ -5,13 +5,13 @@ import eu.dariah.de.colreg.model.base.LocalizableEntity;
 public class VocabularyItem extends LocalizableEntity {
 	private static final long serialVersionUID = 942372659078068387L;
 		
-	private String vocabularyId;
+	private String vocabularyIdentifier;
 	
-	public String getVocabularyId() { return vocabularyId; }
-	public void setVocabularyId(String vocabularyId) { this.vocabularyId = vocabularyId; }
+	public String getVocabularyIdentifier() { return vocabularyIdentifier; }
+	public void setVocabularyIdentifier(String vocabularyIdentifier) { this.vocabularyIdentifier = vocabularyIdentifier; }
 	
 	@Override
 	public String getMessageCodePrefix() {
-		return Vocabulary.MESSAGE_CODE_PREFIX + this.getVocabularyId() + ".";
+		return Vocabulary.MESSAGE_CODE_PREFIX + this.getVocabularyIdentifier() + ".";
 	}
 }
