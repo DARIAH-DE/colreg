@@ -25,6 +25,7 @@
 			<add-attribute type="string" value="_common/appProperties.js" />
 			<add-attribute type="string" value="_common/translator.js" />
 			<add-attribute type="string" value="_common/util.js" />
+			<add-attribute type="string" value="_common/formHandler.js" />
         </put-list-attribute>
 	</definition>
 	<definition name="template_main" extends="template_simple" template="/WEB-INF/view/jsp/templates/main.jsp">
