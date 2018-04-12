@@ -12,4 +12,6 @@ public interface VocabularyItemService {
 	public VocabularyItem findVocabularyItemById(String vocabularyId, String vocabularyItemId);
 
 	public List<VocabularyItem> findVocabularyItemByIdentifier(String vocabularyId, String identifier);
+	
+	public void saveVocabularyItem(VocabularyItem vocabularyItem);
 }

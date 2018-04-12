@@ -73,6 +73,11 @@
 	cursor: pointer;
 }
 
+.dataTable#vocabulary-table tbody tr td {
+	cursor: default;
+}
+
+
 /*!
  *	data-details-container (the reactor to activations in dataTable) -> reused in editor
  */

@@ -39,7 +39,8 @@ function BaseTable(url, containerSelector) {
 			"drawCallback": function (oSettings) {
 				_this.handleRefresh(oSettings);
 		    },
-		    "initComplete" : function(settings, json) { _this.handleInitComplete(settings, json); }
+		    "initComplete" : function(settings, json) { _this.handleInitComplete(settings, json); },
+		    "stateSave": true
 		};
 	
 	// TODO What was that?
@@ -72,7 +73,7 @@ BaseTable.prototype.assignTableEvents = function() {
     // After a reload, some selection might still be applicable
     $(this.containerSelector).find(".data-table-count select").trigger("change");
     		
-    $(this.containerSelector).find("tbody").on("click", "tr", function () {
+    /*$(this.containerSelector).find("tbody").on("click", "tr", function () {
         if ($(this).hasClass("selected")) {
             $(this).removeClass("selected");
             _this.handleSelection(null);
@@ -81,7 +82,7 @@ BaseTable.prototype.assignTableEvents = function() {
             $(this).addClass("selected");
             _this.handleSelection($(this).prop("id"));
         }
-    });
+    });*/
 };
 
 /* Just an 'abstract' method that is intended to be overridden */

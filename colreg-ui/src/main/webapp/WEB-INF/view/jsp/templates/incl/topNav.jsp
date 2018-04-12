@@ -33,7 +33,7 @@
 							<ul role="menu" class="dropdown-menu">
 								<c:forEach items="${_vocabularies}" var="vocabulary">
 									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="<s:url value='/vocabulary/${vocabulary.id}/' />">
+										<a role="menuitem" tabindex="-1" href="<s:url value='/vocabularies/${vocabulary.id}/' />">
 											${vocabulary.localizedLabel}
 										</a>
 									</li>

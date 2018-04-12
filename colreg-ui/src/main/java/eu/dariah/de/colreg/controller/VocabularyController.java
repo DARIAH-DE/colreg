@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,12 +72,15 @@ public class VocabularyController extends VersionedEntityController {
 	
 	@RequestMapping(value="{vocabularyId}/list", method=RequestMethod.GET)
 	public @ResponseBody TableListPojo<VocabularyItemPojo> getAllVocabularyItems(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
-		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(vocabularyId);
+		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
+		
+		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(v.getIdentifier());
 		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
 
 		return new TableListPojo<VocabularyItemPojo>(vocabularyItemPojos);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value="{vocabularyId}/{vocabularyItemId}/forms/edit", method=RequestMethod.GET)
 	public String getAddItemForm(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, Model model, Locale locale, HttpServletRequest request) {
 		AuthPojo auth = authInfoHelper.getAuth(request);
@@ -87,9 +91,9 @@ public class VocabularyController extends VersionedEntityController {
 			if (!auth.isAuth()) {
 				return "redirect:/" + this.getLoginUrl();
 			}
-			vi = vocabularyItemService.createVocabularyItem(vocabularyId);
+			vi = vocabularyItemService.createVocabularyItem(v.getIdentifier());
 		} else {
-			vi = vocabularyItemService.findVocabularyItemById(vocabularyId, vocabularyItemId);
+			vi = vocabularyItemService.findVocabularyItemById(v.getIdentifier(), vocabularyItemId);
 		}
 		if (vi==null) {
 			throw new ResourceNotFoundException();
@@ -99,16 +103,19 @@ public class VocabularyController extends VersionedEntityController {
 		model.addAttribute("vocabularyItem", vi);
 		model.addAttribute("isNew", vi.getId().equals("new"));
 		
-		model.addAttribute("actionPath", "/vocabulary/" + vocabularyId + "/" + vocabularyItemId + "/saveItem");
+		model.addAttribute("actionPath", "/vocabularies/" + v.getIdentifier() + "/" + vocabularyItemId + "/saveItem");
 		
 		return "vocabulary/edit_item";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(method=POST, value="{vocabularyId}/{vocabularyItemId}/saveItem", produces = "application/json; charset=utf-8")
-	public @ResponseBody ModelActionPojo saveVocabularyItem(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, @Valid VocabularyItem vocabularyItem, BindingResult bindingResult, HttpServletRequest request, Model model, Locale locale) {
+	public @ResponseBody ModelActionPojo saveVocabularyItem(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, VocabularyItem vocabularyItem, BindingResult bindingResult, HttpServletRequest request, Model model, Locale locale) {
 		validator.validate(vocabularyItem, bindingResult);
-		
 		ModelActionPojo result = getActionResult(bindingResult, locale);
+		if (result.isSuccess()) {
+			vocabularyItemService.saveVocabularyItem(vocabularyItem);
+		}
 		return result;
 	}
 

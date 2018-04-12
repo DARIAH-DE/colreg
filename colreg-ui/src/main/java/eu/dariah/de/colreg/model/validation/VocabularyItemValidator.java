@@ -26,7 +26,7 @@ public class VocabularyItemValidator extends AbstractValidator {
 	protected void addExtraValidation(Object objectForm, Errors errors) {
 		VocabularyItem vocabularyItem = (VocabularyItem)objectForm;
 
-		List<VocabularyItem> items = vocabularyItemService.findVocabularyItemByIdentifier(vocabularyItem.getVocabularyId(), vocabularyItem.getIdentifier());
+		List<VocabularyItem> items = vocabularyItemService.findVocabularyItemByIdentifier(vocabularyItem.getVocabularyIdentifier(), vocabularyItem.getIdentifier());
 		if (items.size()>1 || (items.size()==1 && !items.get(0).getId().equals(vocabularyItem.getId()))) {
 			errors.rejectValue("identifier", "~eu.dariah.de.colreg.validation.vocabulary_item.identifier_not_unique");
 		}

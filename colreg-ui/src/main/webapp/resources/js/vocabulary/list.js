@@ -12,7 +12,7 @@ var VocabularyTable = function() {
 	this.createTable();
 };
 
-VocabularyTable.prototype = new BaseTable(__util.composeUrl("vocabulary/" + $("#vocabulary-id").val() + "/list"), "#vocabulary-table-container");
+VocabularyTable.prototype = new BaseTable(__util.composeUrl("vocabularies/" + $("#vocabulary-id").val() + "/list"), "#vocabulary-table-container");
 
 VocabularyTable.prototype.createTable = function() {
 	var _this = this;
@@ -33,28 +33,37 @@ VocabularyTable.prototype.createTable = function() {
 	    	   "width" : "50%"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": "entity.id",
-	    	   "class" : "td-no-wrap"
-	       }       
+	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderActionColumn(row, type, val, meta); },
+	    	   "class" : "td-no-wrap",
+	    	   "visible" : $("#table-edit-mode").val()==="true" ? true : false
+	       }
 	   ]
 	}, this.baseSettings));
-	
-	$('#agent-table').on('click', 'tr', function () {
-        var entityId = _this._base.table.row(this).data().entity.entityId;
-        location.href = __util.composeUrl("agents/" + entityId);
-    } );
 };
 
 
 VocabularyTable.prototype.renderLocalNameColumn = function(row, type, val, meta) {
 	var result = "";
 	if (type=="display") {
-		return "local";
+		result += "<i class='fa fa-" + (row.entity.hasCurrentLocale ? "check-" : "") + "square-o' aria-hidden='true'></i> ";
+		if (row.entity.hasCurrentLocale) {
+			result += row.entity.localizedLabel;
+		} 
 	} else {
-		return "local"; 
+		return row.entity.hasCurrentLocale + " " + row.entity.localizedLabel;
 	}
 	return result;
 };
+
+VocabularyTable.prototype.renderActionColumn = function(row, type, val, meta) {
+	if (type=="display" || $("#table-edit-mode").val()!=="true") {
+		return "<button onclick=\"vocabularyTable.triggerEditVocabularyItem('" + row.entity.id + "');\" class=\"btn btn-link btn-xs pull-left\">" + 
+			      "<span class=\"glyphicon glyphicon-pencil\"></span>" + 
+			   "</button>";
+	} else {
+		return "";
+	}
+}
 
 VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
 	var _this = this;
@@ -64,28 +73,10 @@ VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
 		formUrl: __util.composeUrl(itemId + "/forms/edit"),
 		identifier: form_identifier,
 		//additionalModalClasses: "wide-modal",
-		//completeCallback: function(container) {},
+		completeCallback: function(container) { 
+			_this.refresh(); 
+		},
 		//setupCallback: function() { } -> refreshList
 	});	
 	modalFormHandler.show(form_identifier);
-	
-	/*this.createModalForm(-1, "addCollection", ucId + "/forms/assignCollections", "wide-modal", 
-			function(container) {
-				$(container).find('#user-collections-add-collections-table').DataTable({
-					"order": [[ 1, "asc" ]],
-					"columnDefs": [
-						{"targets": [1], "width": "100%"}
-					]
-				});
-			}, 
-			function() { 
-				_this.refreshCollections();
-			});*/
-	
-	
-	/*$.extend(true, {
-					"ajaxSource" : null,
-					"order": [[ 1, "asc" ]],
-					"columnDefs": [{"targets": [1], "width": "100%"},{"targets": [0], "sortable": false }],
-				})*/
 };

@@ -294,8 +294,9 @@ ModalFormHandler.prototype.processSubmitResponse = function(data) {
 		this.formResetted = true;
 		$(this.container).modal('hide');
 		
-		__notifications.showMessage(NOTIFICATION_TYPES.SUCCESS, _this.translate("~*uploadsuccessful.head"), _this.translate("~*uploadsuccessful.body"));
-		
+		/*if (__notifications!==undefined) {
+			__notifications.showMessage(NOTIFICATION_TYPES.SUCCESS, _this.translate("~*uploadsuccessful.head"), _this.translate("~*uploadsuccessful.body"));
+		}*/
 		
 		if (_this.options.completeCallback != undefined && typeof _this.options.completeCallback == 'function') {
 			_this.options.completeCallback(data);

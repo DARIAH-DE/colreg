@@ -16,26 +16,34 @@ public class VocabularyItemServiceImpl implements VocabularyItemService {
 	
 	@Override
 	public List<VocabularyItem> findVocabularyItems(String vocabularyId) {
-		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyId").is(vocabularyId)));
+		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyId)));
 	}
 
 	@Override
-	public VocabularyItem createVocabularyItem(String vocabularyId) {
+	public VocabularyItem createVocabularyItem(String vocabularyIdentifier) {
 		VocabularyItem vi = new VocabularyItem();
 		vi.setId("new");
-		vi.setVocabularyId(vocabularyId);
+		vi.setVocabularyIdentifier(vocabularyIdentifier);
 		return vi;
 	}
 
 	@Override
-	public VocabularyItem findVocabularyItemById(String vocabularyId, String vocabularyItemId) {
+	public VocabularyItem findVocabularyItemById(String vocabularyIdentifier, String vocabularyItemId) {
 		VocabularyItem vi = vocabularyItemDao.findById(vocabularyItemId);
-		Assert.isTrue(vi.getVocabularyId().equals(vocabularyId));
+		Assert.isTrue(vi.getVocabularyIdentifier().equals(vocabularyIdentifier));
 		return vi;
 	}
 
 	@Override
 	public List<VocabularyItem> findVocabularyItemByIdentifier(String vocabularyId, String identifier) {
-		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyId").is(vocabularyId).and("identifier").is(identifier)));
+		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyId).and("identifier").is(identifier)));
+	}
+
+	@Override
+	public void saveVocabularyItem(VocabularyItem vocabularyItem) {
+		if (vocabularyItem.getId().equals("new")) {
+			vocabularyItem.setId(null);
+		}
+		vocabularyItemDao.save(vocabularyItem);
 	}
 }

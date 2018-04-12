@@ -11,14 +11,15 @@
 </ul>
 <div id="main-content">
 	<div class="row">
-		<div id="vocabulary-table-container" class="col-md-12">			
-			<h2 class="pull-left">${vocabulary.localizedLabel}</h2>
+		<div id="vocabulary-table-container" class="col-md-12">
+			<h2>${vocabulary.localizedLabel}</h2>
 			<input type="hidden" id="vocabulary-id" value="${vocabulary.id}" />
 			<div class="pull-right">
 				<c:if test="${_auth!=null && _auth.auth}">
 					<button onclick="vocabularyTable.triggerEditVocabularyItem('new');" class="btn btn-primary btn-sm pull-left">
 						<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.agent.actions.add_vocabulary_item" />
 					</button>
+					<input type="hidden" id="table-edit-mode" value="true" />
 				</c:if>
 				<div class="data-table-filter pull-left">
 					<input type="text" class="form-control input-sm" placeholder='<s:message code="~eu.dariah.de.colreg.common.labels.filter" />'>
@@ -40,15 +41,20 @@
 							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.default_name" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.local_name" /></th>
-							<th><!-- Actions --></th>
+							<c:if test="${_auth!=null && _auth.auth}">
+								<th><!-- Actions --></th>
+							</c:if>
 						</tr>
 					</thead>
 					<tbody>
 					<tr>
-						<td colspan="4" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+						<td colspan="${_auth!=null && _auth.auth ? '4' : '3'}" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
 					</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class="clearfix">
+				<div class="alert alert-info alert-sm pull-right"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_translations" /></div>
 			</div>
 		</div>
 	</div>

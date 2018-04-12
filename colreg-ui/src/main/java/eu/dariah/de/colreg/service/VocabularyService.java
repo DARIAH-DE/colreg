@@ -12,6 +12,7 @@ import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
+import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 
 public interface VocabularyService {
 	public List<Language> queryLanguages(String query);

@@ -20,7 +20,7 @@
 			</small>
 		</h2>
 		<input type="hidden" id="id" name="id" value="${vocabularyItem.id}" />
-		<input type="hidden" id="vocabularyId" name="vocabularyId" value="${vocabularyItem.vocabularyId}" />
+		<input type="hidden" id="vocabularyIdentifier" name="vocabularyIdentifier" value="${vocabularyItem.vocabularyIdentifier}" />
 	</div>
 	<div class="form-content">
 		<fieldset>
@@ -38,6 +38,7 @@
 					<sf:errors path="defaultName" cssClass="error" />
 				</div>
 			</div>
+			<div class="alert alert-info alert-sm pull-right"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_translations" /></div>
 		</fieldset>
 	</div>
 	<div class="form-footer control-group">

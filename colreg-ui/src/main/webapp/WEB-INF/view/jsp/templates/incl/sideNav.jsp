@@ -26,7 +26,7 @@
 		<hr />
 		<h5 class="list-group-header"><s:message code="~eu.dariah.de.colreg.titles.vocabularies" /></h5>
 		<c:forEach items="${_vocabularies}" var="vocabulary">
-			<a class="list-group-item${_navigationAttribute==vocabulary.identifier ? ' active' : ''}" href="<s:url value='/vocabulary/${vocabulary.id}/' />">${vocabulary.localizedLabel}</a>
+			<a class="list-group-item${_navigationAttribute==vocabulary.identifier ? ' active' : ''}" href="<s:url value='/vocabularies/${vocabulary.id}/' />">${vocabulary.localizedLabel}</a>
 		</c:forEach>
 	</c:if>
 </div>
