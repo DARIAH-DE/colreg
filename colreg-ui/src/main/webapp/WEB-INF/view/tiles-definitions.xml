@@ -141,6 +141,7 @@
 			<add-attribute type="string" value="vocabulary/list.js" />
 		</put-list-attribute>
 	</definition>
+	<definition name="vocabulary/edit_item" template="/WEB-INF/view/jsp/vocabulary/form/edit_item.jsp" />
 	
 	<!-- SAML Administration -->
 	<definition name="saml/provider_view" extends="template_simple">

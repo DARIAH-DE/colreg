@@ -22,6 +22,7 @@ public class VocabularyItemServiceImpl implements VocabularyItemService {
 	@Override
 	public VocabularyItem createVocabularyItem(String vocabularyId) {
 		VocabularyItem vi = new VocabularyItem();
+		vi.setId("new");
 		vi.setVocabularyId(vocabularyId);
 		return vi;
 	}

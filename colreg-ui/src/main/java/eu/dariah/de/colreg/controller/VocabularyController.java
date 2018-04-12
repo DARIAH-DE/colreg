@@ -88,6 +88,8 @@ public class VocabularyController extends VersionedEntityController {
 		model.addAttribute("vocabularyItem", vi);
 		model.addAttribute("isNew", vi.getId().equals("new"));
 		
+		model.addAttribute("actionPath", "/vocabulary/" + vocabularyId + "/" + vocabularyItemId + "/saveItem");
+		
 		return "vocabulary/edit_item";
 	}
 	

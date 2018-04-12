@@ -13,11 +13,12 @@
 	<div class="row">
 		<div id="vocabulary-table-container" class="col-md-12">			
 			<h2 class="pull-left">${vocabulary.localizedLabel}</h2>
+			<input type="hidden" id="vocabulary-id" value="${vocabulary.id}" />
 			<div class="pull-right">
 				<c:if test="${_auth!=null && _auth.auth}">
-					<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
+					<button onclick="vocabularyTable.triggerEditVocabularyItem('new');" class="btn btn-primary btn-sm pull-left">
 						<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.agent.actions.add_vocabulary_item" />
-					</a>
+					</button>
 				</c:if>
 				<div class="data-table-filter pull-left">
 					<input type="text" class="form-control input-sm" placeholder='<s:message code="~eu.dariah.de.colreg.common.labels.filter" />'>
@@ -33,18 +34,18 @@
 				</div>					
 			</div>
 			<div class="clearfix">
-				<table id="agent-table" class="table table-striped table-bordered table-condensed">
+				<table id="vocabulary-table" class="table table-striped table-bordered table-condensed">
 					<thead>
 						<tr>
-							<th><!-- ~Badges --></th> 
 							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.default_name" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.local_name" /></th>
+							<th><!-- Actions --></th>
 						</tr>
 					</thead>
 					<tbody>
 					<tr>
-						<td colspan="3" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+						<td colspan="4" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
 					</tr>
 					</tbody>
 				</table>

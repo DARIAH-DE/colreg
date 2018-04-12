@@ -1,41 +1,41 @@
-var agentTable;
+var vocabularyTable;
 $(document).ready(function() {
-	agentTable = new AgentTable();
+	vocabularyTable = new VocabularyTable();
 });
 
-var AgentTable = function() {
+var VocabularyTable = function() {
 	this.prepareTranslations(["~eu.dariah.de.colreg.common.labels.deleted",
 	                          "~eu.dariah.de.colreg.common.labels.draft",
 	                          "~eu.dariah.de.colreg.common.labels.published",
 	                          "~eu.dariah.de.colreg.common.labels.valid"]);
+	this.vocabularyId = $("#vocabulary-id").val();
 	this.createTable();
 };
 
-AgentTable.prototype = new BaseTable(__util.composeUrl("agents/list"), "#agent-table-container");
+VocabularyTable.prototype = new BaseTable(__util.composeUrl("vocabulary/list"), "#vocabulary-table-container");
 
-AgentTable.prototype.createTable = function() {
+VocabularyTable.prototype.createTable = function() {
 	var _this = this;
-	this._base.table = $('#agent-table').DataTable($.extend(true, {
+	this._base.table = $('#vocabulary-table').DataTable($.extend(true, {
 		"order": [[1, "asc"]],
 		"columnDefs": [
 	       {
 	           "targets": [0],
 	           "class" : "td-no-wrap",
-	           "data": function (row, type, val, meta) { return agentTable.renderBadgeColumn(row, type, val, meta); }
+	       	   "data": "entity.identifier",
 	       }, {	
 	    	   "targets": [1],
-	    	   "data": "entity.name",
-	    	   "width" : "100%"
+	    	   "data": "entity.defaultName",
+	    	   "width" : "50%"
 	       }, {	
 	    	   "targets": [2],
-	    	   "data": "entity.type",
-	    	   "class" : "td-no-wrap"
+	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderLocalNameColumn(row, type, val, meta); },
+	    	   "width" : "50%"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": "entity.type",
-	    	   "data": function (row, type, val, meta) { return agentTable.renderVersionColumn(row, type, val, meta); }
-	    	  /* "visible" : false*/
-	       }	       
+	    	   "data": "entity.id",
+	    	   "class" : "td-no-wrap"
+	       }       
 	   ]
 	}, this.baseSettings));
 	
@@ -45,36 +45,47 @@ AgentTable.prototype.createTable = function() {
     } );
 };
 
-AgentTable.prototype.renderVersionColumn = function(row, type, val, meta) {
-	if (type=="display") {
-		return row.entity.lastChanged;
-	} else {
-		return row.entity.versionTimestamp;
-	}
-};
 
-AgentTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
+VocabularyTable.prototype.renderLocalNameColumn = function(row, type, val, meta) {
 	var result = "";
 	if (type=="display") {
-		if (row.entity.state==="deleted") {
-			result += '<span class="label label-danger">' + __translator.translate("~eu.dariah.de.colreg.common.labels.deleted") + '</span> ';
-		} else if (row.entity.state==="valid") {
-			result += '<span class="label label-info">' + __translator.translate("~eu.dariah.de.colreg.common.labels.valid") + '</span> ';
-		} else if (row.entity.state==="published") {
-			result += '<span class="label label-info">' + __translator.translate("~eu.dariah.de.colreg.common.labels.published") + '</span> ';
-		} else {
-			result += '<span class="label label-warning">' + __translator.translate("~eu.dariah.de.colreg.common.labels.draft") + '</span> ';
-		} 
+		return "local";
 	} else {
-		if (row.entity.state==="deleted") {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.deleted");
-		} else if (row.entity.state==="valid") {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.valid");
-		} else if (row.entity.state==="published") {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.published");
-		} else {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.draft");
-		} 
+		return "local"; 
 	}
 	return result;
+};
+
+VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
+	var _this = this;
+	var form_identifier = this.vocabularyId + "-new-item";
+	
+	modalFormHandler = new ModalFormHandler({
+		formUrl: __util.composeUrl(itemId),
+		identifier: form_identifier,
+		//additionalModalClasses: modalType,
+		//completeCallback: function(container) {},
+		//setupCallback: function() { } -> refreshList
+	});	
+	modalFormHandler.show(form_identifier);
+	
+	/*this.createModalForm(-1, "addCollection", ucId + "/forms/assignCollections", "wide-modal", 
+			function(container) {
+				$(container).find('#user-collections-add-collections-table').DataTable({
+					"order": [[ 1, "asc" ]],
+					"columnDefs": [
+						{"targets": [1], "width": "100%"}
+					]
+				});
+			}, 
+			function() { 
+				_this.refreshCollections();
+			});*/
+	
+	
+	/*$.extend(true, {
+					"ajaxSource" : null,
+					"order": [[ 1, "asc" ]],
+					"columnDefs": [{"targets": [1], "width": "100%"},{"targets": [0], "sortable": false }],
+				})*/
 };
