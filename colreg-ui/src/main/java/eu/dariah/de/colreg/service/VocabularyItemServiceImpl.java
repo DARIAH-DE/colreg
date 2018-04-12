@@ -33,4 +33,9 @@ public class VocabularyItemServiceImpl implements VocabularyItemService {
 		Assert.isTrue(vi.getVocabularyId().equals(vocabularyId));
 		return vi;
 	}
+
+	@Override
+	public List<VocabularyItem> findVocabularyItemByIdentifier(String vocabularyId, String identifier) {
+		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyId").is(vocabularyId).and("identifier").is(identifier)));
+	}
 }

@@ -10,4 +10,6 @@ public interface VocabularyItemService {
 	public VocabularyItem createVocabularyItem(String vocabularyId);
 
 	public VocabularyItem findVocabularyItemById(String vocabularyId, String vocabularyItemId);
+
+	public List<VocabularyItem> findVocabularyItemByIdentifier(String vocabularyId, String identifier);
 }

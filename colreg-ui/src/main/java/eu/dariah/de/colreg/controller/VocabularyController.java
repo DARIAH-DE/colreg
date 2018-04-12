@@ -23,12 +23,12 @@ import de.unibamberg.minf.core.web.localization.MessageSource;
 import de.unibamberg.minf.core.web.pojo.MessagePojo;
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
+import eu.dariah.de.colreg.model.validation.VocabularyItemValidator;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.TableListPojo;
 import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
-import eu.dariah.de.colreg.pojo.VocabularyPojo;
 import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
 import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.service.VocabularyItemService;
@@ -44,6 +44,7 @@ public class VocabularyController extends VersionedEntityController {
 	@Autowired protected VocabularyItemService vocabularyItemService;
 	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
 	
+	@Autowired private VocabularyItemValidator validator;
 	@Autowired private MessageSource messageSource;
 	
 	public VocabularyController() {
@@ -105,6 +106,8 @@ public class VocabularyController extends VersionedEntityController {
 	
 	@RequestMapping(method=POST, value="{vocabularyId}/{vocabularyItemId}/saveItem", produces = "application/json; charset=utf-8")
 	public @ResponseBody ModelActionPojo saveVocabularyItem(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, @Valid VocabularyItem vocabularyItem, BindingResult bindingResult, HttpServletRequest request, Model model, Locale locale) {
+		validator.validate(vocabularyItem, bindingResult);
+		
 		ModelActionPojo result = getActionResult(bindingResult, locale);
 		return result;
 	}
