@@ -8,6 +8,7 @@ public class VocabularyPojo extends BaseIdentifiable {
 	private String identifier;
 	private String localizedLabel;
 	
+	
 	public String getIdentifier() { return identifier; }
 	public void setIdentifier(String identifier) { this.identifier = identifier; }
 	

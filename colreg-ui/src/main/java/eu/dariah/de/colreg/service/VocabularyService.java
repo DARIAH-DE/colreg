@@ -38,4 +38,6 @@ public interface VocabularyService {
 	public void saveUnitOfMeasurement(UnitOfMeasurement unit);
 
 	public List<Vocabulary> findVocabularies();
+
+	public Vocabulary findVocabulary(String vocabularyId);
 }

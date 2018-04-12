@@ -7,6 +7,8 @@ public class VocabularyItemPojo extends BaseIdentifiable {
 	
 	private String identifier;
 	private String localizedLabel;
+	private boolean hasCurrentLocale;
+	private String defaultName;
 	private String vocabularyId;
 	
 	
@@ -18,4 +20,10 @@ public class VocabularyItemPojo extends BaseIdentifiable {
 	
 	public String getLocalizedLabel() { return localizedLabel; }
 	public void setLocalizedLabel(String localizedLabel) { this.localizedLabel = localizedLabel; }
+	
+	public boolean isHasCurrentLocale() { return hasCurrentLocale; }
+	public void setHasCurrentLocale(boolean hasCurrentLocale) { this.hasCurrentLocale = hasCurrentLocale; }
+	
+	public String getDefaultName() { return defaultName; }
+	public void setDefaultName(String defaultName) { this.defaultName = defaultName; }
 }

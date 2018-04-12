@@ -7,16 +7,16 @@
 <ul class="breadcrumb">
 	<li><a href='<s:url value="/" />' target="_self"><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></a></li>
 	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.vocabularies" /></li>
-	<li class="active"><s:message code="~eu.dariah.de.colreg.titles.vocabularies" /></li>
+	<li class="active">${vocabulary.localizedLabel}</li>
 </ul>
 <div id="main-content">
 	<div class="row">
-		<div id="agent-table-container" class="col-md-12">			
-			<h2 class="pull-left"><s:message code="~eu.dariah.de.colreg.titles.agents" /></h2>
+		<div id="vocabulary-table-container" class="col-md-12">			
+			<h2 class="pull-left">${vocabulary.localizedLabel}</h2>
 			<div class="pull-right">
 				<c:if test="${_auth!=null && _auth.auth}">
 					<a href="<s:url value='new' />" class="btn btn-primary btn-sm pull-left">
-						<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.agent.actions.add_agent" />
+						<span class="glyphicon glyphicon-plus"></span> <s:message code="~eu.dariah.de.colreg.view.agent.actions.add_vocabulary_item" />
 					</a>
 				</c:if>
 				<div class="data-table-filter pull-left">
@@ -37,14 +37,14 @@
 					<thead>
 						<tr>
 							<th><!-- ~Badges --></th> 
-							<th><s:message code="~eu.dariah.de.colreg.model.agent.name" /></th>
-							<th><s:message code="~eu.dariah.de.colreg.model.agent.type" /></th>
-							<th><s:message code="~eu.dariah.de.colreg.model.agent.current_version" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.default_name" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.local_name" /></th>
 						</tr>
 					</thead>
 					<tbody>
 					<tr>
-						<td colspan="4" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
+						<td colspan="3" align="center"><s:message code="~eu.dariah.de.colreg.common.view.notifications.nothing_fetched_yet" /></td>
 					</tr>
 					</tbody>
 				</table>

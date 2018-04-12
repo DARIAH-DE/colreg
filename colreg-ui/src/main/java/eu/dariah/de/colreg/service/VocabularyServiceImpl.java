@@ -152,6 +152,9 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public List<Vocabulary> findVocabularies() {
 		return vocabularyDao.findAll();
 	}
-	
-	
+
+	@Override
+	public Vocabulary findVocabulary(String vocabularyId) {
+		return vocabularyDao.findById(vocabularyId);
+	}
 }
