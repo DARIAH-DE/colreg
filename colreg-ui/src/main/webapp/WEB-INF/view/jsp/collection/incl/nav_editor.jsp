@@ -20,8 +20,8 @@
 				<s:bind path="collection.localizedDescriptions*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-description-sets"><s:message code="~eu.dariah.de.colreg.model.collection.description_sets" /></a></li>
 				</s:bind>
-				<s:bind path="collection.collectionType">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionType"><s:message code="~eu.dariah.de.colreg.model.collection.collection_type" /></a></li>
+				<s:bind path="collection.collectionTypes">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-collectionTypes"><s:message code="~eu.dariah.de.colreg.model.collection.collection_types" /></a></li>
 				</s:bind>
 				<s:bind path="collection.collectionDescriptionRights">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#collectionDescriptionRights"><s:message code="~eu.dariah.de.colreg.model.collection.description_rights" /></a></li>
