@@ -26,4 +26,12 @@ public class VocabularyItemPojo extends BaseIdentifiable {
 	
 	public String getDefaultName() { return defaultName; }
 	public void setDefaultName(String defaultName) { this.defaultName = defaultName; }
+	
+	public String getDisplayLabel() {
+		if (this.hasCurrentLocale) {
+			return this.localizedLabel;
+		} else {
+			return this.defaultName;
+		}
+	}
 }

@@ -655,11 +655,11 @@ label.control-label {
 	font-style: italic;
 }
 
-label.control-label a,
-label.control-label a:link,
-label.control-label a:visited,
-label.control-label a:hover, 
-label.control-label a:active,
+label.control-label:not(.linked-control-label) a,
+label.control-label:not(.linked-control-label) a:link,
+label.control-label:not(.linked-control-label) a:visited,
+label.control-label:not(.linked-control-label) a:hover, 
+label.control-label:not(.linked-control-label) a:active,
 a.control-link,
 a.control-link:link,
 a.control-link:visited,

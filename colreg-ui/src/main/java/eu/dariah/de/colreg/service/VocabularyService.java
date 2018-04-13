@@ -41,4 +41,6 @@ public interface VocabularyService {
 	public List<Vocabulary> findVocabularies();
 
 	public Vocabulary findVocabulary(String vocabularyId);
+
+	public Vocabulary findVocabularyByIdentifier(String identifier);
 }

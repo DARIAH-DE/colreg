@@ -22,7 +22,6 @@ public class VocabularyItemConverter extends BaseConverter<VocabularyItem, Vocab
 			pojo.setLocalizedLabel(messageSource.getMessage(object.getMessageCode(), null, locale));
 			pojo.setHasCurrentLocale(true);
 		} catch (NoSuchMessageException e) {
-			pojo.setLocalizedLabel("~" + object.getDefaultName());
 			pojo.setHasCurrentLocale(false);
 		}
 		return pojo;

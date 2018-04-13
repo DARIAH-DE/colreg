@@ -33,12 +33,16 @@ import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
+import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.TableListPojo;
+import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
+import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
+import eu.dariah.de.colreg.service.VocabularyItemService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 
@@ -52,6 +56,14 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private LicenseService licenseService;
 	
 	@Autowired private ImageService imageService;
+	
+	@Autowired protected VocabularyItemService vocabularyItemService;
+	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
+	
+	@ModelAttribute("_collectionTypesVocabularyId")
+	public String getCollectionTypesVocabularyId() {
+		return vocabularyService.findVocabularyByIdentifier(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER).getId();
+	}
 	
 	public CollectionController() {
 		super("collections");
@@ -124,7 +136,7 @@ public class CollectionController extends VersionedEntityController {
 			model.addAttribute("lastSavedTimestamp", inputFlashMap.get("lastSavedTimestamp"));
 		}
 		
-		return fillCollectionEditorModel(c.getEntityId(), c, auth, model);
+		return fillCollectionEditorModel(c.getEntityId(), c, auth, model, locale);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.POST)
@@ -135,7 +147,7 @@ public class CollectionController extends VersionedEntityController {
 			return "redirect:/" + this.getLoginUrl();
 		}
 		
-		return this.doSave(collection, id, false, bindingResult, auth, model, redirectAttributes);
+		return this.doSave(collection, id, false, bindingResult, auth, model, redirectAttributes, locale);
 	}
 	
 	@RequestMapping(value="{id}/publish", method=RequestMethod.POST)
@@ -146,15 +158,15 @@ public class CollectionController extends VersionedEntityController {
 			return "redirect:/" + this.getLoginUrl();
 		}
 		
-		return this.doSave(collection, id, true, bindingResult, auth, model, redirectAttributes);
+		return this.doSave(collection, id, true, bindingResult, auth, model, redirectAttributes, locale);
 	}	
 	
-	private String doSave(Collection collection, String entityId, boolean doPublish, BindingResult bindingResult, AuthPojo auth, Model model, final RedirectAttributes redirectAttributes) {
+	private String doSave(Collection collection, String entityId, boolean doPublish, BindingResult bindingResult, AuthPojo auth, Model model, final RedirectAttributes redirectAttributes, Locale locale) {
 		collection.setEntityId(entityId);
 		validator.validate(collection, bindingResult);
 				
 		if (bindingResult.hasErrors()) {
-			return this.fillCollectionEditorModel(collection.getEntityId(), collection, auth, model);
+			return this.fillCollectionEditorModel(collection.getEntityId(), collection, auth, model, locale);
 		}
 		
 		if (doPublish) {
@@ -181,7 +193,7 @@ public class CollectionController extends VersionedEntityController {
 		return new ModelActionPojo(true);
 	}
 	
-	private String fillCollectionEditorModel(String entityId, Collection c, AuthPojo auth, Model model) {
+	private String fillCollectionEditorModel(String entityId, Collection c, AuthPojo auth, Model model, Locale locale) {
 		model.addAttribute("collection", c);
 		
 		if (c.getAccessRights()==null || ObjectId.isValid(c.getAccessRights())) {
@@ -258,6 +270,11 @@ public class CollectionController extends VersionedEntityController {
 		if (auth.isAuth() && c.getSucceedingVersionId()==null && !c.isDeleted()) {
 			model.addAttribute("editMode", true);
 		}
+		
+		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
+		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
+
+		model.addAttribute("vocabularyItems", vocabularyItemPojos);
 		
 		this.setUsers(c);
 		
@@ -413,7 +430,11 @@ public class CollectionController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editCollectionType"})
-	public String getEditCollectionTypeForm(Model model) {
+	public String getEditCollectionTypeForm(Model model, Locale locale) {
+		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
+		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
+
+		model.addAttribute("vocabularyItems", vocabularyItemPojos);
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currType", "");
 		model.addAttribute("collectionTypes[0]", "");

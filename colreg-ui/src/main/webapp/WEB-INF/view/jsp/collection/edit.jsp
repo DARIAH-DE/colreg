@@ -176,8 +176,10 @@
 			
 			<!-- Collection Types* (NEW!) -->
 			<s:bind path="collectionTypes*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">
-					<label for="lst-collection-collectionTypes" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.collection_types" /></label>
+				<div class="form-group${status.error ? ' container-error' : ' '}">				
+					<label for="lst-collection-collectionTypes" class="col-sm-3 control-label linked-control-label">
+						<a href="<s:url value='/vocabularies/${_collectionTypesVocabularyId}/' />"><i class="fa fa-link" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.model.collection.collection_types" /></a>
+					</label>
 					<div id="lst-collection-collectionTypes-container" class="col-sm-9">
 						<c:choose>
 							<c:when test="${editMode}">
@@ -200,12 +202,15 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
-									<c:forEach items="${collection.collectionTypes}" var="collType" varStatus="status" >
-										<a href="javascript:void(0)">${collType}</a><br/>
-									</c:forEach>
-									<a href="javascript:void(0)"></a>
-								</label>
+								<c:forEach items="${collection.collectionTypes}" var="collType" varStatus="status" >
+									<label class="control-label">
+										<c:forEach items="${vocabularyItems}" var="vocabularyItem">
+											<c:if test="${vocabularyItem.identifier==collType}">
+												<a href="javascript:void(0)">${vocabularyItem.displayLabel}</a>
+											</c:if>
+										</c:forEach>
+									</label><br/>
+								</c:forEach>
 							</c:otherwise>
 						</c:choose>
 					</div>

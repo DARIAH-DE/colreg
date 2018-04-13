@@ -7,8 +7,8 @@
 		<div class="collection-editor-list-input col-sm-5">
 			<span class="attribute-name-helper">collectionTypes{}</span>
 			<span style="display: inline-block; width: 100%;">
-				<input type="text" class="form-control" id="collectionTypes${currIndex}" name="collectionTypes[${currIndex}]" 
-					value="<c:if test="${currType!=null}">${currType}</c:if>">
+				<sf:select path="collectionTypes[${currIndex}]" cssClass="form-control" 
+					items="${vocabularyItems}" itemValue="identifier" itemLabel="displayLabel" />
 			</span>
 		</div>
 		<div class="collection-editor-list-item-buttons">

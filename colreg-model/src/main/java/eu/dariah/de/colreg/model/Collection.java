@@ -23,6 +23,8 @@ import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 public class Collection extends VersionedEntityImpl {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
+	public static final String COLLECTION_TYPES_VOCABULARY_IDENTIFIER = "collectionTypes";
+	
 	/* Identification */
 	private List<String> providedIdentifier;
 	
