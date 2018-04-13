@@ -2,6 +2,8 @@ package eu.dariah.de.colreg.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -273,7 +275,8 @@ public class CollectionController extends VersionedEntityController {
 		
 		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
 		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
-
+		Collections.sort(vocabularyItemPojos);
+		
 		model.addAttribute("vocabularyItems", vocabularyItemPojos);
 		
 		this.setUsers(c);
@@ -433,7 +436,8 @@ public class CollectionController extends VersionedEntityController {
 	public String getEditCollectionTypeForm(Model model, Locale locale) {
 		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
 		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
-
+		Collections.sort(vocabularyItemPojos);
+		
 		model.addAttribute("vocabularyItems", vocabularyItemPojos);
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currType", "");

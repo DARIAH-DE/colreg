@@ -130,6 +130,20 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			collection.setTemporals(retainTemporals);
 		}
 		
+		// Remove duplicate collectionTypes
+		if (collection.getCollectionTypes()!=null && collection.getCollectionTypes().size()>0) {
+			List<String> containedCollectionTypes = new ArrayList<String>();
+			int i=0;
+			do {
+				if (collection.getCollectionTypes().get(i).isEmpty() || containedCollectionTypes.contains(collection.getCollectionTypes().get(i))) {
+					collection.getCollectionTypes().remove(i);
+				} else {
+					containedCollectionTypes.add(collection.getCollectionTypes().get(i));
+					i++;
+				}				
+			} while (i<collection.getCollectionTypes().size());
+		}
+		
 		// Remove empty agent relations
 		if (collection.getAgentRelations()!=null && collection.getAgentRelations().size()>0) {
 			List<CollectionAgentRelation> emptyRelations = new ArrayList<CollectionAgentRelation>();
@@ -182,8 +196,15 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 		this.validateRelatedAgents(collection, errors);
 		this.validateAccess(collection, errors);
 		this.validateImage(collection, errors);
+		this.validateCollectionTypes(collection, errors);
 	}
 	
+	private void validateCollectionTypes(Collection collection, Errors errors) {
+		if (collection.getCollectionTypes()==null || collection.getCollectionTypes().isEmpty()) {
+			errors.rejectValue("collectionTypes", "~eu.dariah.de.colreg.validation.collection.type");
+		}
+	}
+
 	private void validateContact(Collection collection, Errors errors) {
 		if ((collection.getWebPage()==null || collection.getWebPage().trim().isEmpty()) && 
 				(collection.getEMail()==null || collection.getEMail().trim().isEmpty()) && 

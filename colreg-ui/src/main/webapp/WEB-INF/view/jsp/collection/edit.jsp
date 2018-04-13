@@ -5,7 +5,10 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<%@ page import="eu.dariah.de.colreg.model.LocalizedDescription" %>
+
 <tiles:importAttribute name="fluidLayout" />
+
 
 <s:url value="${collection.entityId}" var="actionPath" />
 
@@ -128,6 +131,15 @@
 										</c:forEach>
 										<c:remove var="currDesc" />	
 									</c:when>
+									<c:otherwise>
+										<c:if test="${editMode}">
+											<!-- Insert empty one because mandatory anyway -->
+											<c:set var="currDesc" value="<%=new LocalizedDescription()%>" scope="request" />
+											<c:set var="currIndex" value="0" scope="request" />
+											<c:set var="rowOpen" value="true" scope="request" />
+											<jsp:include page="incl/edit_description.jsp" />
+										</c:if>
+									</c:otherwise>
 								</c:choose>
 								<c:if test="${editMode}">
 									<tr class="collection-editor-table-buttons">
@@ -184,14 +196,21 @@
 						<c:choose>
 							<c:when test="${editMode}">
 								<ul id="lst-collection-collectionTypes" class="collection-editor-list">
-									<c:if test="${fn:length(collection.collectionTypes)>0}">
-										<c:forEach items="${collection.collectionTypes}" var="collectionType" varStatus="status" >
-											<c:set var="currType" value="${collectionType}" scope="request" />
-											<c:set var="currIndex" value="${status.index}" scope="request" />
+									<c:choose>
+										<c:when test="${fn:length(collection.collectionTypes)>0}">
+											<c:forEach items="${collection.collectionTypes}" var="collectionType" varStatus="status" >
+												<c:set var="currType" value="${collectionType}" scope="request" />
+												<c:set var="currIndex" value="${status.index}" scope="request" />
+												<jsp:include page="incl/edit_collection_type.jsp" />
+											</c:forEach>
+											<c:remove var="currType" />	
+										</c:when>
+										<c:otherwise>
+											<c:set var="currType" value="" scope="request" />
+											<c:set var="currIndex" value="0" scope="request" />
 											<jsp:include page="incl/edit_collection_type.jsp" />
-										</c:forEach>
-										<c:remove var="currType" />	
-									</c:if>
+										</c:otherwise>
+									</c:choose>
 									<c:if test="${editMode}">
 										<li class="collection-editor-list-buttons">
 											<div class="col-sm-12">
@@ -206,7 +225,7 @@
 									<label class="control-label">
 										<c:forEach items="${vocabularyItems}" var="vocabularyItem">
 											<c:if test="${vocabularyItem.identifier==collType}">
-												<a href="javascript:void(0)">${vocabularyItem.displayLabel}</a>
+												${collType}<a href="javascript:void(0)">${vocabularyItem.displayLabel}</a>
 											</c:if>
 										</c:forEach>
 									</label><br/>
@@ -214,6 +233,7 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionTypes" />
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
 							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 

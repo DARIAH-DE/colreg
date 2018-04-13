@@ -2,7 +2,7 @@ package eu.dariah.de.colreg.pojo;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
-public class VocabularyItemPojo extends BaseIdentifiable {
+public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<VocabularyItemPojo> {
 	private static final long serialVersionUID = -3342978755459281019L;
 	
 	private String identifier;
@@ -33,5 +33,10 @@ public class VocabularyItemPojo extends BaseIdentifiable {
 		} else {
 			return this.defaultName;
 		}
+	}
+	
+	@Override
+	public int compareTo(VocabularyItemPojo o) {
+		return this.getDisplayLabel().compareTo(o.getDisplayLabel());
 	}
 }

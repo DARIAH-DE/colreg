@@ -4,7 +4,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <s:bind path="localizedDescriptions[${currIndex}].*">
-	<tr class="list${status.error ? ' has-error' : ' '}">
+	<tr class="list${status.error ? ' has-error' : ' '}${rowOpen ? ' row-open' : ''}">
 		<td class="description_title" onclick="editor.tables['descriptionTable'].editEntry(this); return false;">
 			<c:choose>
 				<c:when test="${currDesc!=null}">
@@ -28,7 +28,7 @@
 		</c:if>
 	</tr>
 </s:bind>
-<tr class="edit" style="display: none;">
+<tr class="edit${rowOpen ? ' row-open' : ''}" style="display: ${rowOpen ? 'table-row;' : 'none;'}">
 	<td colspan="${editMode ? 4 : 3}">
 		<s:bind path="localizedDescriptions[${currIndex}].languageId">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
