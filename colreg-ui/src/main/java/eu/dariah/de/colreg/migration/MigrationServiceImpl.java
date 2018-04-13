@@ -8,7 +8,11 @@ import java.nio.file.attribute.FileAttribute;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -31,14 +36,18 @@ import de.unibamberg.minf.dme.model.version.VersionInfoImpl;
 import eu.dariah.de.colreg.dao.VersionDao;
 import eu.dariah.de.colreg.dao.base.DaoImpl;
 import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyDao;
+import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyItemDao;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
+import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 
 @Component
 public class MigrationServiceImpl implements MigrationService {
 	private final static Logger logger = LoggerFactory.getLogger(MigrationServiceImpl.class);
 	private final static String versionHashPrefix = "CollectionRegistry";
 
+	private static final Pattern LOCALIZABLE_ENTITY_IDENTIFIER_PATTERN = Pattern.compile("([A-Za-z0-9-_])+");
+	
 	@Value(value="${paths.backups}")
 	private String backupsBasePath;
 	
@@ -52,6 +61,7 @@ public class MigrationServiceImpl implements MigrationService {
 	
 	@Autowired private VersionDao versionDao;
 	@Autowired private VocabularyDao vocabularyDao;
+	@Autowired private VocabularyItemDao vocabularyItemDao;
 	
 	public MigrationServiceImpl() throws NoSuchAlgorithmException {
 		md = MessageDigest.getInstance("MD5");
@@ -124,7 +134,60 @@ public class MigrationServiceImpl implements MigrationService {
 	}
 
 	private void migrateCollectionTypes() {
+		List<String> rawCollections = this.getObjectsAsString(Collection.class);
+		boolean errors = false;
 		
+		logger.info("Performing collection types migration (version: 3.8.2)");
+		
+		JsonNode node;
+		ObjectNode objectNode;
+		ArrayNode collectionTypesNode;
+		
+		Map<String, String> collectionTypesMap = new HashMap<String, String>();
+		String identifier, label;
+		Matcher m;
+		
+		for (String rawCollection : rawCollections) {
+			try {
+				node = objectMapper.readTree(rawCollection);
+				// Skip drafts
+				if (!node.path("draftUserId").isMissingNode() || !node.path("collectionType").isMissingNode()) {
+					objectNode = (ObjectNode)node;
+					label = objectNode.path("collectionType").textValue();
+					m = LOCALIZABLE_ENTITY_IDENTIFIER_PATTERN.matcher(label);
+					
+					identifier = "";
+					while(m.find()) {
+						identifier += m.group(0);
+			        }
+					identifier = identifier.substring(0, 1).toLowerCase() + identifier.substring(1); 
+
+					collectionTypesNode = objectMapper.createArrayNode();
+					if (collectionTypesMap.containsKey(identifier)) {
+						collectionTypesNode.add(collectionTypesMap.get(identifier));
+					} else {
+						VocabularyItem vi = new VocabularyItem();
+						vi.setDefaultName(label);
+						vi.setIdentifier(identifier);
+						vi.setVocabularyIdentifier(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
+						
+						vocabularyItemDao.save(vi);
+						
+						collectionTypesNode.add(vi.getIdentifier());
+						collectionTypesMap.put(identifier, vi.getIdentifier());
+					}
+					objectNode.set("collectionTypes", collectionTypesNode);
+					objectNode.remove("collectionType");
+					
+					mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
+				}
+			} catch (Exception e) {
+				logger.error("Failed to update database to version 3.8.2", e);
+				errors = true;
+			}
+		}
+		this.saveVersionInfo("3.8.2", errors);
+		logger.info("Collection types migration completed " + (errors ? "WITH" : "without") + " errors (version: 3.8.2)");
 	}
 	
 	private void migrateImages() {

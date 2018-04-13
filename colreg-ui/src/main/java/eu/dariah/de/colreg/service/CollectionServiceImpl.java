@@ -392,7 +392,7 @@ public class CollectionServiceImpl implements CollectionService {
 			pojo.setThumbnailUrl(pImage.getThumbnailUrl());
 		}
 		
-		pojo.setType(collection.getCollectionType());
+		
 		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");
 		return pojo;
 	}

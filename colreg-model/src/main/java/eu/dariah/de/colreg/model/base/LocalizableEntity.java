@@ -10,7 +10,7 @@ public abstract class LocalizableEntity extends BaseIdentifiable {
 	private static final long serialVersionUID = -96310693915725198L;
 	
 	@NotBlank(message="{~eu.dariah.de.colreg.validation.vocabulary_item.identifier_blank}")
-	@Pattern(regexp="([\\p{L}])([\\p{L}\\p{N}-_.])*",message="{~eu.dariah.de.colreg.validation.vocabulary_item.identifier_pattern}")
+	@Pattern(regexp="([\\p{L}\\p{N}-_.])*",message="{~eu.dariah.de.colreg.validation.vocabulary_item.identifier_pattern}")
 	private String identifier;
 	
 	@NotBlank(message="{~eu.dariah.de.colreg.validation.vocabulary_item.default_name_blank}")

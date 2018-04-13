@@ -33,10 +33,7 @@ public class Collection extends VersionedEntityImpl {
 	// Collection description
 	@Valid private List<LocalizedDescription> localizedDescriptions;
 	
-	/** Replaced by collectionTypes container for vocabulary IDs
-	 *  stays in code to support migration */
-	@Deprecated
-	private String collectionType;
+
 	
 	@URL(message="{~eu.dariah.de.colreg.validation.collection.webpage}")
 	private String webPage;
@@ -101,9 +98,7 @@ public class Collection extends VersionedEntityImpl {
 	public List<LocalizedDescription> getLocalizedDescriptions() { return localizedDescriptions; }
 	public void setLocalizedDescriptions(List<LocalizedDescription> localizedDescriptions) { this.localizedDescriptions = localizedDescriptions; }
 	
-	@Deprecated public String getCollectionType() { return collectionType; }
-	@Deprecated public void setCollectionType(String collectionType) { this.collectionType = collectionType; }
-	
+
 	public String getWebPage() { return webPage; }
 	public void setWebPage(String webPage) { this.webPage = webPage; }
 	

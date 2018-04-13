@@ -24,13 +24,15 @@
 	</div>
 	<div class="form-content">
 		<fieldset>
-			<div class="form-group">
-				<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" />:</label>
-				<div class="col-sm-8">
-					<sf:input path="identifier" class="form-control" id="vocabularyItem_identifier" />
-					<sf:errors path="identifier" cssClass="error" />
+			<c:if test="${isNew}">
+				<div class="form-group">
+					<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" />:</label>
+					<div class="col-sm-8">
+						<sf:input path="identifier" class="form-control" id="vocabularyItem_identifier" />
+						<sf:errors path="identifier" cssClass="error" />
+					</div>
 				</div>
-			</div>
+			</c:if>
 			<div class="form-group">
 				<label class="control-label col-sm-4" for="vocabularyItem_defaultName"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.default_name" />:</label>
 				<div class="col-sm-8">

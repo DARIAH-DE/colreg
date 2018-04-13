@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.LocalizedDescription;
@@ -102,7 +104,8 @@ public class CrLegacyApiController {
 				
 				c.setCollectionDescriptionRights("CC0");
 				c.setAccessRights("?");
-				c.setCollectionType("DARIAH-DE Repository");
+				c.setCollectionTypes(new ArrayList<String>());
+				c.getCollectionTypes().add("dARIAH-DERepository");
 				c.setWebPage(draft.getAboutAttribute()!=null ? draft.getAboutAttribute() : a.getUri());
 				
 				// Creator and draft user
