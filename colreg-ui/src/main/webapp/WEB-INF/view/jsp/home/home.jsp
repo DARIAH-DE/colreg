@@ -49,7 +49,7 @@
 								<c:forEach items="${latest}" var="version">
 									<c:set var="version" value="${version}" scope="request" />
 									<c:set var="isAgent" value="false" />
-									<c:catch var="exception"><c:set var="isAgent" value="${version.collectionType!=null}" /></c:catch>
+									<c:catch var="exception"><c:set var="isAgent" value="${version.collectionTypes!=null}" /></c:catch>
 									<c:choose>
 										<c:when test="${isAgent}">
 											<jsp:include page="incl/latest_collection.jsp" />

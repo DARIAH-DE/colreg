@@ -239,7 +239,7 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.seteMail(collection.getEMail());
 		pojo.setCurationDriven(collection.isCurationDriven());
 		pojo.setResearchDriven(collection.isResearchDriven());
-
+		pojo.setCollectionTypes(collection.getCollectionTypes());
 		pojo.setImages(this.convertImageMapToPojos(collection.getCollectionImages()));
 		
 		if (locale!=null) {

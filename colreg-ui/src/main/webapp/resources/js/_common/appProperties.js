@@ -1,5 +1,5 @@
 var AppProperties = function() {
-	this.refreshViews = true;
+	this.refreshViews = false;
 	this.refreshIntervalMs = 2000;
 	this.notificationsArea = "#notifications-area";
 	this.notificationsTimeoutMs = 5000;

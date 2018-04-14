@@ -156,7 +156,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 
 	@Override
 	public Vocabulary findVocabulary(String vocabularyId) {
-		return vocabularyDao.findById(vocabularyId);
+		return vocabularyDao.findOne(Query.query((new Criteria()).orOperator(Criteria.where("id").is(vocabularyId), Criteria.where("identifier").is(vocabularyId))));
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -71,13 +70,18 @@ public class VocabularyController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(value="{vocabularyId}/list", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<VocabularyItemPojo> getAllVocabularyItems(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody TableListPojo<VocabularyItemPojo> getVocabularyItemsList(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
+		return new TableListPojo<VocabularyItemPojo>(this.getAllVocabularyItems(vocabularyId, model, locale, request));
+	}
+	
+	@RequestMapping(value="{vocabularyId}/items", method=RequestMethod.GET)
+	public @ResponseBody List<VocabularyItemPojo> getAllVocabularyItems(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
 		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
 		
 		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(v.getIdentifier());
 		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
 
-		return new TableListPojo<VocabularyItemPojo>(vocabularyItemPojos);
+		return vocabularyItemPojos;
 	}
 	
 	@PreAuthorize("isAuthenticated()")

@@ -30,6 +30,7 @@ public class CollectionPojo extends BaseIdentifiable {
 	private String lastChanged;
 	
 	private List<AgentPojo> agents;
+	private List<String> collectionTypes;
 	
 	
 	@XmlElement(name="id")
@@ -77,4 +78,7 @@ public class CollectionPojo extends BaseIdentifiable {
 
 	public List<AgentPojo> getAgents() { return agents; }
 	public void setAgents(List<AgentPojo> agents) { this.agents = agents; }
+
+	public List<String> getCollectionTypes() { return collectionTypes; }
+	public void setCollectionTypes(List<String> collectionTypes) { this.collectionTypes = collectionTypes; }
 }
