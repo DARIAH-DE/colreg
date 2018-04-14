@@ -8,20 +8,44 @@ $(document).ready(function() {
 var CollectionTable = function(url, containerSelector, selector) {
 	BaseTable.apply(this, [url, containerSelector]);
 	
+	var _this = this;
 	this.url = url;
 	this.selector = selector;
-	
+			
 	this.prepareTranslations(["~eu.dariah.de.colreg.common.labels.deleted",
 	                          "~eu.dariah.de.colreg.common.labels.draft",
 	                          "~eu.dariah.de.colreg.common.labels.published",
 	                          "~eu.dariah.de.colreg.common.labels.valid",
 	                          "~eu.dariah.de.colreg.view.collection.labels.no_image"]);
-	this.createTable();
 	
+	this.initializeCollectionTypes(function(types) {
+		_this.collectionTypes = types;
+		_this.createTable();
+	});
 };
 
 CollectionTable.prototype = new BaseTable();
 CollectionTable.prototype.constructor = BaseTable;
+
+CollectionTable.prototype.initializeCollectionTypes = function(callback) {
+	$.ajax({
+        url: __util.composeUrl("vocabularies/collectionTypes/items"),
+        type: "GET",
+        encoding: "UTF-8",
+        dataType: "json",
+        success: function(data) {
+        	if (callback!==undefined) {
+        		var types = [];
+        		if (data!==null && data!==undefined) {
+        			for (var i=0; i<data.length; i++) {
+        				types[data[i].identifier] = data[i].displayLabel;
+        			}
+        		}
+        		callback(types);
+        	}
+        }
+    });
+};
 
 CollectionTable.prototype.createTable = function() {
 	var _this = this;
@@ -44,7 +68,7 @@ CollectionTable.prototype.createTable = function() {
 	    	   "width" : "80%"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": "entity.type"
+	    	   "data": function (row, type, val, meta) { return _this.renderTypesColumn(row, type, val, meta); },
 	       }, {	
 	    	   "targets": [4],
 	    	   "data": function (row, type, val, meta) { return _this.renderAccessColumn(row, type, val, meta); },
@@ -76,6 +100,21 @@ CollectionTable.prototype.renderVersionColumn = function(row, type, val, meta) {
 	} else {
 		return row.entity.versionTimestamp;
 	}
+};
+
+CollectionTable.prototype.renderTypesColumn = function(row, type, val, meta) {
+	var types = "";
+	if (row.entity.collectionTypes==null || row.entity.collectionTypes==undefined) {
+		return types;
+	}
+	
+	for (var i=0; i<row.entity.collectionTypes.length; i++) {
+		types += this.collectionTypes[row.entity.collectionTypes[i]];
+		if (i<row.entity.collectionTypes.length-1) {
+			types += ", ";
+		}
+	} 
+	return types;
 };
 
 CollectionTable.prototype.renderImageColumn = function(row, type, val, meta) {

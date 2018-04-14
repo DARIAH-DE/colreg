@@ -296,7 +296,7 @@ CollectionEditor.prototype.renderAgentSuggestion = function(agent) {
 CollectionEditor.prototype.triggerAddUnitOfMeasurement = function() {
 	bootbox.prompt(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.add_uom"), function(result){ 
 		$.ajax({
-	        url: __util.composeUrl("vocabulary/uom/async/add"),
+	        url: __util.composeUrl("vocabularies/uom/async/add"),
 	        data: { value: result },
 	        type: "GET",
 	        async: false,

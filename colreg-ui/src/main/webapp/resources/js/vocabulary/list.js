@@ -28,15 +28,15 @@ VocabularyTable.prototype.createTable = function() {
 	    	   "data": "entity.defaultName",
 	    	   "width" : "50%"
 	       }, {	
-	    	   "targets": [2],
-	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderLocalNameColumn(row, type, val, meta); },
-	    	   "width" : "50%"
-	       }, {	
 	    	   "targets": [3],
+	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderLocalNameColumn(row, type, val, meta); },
+	    	   "width" : "40%"
+	       }, {	
+	    	   "targets": [2],
 	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderActionColumn(row, type, val, meta); },
 	    	   "class" : "td-no-wrap",
 	    	   "visible" : $("#table-edit-mode").val()==="true" ? true : false
-	       }
+	      }
 	   ]
 	}, this.baseSettings));
 };
@@ -56,7 +56,7 @@ VocabularyTable.prototype.renderLocalNameColumn = function(row, type, val, meta)
 };
 
 VocabularyTable.prototype.renderActionColumn = function(row, type, val, meta) {
-	if (type=="display" || $("#table-edit-mode").val()!=="true") {
+	if (type=="display" && $("#table-edit-mode").val()==="true") {
 		return "<button onclick=\"vocabularyTable.triggerEditVocabularyItem('" + row.entity.id + "');\" class=\"btn btn-link btn-xs pull-left\">" + 
 			      "<span class=\"glyphicon glyphicon-pencil\"></span>" + 
 			   "</button>";

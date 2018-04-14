@@ -239,7 +239,6 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.seteMail(collection.getEMail());
 		pojo.setCurationDriven(collection.isCurationDriven());
 		pojo.setResearchDriven(collection.isResearchDriven());
-		pojo.setCollectionTypes(collection.getCollectionTypes());
 		pojo.setImages(this.convertImageMapToPojos(collection.getCollectionImages()));
 		
 		if (locale!=null) {
@@ -342,6 +341,7 @@ public class CollectionServiceImpl implements CollectionService {
 		pojo.setEntityId(collection.getEntityId());
 		pojo.setParentEntityId(collection.getParentCollectionId());
 		pojo.setId(collection.getId());
+		pojo.setCollectionTypes(collection.getCollectionTypes());
 		
 		if (locale!=null) {
 			pojo.setLastChanged(
