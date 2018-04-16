@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.pojo.api;
+package eu.dariah.de.colreg.pojo.view;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

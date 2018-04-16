@@ -23,9 +23,9 @@ public interface CollectionService {
 	public List<Collection> findAllVersionsForEntityId(String id);
 	public Collection findVersionById(String id, boolean includeDeleted);
 	public void appendVersionComment(String versionid, String comment);
-	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale);
+	/*public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale);
 	public <T extends CollectionPojo> List<T> convertToPojos(Class<T> clazz, List<Collection> collections, Locale locale);
-	public <T extends CollectionPojo> T convertToPojo(Class<T> clazz, Collection collection, Locale locale);
+	public <T extends CollectionPojo> T convertToPojo(Class<T> clazz, Collection collection, Locale locale);*/
 	public List<Collection> findAllDrafts(String userId);
 	public List<Collection> findLatestChanges(int i, AuthPojo auth);
 	public long countCollections();

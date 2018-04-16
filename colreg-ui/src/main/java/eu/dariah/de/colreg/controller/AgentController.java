@@ -30,7 +30,7 @@ import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.pojo.AgentPojo;
-import eu.dariah.de.colreg.pojo.api.TableListPojo;
+import eu.dariah.de.colreg.pojo.view.TableListPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;

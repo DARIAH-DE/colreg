@@ -205,12 +205,12 @@ public class CollectionServiceImpl implements CollectionService {
 		collectionDao.save(c);
 	}
 
-	@Override
+	/*@Override
 	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale) {
 		return this.convertToPojos(CollectionPojo.class, collections, locale);
 	}
-	
-	@Override
+	*/
+	/*@Override
 	public <T extends CollectionPojo> List<T> convertToPojos(Class<T> clazz, List<Collection> collections, Locale locale) {
 		if (collections==null) {
 			return null;
@@ -255,7 +255,7 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		
 		return clazz.cast(pojo);
-	}
+	}*/
 	
 	@Override
 	public List<Collection> findLatestChanges(int i, AuthPojo auth) {

@@ -38,8 +38,10 @@ import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
 import eu.dariah.de.colreg.pojo.api.CollectionPojo;
-import eu.dariah.de.colreg.pojo.api.TableListPojo;
+import eu.dariah.de.colreg.pojo.converter.CollectionViewPojoConverter;
 import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
+import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
+import eu.dariah.de.colreg.pojo.view.TableListPojo;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
@@ -51,6 +53,8 @@ import eu.dariah.de.dariahsp.model.web.AuthPojo;
 @RequestMapping(value={"/collections/", "/drafts/"})
 public class CollectionController extends VersionedEntityController {
 	@Autowired private CollectionService collectionService;
+	@Autowired private CollectionViewPojoConverter collectionPojoConverter;
+	
 	@Autowired private SchemaService schemaService;
 	
 	@Autowired private CollectionValidator validator;
@@ -85,7 +89,7 @@ public class CollectionController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(value="list", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<CollectionPojo> getAllPublic(Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody TableListPojo<CollectionViewPojo> getAllPublic(Model model, Locale locale, HttpServletRequest request) {
 		List<Collection> collections = null;
 		if(request.getServletPath().equals("/drafts/list")) {
 			AuthPojo auth = authInfoHelper.getAuth(request);
@@ -96,8 +100,8 @@ public class CollectionController extends VersionedEntityController {
 			collections = collectionService.findAllCurrent();
 		}
 		
-		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(collections, locale);
-		return new TableListPojo<CollectionPojo>(collectionPojos);
+		List<CollectionViewPojo> collectionPojos = collectionPojoConverter.convertToPojos(collections, locale);
+		return new TableListPojo<CollectionViewPojo>(collectionPojos);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)

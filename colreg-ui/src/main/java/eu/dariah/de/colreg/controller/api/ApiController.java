@@ -26,7 +26,7 @@ public class ApiController {
 	@RequestMapping(value="collections", method=RequestMethod.GET)
 	public @ResponseBody List<CollectionPojo> getAllPublic() {
 		List<Collection> collections = collectionService.findAllCurrent();
-		List<CollectionPojo> collectionPojos = collectionService.convertToPojos(CollectionPojo.class, collections, null);
+		List<CollectionPojo> collectionPojos = null;//collectionService.convertToPojos(CollectionPojo.class, collections, null);
 		return collectionPojos;
 	}
 	
@@ -34,6 +34,6 @@ public class ApiController {
 	public @ResponseBody DcddmCollectionPojo getCollection(@PathVariable String collectionId) {
 		Collection c = collectionService.findCurrentByCollectionId(collectionId);
 		
-		return collectionService.convertToPojo(DcddmCollectionPojo.class, c, null);
+		return null;//collectionService.convertToPojo(DcddmCollectionPojo.class, c, null);
 	}
 }

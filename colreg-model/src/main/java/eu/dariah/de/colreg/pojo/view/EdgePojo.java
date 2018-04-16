@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.pojo.api;
+package eu.dariah.de.colreg.pojo.view;
 
 public class EdgePojo {
 	private String source;
