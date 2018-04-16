@@ -45,8 +45,8 @@
 					<thead>
 						<tr>
 							<th><!-- ~Badges --></th> 
-							<th><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_image" /></th>
+							<th><s:message code="~eu.dariah.de.colreg.model.localized_description.title" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.collection_types" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.access" /></th>
 							<th><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></th>

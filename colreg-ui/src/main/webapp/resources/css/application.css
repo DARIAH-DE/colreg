@@ -23,6 +23,27 @@
 	padding-left: 15px;
 }
 
+.collection-list-thumb-nopreview  {
+  margin: 10px;
+  width: 126px;
+  height: 121px;
+  float: left;
+  /*background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/shoes.jpg);*/
+  background-size: cover;
+  position: relative;
+}
+
+.collection-list-thumb-nopreview h4 {
+  position: absolute;
+  bottom: 10px;
+  left: 6px;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 4px 8px;
+  color: white;
+  margin: 0;
+  font: 12px Sans-Serif;
+}
+
 /*#collection-image-placeholder {
 	margin: 10px;
 }

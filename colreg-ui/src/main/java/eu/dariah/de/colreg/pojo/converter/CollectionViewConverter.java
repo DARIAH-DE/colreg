@@ -11,8 +11,10 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import de.unibamberg.minf.core.web.localization.LocaleConverter;
 import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.pojo.converter.base.BaseConverter;
 import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
@@ -46,7 +48,7 @@ public class CollectionViewConverter extends BaseConverter<Collection, Collectio
 
 	public CollectionViewPojo convertToPojo(Collection collection, Map<String, String> accessTypeIdLabelsMap, Locale locale) {
 		CollectionViewPojo pojo = new CollectionViewPojo();
-		pojo.setId(collection.getId());
+		pojo.setId(collection.getEntityId());
 		pojo.setDeleted(collection.isDeleted());
 		pojo.setPublished(collection.getDraftUserId()==null || collection.getDraftUserId().isEmpty());
 		pojo.setDraft(!pojo.isPublished());
@@ -62,9 +64,22 @@ public class CollectionViewConverter extends BaseConverter<Collection, Collectio
 				pojo.getAccessTypes().add(accessTypeIdLabelsMap.get(collection.getAccessMethods().get(i).getType()));
 			}
 		}
-		
-		// Locale !
-		pojo.setDisplayTitle(collection.getLocalizedDescriptions().get(0).getDescription());
+
+		if (collection.getLocalizedDescriptions().size()==1) {
+			pojo.setDisplayTitle(collection.getLocalizedDescriptions().get(0).getTitle());
+		} else {
+			String languageCode;
+			for (LocalizedDescription desc : collection.getLocalizedDescriptions()) {
+				languageCode = LocaleConverter.getLanguageForIso3Code(desc.getLanguageId());
+				if (locale.getLanguage().equals(new Locale(languageCode).getLanguage())) {
+					pojo.setDisplayTitle(desc.getTitle());
+					break;
+				}
+			}
+			if (pojo.getDisplayTitle()==null) {
+				pojo.setDisplayTitle(collection.getLocalizedDescriptions().get(0).getTitle());
+			}
+		}
 		
 		if (collection.getCollectionImages()!=null && collection.getCollectionImages().size()>0) {
 			pojo.setPrimaryImage(imageConverter.convertToPojo(collection.getCollectionImages().get(0), 0));
