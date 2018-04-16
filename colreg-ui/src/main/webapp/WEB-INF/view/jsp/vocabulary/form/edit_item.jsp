@@ -28,17 +28,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" />:</label>
 				<div class="col-sm-8">
-					<c:choose>
-						<c:when test="${isNew}">
-							<sf:input path="identifier" class="form-control" id="vocabularyItem_identifier" />
-						</c:when>
-						<c:otherwise>
-							<sf:hidden path="identifier"/>
-							<label class="control-label">
-								${vocabularyItem.identifier}
-							</label>
-						</c:otherwise>
-					</c:choose>
+					<sf:input path="identifier" class="form-control" id="vocabularyItem_identifier" />
 					<sf:errors path="identifier" cssClass="error" />
 				</div>
 			</div>

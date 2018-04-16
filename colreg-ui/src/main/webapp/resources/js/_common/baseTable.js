@@ -17,8 +17,8 @@ function BaseTable(url, containerSelector) {
 	this.containerSelector = containerSelector==undefined ? null : containerSelector;
 	
 	this.baseTranslations = ["~eu.dariah.de.colreg.common.view.notifications.async_general_error",
-	                         "~eu.dariah.de.colreg.common.view.notifications.async_timeout",
-	                         "~eu.dariah.de.colreg.common.view.notifications.session_expired_reload"];
+        					 "~eu.dariah.de.colreg.common.view.notifications.async_timeout",
+        					 "~eu.dariah.de.colreg.common.view.notifications.session_expired_reload"];
 	
 	this.options = {
 			refreshInterval: __properties.refreshIntervalMs,
@@ -31,22 +31,35 @@ function BaseTable(url, containerSelector) {
 			"dom":	"<'row'<'col-sm-12 data-tables-table'tr>>" +
 					"<'row'<'col-sm-5'i><'col-sm-7'p>>",
 			"autoWidth": false,
+			"responsive": {
+				"details" : {
+					"display" : $.fn.dataTable.Responsive.display.childRowImmediate,
+				}
+			},
 			"processing": true,
 			"ajax": {
 				"url" : url!=null && url !=undefined ? url : window.location.pathname + "async/getData",
-				"error": function(xhr, textStatus, error) {_this.handleAjaxError(xhr, textStatus, error); }
+				"error": function(xhr, textStatus, error) {_this.handleAjaxError(xhr, textStatus, error); },
+				"dataSrc" : function(data) { return _this.handleAjaxCallback(data.aaData); }
 			},
 			"drawCallback": function (oSettings) {
+				if (_this.handleGrouping!==undefined) {
+					_this.handleGrouping(this, oSettings);
+				}
 				_this.handleRefresh(oSettings);
 		    },
-		    "initComplete" : function(settings, json) { _this.handleInitComplete(settings, json); },
-		    "stateSave": true
+		    "initComplete" : function(settings, json) { _this.handleInitComplete(settings, json); }
 		};
 	
 	// TODO What was that?
 	//$(".editor-option").change(function() { _this.refresh(); });
 	this.cycleRefresh();
 }
+
+
+BaseTable.prototype.handleAjaxCallback = function(json) {
+	return json;
+};
 
 BaseTable.prototype.handleInitComplete = function(settings, json) {
 	this.assignTableEvents();
@@ -76,17 +89,22 @@ BaseTable.prototype.assignTableEvents = function() {
     /*$(this.containerSelector).find("tbody").on("click", "tr", function () {
         if ($(this).hasClass("selected")) {
             $(this).removeClass("selected");
-            _this.handleSelection(null);
+            if (_this.handleSelection!==undefined) {
+            	_this.handleSelection(null);
+            }
         } else {
         	_this._base.table.$("tr.selected").removeClass("selected");
             $(this).addClass("selected");
-            _this.handleSelection($(this).prop("id"));
+            
+            if (_this.handleSelection!==undefined) {
+            	_this.handleSelection($(this).prop("id"));
+            }
         }
     });*/
 };
 
 /* Just an 'abstract' method that is intended to be overridden */
-BaseTable.prototype.handleSelection = function(id) { };
+//BaseTable.prototype.handleSelection = function(id) {};
 
 BaseTable.prototype.handleAjaxError = function(xhr, textStatus, error) {
     // Reload because the session has expired
@@ -100,9 +118,7 @@ BaseTable.prototype.handleAjaxError = function(xhr, textStatus, error) {
         //alert(__translator.translate("~eu.dariah.de.colreg.common.view.notifications.async_general_error"));
     }
 	this.error = true;
-	if (this.table.fnProcessingIndicator!=undefined) {
-		this.table.fnProcessingIndicator(false);
-	}
+    this.table.fnProcessingIndicator(false);
 };
 
 BaseTable.prototype.cycleRefresh = function() {
@@ -127,15 +143,19 @@ BaseTable.prototype.refresh = function() {
 					$("#"+selected[i]).each(function() {
 						$(this).addClass("selected");
 						// Only executed if the row (id) still exists
-						_this.handleSelection(selected[i]);
+						if (_this.handleSelection!==undefined) {
+							_this.handleSelection(selected[i]);
+						}
 						hasSelected = true;
 					});
 				}
 			} 
 			if (!hasSelected) {
-				_this.handleSelection(null);
+				if (_this.handleSelection!==undefined) {
+					_this.handleSelection(null);
+				}
 			}
-		}, false);
+		});
 	}
 };
 

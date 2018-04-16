@@ -28,11 +28,11 @@ VocabularyTable.prototype.createTable = function() {
 	    	   "data": "entity.defaultName",
 	    	   "width" : "50%"
 	       }, {	
-	    	   "targets": [3],
+	    	   "targets": [2],
 	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderLocalNameColumn(row, type, val, meta); },
 	    	   "width" : "40%"
 	       }, {	
-	    	   "targets": [2],
+	    	   "targets": [3],
 	    	   "data": function (row, type, val, meta) { return vocabularyTable.renderActionColumn(row, type, val, meta); },
 	    	   "class" : "td-no-wrap",
 	    	   "visible" : $("#table-edit-mode").val()==="true" ? true : false
@@ -72,7 +72,7 @@ VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
 	modalFormHandler = new ModalFormHandler({
 		formUrl: __util.composeUrl(itemId + "/forms/edit"),
 		identifier: form_identifier,
-		//additionalModalClasses: "wide-modal",
+		additionalModalClasses: "wide-modal",
 		completeCallback: function(container) { 
 			_this.refresh(); 
 		},
