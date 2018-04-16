@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.pojo;
+package eu.dariah.de.colreg.pojo.api;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.pojo.AgentPojo;
 
 @XmlRootElement(name="collection")
 public class CollectionPojo extends BaseIdentifiable {

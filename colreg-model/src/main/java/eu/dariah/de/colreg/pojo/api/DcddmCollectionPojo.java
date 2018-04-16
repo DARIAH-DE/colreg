@@ -1,9 +1,13 @@
-package eu.dariah.de.colreg.pojo;
+package eu.dariah.de.colreg.pojo.api;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import eu.dariah.de.colreg.pojo.AccessPojo;
+import eu.dariah.de.colreg.pojo.AccrualPojo;
+import eu.dariah.de.colreg.pojo.ImagePojo;
 
 
 @XmlRootElement(name="collection")

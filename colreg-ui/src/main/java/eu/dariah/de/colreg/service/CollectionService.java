@@ -5,8 +5,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import eu.dariah.de.colreg.model.Collection;
-import eu.dariah.de.colreg.pojo.CollectionPojo;
 import eu.dariah.de.colreg.pojo.ImagePojo;
+import eu.dariah.de.colreg.pojo.api.CollectionPojo;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 public interface CollectionService {
