@@ -10,7 +10,7 @@ public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<V
 	private boolean hasCurrentLocale;
 	private String defaultName;
 	private String vocabularyId;
-	
+	private boolean disabled;
 	
 	public String getVocabularyId() { return vocabularyId; }
 	public void setVocabularyId(String vocabularyId) { this.vocabularyId = vocabularyId; }
@@ -26,6 +26,9 @@ public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<V
 	
 	public String getDefaultName() { return defaultName; }
 	public void setDefaultName(String defaultName) { this.defaultName = defaultName; }
+	
+	public boolean isDisabled() { return disabled; }
+	public void setDisabled(boolean disabled) { this.disabled = disabled; }
 	
 	public String getDisplayLabel() {
 		if (this.hasCurrentLocale) {

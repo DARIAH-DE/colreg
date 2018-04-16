@@ -3,7 +3,6 @@ package eu.dariah.de.colreg.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
