@@ -38,7 +38,7 @@ CollectionTable.prototype.initializeCollectionTypes = function(callback) {
         		var types = [];
         		if (data!==null && data!==undefined) {
         			for (var i=0; i<data.length; i++) {
-        				types[data[i].identifier] = data[i].displayLabel;
+        				types[data[i].id] = data[i].displayLabel;
         			}
         		}
         		callback(types);

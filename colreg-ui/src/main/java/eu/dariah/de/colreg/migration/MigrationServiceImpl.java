@@ -173,8 +173,8 @@ public class MigrationServiceImpl implements MigrationService {
 						
 						vocabularyItemDao.save(vi);
 						
-						collectionTypesNode.add(vi.getIdentifier());
-						collectionTypesMap.put(identifier, vi.getIdentifier());
+						collectionTypesNode.add(vi.getId());
+						collectionTypesMap.put(identifier, vi.getId());
 					}
 					objectNode.set("collectionTypes", collectionTypesNode);
 					objectNode.remove("collectionType");
