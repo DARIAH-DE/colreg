@@ -13,7 +13,7 @@ public abstract class BaseConverter<TObj extends BaseIdentifiable, TPojo extends
 
 	@Autowired protected MessageSource messageSource;
 	
-	public final List<TPojo> convertToPojos(List<TObj> objects, Locale locale) {
+	public List<TPojo> convertToPojos(List<TObj> objects, Locale locale) {
 		if (objects==null || objects.isEmpty()) {
 			return new ArrayList<TPojo>(0);
 		}

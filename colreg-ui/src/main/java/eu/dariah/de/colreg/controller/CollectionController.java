@@ -38,7 +38,8 @@ import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
 import eu.dariah.de.colreg.pojo.api.CollectionPojo;
-import eu.dariah.de.colreg.pojo.converter.CollectionViewPojoConverter;
+import eu.dariah.de.colreg.pojo.converter.CollectionViewConverter;
+import eu.dariah.de.colreg.pojo.converter.ImageConverter;
 import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
@@ -53,7 +54,7 @@ import eu.dariah.de.dariahsp.model.web.AuthPojo;
 @RequestMapping(value={"/collections/", "/drafts/"})
 public class CollectionController extends VersionedEntityController {
 	@Autowired private CollectionService collectionService;
-	@Autowired private CollectionViewPojoConverter collectionPojoConverter;
+	@Autowired private CollectionViewConverter collectionPojoConverter;
 	
 	@Autowired private SchemaService schemaService;
 	
@@ -61,6 +62,7 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private LicenseService licenseService;
 	
 	@Autowired private ImageService imageService;
+	@Autowired private ImageConverter imageConverter;
 	
 	@Autowired protected VocabularyItemService vocabularyItemService;
 	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
@@ -238,7 +240,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
 	
-		model.addAttribute("collectionImages", collectionService.convertImageMapToPojos(c.getCollectionImages()));
+		model.addAttribute("collectionImages", imageConverter.convertToPojos(c.getCollectionImages()));
 		
 		if (c.getParentCollectionId()!=null) {
 			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));

@@ -53,7 +53,7 @@ public class CollectionServiceImpl implements CollectionService {
 	@Autowired private AccrualPeriodicityDao accPeriodicityDao;
 	@Autowired private AccrualPolicyDao accPolicyDao;
 
-	@Autowired private ImageService imageService;
+	
 	
 	@Override
 	public Collection createCollection(String userId) {
@@ -311,28 +311,6 @@ public class CollectionServiceImpl implements CollectionService {
 		return imageMap;
 	}
 	
-	@Override
-	public List<ImagePojo> convertImageMapToPojos(Map<Integer, String> imageMap) {
-		if (imageMap==null || imageMap.size()==0) {
-			return null;
-		}
-		List<ImagePojo> result = new ArrayList<ImagePojo>();
-		for (Integer index : imageMap.keySet()) {
-			result.add(this.convertImageIdToPojo(imageMap.get(index), index));
-		}	
-		return result;
-	}
-	
-	@Override
-	public ImagePojo convertImageIdToPojo(String imageId, int index) {
-		ImagePojo pImage = new ImagePojo();
-		pImage.setIndex(index);
-		pImage.setId(imageId);
-		pImage.setThumbnailUrl((imageService.getImageURI(pImage.getId(), ImageTypes.THUMBNAIL)));
-		pImage.setImageUrl((imageService.getImageURI(pImage.getId(), null)));
-		
-		return pImage;
-	}
 
 	private <T extends CollectionPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
 		//CollectionPojo pojo = new CollectionPojo();
@@ -387,9 +365,9 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		
 		if (collection.getCollectionImages()!=null && collection.getCollectionImages().size()>0) {
-			ImagePojo pImage = this.convertImageIdToPojo(collection.getCollectionImages().get(collection.getCollectionImages().keySet().iterator().next()), 0);
+			/*ImagePojo pImage = this.convertImageIdToPojo(collection.getCollectionImages().get(collection.getCollectionImages().keySet().iterator().next()), 0);
 			pojo.setImageUrl(pImage.getImageUrl());
-			pojo.setThumbnailUrl(pImage.getThumbnailUrl());
+			pojo.setThumbnailUrl(pImage.getThumbnailUrl());*/
 		}
 		
 		

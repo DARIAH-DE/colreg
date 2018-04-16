@@ -3,12 +3,16 @@ package eu.dariah.de.colreg.pojo.view;
 import java.util.List;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.pojo.ImagePojo;
 
 public class CollectionViewPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = 110389795212453807L;
 
-	private String state;
-	private String thumbnailUrl;
+	private boolean draft;
+	private boolean published;
+	private boolean deleted;
+	
+	private ImagePojo primaryImage;
 	private String displayTitle;
 	private List<String> collectionTypeIdentifiers;
 	private List<String> accessTypes;
@@ -17,11 +21,17 @@ public class CollectionViewPojo extends BaseIdentifiable {
 	private String displayTimestamp;
 	
 	
-	public String getState() { return state; }
-	public void setState(String state) { this.state = state; }
+	public boolean isDraft() { return draft; }
+	public void setDraft(boolean draft) { this.draft = draft; }
 	
-	public String getThumbnailUrl() { return thumbnailUrl; }
-	public void setThumbnailUrl(String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }
+	public boolean isPublished() { return published; }
+	public void setPublished(boolean published) { this.published = published; }
+	
+	public boolean isDeleted() { return deleted; }
+	public void setDeleted(boolean deleted) { this.deleted = deleted; }
+	
+	public ImagePojo getPrimaryImage() { return primaryImage; }
+	public void setPrimaryImage(ImagePojo primaryImage) { this.primaryImage = primaryImage; }
 	
 	public String getDisplayTitle() { return displayTitle; }
 	public void setDisplayTitle(String displayTitle) { this.displayTitle = displayTitle; }
