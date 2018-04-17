@@ -29,7 +29,7 @@ import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
-import eu.dariah.de.colreg.pojo.AgentPojo;
+import eu.dariah.de.colreg.pojo.view.AgentViewPojo;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
@@ -55,11 +55,11 @@ public class AgentController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(value="list", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<AgentPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody TableListPojo<AgentViewPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
 		List<Agent> agents = agentService.findAllCurrent();
-		List<AgentPojo> agentPojos = null;//agentService.convertToPojos(agents, locale);
+		List<AgentViewPojo> agentPojos = agentService.convertToPojos(agents, locale);
 		
-		return new TableListPojo<AgentPojo>(agentPojos);
+		return new TableListPojo<AgentViewPojo>(agentPojos);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)

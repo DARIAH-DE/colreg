@@ -3,52 +3,47 @@ package eu.dariah.de.colreg.pojo.converter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import org.springframework.stereotype.Component;
 
 import eu.dariah.de.colreg.model.Accrual;
-import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
-import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
-import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.converter.base.BaseConverter;
 
+@Component
 public class AccrualConverter extends BaseConverter<Accrual, AccrualPojo> {
 
 	@Override
-	public AccrualPojo convertToPojo(Accrual object, Locale locale) {
-		// TODO Auto-generated method stub
-		return null;
+	public AccrualPojo convertToPojo(Accrual accrual, Locale locale) {
+		return this.convertToPojo(accrual, locale, null, null, null);
 	}
-
-	/*
-	 * private List<AccrualPojo> convertAccrualToPojos(List<Accrual> accrualMethods) {
-		if (accrualMethods==null || accrualMethods.size()==0) {
-			return null;
+	
+	public List<AccrualPojo> convertToPojos(List<Accrual> accruals, Locale locale, Map<String, String> accrualMethodIdIdentifierMap, 
+			Map<String, String> accrualPolicyIdIdentifierMap, Map<String, String> accrualPeriodicityIdIdentifierMap) {
+		if (accruals==null || accruals.isEmpty()) {
+			return new ArrayList<AccrualPojo>(0);
 		}
-		List<AccrualPojo> accrualPojos = new ArrayList<AccrualPojo>();
-		AccrualPojo accPojo;
-		AccrualMethod accMethod;
-		AccrualPolicy accPolicy;
-		AccrualPeriodicity accPeriodicity;
-		
-		for (Accrual acc : accrualMethods) {
-			accPojo = new AccrualPojo();
-			
-			accMethod = accMethodDao.findById(acc.getAccrualMethod());
-			if (accMethod!=null) {
-				accPojo.setAccrualMethod(accMethod.getIdentifier());
-			}
-			accPolicy = accPolicyDao.findById(acc.getAccrualPolicy());
-			if (accPolicy!=null) {
-				accPojo.setAccrualPolicy(accPolicy.getIdentifier());
-			}
-			accPeriodicity = accPeriodicityDao.findById(acc.getAccrualPeriodicity());
-			if (accPeriodicity!=null) {
-				accPojo.setAccrualPeriodicity(accPeriodicity.getIdentifier());	
-			}
-			accrualPojos.add(accPojo);
+		List<AccrualPojo> pojos = new ArrayList<AccrualPojo>(accruals.size());
+		for (Accrual accrual : accruals) {
+			pojos.add(this.convertToPojo(accrual, locale, accrualMethodIdIdentifierMap, accrualPolicyIdIdentifierMap, accrualPeriodicityIdIdentifierMap));
 		}
-		
-		return accrualPojos;
+		return pojos;
 	}
-	 */
+	
+	public AccrualPojo convertToPojo(Accrual accrual, Locale locale, Map<String, String> accrualMethodIdIdentifierMap, 
+			Map<String, String> accrualPolicyIdIdentifierMap, Map<String, String> accrualPeriodicityIdIdentifierMap) {
+		AccrualPojo pojo = new AccrualPojo();
+		
+		if (accrualMethodIdIdentifierMap!=null) {
+			pojo.setAccrualMethod(accrualMethodIdIdentifierMap.get(accrual.getAccrualMethod()));
+		}
+		if (accrualPolicyIdIdentifierMap!=null) {
+			pojo.setAccrualPolicy(accrualPolicyIdIdentifierMap.get(accrual.getAccrualPolicy()));
+		}
+		if (accrualPeriodicityIdIdentifierMap!=null) {
+			pojo.setAccrualPeriodicity(accrualPeriodicityIdIdentifierMap.get(accrual.getAccrualPeriodicity()));
+		}
+		return pojo;
+	}
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.pojo.api.AgentApiPojo;
-import eu.dariah.de.colreg.pojo.converter.base.BaseConverter;
+import eu.dariah.de.colreg.pojo.converter.base.BaseAgentConverter;
 
 @Component
-public class AgentApiConverter extends BaseConverter<Agent, AgentApiPojo> {
+public class AgentApiConverter extends BaseAgentConverter<AgentApiPojo> {
 	
 	@Override
 	public AgentApiPojo convertToPojo(Agent agent, Locale locale) {
@@ -36,7 +36,7 @@ public class AgentApiConverter extends BaseConverter<Agent, AgentApiPojo> {
 		pojo.setVersionId(agent.getId());
 		pojo.setTimestamp(agent.getVersionTimestamp().toInstant().getMillis());
 		pojo.setDeleted(agent.isDeleted());
-		pojo.setName(agent.getName() + ((agent.getForeName()!=null && !agent.getForeName().trim().isEmpty()) ? ", " + agent.getForeName(): ""));
+		pojo.setName(this.getDisplayName(agent));
 		
 		if (locale!=null) {
 			pojo.setLocalizedTimestamp(this.getDisplayTimestamp(agent.getVersionTimestamp(), locale));
