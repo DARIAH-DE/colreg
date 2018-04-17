@@ -1,60 +1,30 @@
 package eu.dariah.de.colreg.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import de.unibamberg.minf.core.web.service.ImageService;
-import de.unibamberg.minf.core.web.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
-import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
-import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
-import eu.dariah.de.colreg.dao.vocabulary.AccrualPeriodicityDao;
-import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
-import eu.dariah.de.colreg.model.Access;
-import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
-import eu.dariah.de.colreg.model.LocalizedDescription;
-import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
-import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
-import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
-import eu.dariah.de.colreg.pojo.AccessPojo;
-import eu.dariah.de.colreg.pojo.AccrualPojo;
-import eu.dariah.de.colreg.pojo.AgentPojo;
-import eu.dariah.de.colreg.pojo.ImagePojo;
-import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
-import eu.dariah.de.colreg.pojo.api.ExtendedCollectionApiPojo;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
 	@Autowired private CollectionDao collectionDao;
 	@Autowired private AgentDao agentDao;
-	@Autowired private AccessTypeDao accessTypeDao;
-	
-	@Autowired private AgentService agentService;
-	
-	@Autowired private AccrualMethodDao accMethodDao;
-	@Autowired private AccrualPeriodicityDao accPeriodicityDao;
-	@Autowired private AccrualPolicyDao accPolicyDao;
 
-	
-	
 	@Override
 	public Collection createCollection(String userId) {
 		Collection c = new Collection();
@@ -204,58 +174,6 @@ public class CollectionServiceImpl implements CollectionService {
 		c.setVersionComment(comment);
 		collectionDao.save(c);
 	}
-
-	/*@Override
-	public List<CollectionPojo> convertToPojos(List<Collection> collections, Locale locale) {
-		return this.convertToPojos(CollectionPojo.class, collections, locale);
-	}
-	*/
-	/*@Override
-	public <T extends CollectionPojo> List<T> convertToPojos(Class<T> clazz, List<Collection> collections, Locale locale) {
-		if (collections==null) {
-			return null;
-		}
-		List<T> pojos = new ArrayList<T>(collections.size());
-		for (Collection c : collections) {
-			pojos.add(this.convertToPojo(clazz, c, locale));
-		}
-		return pojos;
-	}
-
-	@Override
-	public <T extends CollectionPojo> T convertToPojo(Class<T> clazz, Collection collection, Locale locale) {
-		if (collection==null) {
-			return null;
-		}
-		
-		if (!DcddmCollectionPojo.class.isAssignableFrom(clazz)) {
-			return clazz.cast(this.fillCollectionPojo(new CollectionPojo(), collection, locale));
-		}
-		DcddmCollectionPojo pojo = this.fillCollectionPojo(new DcddmCollectionPojo(), collection, locale);
-		
-		pojo.setAccessPojos(convertAccessToPojos(collection.getAccessMethods()));
-		pojo.setAccrualPojos(convertAccrualToPojos(collection.getAccrualMethods()));
-		pojo.setWebPage(collection.getWebPage());
-		pojo.seteMail(collection.getEMail());
-		pojo.setCurationDriven(collection.isCurationDriven());
-		pojo.setResearchDriven(collection.isResearchDriven());
-		pojo.setImages(this.convertImageMapToPojos(collection.getCollectionImages()));
-		
-		if (locale!=null) {
-			// TODO: Actually use the one we need not the first
-			pojo.setDescription(collection.getLocalizedDescriptions().get(0).getDescription());
-		} else {
-			Map<String, String> descriptions = new HashMap<String, String>();
-			for (LocalizedDescription desc : collection.getLocalizedDescriptions()) {
-				if (desc.getDescription()!=null && !desc.getDescription().isEmpty()) {
-					descriptions.put(desc.getLanguageId(), desc.getDescription());
-				}
-			}
-			pojo.setDecriptions(descriptions);
-		}
-		
-		return clazz.cast(pojo);
-	}*/
 	
 	@Override
 	public List<Collection> findLatestChanges(int i, AuthPojo auth) {
@@ -309,127 +227,5 @@ public class CollectionServiceImpl implements CollectionService {
 			imageMap = result;
 		}
 		return imageMap;
-	}
-	
-
-	private <T extends CollectionApiPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
-		//CollectionPojo pojo = new CollectionPojo();
-		pojo.setVersionId(collection.getId());
-		pojo.setVersionTimestamp(collection.getVersionTimestamp().toInstant().getMillis());
-		pojo.setEntityId(collection.getEntityId());
-		pojo.setParentEntityId(collection.getParentCollectionId());
-		pojo.setId(collection.getId());
-		pojo.setCollectionTypes(collection.getCollectionTypes());
-		
-		if (locale!=null) {
-			pojo.setLastChanged(
-					"<span style=\"white-space: nowrap;\">" + 
-							collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("L-", locale), locale) +
-					"</span> <span style=\"white-space: nowrap;\">" + 
-							collection.getVersionTimestamp().toString(DateTimeFormat.patternForStyle("-M", locale), locale) +
-					"</span>");
-			
-			// TODO: Actually use the one we need not the first
-			pojo.setTitle(collection.getLocalizedDescriptions().get(0).getTitle());
-			pojo.setAcronym(collection.getLocalizedDescriptions().get(0).getAcronym());
-		} else {
-			Map<String, String> titles = new HashMap<String, String>();
-			Map<String, String> acronyms = new HashMap<String, String>();
-			for (LocalizedDescription desc : collection.getLocalizedDescriptions()) {
-				titles.put(desc.getLanguageId(), desc.getTitle());
-				if (desc.getAcronym()!=null && !desc.getAcronym().isEmpty()) {
-					acronyms.put(desc.getLanguageId(), desc.getAcronym());
-				}
-			}
-			pojo.setAcronyms(acronyms);
-			pojo.setTitles(titles);
-		}	
-			
-		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
-			String accessTypes = "";
-			for (int i=0; i<collection.getAccessMethods().size(); i++) {
-				accessTypes += accessTypeDao.findById(collection.getAccessMethods().get(i).getType()).getLabel();
-				if (i<collection.getAccessMethods().size()-1) {
-					accessTypes += "; ";
-				}
-			}
-			pojo.setAccess(accessTypes);
-			
-		}
-		
-		if (collection.getAgentRelations()!=null && collection.getAgentRelations().size()>0) {
-			pojo.setAgents(new ArrayList<AgentPojo>());
-			for (CollectionAgentRelation ar : collection.getAgentRelations()) {
-				pojo.getAgents().add(agentService.convertToPojo(agentService.findCurrentByAgentId(ar.getAgentId()), locale));
-			}
-		}
-		
-		if (collection.getCollectionImages()!=null && collection.getCollectionImages().size()>0) {
-			/*ImagePojo pImage = this.convertImageIdToPojo(collection.getCollectionImages().get(collection.getCollectionImages().keySet().iterator().next()), 0);
-			pojo.setImageUrl(pImage.getImageUrl());
-			pojo.setThumbnailUrl(pImage.getThumbnailUrl());*/
-		}
-		
-		
-		pojo.setState(collection.isDeleted() ? "deleted" : collection.getDraftUserId()==null||collection.getDraftUserId().isEmpty() ? "published" : "draft");
-		return pojo;
-	}
-	
-	private List<AccessPojo> convertAccessToPojos (List<Access> as) {
-		List<AccessPojo> aPojos = null;
-		if (as!=null) {
-			aPojos = new ArrayList<AccessPojo>();
-			for (Access a : as) {
-				aPojos.add(convertAccessToPojo(a));
-			}
-		}
-		return aPojos;
-	}
-	
-	private List<AccrualPojo> convertAccrualToPojos(List<Accrual> accrualMethods) {
-		if (accrualMethods==null || accrualMethods.size()==0) {
-			return null;
-		}
-		List<AccrualPojo> accrualPojos = new ArrayList<AccrualPojo>();
-		AccrualPojo accPojo;
-		AccrualMethod accMethod;
-		AccrualPolicy accPolicy;
-		AccrualPeriodicity accPeriodicity;
-		
-		for (Accrual acc : accrualMethods) {
-			accPojo = new AccrualPojo();
-			
-			accMethod = accMethodDao.findById(acc.getAccrualMethod());
-			if (accMethod!=null) {
-				accPojo.setAccrualMethod(accMethod.getIdentifier());
-			}
-			accPolicy = accPolicyDao.findById(acc.getAccrualPolicy());
-			if (accPolicy!=null) {
-				accPojo.setAccrualPolicy(accPolicy.getIdentifier());
-			}
-			accPeriodicity = accPeriodicityDao.findById(acc.getAccrualPeriodicity());
-			if (accPeriodicity!=null) {
-				accPojo.setAccrualPeriodicity(accPeriodicity.getIdentifier());	
-			}
-			accrualPojos.add(accPojo);
-		}
-		
-		return accrualPojos;
-	}
-	
-	private AccessPojo convertAccessToPojo (Access a) {
-		AccessPojo aPojo = null;
-		if (a!=null) {
-			aPojo = new AccessPojo();
-			if (a.getSchemeIds()!=null) {
-				aPojo.setSchemeIds(new ArrayList<String>(a.getSchemeIds()));
-			}
-			aPojo.setSet(a.getOaiSet());
-			aPojo.setType(accessTypeDao.findById(a.getType()).getLabel());
-			aPojo.setUri(a.getUri());
-		}
-		return aPojo;
-	}
-	
-	
+	}	
 }

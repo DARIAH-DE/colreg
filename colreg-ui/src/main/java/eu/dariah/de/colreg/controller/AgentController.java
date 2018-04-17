@@ -57,7 +57,7 @@ public class AgentController extends VersionedEntityController {
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody TableListPojo<AgentPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
 		List<Agent> agents = agentService.findAllCurrent();
-		List<AgentPojo> agentPojos = agentService.convertToPojos(agents, locale);
+		List<AgentPojo> agentPojos = null;//agentService.convertToPojos(agents, locale);
 		
 		return new TableListPojo<AgentPojo>(agentPojos);
 	}

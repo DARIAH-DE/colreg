@@ -9,15 +9,15 @@ import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 
-
 @XmlRootElement(name="collection")
 public class ExtendedCollectionApiPojo extends CollectionApiPojo {
 	private static final long serialVersionUID = 5030563485613906700L;
 	
+	private String localizedDescription;
+	private Map<String, String> decriptions;
+	
 	private List<AccessPojo> accessPojos;
 	private List<AccrualPojo> accrualPojos;
-	private String description;
-	private Map<String, String> decriptions;
 	private String webPage;
 	private String eMail;
 	private boolean researchDriven;
@@ -31,8 +31,8 @@ public class ExtendedCollectionApiPojo extends CollectionApiPojo {
 	public List<AccrualPojo> getAccrualPojos() { return accrualPojos; }
 	public void setAccrualPojos(List<AccrualPojo> accrualPojos) { this.accrualPojos = accrualPojos; }
 	
-	public String getDescription() { return description; }
-	public void setDescription(String description) { this.description = description; }
+	public String getLocalizedDescription() { return localizedDescription; }
+	public void setLocalizedDescription(String localizedDescription) { this.localizedDescription = localizedDescription; }
 	
 	public Map<String, String> getDecriptions() { return decriptions; }
 	public void setDecriptions(Map<String, String> decriptions) { this.decriptions = decriptions; }

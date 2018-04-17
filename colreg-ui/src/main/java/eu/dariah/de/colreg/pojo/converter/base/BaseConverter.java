@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
-public abstract class BaseConverter<TObj extends BaseIdentifiable, TPojo extends BaseIdentifiable> {
-
+public abstract class BaseConverter<TObj, TPojo> {
+	private static final DateTimeFormatter DISPLAY_TIMESTAMP_FORMATTER = DateTimeFormat.forStyle("LL");
+	
 	@Autowired protected MessageSource messageSource;
 	
 	public List<TPojo> convertToPojos(List<TObj> objects, Locale locale) {
@@ -22,6 +26,13 @@ public abstract class BaseConverter<TObj extends BaseIdentifiable, TPojo extends
 			pojos.add(this.convertToPojo(object, locale));
 		}
 		return pojos;
+	}
+	
+	protected String getDisplayTimestamp(DateTime timestamp, Locale locale) {
+		if (locale==null) {
+			return null;
+		}
+		return DISPLAY_TIMESTAMP_FORMATTER.withLocale(locale).print(timestamp);
 	}
 
 	public abstract TPojo convertToPojo(TObj object, Locale locale);

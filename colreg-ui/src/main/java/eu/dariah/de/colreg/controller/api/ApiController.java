@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
 import eu.dariah.de.colreg.pojo.api.ExtendedCollectionApiPojo;
-import eu.dariah.de.colreg.pojo.converter.CollectionApiConverter;
-import eu.dariah.de.colreg.pojo.converter.ExtendedCollectionApiConverter;
+import eu.dariah.de.colreg.pojo.converter.api.CollectionApiConverter;
+import eu.dariah.de.colreg.pojo.converter.api.ExtendedCollectionApiConverter;
 import eu.dariah.de.colreg.service.CollectionService;
 
 @Controller
