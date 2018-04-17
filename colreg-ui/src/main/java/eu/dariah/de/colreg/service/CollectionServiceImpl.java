@@ -37,8 +37,8 @@ import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 import eu.dariah.de.colreg.pojo.ImagePojo;
-import eu.dariah.de.colreg.pojo.api.CollectionPojo;
-import eu.dariah.de.colreg.pojo.api.DcddmCollectionPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
+import eu.dariah.de.colreg.pojo.api.ExtendedCollectionApiPojo;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
@@ -312,7 +312,7 @@ public class CollectionServiceImpl implements CollectionService {
 	}
 	
 
-	private <T extends CollectionPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
+	private <T extends CollectionApiPojo> T fillCollectionPojo(T pojo, Collection collection, Locale locale) {
 		//CollectionPojo pojo = new CollectionPojo();
 		pojo.setVersionId(collection.getId());
 		pojo.setVersionTimestamp(collection.getVersionTimestamp().toInstant().getMillis());

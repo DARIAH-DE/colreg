@@ -11,7 +11,7 @@ import eu.dariah.de.colreg.pojo.ImagePojo;
 
 
 @XmlRootElement(name="collection")
-public class DcddmCollectionPojo extends CollectionPojo {
+public class ExtendedCollectionApiPojo extends CollectionApiPojo {
 	private static final long serialVersionUID = 5030563485613906700L;
 	
 	private List<AccessPojo> accessPojos;

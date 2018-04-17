@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.dariah.de.colreg.model.Collection;
-import eu.dariah.de.colreg.pojo.api.CollectionPojo;
-import eu.dariah.de.colreg.pojo.api.DcddmCollectionPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
+import eu.dariah.de.colreg.pojo.api.ExtendedCollectionApiPojo;
+import eu.dariah.de.colreg.pojo.converter.CollectionApiConverter;
+import eu.dariah.de.colreg.pojo.converter.ExtendedCollectionApiConverter;
 import eu.dariah.de.colreg.service.CollectionService;
 
 @Controller
@@ -22,18 +24,21 @@ public class ApiController {
 	protected static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 	
 	@Autowired private CollectionService collectionService;
-
+	@Autowired private CollectionApiConverter collectionApiConverter;
+	@Autowired private ExtendedCollectionApiConverter extendedCollectionApiConverter;
+	
+	
 	@RequestMapping(value="collections", method=RequestMethod.GET)
-	public @ResponseBody List<CollectionPojo> getAllPublic() {
+	public @ResponseBody List<CollectionApiPojo> getAllPublic() {
 		List<Collection> collections = collectionService.findAllCurrent();
-		List<CollectionPojo> collectionPojos = null;//collectionService.convertToPojos(CollectionPojo.class, collections, null);
+		List<CollectionApiPojo> collectionPojos = collectionApiConverter.convertToPojos(collections, null);
 		return collectionPojos;
 	}
 	
 	@RequestMapping(value="collections/{collectionId}", method=RequestMethod.GET)
-	public @ResponseBody DcddmCollectionPojo getCollection(@PathVariable String collectionId) {
+	public @ResponseBody ExtendedCollectionApiPojo getCollection(@PathVariable String collectionId) {
 		Collection c = collectionService.findCurrentByCollectionId(collectionId);
 		
-		return null;//collectionService.convertToPojo(DcddmCollectionPojo.class, c, null);
+		return extendedCollectionApiConverter.convertToPojo(c, null);
 	}
 }

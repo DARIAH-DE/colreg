@@ -6,7 +6,7 @@ import java.util.Map;
 
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.ImagePojo;
-import eu.dariah.de.colreg.pojo.api.CollectionPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 public interface CollectionService {

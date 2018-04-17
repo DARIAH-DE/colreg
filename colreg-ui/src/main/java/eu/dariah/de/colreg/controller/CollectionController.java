@@ -37,7 +37,7 @@ import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
-import eu.dariah.de.colreg.pojo.api.CollectionPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
 import eu.dariah.de.colreg.pojo.converter.CollectionViewConverter;
 import eu.dariah.de.colreg.pojo.converter.ImageConverter;
 import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;

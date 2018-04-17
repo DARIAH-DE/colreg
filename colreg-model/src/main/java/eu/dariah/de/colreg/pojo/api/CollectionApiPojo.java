@@ -10,7 +10,7 @@ import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 import eu.dariah.de.colreg.pojo.AgentPojo;
 
 @XmlRootElement(name="collection")
-public class CollectionPojo extends BaseIdentifiable {
+public class CollectionApiPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5544026876984535637L;
 
 	private String entityId;
