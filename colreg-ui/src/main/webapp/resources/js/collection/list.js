@@ -156,7 +156,7 @@ CollectionTable.prototype.renderImageColumn = function(row, type, val, meta) {
 	if (row.entity.primaryImage!==undefined && row.entity.primaryImage!==null) {
 		return "<img class='collection-list-thumb' src=\"" + row.entity.primaryImage.thumbnailUrl + "\" />";
 	} else {
-		return "<div class=\"collection-list-thumb-nopreview\" style=\"background: url(" + __util.composeUrl("resources/img/dariah-flower.png") + ");\">" +
+		return "<div class=\"collection-list-thumb-nopreview\">" +
 						"<h4>" + __translator.translate("~eu.dariah.de.colreg.view.collection.labels.no_image") + "</h4>" +
 			   "</div>"
 	}
