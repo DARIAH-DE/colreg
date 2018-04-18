@@ -10,8 +10,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
-import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
-
 public abstract class BaseConverter<TObj, TPojo> {
 	private static final DateTimeFormatter DISPLAY_TIMESTAMP_FORMATTER = DateTimeFormat.forStyle("LL");
 	

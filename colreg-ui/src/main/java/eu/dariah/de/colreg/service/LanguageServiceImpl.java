@@ -6,10 +6,12 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Service;
 
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 
+@Service
 public class LanguageServiceImpl implements LanguageService {
 	@Autowired private LanguageDao languageDao;
 	
