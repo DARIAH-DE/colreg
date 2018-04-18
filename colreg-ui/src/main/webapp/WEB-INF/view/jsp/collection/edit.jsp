@@ -199,7 +199,7 @@
 								<c:forEach items="${collection.collectionTypes}" var="collType" varStatus="status" >
 									<label class="control-label">
 										<c:forEach items="${vocabularyItems}" var="vocabularyItem">
-											<c:if test="${vocabularyItem.id==collType}">
+											<c:if test="${vocabularyItem.identifier==collType}">
 												<a href="javascript:void(0)">${vocabularyItem.displayLabel}</a>
 											</c:if>
 										</c:forEach>

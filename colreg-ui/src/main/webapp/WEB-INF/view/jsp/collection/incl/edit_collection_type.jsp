@@ -10,8 +10,8 @@
 				<select id="collectionTypes${currIndex}" name="collectionTypes[${currIndex}]" class="form-control">
 					<option value="" disabled selected hidden></option>
 					<c:forEach items="${vocabularyItems}" var="vocabularyItem">
-						<option value="${vocabularyItem.id}" 
-								${vocabularyItem.id==collection.collectionTypes[currIndex] ? "selected='selected'" : ""}
+						<option value="${vocabularyItem.identifier}" 
+								${vocabularyItem.identifier==collection.collectionTypes[currIndex] ? "selected='selected'" : ""}
 								${vocabularyItem.disabled ? "hidden" : ""}>
 							${vocabularyItem.displayLabel} 
 							<c:if test="${vocabularyItem.disabled}">[<s:message code="~eu.dariah.de.colreg.common.labels.disabled" />]</c:if>

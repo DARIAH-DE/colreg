@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.common.labels.disabled" />:</label>
+				<label class="control-label col-sm-4" for="vocabularyItem_disabled"><s:message code="~eu.dariah.de.colreg.common.labels.disabled" />:</label>
 				<div class="col-sm-8">
 					<sf:checkbox path="disabled" />
 					<div class="alert alert-info alert-sm pull-right"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_disabled" /></div>
@@ -45,7 +45,23 @@
 					<sf:errors path="defaultName" cssClass="error" />
 				</div>
 			</div>
-			<div class="alert alert-info alert-sm pull-right"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_translations" /></div>
+			<div class="form-group">
+				<div class="col-sm-8 col-sm-offset-4">
+					<div class="alert alert-info alert-sm"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_translations" /></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.external_identifier" />:</label>
+				<div class="col-sm-8">
+					<sf:input path="externalIdentifier" class="form-control" id="vocabularyItem_externalIdentifier" />
+					<sf:errors path="externalIdentifier" cssClass="error" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-8 col-sm-offset-4">
+					<div class="alert alert-info alert-sm"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_external_identifier" /></div>
+				</div>
+			</div>
 		</fieldset>
 	</div>
 	<div class="form-footer control-group">

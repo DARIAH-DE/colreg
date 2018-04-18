@@ -9,6 +9,7 @@ public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<V
 	private static final long serialVersionUID = -3342978755459281019L;
 	
 	private String identifier;
+	private String externalIdentifier;
 	private String localizedLabel;
 	private boolean hasCurrentLocale;
 	private String defaultName;
@@ -20,6 +21,9 @@ public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<V
 	
 	public String getIdentifier() { return identifier; }
 	public void setIdentifier(String identifier) { this.identifier = identifier; }
+	
+	public String getExternalIdentifier() { return externalIdentifier; }
+	public void setExternalIdentifier(String externalIdentifier) { this.externalIdentifier = externalIdentifier; }
 	
 	public String getLocalizedLabel() { return localizedLabel; }
 	public void setLocalizedLabel(String localizedLabel) { this.localizedLabel = localizedLabel; }
