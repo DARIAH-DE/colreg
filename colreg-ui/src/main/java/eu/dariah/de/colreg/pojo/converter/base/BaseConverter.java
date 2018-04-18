@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
 public abstract class BaseConverter<TObj, TPojo> {
-	private static final DateTimeFormatter DISPLAY_TIMESTAMP_FORMATTER = DateTimeFormat.forStyle("LL");
+	private static final DateTimeFormatter DISPLAY_TIMESTAMP_FORMATTER = DateTimeFormat.forStyle("LM");
 	
 	@Autowired protected MessageSource messageSource;
 	

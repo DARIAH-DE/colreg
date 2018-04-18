@@ -25,14 +25,13 @@ AgentTable.prototype.createTable = function() {
 	       }, {	
 	    	   "targets": [1],
 	    	   "data": "entity.name",
-	    	   "width" : "100%"
+	    	   //"width" : "100%"
 	       }, {	
 	    	   "targets": [2],
 	    	   "data": "entity.type",
 	    	   "class" : "td-no-wrap"
 	       }, {	
 	    	   "targets": [3],
-	    	   "data": "entity.type",
 	    	   "data": function (row, type, val, meta) { return agentTable.renderVersionColumn(row, type, val, meta); }
 	    	  /* "visible" : false*/
 	       }	       
@@ -40,40 +39,33 @@ AgentTable.prototype.createTable = function() {
 	}, this.baseSettings));
 	
 	$('#agent-table').on('click', 'tr', function () {
-        var entityId = _this._base.table.row(this).data().entity.entityId;
+        var entityId = _this._base.table.row(this).data().entity.id;
         location.href = __util.composeUrl("agents/" + entityId);
     } );
 };
 
 AgentTable.prototype.renderVersionColumn = function(row, type, val, meta) {
 	if (type=="display") {
-		return row.entity.lastChanged;
+		return row.entity.displayTimestamp;
 	} else {
-		return row.entity.versionTimestamp;
+		return row.entity.timestamp;
 	}
+	return "";
 };
 
 AgentTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 	var result = "";
 	if (type=="display") {
-		if (row.entity.state==="deleted") {
+		if (row.entity.deleted) {
 			result += '<span class="label label-danger">' + __translator.translate("~eu.dariah.de.colreg.common.labels.deleted") + '</span> ';
-		} else if (row.entity.state==="valid") {
-			result += '<span class="label label-info">' + __translator.translate("~eu.dariah.de.colreg.common.labels.valid") + '</span> ';
-		} else if (row.entity.state==="published") {
-			result += '<span class="label label-info">' + __translator.translate("~eu.dariah.de.colreg.common.labels.published") + '</span> ';
 		} else {
-			result += '<span class="label label-warning">' + __translator.translate("~eu.dariah.de.colreg.common.labels.draft") + '</span> ';
+			result += '<span class="label label-info">' + __translator.translate("~eu.dariah.de.colreg.common.labels.valid") + '</span> ';
 		} 
 	} else {
-		if (row.entity.state==="deleted") {
+		if (row.entity.deleted) {
 			result += __translator.translate("~eu.dariah.de.colreg.common.labels.deleted");
-		} else if (row.entity.state==="valid") {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.valid");
-		} else if (row.entity.state==="published") {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.published");
 		} else {
-			result += __translator.translate("~eu.dariah.de.colreg.common.labels.draft");
+			result += __translator.translate("~eu.dariah.de.colreg.common.labels.valid");
 		} 
 	}
 	return result;
