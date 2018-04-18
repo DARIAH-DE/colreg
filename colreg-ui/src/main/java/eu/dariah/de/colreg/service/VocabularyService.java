@@ -7,12 +7,10 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
-import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
-import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 
 public interface VocabularyService {
 	public List<Language> queryLanguages(String query);
@@ -21,7 +19,6 @@ public interface VocabularyService {
 	public List<AccrualPeriodicity> findAllAccrualPeriodicities();
 	public List<AccrualPolicy> findAllAccrualPolicies();
 	public List<AccessType> findAllAccessTypes();
-	public List<AgentType> findAllAgentTypes();
 	public List<AgentRelationType> findAllAgentRelationTypes();
 	public List<ItemType> findAllItemTypes();
 	
@@ -32,7 +29,6 @@ public interface VocabularyService {
 	public Language findLanguageByCode(String id);
 	public AccessType findAccessTypeById(String id);
 	public AccessType findAccessTypeByIdentfier(String string);
-	public AgentType findAgentTypeById(String agentTypeId);
 
 	public List<UnitOfMeasurement> findAllUnitsOfMeasurement();
 	public UnitOfMeasurement findUnitOfMeasurementByName(String uom);

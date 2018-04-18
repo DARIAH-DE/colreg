@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.model.api.view;
+package eu.dariah.de.colreg.pojo.converter.view;
 
 import java.util.ArrayList;
 import java.util.List;

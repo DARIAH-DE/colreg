@@ -13,7 +13,6 @@ import eu.dariah.de.colreg.dao.vocabulary.AccrualMethodDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualPeriodicityDao;
 import eu.dariah.de.colreg.dao.vocabulary.AccrualPolicyDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentRelationTypeDao;
-import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.ItemTypeDao;
 import eu.dariah.de.colreg.dao.vocabulary.LanguageDao;
 import eu.dariah.de.colreg.dao.vocabulary.UnitOfMeasurementDao;
@@ -23,12 +22,10 @@ import eu.dariah.de.colreg.model.vocabulary.AccrualMethod;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPeriodicity;
 import eu.dariah.de.colreg.model.vocabulary.AccrualPolicy;
 import eu.dariah.de.colreg.model.vocabulary.AgentRelationType;
-import eu.dariah.de.colreg.model.vocabulary.AgentType;
 import eu.dariah.de.colreg.model.vocabulary.ItemType;
 import eu.dariah.de.colreg.model.vocabulary.Language;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
-import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 
 @Service
 public class VocabularyServiceImpl implements VocabularyService {
@@ -38,7 +35,6 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Autowired private AccrualMethodDao accrualMethodDao;
 	@Autowired private AccrualPolicyDao accrualPolicyDao;
 	@Autowired private AccrualPeriodicityDao accrualPeriodicityDao;
-	@Autowired private AgentTypeDao agentTypeDao;
 	@Autowired private AgentRelationTypeDao agentRelationTypeDao;
 	@Autowired private ItemTypeDao itemTypeDao;
 	@Autowired private UnitOfMeasurementDao uomDao;
@@ -78,12 +74,7 @@ public class VocabularyServiceImpl implements VocabularyService {
 	public List<AccessType> findAllAccessTypes() {
 		return accessTypeDao.findAll();
 	}
-	
-	@Override
-	public List<AgentType> findAllAgentTypes() {
-		return agentTypeDao.findAll();
-	}
-	
+		
 	@Override
 	public List<AgentRelationType> findAllAgentRelationTypes() {
 		return agentRelationTypeDao.findAll();
@@ -122,11 +113,6 @@ public class VocabularyServiceImpl implements VocabularyService {
 	@Override
 	public AccessType findAccessTypeByIdentfier(String identifier) {
 		return accessTypeDao.findOne(Query.query(Criteria.where("identifier").is(identifier)));
-	}
-
-	@Override
-	public AgentType findAgentTypeById(String agentTypeId) {
-		return agentTypeDao.findOne(Query.query(Criteria.where("id").is(agentTypeId)));
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.model.api.view;
+package eu.dariah.de.colreg.pojo.converter.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import eu.dariah.de.colreg.model.Agent;
-import eu.dariah.de.colreg.pojo.api.AgentApiPojo;
 import eu.dariah.de.colreg.pojo.converter.base.BaseAgentConverter;
-import eu.dariah.de.colreg.pojo.converter.base.BaseConverter;
 import eu.dariah.de.colreg.pojo.view.AgentViewPojo;
 
 @Component
@@ -18,12 +16,7 @@ public class AgentViewConverter extends BaseAgentConverter<AgentViewPojo> {
 
 	@Override
 	public AgentViewPojo convertToPojo(Agent agent, Locale locale) {
-		AgentViewPojo pojo = new AgentViewPojo();
-		pojo.setId(agent.getEntityId());
-		pojo.setDeleted(agent.isDeleted());
-		pojo.setType(type);
-
-		return null;
+		return this.convertToPojo(agent, locale, null);
 	}
 	
 	public List<AgentViewPojo> convertToPojos(List<Agent> agents, Locale locale, Map<String, String> agentTypeIdLabelMap) {
@@ -38,7 +31,16 @@ public class AgentViewConverter extends BaseAgentConverter<AgentViewPojo> {
 	}
 	
 	public AgentViewPojo convertToPojo(Agent agent, Locale locale, Map<String, String> agentTypeIdLabelMap) {
-		
+		AgentViewPojo pojo = new AgentViewPojo();
+		pojo.setId(agent.getEntityId());
+		pojo.setDeleted(agent.isDeleted());
+		pojo.setDisplayTimestamp(this.getDisplayTimestamp(agent.getVersionTimestamp(), locale));
+		pojo.setName(this.getDisplayName(agent));
+				
+		if (agentTypeIdLabelMap!=null) {
+			pojo.setType(agentTypeIdLabelMap.get(agent.getAgentTypeId()));
+		}
+		return pojo;
 	}
 
 }

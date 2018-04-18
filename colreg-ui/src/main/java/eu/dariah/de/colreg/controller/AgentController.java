@@ -29,9 +29,11 @@ import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
+import eu.dariah.de.colreg.pojo.converter.view.AgentViewConverter;
 import eu.dariah.de.colreg.pojo.view.AgentViewPojo;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
 import eu.dariah.de.colreg.service.AgentService;
+import eu.dariah.de.colreg.service.AgentTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
@@ -42,6 +44,9 @@ public class AgentController extends VersionedEntityController {
 	@Autowired private CollectionService collectionService;
 	
 	@Autowired private AgentValidator validator;
+	@Autowired private AgentViewConverter agentConverter;
+	
+	@Autowired private AgentTypeService agentTypeService;
 	
 	public AgentController() {
 		super("agents");
@@ -57,7 +62,9 @@ public class AgentController extends VersionedEntityController {
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public @ResponseBody TableListPojo<AgentViewPojo> getAllDrafts(Model model, Locale locale, HttpServletRequest request) {
 		List<Agent> agents = agentService.findAllCurrent();
-		List<AgentViewPojo> agentPojos = agentService.convertToPojos(agents, locale);
+		Map<String, String> agentTypeIdLabelMap = agentTypeService.findAgentTypeIdLabelMap();
+				
+		List<AgentViewPojo> agentPojos = agentConverter.convertToPojos(agents, locale, agentTypeIdLabelMap);
 		
 		return new TableListPojo<AgentViewPojo>(agentPojos);
 	}
@@ -98,7 +105,7 @@ public class AgentController extends VersionedEntityController {
 		model.addAttribute("agent", a);
 		model.addAttribute("selectedVersionId", a.getId());
 		
-		List<AgentType> agentTypes = vocabularyService.findAllAgentTypes();
+		List<AgentType> agentTypes = agentTypeService.findAllAgentTypes();
 		model.addAttribute("agentTypes", agentTypes);
 		
 		for (AgentType agentType : agentTypes) {

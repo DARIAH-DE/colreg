@@ -10,13 +10,13 @@ import org.springframework.validation.Errors;
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.service.AgentService;
-import eu.dariah.de.colreg.service.VocabularyService;
+import eu.dariah.de.colreg.service.AgentTypeService;
 
 @Component
 public class AgentValidator extends BaseValidator<Agent> {
 
 	@Autowired private AgentService agentService;
-	@Autowired private VocabularyService vocabularyService;
+	@Autowired private AgentTypeService agentTypeService;
 	
 	public AgentValidator() {
 		super(Agent.class);
@@ -25,7 +25,7 @@ public class AgentValidator extends BaseValidator<Agent> {
 
 	@Override
 	public void preprocess(Agent agent) {
-		if (!vocabularyService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson()) {
+		if (!agentTypeService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson()) {
 			agent.setForeName(null);
 		}
 		
@@ -75,7 +75,7 @@ public class AgentValidator extends BaseValidator<Agent> {
 	@Override
 	public void innerValidate(Agent agent, Errors errors) {
 		
-		if (vocabularyService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson() &&
+		if (agentTypeService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson() &&
 				(agent.getForeName()==null || agent.getForeName().trim().isEmpty())) {
 			errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.first_name");
 		}
