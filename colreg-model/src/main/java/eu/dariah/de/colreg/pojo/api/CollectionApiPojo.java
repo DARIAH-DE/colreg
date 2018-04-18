@@ -6,10 +6,13 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 
 @XmlRootElement(name="collection")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CollectionApiPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5544026876984535637L;
 

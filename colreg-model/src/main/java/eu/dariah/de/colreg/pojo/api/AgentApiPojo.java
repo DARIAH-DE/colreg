@@ -1,7 +1,10 @@
 package eu.dariah.de.colreg.pojo.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AgentApiPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5544026876984535637L;
 

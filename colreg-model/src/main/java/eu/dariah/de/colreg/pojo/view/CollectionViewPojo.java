@@ -2,9 +2,12 @@ package eu.dariah.de.colreg.pojo.view;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CollectionViewPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = 110389795212453807L;
 

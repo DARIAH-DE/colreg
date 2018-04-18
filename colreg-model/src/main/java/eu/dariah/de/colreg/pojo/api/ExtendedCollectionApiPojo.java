@@ -5,11 +5,14 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import eu.dariah.de.colreg.pojo.AccessPojo;
 import eu.dariah.de.colreg.pojo.AccrualPojo;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 
 @XmlRootElement(name="collection")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExtendedCollectionApiPojo extends CollectionApiPojo {
 	private static final long serialVersionUID = 5030563485613906700L;
 	

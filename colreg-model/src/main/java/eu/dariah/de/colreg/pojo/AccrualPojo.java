@@ -1,5 +1,8 @@
 package eu.dariah.de.colreg.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccrualPojo {
 	private String accrualMethod;
 	private String accrualPolicy;

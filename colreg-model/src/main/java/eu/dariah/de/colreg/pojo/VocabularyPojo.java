@@ -1,7 +1,10 @@
 package eu.dariah.de.colreg.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class VocabularyPojo extends BaseIdentifiable {
 	private static final long serialVersionUID = -5301800695287247433L;
 	
