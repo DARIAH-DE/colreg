@@ -96,7 +96,7 @@ public class MigrationServiceImpl implements MigrationService {
 				this.backupDb();
 				backedUp = true;
 			}
-			this.migrateCollectionTypesVocabulary();
+			this.createVocabulary(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER, "Collection Types", "3.8.1");
 		}
 		if (!existingVersions.contains("3.8.2")) {
 			if (!backedUp) {
@@ -105,36 +105,148 @@ public class MigrationServiceImpl implements MigrationService {
 			}
 			this.migrateCollectionTypes();
 		}
+		if (!existingVersions.contains("3.9.0")) {
+			if (!backedUp) {
+				this.backupDb();
+				backedUp = true;
+			}
+			this.createVocabulary(Collection.ITEM_TYPES_VOCABULARY_IDENTIFIER, "Item Types", "3.9.0");
+		}
+		if (!existingVersions.contains("3.9.1")) {
+			if (!backedUp) {
+				this.backupDb();
+				backedUp = true;
+			}
+			this.migrateItemTypes();
+		}
 	}
 	
-	private void migrateCollectionTypesVocabulary() {
-		logger.info("Performing collection types vocabulary migration (version: 3.8.1)");
+	private void createVocabulary(String identifier, String displayName, String version) {
+		logger.info(String.format("Performing vocabulary migration (version: %s; vocabulary: %s)", version, displayName));
 		
 		List<Vocabulary> vocabularies = vocabularyDao.findAll();
 		for (Vocabulary v : vocabularies) {
-			if (v.getIdentifier().equals("collectionTypes")) {
-				logger.warn("Vocabulary [collectionTypes] exists despite db versions not containing 3.8.1; consider updating manually");
+			if (v.getIdentifier().equals(identifier)) {
+				logger.warn(String.format("Vocabulary [%s] exists despite db versions not containing %s; consider updating manually", identifier, version));
 				return;
 			}
 		}
 		
 		Vocabulary v = new Vocabulary();
-		v.setIdentifier("collectionTypes");
-		v.setDefaultName("Collection Types");
+		v.setIdentifier(identifier);
+		v.setDefaultName(displayName);
 		
 		try {
 			vocabularyDao.save(v);
-			this.saveVersionInfo("3.8.1", false);
-			logger.info("Collection types vocabulary migration completed WITHOUT errors (version: 3.8.1)");
+			this.saveVersionInfo(version, false);
+			logger.info(String.format("Item types vocabulary migration completed WITHOUT errors (version: 3.9)", version, displayName));
 		} catch (Exception e) {
-			logger.error("Failed to update database to version 3.8.1", e);
-			this.saveVersionInfo("3.8.1", true);
-			logger.info("Collection types vocabulary migration completed WITH errors (version: 3.8.1)");
+			logger.error(String.format("Failed to update database (version: %s; vocabulary: %s)", version, displayName));
+			this.saveVersionInfo(version, true);
+			logger.info(String.format("Item types vocabulary migration completed WITH errors (version: %s; vocabulary: %s)", version, displayName));
 		}
 	}
+		
+	private void migrateItemTypes() {
+		logger.info("Performing item types migration (version: 3.9.1)");
+		boolean errors = false;
+		
+		try {
+			Map<String, String> itemTypesMap = this.createItemTypes();
+			this.updateCollectionsItemTypes(itemTypesMap);
+			mongoTemplate.dropCollection("itemType");
+		} catch (Exception e) {
+			errors = true;
+		}
+		
+		this.saveVersionInfo("3.9.1", errors);
+		logger.info("Item types migration completed " + (errors ? "WITH" : "without") + " errors (version: 3.9.1)");
+	}
+	
+	private Map<String, String> createItemTypes() throws Exception {
+		JsonNode node;
+		ObjectNode objectNode;
+		String identifier, label;
+		Matcher m;
+		
+		VocabularyItem vi;
+		
+		Map<String, String> itemTypesMap = new HashMap<String, String>();
+		
+		List<String> rawItemTypes = this.getObjectsAsString("itemType");
+		for (String rawItemType : rawItemTypes) {
+			try {
+				node = objectMapper.readTree(rawItemType);
+				objectNode = (ObjectNode)node;
+				
+				label = objectNode.path("label").textValue();
+				m = LOCALIZABLE_ENTITY_IDENTIFIER_PATTERN.matcher(label);
+				
+				identifier = "";
+				while(m.find()) {
+					identifier += m.group(0);
+		        }
+				identifier = identifier.substring(0, 1).toLowerCase() + identifier.substring(1); 
+				
+				vi = new VocabularyItem();
+				vi.setIdentifier(identifier);
+				vi.setExternalIdentifier(node.path("identifier").isMissingNode() ? "" : node.path("identifier").textValue());
+				vi.setDefaultName(node.path("label").isMissingNode() ? "" : node.path("label").textValue());
+				vi.setDescription(node.path("description").isMissingNode() ? "" : node.path("description").textValue());
+				vi.setVocabularyIdentifier(Collection.ITEM_TYPES_VOCABULARY_IDENTIFIER);
+				
+				vocabularyItemDao.save(vi);
 
+				itemTypesMap.put(node.path("_id").path("$oid").asText(), identifier);
+				
+			} catch (Exception e) {
+				logger.error("Failed to update database to version 3.9.1", e);
+				throw e;
+			}
+		}
+		
+		return itemTypesMap;
+	}
+	
+	private void updateCollectionsItemTypes(Map<String, String> itemTypesMap) throws Exception {
+		List<String> rawCollections = this.getObjectsAsString("collection");
+		
+		JsonNode node;
+		ObjectNode objectNode;
+		ArrayNode itemTypesNode, itemTypeIdsNode;
+		
+		try {
+			for (String rawCollection : rawCollections) {
+			
+				node = objectMapper.readTree(rawCollection);
+				objectNode = (ObjectNode)node;
+				if (objectNode.get("itemTypeIds")==null || objectNode.get("itemTypeIds").isMissingNode()) {
+					continue;
+				}
+				itemTypesNode = objectMapper.createArrayNode();
+				itemTypeIdsNode = (ArrayNode)objectNode.get("itemTypeIds");
+				
+				for (JsonNode itemTypeIdNode : itemTypeIdsNode) {
+					if (itemTypesMap.containsKey(itemTypeIdNode.textValue())) {
+						itemTypesNode.add(itemTypesMap.get(itemTypeIdNode.textValue()));
+					} else {
+						throw new Exception("Failed to resolve itemType ID; database might be corrupt: restore backup and migrate manually");
+					}
+				}
+				
+				objectNode.set("itemTypes", itemTypesNode);
+				objectNode.remove("itemTypeIds");
+				
+				mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
+			}
+		} catch (Exception e) {
+			logger.error("Failed to update database to version 3.9.1", e);
+			throw e;
+		}
+	}
+	
 	private void migrateCollectionTypes() {
-		List<String> rawCollections = this.getObjectsAsString(Collection.class);
+		List<String> rawCollections = this.getObjectsAsString("collection");
 		boolean errors = false;
 		
 		logger.info("Performing collection types migration (version: 3.8.2)");
@@ -143,7 +255,7 @@ public class MigrationServiceImpl implements MigrationService {
 		ObjectNode objectNode;
 		ArrayNode collectionTypesNode;
 		
-		Map<String, String> collectionTypesMap = new HashMap<String, String>();
+		List<String> collectionTypeIdentifiers = new ArrayList<String>();
 		String identifier, label;
 		Matcher m;
 		
@@ -163,8 +275,8 @@ public class MigrationServiceImpl implements MigrationService {
 					identifier = identifier.substring(0, 1).toLowerCase() + identifier.substring(1); 
 
 					collectionTypesNode = objectMapper.createArrayNode();
-					if (collectionTypesMap.containsKey(identifier)) {
-						collectionTypesNode.add(collectionTypesMap.get(identifier));
+					if (collectionTypeIdentifiers.contains(identifier)) {
+						collectionTypeIdentifiers.add(identifier);
 					} else {
 						VocabularyItem vi = new VocabularyItem();
 						vi.setDefaultName(label);
@@ -174,7 +286,7 @@ public class MigrationServiceImpl implements MigrationService {
 						vocabularyItemDao.save(vi);
 						
 						collectionTypesNode.add(identifier);
-						collectionTypesMap.put(identifier, identifier);
+						collectionTypeIdentifiers.add(identifier);
 					}
 					objectNode.set("collectionTypes", collectionTypesNode);
 					objectNode.remove("collectionType");
@@ -191,7 +303,7 @@ public class MigrationServiceImpl implements MigrationService {
 	}
 	
 	private void migrateImages() {
-		List<String> rawCollections = this.getObjectsAsString(Collection.class);
+		List<String> rawCollections = this.getObjectsAsString("collection");
 		boolean errors = false;
 		
 		logger.info("Performing image migration (version: 3.8)");
@@ -249,8 +361,8 @@ public class MigrationServiceImpl implements MigrationService {
 		versionDao.save(vi);
 	}
 	
-	private List<String> getObjectsAsString(Class<?> queryObject) {
-		return mongoTemplate.execute(DaoImpl.getCollectionName(queryObject), new CollectionCallback<List<String>>() {
+	private List<String> getObjectsAsString(String queryObject) {
+		return mongoTemplate.execute(queryObject, new CollectionCallback<List<String>>() {
 			public List<String> doInCollection(DBCollection collection) {
 				DBCursor cursor = collection.find();
 				List<String> result = new ArrayList<String>();
