@@ -23,5 +23,9 @@
             </list>
         </property>
     </bean>
+    
+    <bean id="initService" class="de.unibamberg.minf.core.web.init.LocaleAwareInitializationServiceImpl">
+		<property name="basename" value="classpath:i18n/messages" />
+	</bean>
 
 </beans>

@@ -1,17 +1,24 @@
-package eu.dariah.de.colreg.pojo;
+package eu.dariah.de.colreg.pojo.api;
+
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<VocabularyItemPojo> {
-	private static final long serialVersionUID = -3342978755459281019L;
-	
+public class VocabularyItemApiPojo extends BaseIdentifiable {
+	private static final long serialVersionUID = -7649200109797919221L;
 	private String identifier;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String externalIdentifier;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String localizedLabel;
-	private boolean hasCurrentLocale;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private Map<String, String> labels;
+	
 	private String defaultName;
 	private String vocabularyId;
 	private boolean disabled;
@@ -27,26 +34,13 @@ public class VocabularyItemPojo extends BaseIdentifiable implements Comparable<V
 	
 	public String getLocalizedLabel() { return localizedLabel; }
 	public void setLocalizedLabel(String localizedLabel) { this.localizedLabel = localizedLabel; }
-	
-	public boolean isHasCurrentLocale() { return hasCurrentLocale; }
-	public void setHasCurrentLocale(boolean hasCurrentLocale) { this.hasCurrentLocale = hasCurrentLocale; }
-	
+		
 	public String getDefaultName() { return defaultName; }
 	public void setDefaultName(String defaultName) { this.defaultName = defaultName; }
 	
 	public boolean isDisabled() { return disabled; }
 	public void setDisabled(boolean disabled) { this.disabled = disabled; }
 	
-	public String getDisplayLabel() {
-		if (this.hasCurrentLocale) {
-			return this.localizedLabel;
-		} else {
-			return this.defaultName;
-		}
-	}
-	
-	@Override
-	public int compareTo(VocabularyItemPojo o) {
-		return this.getDisplayLabel().compareTo(o.getDisplayLabel());
-	}
+	public Map<String, String> getLabels() { return labels; }
+	public void setLabels(Map<String, String> labels) { this.labels = labels; }
 }

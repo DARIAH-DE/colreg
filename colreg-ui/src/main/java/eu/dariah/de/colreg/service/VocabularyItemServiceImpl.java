@@ -15,8 +15,8 @@ public class VocabularyItemServiceImpl implements VocabularyItemService {
 	@Autowired private VocabularyItemDao vocabularyItemDao;
 	
 	@Override
-	public List<VocabularyItem> findVocabularyItems(String vocabularyId) {
-		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyId)));
+	public List<VocabularyItem> findVocabularyItems(String vocabularyIdentifier) {
+		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyIdentifier)));
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class VocabularyItemServiceImpl implements VocabularyItemService {
 	}
 
 	@Override
-	public List<VocabularyItem> findVocabularyItemByIdentifier(String vocabularyId, String identifier) {
-		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyId).and("identifier").is(identifier)));
+	public List<VocabularyItem> findVocabularyItemByIdentifier(String vocabularyIdentifier, String identifier) {
+		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyIdentifier).and("identifier").is(identifier)));
 	}
 
 	@Override

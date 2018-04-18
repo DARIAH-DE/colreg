@@ -27,10 +27,10 @@ import eu.dariah.de.colreg.model.validation.VocabularyItemValidator;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
-import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
 import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
-import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
+import eu.dariah.de.colreg.pojo.converter.view.VocabularyItemViewConverter;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
+import eu.dariah.de.colreg.pojo.view.VocabularyItemViewPojo;
 import eu.dariah.de.colreg.service.UnitOfMeasurementService;
 import eu.dariah.de.colreg.service.VocabularyItemService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -43,7 +43,7 @@ public class VocabularyController extends VersionedEntityController {
 	@Autowired protected VocabularyConverter vocabularyConverter;
 	
 	@Autowired protected VocabularyItemService vocabularyItemService;
-	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
+	@Autowired protected VocabularyItemViewConverter vocabularyItemConverter;
 	
 	@Autowired private VocabularyItemValidator validator;
 	@Autowired private MessageSource messageSource;
@@ -73,16 +73,16 @@ public class VocabularyController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(value="{vocabularyId}/list", method=RequestMethod.GET)
-	public @ResponseBody TableListPojo<VocabularyItemPojo> getVocabularyItemsList(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
-		return new TableListPojo<VocabularyItemPojo>(this.getAllVocabularyItems(vocabularyId, model, locale, request));
+	public @ResponseBody TableListPojo<VocabularyItemViewPojo> getVocabularyItemsList(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
+		return new TableListPojo<VocabularyItemViewPojo>(this.getAllVocabularyItems(vocabularyId, model, locale, request));
 	}
 	
 	@RequestMapping(value="{vocabularyId}/items", method=RequestMethod.GET)
-	public @ResponseBody List<VocabularyItemPojo> getAllVocabularyItems(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
+	public @ResponseBody List<VocabularyItemViewPojo> getAllVocabularyItems(@PathVariable String vocabularyId, Model model, Locale locale, HttpServletRequest request) {
 		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
 		
 		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(v.getIdentifier());
-		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
+		List<VocabularyItemViewPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
 
 		return vocabularyItemPojos;
 	}

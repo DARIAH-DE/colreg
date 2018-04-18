@@ -36,12 +36,12 @@ import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.ImagePojo;
-import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
 import eu.dariah.de.colreg.pojo.converter.ImageConverter;
-import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.pojo.converter.view.CollectionViewConverter;
+import eu.dariah.de.colreg.pojo.converter.view.VocabularyItemViewConverter;
 import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
+import eu.dariah.de.colreg.pojo.view.VocabularyItemViewPojo;
 import eu.dariah.de.colreg.service.AccessTypeService;
 import eu.dariah.de.colreg.service.AccrualMethodService;
 import eu.dariah.de.colreg.service.AccrualPeriodicityService;
@@ -70,7 +70,7 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private ImageConverter imageConverter;
 	
 	@Autowired protected VocabularyItemService vocabularyItemService;
-	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
+	@Autowired protected VocabularyItemViewConverter vocabularyItemConverter;
 	
 	@Autowired private AgentRelationTypeService agentRelationTypeService;
 	@Autowired private AccessTypeService accessTypeService;
@@ -293,7 +293,7 @@ public class CollectionController extends VersionedEntityController {
 		}
 		
 		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
-		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
+		List<VocabularyItemViewPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
 		Collections.sort(vocabularyItemPojos);
 		
 		model.addAttribute("vocabularyItems", vocabularyItemPojos);
@@ -454,7 +454,7 @@ public class CollectionController extends VersionedEntityController {
 	@RequestMapping(method=GET, value={"/includes/editCollectionType"})
 	public String getEditCollectionTypeForm(Model model, Locale locale) {
 		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
-		List<VocabularyItemPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
+		List<VocabularyItemViewPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
 		Collections.sort(vocabularyItemPojos);
 		
 		model.addAttribute("vocabularyItems", vocabularyItemPojos);
