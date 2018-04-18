@@ -13,23 +13,21 @@ import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
 
 @Component
 public class CollectionViewConverter extends BaseCollectionConverter<CollectionViewPojo> {	
-	
+		
 	@Override
-	public List<CollectionViewPojo> convertToPojos(List<Collection> collections, Locale locale) {
+	public CollectionViewPojo convertToPojo(Collection collection, Locale locale) {
+		return this.convertToPojo(collection, null, locale);
+	}
+	
+	public List<CollectionViewPojo> convertToPojos(List<Collection> collections, Locale locale, Map<String, String> accessTypeIdLabelsMap) {
 		if (collections==null || collections.isEmpty()) {
 			return new ArrayList<CollectionViewPojo>(0);
 		}
 		List<CollectionViewPojo> pojos = new ArrayList<CollectionViewPojo>(collections.size());
-		Map<String, String> accessTypeIdLabelsMap = this.getAccessTypeIdLabelsMap();
 		for (Collection collection : collections) {
 			pojos.add(this.convertToPojo(collection, accessTypeIdLabelsMap, locale));
 		}
 		return pojos;
-	}
-	
-	@Override
-	public CollectionViewPojo convertToPojo(Collection collection, Locale locale) {
-		return this.convertToPojo(collection, this.getAccessTypeIdLabelsMap(), locale);
 	}
 	
 	public CollectionViewPojo convertToPojo(Collection collection, Map<String, String> accessTypeIdLabelsMap, Locale locale) {

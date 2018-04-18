@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.dariah.de.colreg.model.vocabulary.Language;
-import eu.dariah.de.colreg.service.VocabularyService;
+import eu.dariah.de.colreg.service.LanguageService;
 
 @Controller
 @RequestMapping("/languages/")
 public class LanguageController {
-	@Autowired private VocabularyService vocabularyService;
+	@Autowired private LanguageService languageService;
 	
 	@RequestMapping(value="query/{query}", method=RequestMethod.GET)
 	public @ResponseBody List<Language> queryLanguages(@PathVariable String query) {
-		return vocabularyService.queryLanguages(query);
+		return languageService.queryLanguages(query);
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	public @ResponseBody Language getLanguage(@PathVariable String id) {
-		Language l = vocabularyService.findLanguageByCode(id);
+		Language l = languageService.findLanguageByCode(id);
 		if (l==null) {
-			l = vocabularyService.findLanguageById(id);
+			l = languageService.findLanguageById(id);
 		}
 		return l;
 	}

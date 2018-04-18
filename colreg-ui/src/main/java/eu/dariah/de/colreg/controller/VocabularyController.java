@@ -31,6 +31,7 @@ import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
 import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
 import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
+import eu.dariah.de.colreg.service.UnitOfMeasurementService;
 import eu.dariah.de.colreg.service.VocabularyItemService;
 import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
@@ -46,6 +47,8 @@ public class VocabularyController extends VersionedEntityController {
 	
 	@Autowired private VocabularyItemValidator validator;
 	@Autowired private MessageSource messageSource;
+	
+	@Autowired private UnitOfMeasurementService unitOfMeasurementService;
 	
 	public VocabularyController() {
 		super("vocabularies");
@@ -126,7 +129,7 @@ public class VocabularyController extends VersionedEntityController {
 	private ModelActionPojo addUom(String uom, Locale locale) {
 		ModelActionPojo result = new ModelActionPojo();
 		
-		UnitOfMeasurement unit = vocabularyService.findUnitOfMeasurementByName(uom);
+		UnitOfMeasurement unit = unitOfMeasurementService.findUnitOfMeasurementByName(uom);
 		if (unit!=null) {
 			result.setMessage(new MessagePojo("error", "", 
 					messageSource.getMessage("~eu.dariah.de.colreg.view.collection.notification.uom_exists_error", null, locale)));
@@ -134,7 +137,7 @@ public class VocabularyController extends VersionedEntityController {
 			unit = new UnitOfMeasurement();
 			unit.setName(uom.trim());
 			unit.setMessageCode(uom.replaceAll("\\s+",""));
-			vocabularyService.saveUnitOfMeasurement(unit);
+			unitOfMeasurementService.saveUnitOfMeasurement(unit);
 			result.setSuccess(true);
 			result.setPojo(unit);
 		}

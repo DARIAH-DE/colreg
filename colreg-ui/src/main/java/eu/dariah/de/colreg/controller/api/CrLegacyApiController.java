@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.LocalizedDescription;
@@ -25,8 +23,8 @@ import eu.dariah.de.colreg.model.api.repository.RepositoryDraftContainer;
 import eu.dariah.de.colreg.model.api.repository.RepositoryResponse;
 import eu.dariah.de.colreg.model.marshalling.XMLConverter;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
+import eu.dariah.de.colreg.service.AccessTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.VocabularyService;
 import eu.dariah.de.dariahsp.model.User;
 import eu.dariah.de.dariahsp.model.UserImpl;
 import eu.dariah.de.dariahsp.service.UserService;
@@ -42,7 +40,9 @@ public class CrLegacyApiController {
 	@Autowired private UserService userService;
 	@Autowired private CollectionValidator collectionValidator;
 	@Autowired private CollectionService collectionService;
-	@Autowired private VocabularyService vocabularyService;
+	
+	@Autowired private AccessTypeService accessTypeService;
+
 	
 	@RequestMapping(value={"/collection/submitDraft", "/collection/submitDraft/"}, method = RequestMethod.POST, produces="application/xml")
 	public @ResponseBody RepositoryResponse postRepositoryCollection(@RequestBody String xml, HttpServletResponse response, HttpServletRequest request) {
@@ -91,7 +91,7 @@ public class CrLegacyApiController {
 				Access a = new Access();
 				a.setSchemeIds(new ArrayList<String>());
 				a.getSchemeIds().add("oai_dc");
-				a.setType(vocabularyService.findAccessTypeByIdentfier("oaipmh").getId());
+				a.setType(accessTypeService.findAccessTypeByIdentfier("oaipmh").getId());
 				a.setUri(this.getOaiUrl(draft));
 				a.setOaiSet(this.getOaiSet(draft));
 				

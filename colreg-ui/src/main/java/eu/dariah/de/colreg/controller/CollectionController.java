@@ -37,18 +37,23 @@ import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.VocabularyItemPojo;
-import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
 import eu.dariah.de.colreg.pojo.converter.ImageConverter;
 import eu.dariah.de.colreg.pojo.converter.VocabularyItemConverter;
 import eu.dariah.de.colreg.pojo.converter.view.CollectionViewConverter;
 import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
+import eu.dariah.de.colreg.service.AccessTypeService;
+import eu.dariah.de.colreg.service.AccrualMethodService;
+import eu.dariah.de.colreg.service.AccrualPeriodicityService;
+import eu.dariah.de.colreg.service.AccrualPolicyService;
+import eu.dariah.de.colreg.service.AgentRelationTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.ItemTypeService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
+import eu.dariah.de.colreg.service.UnitOfMeasurementService;
 import eu.dariah.de.colreg.service.VocabularyItemService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
-
 
 @Controller
 @RequestMapping(value={"/collections/", "/drafts/"})
@@ -66,6 +71,15 @@ public class CollectionController extends VersionedEntityController {
 	
 	@Autowired protected VocabularyItemService vocabularyItemService;
 	@Autowired protected VocabularyItemConverter vocabularyItemConverter;
+	
+	@Autowired private AgentRelationTypeService agentRelationTypeService;
+	@Autowired private AccessTypeService accessTypeService;
+	@Autowired private AccrualMethodService accrualMethodService;
+	@Autowired private AccrualPolicyService accrualPolicyService;
+	@Autowired private AccrualPeriodicityService accrualPeriodicityService;
+	@Autowired private ItemTypeService itemTypeService;
+	@Autowired private UnitOfMeasurementService unitOfMeasurementService;
+		
 	
 	@ModelAttribute("_collectionTypesVocabularyId")
 	public String getCollectionTypesVocabularyId() {
@@ -101,8 +115,8 @@ public class CollectionController extends VersionedEntityController {
 		} else {
 			collections = collectionService.findAllCurrent();
 		}
-		
-		List<CollectionViewPojo> collectionPojos = collectionPojoConverter.convertToPojos(collections, locale);
+		Map<String, String> accessTypeIdLabelsMap = accessTypeService.findAccessTypeIdLabelsMap();
+		List<CollectionViewPojo> collectionPojos = collectionPojoConverter.convertToPojos(collections, locale, accessTypeIdLabelsMap);
 		return new TableListPojo<CollectionViewPojo>(collectionPojos);
 	}
 	
@@ -231,14 +245,14 @@ public class CollectionController extends VersionedEntityController {
 		
 		model.addAttribute("selectedVersionId", c.getId());
 		
-		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
-		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
-		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
-		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
-		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
-		model.addAttribute("itemTypes", vocabularyService.findAllItemTypes());
+		model.addAttribute("agentRelationTypes", agentRelationTypeService.findAllAgentRelationTypes());
+		model.addAttribute("accessTypes", accessTypeService.findAllAccessTypes());
+		model.addAttribute("accrualMethods", accrualMethodService.findAllAccrualMethods());
+		model.addAttribute("accrualPolicies", accrualPolicyService.findAllAccrualPolicies());
+		model.addAttribute("accrualPeriodicities", accrualPeriodicityService.findAllAccrualPeriodicities());
+		model.addAttribute("itemTypes", itemTypeService.findAllItemTypes());
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
-		model.addAttribute("unitsOfMeasurement", vocabularyService.findAllUnitsOfMeasurement());
+		model.addAttribute("unitsOfMeasurement", unitOfMeasurementService.findAllUnitsOfMeasurement());
 	
 		model.addAttribute("collectionImages", imageConverter.convertToPojos(c.getCollectionImages()));
 		
@@ -320,7 +334,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currMethod", a);
 		model.addAttribute("accessMethods[0]", a);
-		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
+		model.addAttribute("accessTypes", accessTypeService.findAllAccessTypes());
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_access";
@@ -332,11 +346,11 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currMethod", a);
 		model.addAttribute("accrualMethods[0]", a);
-		model.addAttribute("accessTypes", vocabularyService.findAllAccessTypes());
+		model.addAttribute("accessTypes", accessTypeService.findAllAccessTypes());
 		
-		model.addAttribute("accrualMethods", vocabularyService.findAllAccrualMethods());
-		model.addAttribute("accrualPolicies", vocabularyService.findAllAccrualPolicies());
-		model.addAttribute("accrualPeriodicities", vocabularyService.findAllAccrualPeriodicities());
+		model.addAttribute("accrualMethods", accrualMethodService.findAllAccrualMethods());
+		model.addAttribute("accrualPolicies", accrualPolicyService.findAllAccrualPolicies());
+		model.addAttribute("accrualPeriodicities", accrualPeriodicityService.findAllAccrualPeriodicities());
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_accrual";
 	}
@@ -348,7 +362,7 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("currAgentRelation", ar);
 		model.addAttribute("agentRelations[0]", ar);
 				
-		model.addAttribute("agentRelationTypes", vocabularyService.findAllAgentRelationTypes());
+		model.addAttribute("agentRelationTypes", agentRelationTypeService.findAllAgentRelationTypes());
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_agent";
 	}

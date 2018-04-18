@@ -20,8 +20,8 @@ import de.dariah.federation.model.ColRegServicePojo;
 import eu.dariah.de.colreg.model.Access;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
+import eu.dariah.de.colreg.service.AccessTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.VocabularyService;
 
 @Controller
 @RequestMapping("/colreg")
@@ -29,8 +29,8 @@ public class GsLegacyApiController {
 	protected static final Logger logger = LoggerFactory.getLogger(GsLegacyApiController.class);
 	
 	@Autowired private CollectionService collectionService;
-	@Autowired private VocabularyService vocabularyService;
-	
+	@Autowired private AccessTypeService accessTypeService;
+
 	@RequestMapping(value={"/collection/listAll", "/collection/listAll/"}, method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody List<ColRegCollectionPojo> listAllCollections() {
 		List<ColRegCollectionPojo> result = new ArrayList<ColRegCollectionPojo>();
@@ -55,7 +55,7 @@ public class GsLegacyApiController {
 							sPojo.setServiceSubset(a.getOaiSet());
 							sPojo.setAccessControl(c.getAccessRights());
 							
-							AccessType aType = vocabularyService.findAccessTypeById(a.getType());
+							AccessType aType = accessTypeService.findAccessTypeById(a.getType());
 							if (aType!=null) { 
 								if (aType.getIdentifier().equals("oaipmh")) {
 									sPojo.setServiceMethod("OAI-PMH");

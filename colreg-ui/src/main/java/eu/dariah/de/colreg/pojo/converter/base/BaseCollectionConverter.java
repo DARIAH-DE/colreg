@@ -9,16 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import de.unibamberg.minf.core.web.localization.LocaleConverter;
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
-import eu.dariah.de.colreg.dao.vocabulary.AccessTypeDao;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.LocalizedDescription;
-import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.converter.ImageConverter;
 
 public abstract class BaseCollectionConverter<TPojo extends BaseIdentifiable> extends BaseConverter<Collection, TPojo> {
 
-	@Autowired private AccessTypeDao accessTypeDao;
 	@Autowired private ImageConverter imageConverter;
 		
 	protected ImagePojo getPrimaryImage(Collection collection) {
@@ -88,14 +85,5 @@ public abstract class BaseCollectionConverter<TPojo extends BaseIdentifiable> ex
 			}
 			return collection.getLocalizedDescriptions().get(0);
 		}
-	}
-	
-	protected Map<String, String> getAccessTypeIdLabelsMap() {
-		List<AccessType> accessTypes = accessTypeDao.findAll();
-		Map<String, String> accessTypeIdLabelsMap = new HashMap<String, String>(accessTypes.size());
-		for (AccessType accessType : accessTypes) {
-			accessTypeIdLabelsMap.put(accessType.getId(), accessType.getLabel());
-		}
-		return accessTypeIdLabelsMap;
 	}
 }

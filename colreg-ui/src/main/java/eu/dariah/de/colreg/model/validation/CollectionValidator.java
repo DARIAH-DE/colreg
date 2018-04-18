@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.codecs.CollectibleCodec;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,15 +16,17 @@ import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
+import eu.dariah.de.colreg.service.AccessTypeService;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.VocabularyService;
+import eu.dariah.de.colreg.service.LanguageService;
 
 @Component
 public class CollectionValidator extends BaseValidator<Collection> implements InitializingBean {	
 	@Autowired private CollectionService collectionService;
 	@Autowired private AgentService agentService;
-	@Autowired private VocabularyService vocabularyService;
+	@Autowired private LanguageService languageService;
+	@Autowired private AccessTypeService accessTypeService;
 	
 	private String oaiTypeId;
 	
@@ -35,7 +36,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		AccessType oaiType = vocabularyService.findAccessTypeByIdentfier("oaipmh");
+		AccessType oaiType = accessTypeService.findAccessTypeByIdentfier("oaipmh");
 		oaiTypeId = oaiType==null ? "" : oaiType.getId();
 	}
 
@@ -229,7 +230,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 		if (collection.getItemLanguages()!=null && collection.getItemLanguages().size()>0) {
 			boolean itemLanguageError = false;
 			for (int i=0; i<collection.getItemLanguages().size(); i++) {
-				if (vocabularyService.findLanguageByCode(collection.getItemLanguages().get(i))==null) {
+				if (languageService.findLanguageByCode(collection.getItemLanguages().get(i))==null) {
 					errors.rejectValue("itemLanguages[" + i + "]", "~eu.dariah.de.colreg.validation.collection.invalid_language");
 					itemLanguageError = true;
 				}
@@ -271,7 +272,6 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	private void validateAccess(Collection collection, Errors errors) {
 		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
 			Access acc;
-			AccessType accType;
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
 				acc = collection.getAccessMethods().get(i);
 				if (acc.getSchemeIds()!=null && acc.getSchemeIds().size()>0) {
