@@ -48,7 +48,6 @@ import eu.dariah.de.colreg.service.AccrualPeriodicityService;
 import eu.dariah.de.colreg.service.AccrualPolicyService;
 import eu.dariah.de.colreg.service.AgentRelationTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
-import eu.dariah.de.colreg.service.ItemTypeService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
 import eu.dariah.de.colreg.service.UnitOfMeasurementService;
@@ -77,13 +76,17 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private AccrualMethodService accrualMethodService;
 	@Autowired private AccrualPolicyService accrualPolicyService;
 	@Autowired private AccrualPeriodicityService accrualPeriodicityService;
-	@Autowired private ItemTypeService itemTypeService;
 	@Autowired private UnitOfMeasurementService unitOfMeasurementService;
 		
 	
 	@ModelAttribute("_collectionTypesVocabularyId")
 	public String getCollectionTypesVocabularyId() {
 		return vocabularyService.findVocabularyByIdentifier(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER).getId();
+	}
+	
+	@ModelAttribute("_itemTypesVocabularyId")
+	public String getItemTypesVocabularyId() {
+		return vocabularyService.findVocabularyByIdentifier(Collection.ITEM_TYPES_VOCABULARY_IDENTIFIER).getId();
 	}
 	
 	public CollectionController() {
@@ -250,7 +253,6 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("accrualMethods", accrualMethodService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", accrualPolicyService.findAllAccrualPolicies());
 		model.addAttribute("accrualPeriodicities", accrualPeriodicityService.findAllAccrualPeriodicities());
-		model.addAttribute("itemTypes", itemTypeService.findAllItemTypes());
 		model.addAttribute("encodingSchemes", schemaService.findAllSchemas());
 		model.addAttribute("unitsOfMeasurement", unitOfMeasurementService.findAllUnitsOfMeasurement());
 	
@@ -292,11 +294,18 @@ public class CollectionController extends VersionedEntityController {
 			model.addAttribute("editMode", true);
 		}
 		
-		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
-		List<VocabularyItemViewPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
-		Collections.sort(vocabularyItemPojos);
+		List<VocabularyItem> collectionTypes = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
+		List<VocabularyItemViewPojo> collectionTypePojos = vocabularyItemConverter.convertToPojos(collectionTypes, locale);
+		Collections.sort(collectionTypePojos);
 		
-		model.addAttribute("vocabularyItems", vocabularyItemPojos);
+		model.addAttribute("availableCollectionTypes", collectionTypePojos);
+		
+		List<VocabularyItem> itemTypes = vocabularyItemService.findVocabularyItems(Collection.ITEM_TYPES_VOCABULARY_IDENTIFIER);
+		List<VocabularyItemViewPojo> itemTypePojos = vocabularyItemConverter.convertToPojos(itemTypes, locale);
+		Collections.sort(itemTypePojos);
+		
+		model.addAttribute("availableItemTypes", itemTypePojos);
+		
 		
 		this.setUsers(c);
 		
@@ -453,14 +462,25 @@ public class CollectionController extends VersionedEntityController {
 	
 	@RequestMapping(method=GET, value={"/includes/editCollectionType"})
 	public String getEditCollectionTypeForm(Model model, Locale locale) {
-		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
+		return this.getEditVocabularyItemForm(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER, model, locale);
+	}
+	
+	@RequestMapping(method=GET, value={"/includes/editItemType"})
+	public String getEditItemTypeForm(Model model, Locale locale) {
+		return this.getEditVocabularyItemForm(Collection.ITEM_TYPES_VOCABULARY_IDENTIFIER, model, locale);
+	}
+	
+	private String getEditVocabularyItemForm(String vocabularyIdentifier, Model model, Locale locale) {
+		List<VocabularyItem> vocabularyItems = vocabularyItemService.findVocabularyItems(vocabularyIdentifier);
 		List<VocabularyItemViewPojo> vocabularyItemPojos = vocabularyItemConverter.convertToPojos(vocabularyItems, locale);
 		Collections.sort(vocabularyItemPojos);
 		
-		model.addAttribute("vocabularyItems", vocabularyItemPojos);
+		model.addAttribute("vocabularyIdentifier", vocabularyIdentifier);
+		
+		model.addAttribute("availableVocabularyItems", vocabularyItemPojos);
 		model.addAttribute("currIndex", 0);
-		model.addAttribute("currType", "");
-		model.addAttribute("collectionTypes[0]", "");
-		return "collection/edit/incl/edit_collectiontype";
+		model.addAttribute(vocabularyIdentifier + "[0]", "");
+		return "collection/edit/incl/edit_vocabulary_item";
 	}
+	
 }

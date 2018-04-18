@@ -67,8 +67,8 @@
 				<s:bind path="collection.itemsCreated">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#itemsCreated"><s:message code="~eu.dariah.de.colreg.model.collection.items_created" /></a></li>
 				</s:bind>
-				<s:bind path="collection.itemTypeIds">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#itemTypeIds"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></a></li>
+				<s:bind path="collection.itemTypes">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#itemTypes"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></a></li>
 				</s:bind>
 				<s:bind path="collection.size">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#size"><s:message code="~eu.dariah.de.colreg.model.collection.size" /></a></li>

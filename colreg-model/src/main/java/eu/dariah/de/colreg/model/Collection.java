@@ -26,6 +26,7 @@ public class Collection extends VersionedEntityImpl {
 	private static final long serialVersionUID = 6282222176000625940L;
 	
 	public static final String COLLECTION_TYPES_VOCABULARY_IDENTIFIER = "collectionTypes";
+	public static final String ITEM_TYPES_VOCABULARY_IDENTIFIER = "itemTypes";
 	
 	/* Identification */
 	private List<String> providedIdentifier;
@@ -51,7 +52,7 @@ public class Collection extends VersionedEntityImpl {
 	private List<String> spatials;
 	private List<String> temporals;
 	
-	private List<String> itemTypeIds;
+	private List<String> itemTypes;
 	
 	private String collectionCreated;
 	private String itemsCreated;
@@ -177,8 +178,8 @@ public class Collection extends VersionedEntityImpl {
 	public String getCollectionImageRights() { return collectionImageRights; }
 	public void setCollectionImageRights(String collectionImageRights) { this.collectionImageRights = collectionImageRights; }
 	
-	public List<String> getItemTypeIds() { return itemTypeIds; }
-	public void setItemTypeIds(List<String> itemTypeIds) { this.itemTypeIds = itemTypeIds; }
+	public List<String> getItemTypes() { return itemTypes; }
+	public void setItemTypes(List<String> itemTypes) { this.itemTypes = itemTypes; }
 	
 	public List<String> getAudiences() { return audiences; }
 	public void setAudiences(List<String> audiences) { this.audiences = audiences; }

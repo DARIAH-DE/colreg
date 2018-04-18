@@ -162,61 +162,15 @@
 			</s:bind>
 			
 			<!-- Collection Types* -->
-			<s:bind path="collectionTypes*">
-				<div class="form-group${status.error ? ' container-error' : ' '}">				
-					<label for="lst-collection-collectionTypes" class="col-sm-3 control-label linked-control-label">
-						<a href="<s:url value='/vocabularies/${_collectionTypesVocabularyId}/' />"><i class="fa fa-link" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.model.collection.collection_types" /></a>
-					</label>
-					<div id="lst-collection-collectionTypes-container" class="col-sm-9">
-						<c:choose>
-							<c:when test="${editMode}">
-								<ul id="lst-collection-collectionTypes" class="collection-editor-list">
-									<c:choose>
-										<c:when test="${fn:length(collection.collectionTypes)>0}">
-											<c:forEach items="${collection.collectionTypes}" var="collectionType" varStatus="status" >
-												<c:set var="currType" value="${collectionType}" scope="request" />
-												<c:set var="currIndex" value="${status.index}" scope="request" />
-												<jsp:include page="incl/edit_collection_type.jsp" />
-											</c:forEach>
-											<c:remove var="currType" />	
-										</c:when>
-										<c:otherwise>
-											<c:set var="currType" value="" scope="request" />
-											<c:set var="currIndex" value="0" scope="request" />
-											<jsp:include page="incl/edit_collection_type.jsp" />
-										</c:otherwise>
-									</c:choose>
-									<c:if test="${editMode}">
-										<li class="collection-editor-list-buttons">
-											<div class="col-sm-12">
-												<button onclick="editor.lists['collectionTypes'].triggerAddListElement(this);" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_collectiontype" /></button>
-											</div>
-										</li>
-									</c:if>
-								</ul>
-							</c:when>
-							<c:otherwise>
-								<c:forEach items="${collection.collectionTypes}" var="collType" varStatus="status" >
-									<label class="control-label">
-										<c:forEach items="${vocabularyItems}" var="vocabularyItem">
-											<c:if test="${vocabularyItem.identifier==collType}">
-												<a href="javascript:void(0)">${vocabularyItem.displayLabel}</a>
-											</c:if>
-										</c:forEach>
-									</label><br/>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="collectionTypes" />
-					<div class="col-sm-9 col-sm-offset-3">
-						<div class="editor-hint">
-							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-							<s:message code="~eu.dariah.de.colreg.editorhint.collection.collection_type" />
-						</div>
-					</div>
-				</div>
-			</s:bind>
+			<c:set var="vocabularyId" value="${_collectionTypesVocabularyId}" scope="request" />
+			<c:set var="vocabularyIdentifier" value="collectionTypes" scope="request" />
+			<c:set var="vocabularyMessageCode" value="~eu.dariah.de.colreg.model.collection.collection_types" scope="request" />
+			<c:set var="vocabularyAddEntryCode" value="~eu.dariah.de.colreg.view.collection.actions.add_collectiontype" scope="request" />
+			<c:set var="vocabularyHintCode" value="~eu.dariah.de.colreg.editorhint.collection.collection_type" scope="request" />
+			<c:set var="vocabularyModelItems" value="${collection.collectionTypes}" scope="request" />
+			<c:set var="availableVocabularyItems" value="${availableCollectionTypes}" scope="request" />
+			<jsp:include page="incl/edit_vocabulary_items.jsp" />
+			
 			
 			<!-- Rights of collection description -->
 			<s:bind path="collectionDescriptionRights">
@@ -661,51 +615,15 @@
 			</s:bind>
 			
 			<!-- Item type* -->
-			<s:bind path="itemTypeIds">
-				<div id="itemTypeIds-container" class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="itemTypeIds" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.item_types" /></label>
-					<c:choose>
-						<c:when test="${editMode}">
-							<div class="col-sm-5">
-								<select class="form-control" id="itemTypeIds" name="itemTypeIds" size="12" multiple="multiple" autocomplete="off">
-									<c:forEach items="${itemTypes}" var="type">
-										<c:set var="contains" value="false" />
-										<c:forEach items="${collection.itemTypeIds}" var="typeId">
-											<c:if test="${typeId==type.id}">
-												<c:set var="contains" value="true" />
-											</c:if>
-										</c:forEach>
-										<c:set var="selected"></c:set>
-										<c:if test="${contains}"><c:set var="selected">selected="selected"</c:set></c:if>
-										<option ${selected} value="${type.id}">${type.label}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="col-sm-9">							
-								<label class="control-label">
-								<c:forEach items="${itemTypes}" var="type">
-									<c:forEach items="${collection.itemTypeIds}" var="typeId">
-										<c:if test="${typeId==type.id}">
-											<a href="javascript:void(0)">${type.label}</a><br/>
-										</c:if>
-									</c:forEach>
-								</c:forEach>
-								</label>
-							</div>
-						</c:otherwise>
-					</c:choose>
-					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="itemTypeIds" />
-					<div class="col-sm-9 col-sm-offset-3">
-						<div class="editor-hint">
-							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-							<s:message code="~eu.dariah.de.colreg.editorhint.collection.item_types" />
-						</div>
-					</div>
-				</div>
-			</s:bind>
-			
+			<c:set var="vocabularyId" value="${_itemTypesVocabularyId}" scope="request" />
+			<c:set var="vocabularyIdentifier" value="itemTypes" scope="request" />
+			<c:set var="vocabularyMessageCode" value="~eu.dariah.de.colreg.model.collection.item_types" scope="request" />
+			<c:set var="vocabularyAddEntryCode" value="~eu.dariah.de.colreg.view.collection.actions.add_itemtype" scope="request" />
+			<c:set var="vocabularyHintCode" value="~eu.dariah.de.colreg.editorhint.collection.item_type" scope="request" />
+			<c:set var="vocabularyModelItems" value="${collection.itemTypes}" scope="request" />
+			<c:set var="availableVocabularyItems" value="${availableItemTypes}" scope="request" />
+			<jsp:include page="incl/edit_vocabulary_items.jsp" />
+						
 			<!-- Size -->
 			<s:bind path="size">
 				<div id="size-container" class="form-group${status.error ? ' has-error' : ' '}">

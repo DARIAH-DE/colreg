@@ -168,6 +168,13 @@ CollectionEditor.prototype.initEditorComponents = function() {
 			_this.registerFormControlSelectionEvents($(row));
 		}
 	});
+	this.lists["itemTypes"] = new CollectionEditorList({
+		listSelector: "#lst-collection-itemTypes",
+		newRowUrl: __util.composeUrl("collections/includes/editItemType"),
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
+	});
 };
 
 CollectionEditor.prototype.registerLanguageTypeahead = function(element) {

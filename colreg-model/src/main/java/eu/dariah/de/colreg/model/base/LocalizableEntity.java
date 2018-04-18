@@ -17,6 +17,7 @@ public abstract class LocalizableEntity extends BaseIdentifiable {
 	private String defaultName;
 	
 	private String externalIdentifier;
+	private String description;
 		
 	public String getIdentifier() { return identifier; }
 	public void setIdentifier(String identifier) { this.identifier = identifier; }
@@ -26,6 +27,9 @@ public abstract class LocalizableEntity extends BaseIdentifiable {
 	
 	public String getExternalIdentifier() { return externalIdentifier; }
 	public void setExternalIdentifier(String externalIdentifier) { this.externalIdentifier = externalIdentifier; }
+	
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
 	
 	public String getMessageCode() {
 		if (this.identifier==null || this.identifier.trim().isEmpty()) {
