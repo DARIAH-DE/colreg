@@ -59,6 +59,11 @@ String.prototype.startsWith = function(start) {
         return this.length >= start.length && this.substr(0,start.length)==start;
 };
 
+String.prototype.replaceAll = function (find, replace) {
+    var str = this;
+    return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+};
+
 var Util = function() {
         __translator.addTranslations(["~eu.dariah.de.colreg.common.view.notifications.login_required.head",
                                       "~eu.dariah.de.colreg.common.view.notifications.login_required.body",

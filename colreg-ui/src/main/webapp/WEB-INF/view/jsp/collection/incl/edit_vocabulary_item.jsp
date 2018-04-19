@@ -13,9 +13,9 @@
 					<c:forEach items="${availableVocabularyItems}" var="availableVocabularyItem">
 						<option value="${availableVocabularyItem.identifier}" 
 								${availableVocabularyItem.identifier==vocabularyModelItems[currIndex] ? "selected='selected'" : ""}
-								${availableVocabularyItem.disabled ? "hidden" : ""}>
+								${availableVocabularyItem.deleted ? "hidden" : ""}>
 							${availableVocabularyItem.displayLabel} 
-							<c:if test="${availableVocabularyItem.disabled}">[<s:message code="~eu.dariah.de.colreg.common.labels.disabled" />]</c:if>
+							<c:if test="${availableVocabularyItem.deleted}">[<s:message code="~eu.dariah.de.colreg.common.labels.deleted" />]</c:if>
 						</option>
 					</c:forEach>
 				</select>

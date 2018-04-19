@@ -1,5 +1,6 @@
 package eu.dariah.de.colreg.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import de.unibamberg.minf.core.web.controller.ResourceNotFoundException;
 import de.unibamberg.minf.core.web.localization.MessageSource;
 import de.unibamberg.minf.core.web.pojo.MessagePojo;
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
+import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.VocabularyItemValidator;
 import eu.dariah.de.colreg.model.vocabulary.UnitOfMeasurement;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
@@ -31,6 +36,7 @@ import eu.dariah.de.colreg.pojo.converter.VocabularyConverter;
 import eu.dariah.de.colreg.pojo.converter.view.VocabularyItemViewConverter;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
 import eu.dariah.de.colreg.pojo.view.VocabularyItemViewPojo;
+import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.UnitOfMeasurementService;
 import eu.dariah.de.colreg.service.VocabularyItemService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -100,7 +106,7 @@ public class VocabularyController extends VersionedEntityController {
 			}
 			vi = vocabularyItemService.createVocabularyItem(v.getIdentifier());
 		} else {
-			vi = vocabularyItemService.findVocabularyItemById(v.getIdentifier(), vocabularyItemId);
+			vi = vocabularyItemService.findVocabularyItemById(vocabularyItemId);
 		}
 		if (vi==null) {
 			throw new ResourceNotFoundException();
@@ -125,7 +131,55 @@ public class VocabularyController extends VersionedEntityController {
 		}
 		return result;
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(method=GET, value="{vocabularyId}/{vocabularyItemId}/delete", produces = "application/json; charset=utf-8")
+	public @ResponseBody ModelActionPojo deleteVocabularyItem(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
+		VocabularyItem vi = vocabularyItemService.findVocabularyItemById(vocabularyItemId);
+		
+		Assert.isTrue(v.getIdentifier().equals(vi.getVocabularyIdentifier()));
+		
+		ObjectNode resultPojo = objectMapper.createObjectNode();
+		resultPojo.put("deleteCount", vocabularyItemService.deleteVocabularyItem(vi, auth.getUserId()));
+		
+		ModelActionPojo result = new ModelActionPojo(true);
+		result.setPojo(resultPojo);
+		
+		return result;
+	}
+			
+	
+	@RequestMapping(method=GET, value="{vocabularyId}/{vocabularyItemId}/countCollections", produces = "application/json; charset=utf-8")
+	public @ResponseBody ModelActionPojo countAffectedCollections(@PathVariable String vocabularyId, @PathVariable String vocabularyItemId, HttpServletRequest request) {
+		AuthPojo auth = authInfoHelper.getAuth(request);
+		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
+		VocabularyItem vi = vocabularyItemService.findVocabularyItemById(vocabularyItemId);
+		
+		Assert.isTrue(v.getIdentifier().equals(vi.getVocabularyIdentifier()));
+		
+		List<Collection> cs = vocabularyItemService.findCurrentMatchingCollections(v.getIdentifier(), vi.getIdentifier(), auth.getUserId());
+		int cCounter = 0;
+		int dCounter = 0;
+		for (Collection c : cs) {
+			if (c.getDraftUserId()!=null) {
+				dCounter++;
+			} else {
+				cCounter++;
+			}
+		}
+		ObjectNode resultPojo = objectMapper.createObjectNode();
+		resultPojo.put("collections", cCounter);
+		resultPojo.put("drafts", dCounter);
+		
+		ModelActionPojo result = new ModelActionPojo(true);
+		result.setPojo(resultPojo);
+		
+		return result;
+	}
+	
+	
 	private ModelActionPojo addUom(String uom, Locale locale) {
 		ModelActionPojo result = new ModelActionPojo();
 		

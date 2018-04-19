@@ -7,7 +7,8 @@ var VocabularyTable = function() {
 	this.prepareTranslations(["~eu.dariah.de.colreg.common.labels.deleted",
 	                          "~eu.dariah.de.colreg.common.labels.draft",
 	                          "~eu.dariah.de.colreg.common.labels.published",
-	                          "~eu.dariah.de.colreg.common.labels.valid"]);
+	                          "~eu.dariah.de.colreg.common.labels.valid", 
+	                          "~eu.dariah.de.colreg.view.collection.labels.delete_vocabulary_item"]);
 	this.vocabularyId = $("#vocabulary-id").val();
 	this.createTable();
 };
@@ -57,13 +58,50 @@ VocabularyTable.prototype.renderLocalNameColumn = function(row, type, val, meta)
 
 VocabularyTable.prototype.renderActionColumn = function(row, type, val, meta) {
 	if (type=="display" && $("#table-edit-mode").val()==="true") {
-		return "<button onclick=\"vocabularyTable.triggerEditVocabularyItem('" + row.entity.id + "');\" class=\"btn btn-link btn-xs pull-left\">" + 
+		return "<button onclick=\"vocabularyTable.triggerEditVocabularyItem('" + row.entity.id + "');\" class=\"btn btn-link btn-xs\">" + 
 			      "<span class=\"glyphicon glyphicon-pencil\"></span>" + 
+			   "</button> " +
+			   "<button onclick=\"vocabularyTable.triggerDeleteVocabularyItem('" + row.entity.id + "');\" class=\"btn btn-link btn-xs\">" + 
+			      "<span class=\"glyphicon glyphicon-trash\"></span>" + 
 			   "</button>";
 	} else {
 		return "";
 	}
 }
+
+VocabularyTable.prototype.triggerDeleteVocabularyItem = function(itemId) {
+	var _this = this;
+	
+	$.ajax({
+        url: __util.composeUrl("vocabularies/" + _this.vocabularyId + "/" + itemId + "/countCollections"),
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+        	bootbox.confirm(__translator.translate("~eu.dariah.de.colreg.view.collection.labels.delete_vocabulary_item", [data.pojo.collections, data.pojo.drafts]), function(result) {
+        		if(result) {
+        			$.ajax({
+        		        url: __util.composeUrl("vocabularies/" + _this.vocabularyId + "/" + itemId + "/delete"),
+        		        type: "GET",
+        		        dataType: "json",
+        		        success: function(data) {
+        		        	 _this.refresh();
+        		        },
+        		        error: function(textStatus) { 
+        		        	__notifications.showTranslatedMessage(NOTIFICATION_TYPES.ERROR, 
+        		        			"~eu.dariah.de.colreg.common.view.forms.servererror.head", 
+        		        			"~eu.dariah.de.colreg.common.view.forms.servererror.body");
+        		        }
+        			});
+        		}
+        	}); 
+        },
+        error: function(textStatus) { 
+        	__notifications.showTranslatedMessage(NOTIFICATION_TYPES.ERROR, 
+        			"~eu.dariah.de.colreg.common.view.forms.servererror.head", 
+        			"~eu.dariah.de.colreg.common.view.forms.servererror.body");
+        }
+	});
+};
 
 VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
 	var _this = this;

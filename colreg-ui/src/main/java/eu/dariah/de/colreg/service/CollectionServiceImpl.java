@@ -109,7 +109,6 @@ public class CollectionServiceImpl implements CollectionService {
 		Criteria[] queryCriteria = new Criteria[] {
 				// ID match
 				Criteria.where("id").is(query).andOperator(cBase),
-				
 
 				// Title starts with
 				Criteria.where("localizedDescriptions").elemMatch(
@@ -227,5 +226,5 @@ public class CollectionServiceImpl implements CollectionService {
 			imageMap = result;
 		}
 		return imageMap;
-	}	
+	}
 }

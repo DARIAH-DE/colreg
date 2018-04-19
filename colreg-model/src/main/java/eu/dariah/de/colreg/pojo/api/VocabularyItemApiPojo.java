@@ -21,7 +21,7 @@ public class VocabularyItemApiPojo extends BaseIdentifiable {
 	
 	private String defaultName;
 	private String vocabularyId;
-	private boolean disabled;
+	private boolean deleted;
 	
 	public String getVocabularyId() { return vocabularyId; }
 	public void setVocabularyId(String vocabularyId) { this.vocabularyId = vocabularyId; }
@@ -38,8 +38,8 @@ public class VocabularyItemApiPojo extends BaseIdentifiable {
 	public String getDefaultName() { return defaultName; }
 	public void setDefaultName(String defaultName) { this.defaultName = defaultName; }
 	
-	public boolean isDisabled() { return disabled; }
-	public void setDisabled(boolean disabled) { this.disabled = disabled; }
+	public boolean isDeleted() { return deleted; }
+	public void setDeleted(boolean deleted) { this.deleted = deleted; }
 	
 	public Map<String, String> getLabels() { return labels; }
 	public void setLabels(Map<String, String> labels) { this.labels = labels; }

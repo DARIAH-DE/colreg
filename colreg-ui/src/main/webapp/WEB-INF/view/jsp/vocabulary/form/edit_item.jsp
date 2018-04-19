@@ -24,19 +24,11 @@
 	</div>
 	<div class="form-content">
 		<fieldset>
-			<!-- Warning: if this is allowed in the future, this needs updating all relevant collections -->
-			<!-- <div class="form-group">
+			<div class="form-group">
 				<label class="control-label col-sm-4" for="vocabularyItem_identifier"><s:message code="~eu.dariah.de.colreg.model.vocabulary_item.identifier" />:</label>
 				<div class="col-sm-8">
 					<sf:input path="identifier" class="form-control" id="vocabularyItem_identifier" />
 					<sf:errors path="identifier" cssClass="error" />
-				</div>
-			</div> -->
-			<div class="form-group">
-				<label class="control-label col-sm-4" for="vocabularyItem_disabled"><s:message code="~eu.dariah.de.colreg.common.labels.disabled" />:</label>
-				<div class="col-sm-8">
-					<sf:checkbox path="disabled" />
-					<div class="alert alert-info alert-sm pull-right"><s:message code="~eu.dariah.de.colreg.view.vocabulary_item.labels.hint_disabled" /></div>
 				</div>
 			</div>
 			<div class="form-group">

@@ -14,7 +14,7 @@ public class VocabularyItemViewPojo extends BaseIdentifiable implements Comparab
 	private boolean hasCurrentLocale;
 	private String defaultName;
 	private String vocabularyId;
-	private boolean disabled;
+	private boolean deleted;
 	
 	public String getVocabularyId() { return vocabularyId; }
 	public void setVocabularyId(String vocabularyId) { this.vocabularyId = vocabularyId; }
@@ -34,8 +34,8 @@ public class VocabularyItemViewPojo extends BaseIdentifiable implements Comparab
 	public String getDefaultName() { return defaultName; }
 	public void setDefaultName(String defaultName) { this.defaultName = defaultName; }
 	
-	public boolean isDisabled() { return disabled; }
-	public void setDisabled(boolean disabled) { this.disabled = disabled; }
+	public boolean isDeleted() { return deleted; }
+	public void setDeleted(boolean deleted) { this.deleted = deleted; }
 	
 	public String getDisplayLabel() {
 		if (this.hasCurrentLocale) {

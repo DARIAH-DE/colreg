@@ -25,7 +25,7 @@ public class VocabularyItemApiConverter extends BaseConverter<VocabularyItem, Vo
 		pojo.setIdentifier(object.getIdentifier());
 		pojo.setVocabularyId(object.getVocabularyIdentifier());
 		pojo.setDefaultName(object.getDefaultName());	
-		pojo.setDisabled(object.isDisabled());
+		pojo.setDeleted(object.isDeleted());
 		pojo.setExternalIdentifier(object.getExternalIdentifier());
 		if (locale!=null) {
 			try {

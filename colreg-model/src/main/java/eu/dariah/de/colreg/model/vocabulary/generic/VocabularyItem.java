@@ -6,13 +6,13 @@ public class VocabularyItem extends LocalizableEntity {
 	private static final long serialVersionUID = 942372659078068387L;
 		
 	private String vocabularyIdentifier;
-	private boolean disabled;
+	private boolean deleted;
 	
 	public String getVocabularyIdentifier() { return vocabularyIdentifier; }
 	public void setVocabularyIdentifier(String vocabularyIdentifier) { this.vocabularyIdentifier = vocabularyIdentifier; }
 	
-	public boolean isDisabled() { return disabled; }
-	public void setDisabled(boolean disabled) { this.disabled = disabled; }
+	public boolean isDeleted() { return deleted; }
+	public void setDeleted(boolean deleted) { this.deleted = deleted; }
 	
 	@Override
 	public String getMessageCodePrefix() {

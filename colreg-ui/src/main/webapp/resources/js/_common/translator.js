@@ -72,15 +72,31 @@ Translator.prototype.getNonTranslated = function() {
 	return result;
 };
 
-Translator.prototype.translate = function(code) {
+Translator.prototype.translate = function(code, args) {
+	var translation;
 	for(var i=0; i<this.translations.length; i++) {
 		if (this.translations[i].key===code) {
 			if(this.translations[i].translation==undefined) {
-				return this.translations[i].defaultText;
+				translation = this.translations[i].defaultText;
 			}
-			return this.translations[i].translation;
+			translation = this.translations[i].translation;
 		}
 	}
+	
+	if (translation!==undefined) {
+		if (args!==undefined) {
+			if (args instanceof Array) {
+				for(var i=0; i<this.translations.length; i++) {
+					translation = translation.replaceAll("{" + i + "}", args[i]);
+				}
+			} else {
+				translation = translation.replaceAll("{0}", args);
+			}
+		}
+		return translation;
+	}
+	
+	
 	return code;
 };
 
