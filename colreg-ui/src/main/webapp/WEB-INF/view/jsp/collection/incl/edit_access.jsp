@@ -139,6 +139,7 @@
 				<div class="col-sm-7">
 					<c:choose>
 						<c:when test="${editMode}">
+							<span class="attribute-name-helper">accessMethods{}.schemeIds</span>
 							<select class="form-control" id="accessMethods[${currIndex}].schemeIds" name="accessMethods[${currIndex}].schemeIds" size="8" multiple="multiple" autocomplete="off">
 								<c:forEach items="${encodingSchemes}" var="scheme">
 									<c:set var="contains" value="false" />
