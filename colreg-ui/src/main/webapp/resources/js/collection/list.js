@@ -19,8 +19,9 @@ var CollectionTable = function(url, containerSelector, selector) {
 	this.prepareTranslations(["~eu.dariah.de.colreg.common.labels.deleted",
 	                          "~eu.dariah.de.colreg.common.labels.draft",
 	                          "~eu.dariah.de.colreg.common.labels.published",
-	                          "~eu.dariah.de.colreg.common.labels.valid",
-	                          "~eu.dariah.de.colreg.view.collection.labels.no_image"]);
+	                          "~eu.dariah.de.colreg.common.labels.invalid",
+	                          "~eu.dariah.de.colreg.view.collection.labels.no_image",
+	                          "~eu.dariah.de.colreg.view.collection.labels.no_collection_type"]);
 	
 	this.initializeCollectionTypes(function(types) {
 		_this.collectionTypes = types;
@@ -59,7 +60,6 @@ CollectionTable.prototype.createTable = function() {
 		"columnDefs": [
 	       {
 	           "targets": [0],
-	           "class" : "td-no-wrap",
 	           "data": function (row, type, val, meta) { return _this.renderBadgeColumn(row, type, val, meta); }
 	       }, {
 	           "targets": [1],
@@ -142,13 +142,13 @@ CollectionTable.prototype.renderTypesColumn = function(row, type, val, meta) {
 		return types;
 	}
 	
-	for (var i=0; i<row.entity.collectionTypeIdentifiers.length; i++) {
-		types += "<span class=\"label label-primary\">" + this.collectionTypes[row.entity.collectionTypeIdentifiers[i]] + "</span> ";
-		/*types += this.collectionTypes[row.entity.collectionTypeIdentifiers[i]];
-		if (i<row.entity.collectionTypeIdentifiers.length-1) {
-			types += ", ";
-		}*/
-	} 
+	if (row.entity.collectionTypeIdentifiers.length==0) {
+		types += "<span class=\"label label-danger\">" + __translator.translate("~eu.dariah.de.colreg.view.collection.labels.no_collection_type") + "</span> ";
+	} else {
+		for (var i=0; i<row.entity.collectionTypeIdentifiers.length; i++) {
+			types += "<span class=\"label label-primary\">" + this.collectionTypes[row.entity.collectionTypeIdentifiers[i]] + "</span> ";
+		} 
+	}
 	return types;
 };
 
@@ -172,6 +172,10 @@ CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 		} else {
 			result += '<span class="label label-warning">' + __translator.translate("~eu.dariah.de.colreg.common.labels.draft") + '</span> ';
 		} 
+		
+		if (!row.entity.valid) {
+			result += '<span class="label label-danger">' + __translator.translate("~eu.dariah.de.colreg.common.labels.invalid") + '</span> ';
+		}
 	} else {
 		if (row.entity.deleted) {
 			result += __translator.translate("~eu.dariah.de.colreg.common.labels.deleted");
@@ -180,6 +184,10 @@ CollectionTable.prototype.renderBadgeColumn = function(row, type, val, meta) {
 		} else {
 			result += __translator.translate("~eu.dariah.de.colreg.common.labels.draft");
 		} 
+		
+		if (!row.entity.valid) {
+			result += __translator.translate("~eu.dariah.de.colreg.common.labels.invalid");
+		}
 	}
 	return result;
 };

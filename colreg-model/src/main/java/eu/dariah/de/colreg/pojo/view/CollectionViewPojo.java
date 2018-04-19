@@ -50,4 +50,12 @@ public class CollectionViewPojo extends BaseIdentifiable {
 	
 	public String getDisplayTimestamp() { return displayTimestamp; }
 	public void setDisplayTimestamp(String displayTimestamp) { this.displayTimestamp = displayTimestamp; }
+	
+	public boolean isValid() {
+		// Not possible through UI, but by deleting VocabularyItems
+		if (this.getCollectionTypeIdentifiers()==null || this.getCollectionTypeIdentifiers().isEmpty()) {
+			return false;
+		}
+		return true;
+	}
 }
