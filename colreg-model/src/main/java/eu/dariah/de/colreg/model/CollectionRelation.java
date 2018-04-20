@@ -1,6 +1,8 @@
 package eu.dariah.de.colreg.model;
 
-public class CollectionsRelation {
+public class CollectionRelation {
+	public static final String COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER = "collectionRelationTypes";
+	
 	private String sourceEntityId;
 	private String targetEntityId;
 	private boolean bidirectional;
