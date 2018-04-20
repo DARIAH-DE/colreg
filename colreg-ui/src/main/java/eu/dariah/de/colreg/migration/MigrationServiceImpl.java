@@ -28,16 +28,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
 import de.unibamberg.minf.dme.model.version.VersionInfo;
 import de.unibamberg.minf.dme.model.version.VersionInfoImpl;
+import eu.dariah.de.colreg.dao.CollectionRelationDao;
 import eu.dariah.de.colreg.dao.VersionDao;
 import eu.dariah.de.colreg.dao.base.DaoImpl;
 import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyDao;
 import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyItemDao;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.CollectionRelation;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 
@@ -62,6 +65,7 @@ public class MigrationServiceImpl implements MigrationService {
 	@Autowired private VersionDao versionDao;
 	@Autowired private VocabularyDao vocabularyDao;
 	@Autowired private VocabularyItemDao vocabularyItemDao;
+	@Autowired private CollectionRelationDao collectionRelationDao;
 	
 	public MigrationServiceImpl() throws NoSuchAlgorithmException {
 		md = MessageDigest.getInstance("MD5");
@@ -119,8 +123,58 @@ public class MigrationServiceImpl implements MigrationService {
 			}
 			this.migrateItemTypes();
 		}
+		if (!existingVersions.contains("3.9.2")) {
+			if (!backedUp) {
+				this.backupDb();
+				backedUp = true;
+			}
+			this.migrateCollectionRelations();
+		}
 	}
 	
+	private void migrateCollectionRelations() {
+		this.createVocabulary(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER, "Collection Relation Types", "3.9.2");
+		
+		// Existing hierarchical relations
+		VocabularyItem vi = new VocabularyItem();
+		vi.setIdentifier("parentOf");
+		vi.setDefaultName("is parent of");
+		vi.setVocabularyIdentifier(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		vocabularyItemDao.save(vi);
+		
+		// generic 'related to'
+		vi = new VocabularyItem();
+		vi.setIdentifier("relatedTo");
+		vi.setDefaultName("is related to");
+		vi.setVocabularyIdentifier(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		vocabularyItemDao.save(vi);
+		
+		List<String> rawCollections = this.getObjectsAsString("collection");
+		
+		JsonNode node;
+		ObjectNode objectNode;
+		String parentCollectionId;		
+		
+		try {
+			for (String rawCollection : rawCollections) {
+				node = objectMapper.readTree(rawCollection);
+				objectNode = (ObjectNode)node;
+				if (objectNode.get("parentCollectionId")==null || objectNode.get("parentCollectionId").isMissingNode()) {
+					continue;
+				}
+				
+				// TODO: Versionierung??
+				parentCollectionId = objectNode.get("parentCollectionId").textValue();
+				objectNode.remove("parentCollectionId");
+				
+				mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
+			}
+			logger.info("Collection Relation Types migration completed WITHOUT errors (version: 3.9.2)");
+		} catch (Exception e) {
+			logger.error("Failed to update database to version 3.9.2", e);
+		}
+	}
+
 	private void createVocabulary(String identifier, String displayName, String version) {
 		logger.info(String.format("Performing vocabulary migration (version: %s; vocabulary: %s)", version, displayName));
 		
