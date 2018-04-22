@@ -41,4 +41,16 @@ public class CollectionDaoImpl extends VersionedEntityDaoImpl<Collection> implem
 		Query q = new Query(c);
 		return mongoTemplate.count(q, clazz);
 	}
+
+	@Override
+	public List<Collection> findCurrentById(List<String> collectionIds) {
+		Criteria[] entityIdCriteria = new Criteria[collectionIds.size()];
+		for (int i=0; i<collectionIds.size(); i++) {
+			entityIdCriteria[i] = Criteria.where("entityId").is(collectionIds.get(i));
+		}
+		return this.find(Query.query(Criteria
+				.where("deleted").ne(true)
+				.and("succeedingVersionId").is(null)
+				.orOperator(entityIdCriteria)));
+	}
 }

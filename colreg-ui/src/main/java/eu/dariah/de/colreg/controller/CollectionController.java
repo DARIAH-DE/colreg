@@ -2,7 +2,9 @@ package eu.dariah.de.colreg.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -32,11 +34,13 @@ import eu.dariah.de.colreg.model.Accrual;
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.model.CollectionRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.validation.CollectionValidator;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.converter.ImageConverter;
+import eu.dariah.de.colreg.pojo.converter.view.CollectionRelationViewConverter;
 import eu.dariah.de.colreg.pojo.converter.view.CollectionViewConverter;
 import eu.dariah.de.colreg.pojo.converter.view.VocabularyItemViewConverter;
 import eu.dariah.de.colreg.pojo.view.CollectionViewPojo;
@@ -65,6 +69,8 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired private CollectionValidator validator;
 	@Autowired private LicenseService licenseService;
 	
+	@Autowired private CollectionRelationViewConverter collectionRelationConverter;
+	
 	@Autowired private ImageService imageService;
 	@Autowired private ImageConverter imageConverter;
 	
@@ -87,6 +93,11 @@ public class CollectionController extends VersionedEntityController {
 	@ModelAttribute("_itemTypesVocabularyId")
 	public String getItemTypesVocabularyId() {
 		return vocabularyService.findVocabularyByIdentifier(Collection.ITEM_TYPES_VOCABULARY_IDENTIFIER).getId();
+	}
+	
+	@ModelAttribute("_collectionRelationTypesVocabularyId")
+	public String getCollectionRelationTypesVocabularyId() {
+		return vocabularyService.findVocabularyByIdentifier(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER).getId();
 	}
 	
 	public CollectionController() {
@@ -257,9 +268,24 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("unitsOfMeasurement", unitOfMeasurementService.findAllUnitsOfMeasurement());
 	
 		model.addAttribute("collectionImages", imageConverter.convertToPojos(c.getCollectionImages()));
-		
-		if (c.getParentCollectionId()!=null) {
-			model.addAttribute("parentCollection", collectionService.findCurrentByCollectionId(c.getParentCollectionId()));
+
+		if (c.getRelations()!=null) {
+			List<String> relatedCollectionIds = new ArrayList<String>();
+			for (CollectionRelation cr : c.getRelations()) {
+				if (!relatedCollectionIds.contains(cr.getSourceEntityId())) {
+					relatedCollectionIds.add(cr.getSourceEntityId());
+				}
+				if (!relatedCollectionIds.contains(cr.getTargetEntityId())) {
+					relatedCollectionIds.add(cr.getTargetEntityId());
+				}
+			}
+			List<Collection> relatedCollections = collectionService.findCurrentByCollectionIds(relatedCollectionIds);
+			Map<String, CollectionViewPojo> relatedCollectionEntityIdPojoMap = new HashMap<String, CollectionViewPojo>(relatedCollections.size()); 
+			for (CollectionViewPojo pojo : collectionPojoConverter.convertToPojos(relatedCollections, locale)) {
+				relatedCollectionEntityIdPojoMap.put(pojo.getId(), pojo);
+			}
+			
+			model.addAttribute("relations", collectionRelationConverter.convertToPojos(c.getRelations(), locale, relatedCollectionEntityIdPojoMap));
 		}
 		
 		List<Collection> versions = collectionService.findAllVersionsForEntityId(entityId);

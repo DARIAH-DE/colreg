@@ -9,4 +9,5 @@ public interface CollectionDao extends VersionedEntityDao<Collection> {
 	public List<Collection> findCurrentByParentCollectionId(String id);
 	public List<Collection> findAllDrafts(String userId);
 	public long countDrafts(String userId);
+	public List<Collection> findCurrentById(List<String> collectionIds);
 }

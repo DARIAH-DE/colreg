@@ -3,8 +3,6 @@ package eu.dariah.de.colreg.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.mongodb.core.query.Query;
-
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
@@ -26,4 +24,5 @@ public interface CollectionService {
 	public long countCollections();
 	public long countDrafts(String userId);
 	public Map<Integer, String> getOrderedImageMap(Map<Integer, String> imageMap);
+	public List<Collection> findCurrentByCollectionIds(List<String> collectionIds);
 }

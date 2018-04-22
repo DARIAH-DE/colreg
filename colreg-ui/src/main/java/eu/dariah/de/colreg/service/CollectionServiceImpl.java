@@ -227,4 +227,9 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		return imageMap;
 	}
+
+	@Override
+	public List<Collection> findCurrentByCollectionIds(List<String> collectionIds) {
+		return collectionDao.findCurrentById(collectionIds);
+	}
 }

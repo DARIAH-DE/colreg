@@ -42,7 +42,7 @@ public class CollectionViewConverter extends BaseCollectionConverter<CollectionV
 		pojo.setTimestamp(collection.getVersionTimestamp().toInstant().getMillis());
 		pojo.setDisplayTimestamp(this.getDisplayTimestamp(collection.getVersionTimestamp(), locale));
 		
-		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
+		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0 && accessTypeIdLabelsMap!=null) {
 			pojo.setAccessTypes(new ArrayList<String>(collection.getAccessMethods().size()));
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
 				pojo.getAccessTypes().add(accessTypeIdLabelsMap.get(collection.getAccessMethods().get(i).getType()));
