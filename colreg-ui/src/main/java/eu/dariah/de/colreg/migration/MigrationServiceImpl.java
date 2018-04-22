@@ -175,6 +175,7 @@ public class MigrationServiceImpl implements MigrationService {
 				parentCollectionId = objectNode.get("parentCollectionId").textValue();
 				
 				relation = new CollectionRelation();
+				relation.setSourceEntityId(node.path("_id").path("$oid").asText());
 				relation.setTargetEntityId(parentCollectionId);
 				relation.setRelationTypeId("childOf");
 				

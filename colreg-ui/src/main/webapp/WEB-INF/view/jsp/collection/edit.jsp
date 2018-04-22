@@ -735,6 +735,69 @@
 		
 		<div class="editor-section">
 			<div class="editor-section-heading">
+				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.relations" /></h4>
+			</div>
+			
+			<s:bind path="relations*">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.titles.collections" /></label>
+					<div class="col-sm-9">
+						<table id="tbl-collection-relations" class="collection-editor-table">
+							<thead>
+								<tr>
+									<th class="explode">
+										<c:choose>
+											<c:when test="${fn:length(collection.relations)==0}">
+												<a class="control-link" href="javascript:void(0);">~Relation type</a>
+											</c:when>
+											<c:otherwise>
+												~ Relation type
+											</c:otherwise>
+										</c:choose>
+									</th>
+									<th class="explode">~ Relation</th>
+									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${fn:length(collection.relations)>0}">
+										<c:forEach items="${collection.relations}" var="relation" varStatus="status" >
+											<c:set var="currRelation" value="${relation}" scope="request" />
+											<c:set var="currIndex" value="${status.index}" scope="request" />
+											<jsp:include page="incl/edit_relation.jsp" />
+										</c:forEach>
+										<c:remove var="currRelation" />	
+									</c:when>
+									
+								</c:choose>
+								<c:if test="${editMode}">
+									<tr class="collection-editor-table-buttons">
+										<td colspan="${editMode ? 3 : 2}">
+											<button class="btn btn-xs pull-right btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add agent relation</button>		
+										</td>
+									</tr>
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="agentRelations" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							~ editorhint.agents
+						</div>
+					</div>
+				</div>
+			</s:bind>
+		</div>
+		
+		
+		<c:forEach items="${collection.relations}" var="relation">
+		</c:forEach>
+		
+		<div class="editor-section">
+			<div class="editor-section-heading">
 				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></h4>
 			</div>
 			
