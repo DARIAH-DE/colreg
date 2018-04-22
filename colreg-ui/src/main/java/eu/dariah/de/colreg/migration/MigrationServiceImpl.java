@@ -1,6 +1,7 @@
 package eu.dariah.de.colreg.migration;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -146,19 +149,28 @@ public class MigrationServiceImpl implements MigrationService {
 		vi.setVocabularyIdentifier(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
 		vocabularyItemDao.save(vi);
 		
-		List<String> rawCollections = this.getObjectsAsString("collection");
-		
-		JsonNode node;
 		ObjectNode objectNode;
+		Map<String, ObjectNode> rawCollectionsIdMap = new HashMap<String, ObjectNode>();
+		for (String rawCollection : this.getObjectsAsString("collection")) {
+			try {
+				objectNode = (ObjectNode)objectMapper.readTree(rawCollection);
+				// We only update the latest versions of the collections for simplicity reasons
+				if (objectNode.get("succeedingVersionId")==null || objectNode.get("succeedingVersionId").isMissingNode()
+						 || objectNode.get("succeedingVersionId").asText().trim().isEmpty()) {
+					rawCollectionsIdMap.put(objectNode.path("entityId").asText(), objectNode);
+				}
+			} catch (Exception e) {
+				logger.error("Failed to update database to version 3.9.2", e);
+				return;
+			}
+		}
+		
 		String parentCollectionId;		
-		ArrayNode relationsNode;
-		
+		ObjectNode targetNode;
 		CollectionRelation relation;
-		
 		try {
-			for (String rawCollection : rawCollections) {
-				node = objectMapper.readTree(rawCollection);
-				objectNode = (ObjectNode)node;
+			for (String collectionId : rawCollectionsIdMap.keySet()) {
+				objectNode = rawCollectionsIdMap.get(collectionId);
 				if (objectNode.get("parentCollectionId")==null || objectNode.get("parentCollectionId").isMissingNode()) {
 					continue;
 				}
@@ -166,30 +178,36 @@ public class MigrationServiceImpl implements MigrationService {
 				if (parentCollectionId.trim().isEmpty()) {
 					continue;
 				}
-				
-				if (objectNode.get("relations")!=null && !objectNode.get("relations").isMissingNode()) {
-					relationsNode = (ArrayNode)objectNode.get("relations");
-				} else {
-					relationsNode = objectMapper.createArrayNode();
-				}
-				parentCollectionId = objectNode.get("parentCollectionId").textValue();
-				
+				objectNode.remove("parentCollectionId");
+								
 				relation = new CollectionRelation();
-				relation.setSourceEntityId(node.path("_id").path("$oid").asText());
+				relation.setId(new ObjectId().toString());
+				relation.setSourceEntityId(collectionId);
 				relation.setTargetEntityId(parentCollectionId);
 				relation.setRelationTypeId("childOf");
 				
-				relationsNode.add(objectMapper.valueToTree(relation));
-				
-				objectNode.set("relations", relationsNode);
-				objectNode.remove("parentCollectionId");
-				
+				this.appendRelationToCollection(objectNode, relation);
 				mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
+				
+				targetNode = rawCollectionsIdMap.get(parentCollectionId);
+				this.appendRelationToCollection(targetNode, relation);
+				mongoTemplate.save(targetNode.toString(), DaoImpl.getCollectionName(Collection.class));
 			}
 			logger.info("Collection Relation Types migration completed WITHOUT errors (version: 3.9.2)");
 		} catch (Exception e) {
 			logger.error("Failed to update database to version 3.9.2", e);
 		}
+	}
+	
+	private void appendRelationToCollection(ObjectNode collectionNode, CollectionRelation relation) {
+		ArrayNode relationsNode;
+		if (collectionNode.get("relations")!=null && !collectionNode.get("relations").isMissingNode()) {
+			relationsNode = (ArrayNode)collectionNode.get("relations");
+		} else {
+			relationsNode = objectMapper.createArrayNode();
+		}
+		relationsNode.add(objectMapper.valueToTree(relation));
+		collectionNode.set("relations", relationsNode);
 	}
 
 	private void createVocabulary(String identifier, String displayName, String version) {
