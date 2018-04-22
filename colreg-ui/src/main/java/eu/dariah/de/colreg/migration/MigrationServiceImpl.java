@@ -28,13 +28,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
 import de.unibamberg.minf.dme.model.version.VersionInfo;
 import de.unibamberg.minf.dme.model.version.VersionInfoImpl;
-import eu.dariah.de.colreg.dao.CollectionRelationDao;
 import eu.dariah.de.colreg.dao.VersionDao;
 import eu.dariah.de.colreg.dao.base.DaoImpl;
 import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyDao;
@@ -65,7 +63,6 @@ public class MigrationServiceImpl implements MigrationService {
 	@Autowired private VersionDao versionDao;
 	@Autowired private VocabularyDao vocabularyDao;
 	@Autowired private VocabularyItemDao vocabularyItemDao;
-	@Autowired private CollectionRelationDao collectionRelationDao;
 	
 	public MigrationServiceImpl() throws NoSuchAlgorithmException {
 		md = MessageDigest.getInstance("MD5");
@@ -137,8 +134,8 @@ public class MigrationServiceImpl implements MigrationService {
 		
 		// Existing hierarchical relations
 		VocabularyItem vi = new VocabularyItem();
-		vi.setIdentifier("parentOf");
-		vi.setDefaultName("is parent of");
+		vi.setIdentifier("childOf");
+		vi.setDefaultName("is child of");
 		vi.setVocabularyIdentifier(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
 		vocabularyItemDao.save(vi);
 		
@@ -154,6 +151,9 @@ public class MigrationServiceImpl implements MigrationService {
 		JsonNode node;
 		ObjectNode objectNode;
 		String parentCollectionId;		
+		ArrayNode relationsNode;
+		
+		CollectionRelation relation;
 		
 		try {
 			for (String rawCollection : rawCollections) {
@@ -162,9 +162,25 @@ public class MigrationServiceImpl implements MigrationService {
 				if (objectNode.get("parentCollectionId")==null || objectNode.get("parentCollectionId").isMissingNode()) {
 					continue;
 				}
-				
-				// TODO: Versionierung??
 				parentCollectionId = objectNode.get("parentCollectionId").textValue();
+				if (parentCollectionId.trim().isEmpty()) {
+					continue;
+				}
+				
+				if (objectNode.get("relations")!=null && !objectNode.get("relations").isMissingNode()) {
+					relationsNode = (ArrayNode)objectNode.get("relations");
+				} else {
+					relationsNode = objectMapper.createArrayNode();
+				}
+				parentCollectionId = objectNode.get("parentCollectionId").textValue();
+				
+				relation = new CollectionRelation();
+				relation.setTargetEntityId(parentCollectionId);
+				relation.setRelationTypeId("childOf");
+				
+				relationsNode.add(objectMapper.valueToTree(relation));
+				
+				objectNode.set("relations", relationsNode);
 				objectNode.remove("parentCollectionId");
 				
 				mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
@@ -338,10 +354,9 @@ public class MigrationServiceImpl implements MigrationService {
 						vi.setVocabularyIdentifier(Collection.COLLECTION_TYPES_VOCABULARY_IDENTIFIER);
 						
 						vocabularyItemDao.save(vi);
-						
-						collectionTypesNode.add(identifier);
 						collectionTypeIdentifiers.add(identifier);
 					}
+					collectionTypesNode.add(identifier);
 					objectNode.set("collectionTypes", collectionTypesNode);
 					objectNode.remove("collectionType");
 					
