@@ -103,6 +103,7 @@
 	<definition name="collection/edit/incl/edit_access" template="/WEB-INF/view/jsp/collection/incl/edit_access.jsp" />
 	<definition name="collection/edit/incl/edit_accrual" template="/WEB-INF/view/jsp/collection/incl/edit_accrual.jsp" />
 	<definition name="collection/edit/incl/edit_agent" template="/WEB-INF/view/jsp/collection/incl/edit_agent.jsp" />
+	<definition name="collection/edit/incl/edit_relation" template="/WEB-INF/view/jsp/collection/incl/edit_relation.jsp" />
 	<definition name="collection/edit/incl/edit_description" template="/WEB-INF/view/jsp/collection/incl/edit_description.jsp" />
 	<definition name="collection/edit/incl/edit_itemlanguage" template="/WEB-INF/view/jsp/collection/incl/edit_itemlanguage.jsp" />
 	<definition name="collection/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/collection/incl/edit_identifier.jsp" />

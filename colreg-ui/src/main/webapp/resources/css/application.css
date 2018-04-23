@@ -501,7 +501,8 @@ body .modal.modal450 {
 	white-space: nowrap;
 }
 
-.collection-editor-table th.explode {
+.collection-editor-table th.explode,
+.collection-editor-table td.explode {
 	width: 100%;
 } 
 

@@ -4,26 +4,53 @@
 
 <s:bind path="relations[${currIndex}].*">
 	<tr class="list${status.error ? ' has-error' : ' '}">
-		<td class="relationTable_relationName" onclick="editor.tables['relations'].editEntry(this); return false;">
-			<c:choose>
-				<c:when test="${currRelation!=null}">
-					<a class="control-link" href="javascript:void(0);">${currRelation.agent.name} ${currRelation.agent.foreName}</a>
-				</c:when>
-				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
-			</c:choose>
+		<td onclick="editor.tables['relationTable'].editEntry(this); return false;">
+			<i class="fa fa-home" aria-hidden="true"></i>
 		</td>
-		<td class="relationTable_agentType" onclick="editor.tables['relationTable'].editEntry(this); return false;">
-			<c:if test="${currRelation!=null}">
-				<c:forEach items="${agentRelationTypes}" var="type">
-					<c:set var="contains" value="false" />
-					<c:forEach items="${currRelation.typeIds}" var="typeId">
-						<c:if test="${typeId==type.id}">
-							<c:set var="contains" value="true" />
+		
+		<td class="td-no-wrap" onclick="editor.tables['relationTable'].editEntry(this); return false;">
+			<span class="relationTable_direction">
+				<c:choose>
+					<c:when test="${currRelation.bidirectional}">
+						<i class="fa fa-arrows-h" aria-hidden="true"></i>
+						<c:set var="currDirection" value="bidirectional" />
+					</c:when>
+					<c:when test="${currRelation.source.id==collection.entityId}">
+						<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+						<c:set var="currDirection" value="right" />
+					</c:when>
+					<c:otherwise>
+						<i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+						<c:set var="currDirection" value="left" />
+					</c:otherwise>
+				</c:choose>
+			</span>
+			<span class="relationTable_relationType">
+				<c:if test="${currRelation!=null}">
+					<c:forEach items="${availableCollectionRelationTypes}" var="type">
+						<c:if test="${currRelation.relationTypeId==type.identifier}">
+							${type.displayLabel}
 						</c:if>
 					</c:forEach>
-					<c:if test="${contains}">${type.label} </c:if>
-				</c:forEach>
-			</c:if>
+				</c:if>
+			</span>
+			
+		
+		</td>
+		
+		<td onclick="editor.tables['relationTable'].editEntry(this); return false;">
+			<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+		</td>
+			
+		<td class="relationTable_collection explode" onclick="editor.tables['relationTable'].editEntry(this); return false;">
+			<c:choose>
+				<c:when test="${currRelation.source.id==collection.entityId}">
+					<a class="control-link" href="javascript:void(0);">${currRelation.target.displayTitle}</a>
+				</c:when>
+				<c:otherwise>
+					<a class="control-link" href="javascript:void(0);">${currRelation.source.displayTitle}</a>
+				</c:otherwise>
+			</c:choose>
 		</td>
 		<c:if test="${editMode}">
 			<td class="nowrap">
@@ -35,119 +62,127 @@
 	</tr>
 </s:bind>
 <tr class="edit" style="display: none;">
-	<td colspan="${editMode ? 3 : 2}">
-		<s:bind path="relations[${currIndex}].typeIds">
+	<td colspan="${editMode ? 5 : 4}">
+	
+		<s:bind path="relations[${currIndex}].relationTypeId">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="description" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.agent_relation.relation" /></label>
+				<label for="relationTypeId" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.relation_type" /></label>
 				<c:choose>
 					<c:when test="${editMode}">
-						<div class="col-sm-5">
-							<span class="attribute-name-helper">relations{}.typeIds</span>
-							<select class="form-control select-relation-type" id="relations${currIndex}.typeIds" name="relations[${currIndex}].typeIds" size="4" multiple="multiple" autocomplete="off">
-								<c:forEach items="${agentRelationTypes}" var="type">
-									<c:set var="contains" value="false" />
-									<c:forEach items="${currRelation.typeIds}" var="typeId">
-										<c:if test="${typeId==type.id}">
-											<c:set var="contains" value="true" />
-										</c:if>
-									</c:forEach>
-									<c:set var="selected"></c:set>
-									<c:if test="${contains}"><c:set var="selected">selected="selected"</c:set></c:if>
-									<option ${selected} value="${type.id}">${type.label}</option>
-								</c:forEach>
-							</select>
-							<input type="hidden" class="agent-type-display-helper" onchange="editor.tables['relationTable'].handleInputChange(this, 'relationTable_agentType');" />
+						<div class="col-sm-7">
+							<span class="attribute-name-helper">relations{}.relationTypeId</span>
+							<sf:select cssClass="form-control" path="relations[${currIndex}].relationTypeId" items="${availableCollectionRelationTypes}" itemLabel="displayLabel" itemValue="identifier"
+								id="relations${currIndex}.relationTypeId" name="relations[${currIndex}].relationTypeId" 
+								onchange="editor.tables['relationTable'].handleInputChange(this, 'relationTable_relationType', $(this).find('option:selected').text());" 
+								onkeyup="editor.tables['relationTable'].handleInputChange(this, 'relationTable_relationType', $(this).find('option:selected').text());" />
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="col-sm-9">
 							<label class="content-label">
-								<c:forEach items="${agentRelationTypes}" var="type">
-									<c:forEach items="${currRelation.typeIds}" var="typeId">
-										<c:if test="${typeId==type.id}">${type.label}<br /></c:if>
-									</c:forEach>
+								<c:forEach items="${availableCollectionRelationTypes}" var="type">
+									<c:if test="${currRelation.relationTypeId==type.identifier}">
+										${type.displayLabel}
+									</c:if>
 								</c:forEach>
 							</label>
 						</div>
 					</c:otherwise>
 				</c:choose>
 				
-				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
-					path="relations[${currIndex}].typeIds" />
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="relations[${currIndex}].relationTypeId" />
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="editor-hint">
 						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-						<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.relation" />
+						<s:message code="~eu.dariah.de.colreg.editorhint.collection_relation.relation_type" />
 					</div>
 				</div>
 			</div>
 		</s:bind>
-		<s:bind path="relations[${currIndex}].agentId">
+	
+		<s:bind path="relations[${currIndex}].bidirectional">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent_relation.agent" /></label>
-				<div class="col-sm-9">
-					<c:if test="${editMode}">
-						<div class="row">
-							<div class="col-sm-12">
-								<span class="attribute-name-helper">relations{}.agentId</span>
-								<input type="hidden" class="form-control" id="relations${currIndex}.agentId" name="relations[${currIndex}].agentId" 
-									value="<c:if test="${currRelation!=null}">${currRelation.agentId}</c:if>" />
-								<input type="hidden" class="agent-name-display-helper" onchange="editor.tables['relationTable'].handleInputChange(this, 'relationTable_agentName');" />
-								<input type="text" class="form-control typeahead agent-typeahead" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.type_to_search" />" />
+				<label for="relationTypeId" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.direction" /></label>
+				
+				<span class="attribute-name-helper">relations{}.bidirectional</span>
+				<sf:hidden cssClass="relation-direction-bidirectional" path="relations[${currIndex}].bidirectional"/>
+				
+				<c:choose>
+					<c:when test="${editMode}">
+						<div class="col-sm-5">
+							<div class="radio">
+							  <label>
+							  	<span class="attribute-name-helper">relationsHelper{}.direction</span>
+							    <input type="radio"
+							    	onchange="editor.handleRelationDirectionRadioChange(this);" 
+							    	name="relationsHelper[${currIndex}].direction" id="relationsHelper${currIndex}.direction" 
+							    	value="right" ${currDirection=="right" ? " checked" : ""}>
+							    <i class="fa fa-home" aria-hidden="true"></i> 
+							    <i class="fa fa-long-arrow-right" aria-hidden="true"></i> 
+							    <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+							  </label>
 							</div>
-						</div>
-					</c:if>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="agent-display alert alert-default <c:if test="${currRelation.agent==null}">hide</c:if>">
-								<c:if test="${editMode}">
-									<button type="button" class="btn btn-xs btn-link pull-right agent-reset"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-								</c:if>
-								<p>
-									<c:if test="${currRelation.agent!=null}">
-										<a href="<s:url value="/agents/${currRelation.agent.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${currRelation.agent.name} ${currRelation.agent.foreName}</strong><br />
-										<small><em>ID: ${currRelation.agent.entityId}</em></small></a>
-									</c:if>	
-								</p>
+							<div class="radio">
+							  <label>
+							    <span class="attribute-name-helper">relationsHelper{}.direction</span>
+							    <input type="radio" 
+							    	onchange="editor.handleRelationDirectionRadioChange(this);" 
+							    	name="relationsHelper[${currIndex}].direction" id="relationsHelper${currIndex}.direction" 
+							    	value="left"${currDirection=="left" ? " checked" : ""}>
+							    <i class="fa fa-home" aria-hidden="true"></i> 
+							    <i class="fa fa-long-arrow-left" aria-hidden="true"></i> 
+							    <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+							  </label>
 							</div>
-							<div class="agent-display-null <c:if test="${currRelation.agent!=null}">hide</c:if>">
-								<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_agent_set" /></em></label><br />
+							<div class="radio">
+							  <label>
+							  	<span class="attribute-name-helper">relationsHelper{}.direction</span>
+							    <input type="radio" 
+							   		onchange="editor.handleRelationDirectionRadioChange(this);" 
+							    	name="relationsHelper[${currIndex}].direction" id="relationsHelper${currIndex}.direction"  
+							    	value="bidirectional"${currDirection=="bidirectional" ? " checked" : ""}>
+							    <i class="fa fa-home" aria-hidden="true"></i> 
+							    <i class="fa fa-arrows-h" aria-hidden="true"></i> 
+							    <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+							  </label>
 							</div>
 						
-							<sf:errors element="div" cssClass="validation-error" path="relations[${currIndex}].agentId" />
-							<s:url value="/agents/new" var="newAgentUrl" />
-							<div class="editor-hint">
-								<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-								<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.agent" arguments="${newAgentUrl}" />
-							</div>
+							<span class="attribute-name-helper">relations{}.bidirectional</span>
+							<input type="hidden" class="agent-type-display-helper" onchange="editor.tables['relationTable'].handleInputChange(this, 'relationTable_bidirectional');" />
 						</div>
-					</div>
-				</div>
-			</div>
-		</s:bind>
-		<s:bind path="relations[${currIndex}].annotation">
-			<div class="form-group${status.error ? ' has-error' : ' '}">
-				<label for="description" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent_relation.description" /></label>
-				<div class="col-sm-9">
-					<c:choose>
-						<c:when test="${editMode}">
-							<span class="attribute-name-helper">relations{}.annotation</span>
-							<textarea class="form-control" rows="3" id="relations${currIndex}.annotation" name="relations[${currIndex}].annotation"><c:if test="${currRelation!=null}">${currRelation.annotation}</c:if></textarea>
-						</c:when>
-						<c:otherwise>
-							<label class="content-label">${currRelation!=null ? currRelation.annotation : ''}</label>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
-					path="relations[${currIndex}].annotation" />
+					</c:when>
+					<c:otherwise>
+						<div class="col-sm-9">
+							<label class="content-label">
+								<i class="fa ${currRelation.bidirectional ? 'fa-check-square-o' : 'fa-square-o'}" aria-hidden="true"></i>
+							</label>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="relations[${currIndex}].bidirectional" />
 				<div class="col-sm-9 col-sm-offset-3">
 					<div class="editor-hint">
 						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-						<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.annotation" />
+						<s:message code="~eu.dariah.de.colreg.editorhint.collection_relation.direction" />
 					</div>
 				</div>
 			</div>
 		</s:bind>
+	
+		<!-- Source collection block -->
+		<c:set var="displayCollectionBlock" value="true" scope="request" />
+		<c:set var="displayCollectionFieldname" value="sourceEntityId" scope="request" />
+		<c:set var="relatedCollectionPojo" value="${currRelation.source}" scope="request" />
+		<jsp:include page="edit_relation_collection.jsp" />
+		
+		<!-- Target collection block -->
+		<c:set var="displayCollectionBlock" value="true" scope="request" />
+		<c:set var="displayCollectionFieldname" value="targetEntityId" scope="request" />
+		<c:set var="relatedCollectionPojo" value="${currRelation.target}" scope="request" />
+		<jsp:include page="edit_relation_collection.jsp" />
+			
 	</td>
 </tr>
+
+

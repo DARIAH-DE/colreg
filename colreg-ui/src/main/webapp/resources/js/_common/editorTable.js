@@ -111,7 +111,7 @@ CollectionEditorTable.prototype.sort = function() {
 			var id = $(this).text().replace("{}", index);
 			
 			var next = $(this).next();
-			if (next.hasClass("form-control")) {
+			if (next.hasClass("form-control") || next.prop("type")=="radio") {
 				next.prop("id", id).prop("name", name);
 			} else {
 				next.find(".form-control").not(".tt-hint").first().prop("id", id).prop("name", name);
@@ -138,11 +138,18 @@ CollectionEditorTable.prototype.sort = function() {
 	});
 }
 
-CollectionEditorTable.prototype.handleInputChange = function(input, field) {
+CollectionEditorTable.prototype.handleInputChange = function(input, field, value, useHtml) {
 	var listRow = $(input).closest("tr").prev();
 	
-	listRow.find("." + field).each(function() { 
-		$(this).text($(input).val());
+	listRow.find("." + field).each(function() {
+		if (value===undefined) {
+			value = $(input).val();
+		} 
+		if (useHtml===true) {
+			$(this).html(value);
+		} else {
+			$(this).text(value);
+		}
 	});
 };
 

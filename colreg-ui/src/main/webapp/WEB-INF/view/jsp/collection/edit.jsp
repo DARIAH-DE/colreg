@@ -740,29 +740,20 @@
 			
 			<s:bind path="relations*">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.titles.collections" /></label>
+					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.view.collection_relation.labels.relations_to_other_collections" /></label>
 					<div class="col-sm-9">
 						<table id="tbl-collection-relations" class="collection-editor-table">
 							<thead>
 								<tr>
-									<th class="explode">
-										<c:choose>
-											<c:when test="${fn:length(collection.relations)==0}">
-												<a class="control-link" href="javascript:void(0);">~Relation type</a>
-											</c:when>
-											<c:otherwise>
-												~ Relation type
-											</c:otherwise>
-										</c:choose>
-									</th>
-									<th class="explode">~ Relation</th>
+									<th colspan="2"><s:message code="~eu.dariah.de.colreg.model.collection_relation.relation_type" /></th>
+									<th colspan="2" class="explode"><s:message code="~eu.dariah.de.colreg.model.collection_relation.related_collection" /></th>
 									<c:if test="${editMode}"><th class="nowrap"></th></c:if>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${fn:length(collection.relations)>0}">
-										<c:forEach items="${collection.relations}" var="relation" varStatus="status" >
+									<c:when test="${fn:length(relations)>0}">
+										<c:forEach items="${relations}" var="relation" varStatus="status" >
 											<c:set var="currRelation" value="${relation}" scope="request" />
 											<c:set var="currIndex" value="${status.index}" scope="request" />
 											<jsp:include page="incl/edit_relation.jsp" />
@@ -773,8 +764,8 @@
 								</c:choose>
 								<c:if test="${editMode}">
 									<tr class="collection-editor-table-buttons">
-										<td colspan="${editMode ? 3 : 2}">
-											<button class="btn btn-xs pull-right btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>~ Add agent relation</button>		
+										<td colspan="${editMode ? 5 : 4}">
+											<button class="btn btn-xs pull-right btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_collection_relation" /></button>		
 										</td>
 									</tr>
 								</c:if>
@@ -785,16 +776,13 @@
 					<div class="col-sm-9 col-sm-offset-3">
 						<div class="editor-hint">
 							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-							~ editorhint.agents
+							<s:message code="~eu.dariah.de.colreg.editorhint.collection.related_collections" />
 						</div>
 					</div>
 				</div>
 			</s:bind>
 		</div>
 		
-		
-		<c:forEach items="${collection.relations}" var="relation">
-		</c:forEach>
 		
 		<div class="editor-section">
 			<div class="editor-section-heading">
