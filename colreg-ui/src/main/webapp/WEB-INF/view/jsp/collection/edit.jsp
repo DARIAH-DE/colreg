@@ -728,16 +728,14 @@
 					</div>
 				</div>
 			</s:bind>
-			
 		</div>
-			
-		
-		
+
 		<div class="editor-section">
 			<div class="editor-section-heading">
-				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.relations" /></h4>
+				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></h4>
 			</div>
 			
+			<!-- Collection Relations -->
 			<s:bind path="relations*">
 				<div class="form-group${status.error ? ' has-error' : ' '}">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.view.collection_relation.labels.relations_to_other_collections" /></label>
@@ -781,87 +779,6 @@
 					</div>
 				</div>
 			</s:bind>
-		</div>
-		
-		
-		<div class="editor-section">
-			<div class="editor-section-heading">
-				<h4><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></h4>
-			</div>
-			
-			<!-- Is part of -->
-			<s:bind path="parentCollectionId">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
-					<label for="parentCollectionIdSelector" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.parent_collection" /></label>
-					<div id="parentCollectionIdSelector-container" class="col-sm-9">
-						<c:if test="${editMode}">
-							<div class="row">
-								<div class="col-sm-5">
-									<input type="text" id="parentCollectionIdSelector" class="form-control" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.search_by_id_name" />" />
-									<sf:hidden path="parentCollectionId" />
-								</div>
-							</div>
-						</c:if>
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="parentCollection-display alert alert-default <c:if test="${parentCollection==null}">hide</c:if>">
-									<c:if test="${editMode}">
-										<button type="button" class="btn btn-xs btn-link pull-right collection-reset"><span class="glyphicon glyphicon-trash glyphicon-color-danger" aria-hidden="true"></span></button>
-									</c:if>
-										<p>
-									<c:if test="${parentCollection!=null}">
-										<a href="<s:url value="${parentCollection.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${parentCollection.localizedDescriptions[0].title}</strong><br />
-										<small><em>ID: ${parentCollection.entityId}</em></small></a>
-									</c:if>	
-									</p>
-								</div>
-								<div class="parentCollection-display-null <c:if test="${parentCollection!=null}">hide</c:if>">
-									<label class="control-label" style="text-align: left;">
-										<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></a>
-									</label>
-								</div>
-							
-								<sf:errors element="div" cssClass="validation-error" path="parentCollectionId" />
-							
-								<div class="editor-hint">
-									<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-									<s:message code="~eu.dariah.de.colreg.editorhint.collection.parent_collection" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</s:bind>
-			
-			<!-- Has part of -->
-			<div class="form-group">
-				<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></label>
-				<div id="lst-child-collections-container" class="col-sm-9">
-					<c:choose>
-						<c:when test="${childCollections!=null && fn:length(childCollections)>0}">
-							<c:forEach items="${childCollections}" var="child" varStatus="status" >
-								<div class="alert alert-default">
-									<p>
-										<a href="<s:url value="${child.entityId}" />"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${child.localizedDescriptions[0].title}</strong><br />
-										<small><em>ID: ${child.entityId}</em></small></a>	
-									</p>
-								</div>
-							</c:forEach>		
-						</c:when>
-						<c:otherwise>
-							<label class="control-label">
-								<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_children_assigned" /></em></a> 
-							</label>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<div class="col-sm-9 col-sm-offset-3">
-					<div class="editor-hint">
-						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
-						<s:message code="~eu.dariah.de.colreg.editorhint.collection.child_collections" />
-					</div>
-				</div>
-			</div>
 			
 			<!-- Provided identifiers -->
 			<s:bind path="providedIdentifier*">

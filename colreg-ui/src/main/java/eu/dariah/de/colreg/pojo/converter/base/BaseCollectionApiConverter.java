@@ -39,7 +39,6 @@ public abstract class BaseCollectionApiConverter<TPojo extends CollectionApiPojo
 		pojo.setId(collection.getEntityId());
 		pojo.setTimestamp(collection.getVersionTimestamp().toInstant().getMillis());
 		pojo.setVersionId(collection.getId());
-		pojo.setParentId(collection.getParentCollectionId());
 		pojo.setCollectionTypes(collection.getCollectionTypes());
 		pojo.setDeleted(collection.isDeleted());
 		pojo.setPublished(collection.getDraftUserId()==null || collection.getDraftUserId().isEmpty());

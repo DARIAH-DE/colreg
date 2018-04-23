@@ -193,7 +193,6 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 		this.validateContact(collection, errors);
 		this.validateLocalizedDescriptions(collection, errors);
 		this.validateItemLanguages(collection, errors);
-		this.validateParentCollection(collection, errors);
 		this.validateRelatedAgents(collection, errors);
 		this.validateAccess(collection, errors);
 		this.validateImage(collection, errors);
@@ -238,17 +237,6 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			
 			if (itemLanguageError) {
 				errors.rejectValue("itemLanguages", "~eu.dariah.de.colreg.validation.collection.one_or_more_invalid_languages");
-			}
-		}
-	}
-	
-	private void validateParentCollection(Collection collection, Errors errors) {
-		// ParentCollectionId - if set - must relate to valid collection
-		if (collection.getParentCollectionId()!=null && !collection.getParentCollectionId().trim().isEmpty()) {
-			Collection p = collectionService.findCurrentByCollectionId(collection.getParentCollectionId());
-			// TODO: Other reasons why parent collection is invalid -> cycle
-			if (p==null) {
-				errors.rejectValue("parentCollection", "~eu.dariah.de.colreg.validation.collection.invalid_parent");
 			}
 		}
 	}

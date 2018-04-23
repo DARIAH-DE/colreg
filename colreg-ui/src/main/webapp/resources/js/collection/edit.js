@@ -29,7 +29,6 @@ var CollectionEditor = function() {
 	this.initVocabularySources();
 	this.initEditorComponents();
 	
-	this.registerParentCollectionTypeahead($("#parentCollectionIdSelector"));
 	this.registerLanguageTypeahead($(".language-typeahead"));
 	this.registerEncodingSchemeTypeahead($(".encoding-scheme-typeahead"));
 	this.registerAgentTypeahead($(".agent-typeahead"));
@@ -49,9 +48,7 @@ CollectionEditor.prototype = new BaseEditor();
 CollectionEditor.prototype.initVocabularySources = function() {
 	this.addVocabularySource("languages", "languages/query/");
 	this.addVocabularySource("agents", "agents/query/");
-	this.addVocabularySource("schemes", "schemes/query/");
-	this.addVocabularySource("parentCollections", "collections/query/", "excl=" + this.entityId);
-	
+	this.addVocabularySource("schemes", "schemes/query/");	
 	this.addVocabularySource("relatableCollections", "collections/query/", "excl=" + this.entityId);
 };
 
@@ -220,24 +217,6 @@ CollectionEditor.prototype.registerEncodingSchemeTypeahead = function(element) {
 	);
 };
 
-CollectionEditor.prototype.registerParentCollectionTypeahead = function(element) {
-	var _this = this;
-	
-	this.registerTypeahead(element, "parentCollections", "none", 8, 
-			function(data) { return "<p>" + _this.renderCollectionSuggestion(data) + "</p>"; },
-			function(t, suggestion) {
-				_this.handleParentCollectionSelection(true, suggestion.entityId,
-						"<a href='" + suggestion.entityId + "'>" +
-							"<button type=\"button\" class=\"btn btn-xs btn-link pull-right\">" +
-							"<span class=\"glyphicon glyphicon-link\" aria-hidden=\"true\"></span>" +
-						"</button>" + _this.renderCollectionSuggestion(suggestion) + "</a>");
-			}, null
-	);
-	element.closest(".form-group").find(".collection-reset").on("click", function() { 
-		_this.handleParentCollectionSelection(false, "", "<span></span>"); 
-	});
-};
-
 CollectionEditor.prototype.registerRelatedCollectionTypeahead = function(element) {
 	var _this = this;
 	
@@ -316,19 +295,6 @@ CollectionEditor.prototype.initRightsContainer = function() {
 		$(selected).prop('disabled', false);
 		$(selected).prop('name', id);
 	});
-};
-
-CollectionEditor.prototype.handleParentCollectionSelection = function(select, entityId, html) {
-	$("#parentCollectionId").val(entityId);
-	$(".parentCollection-display p").html(html);
-	
-	if (select) {
-		$(".parentCollection-display").removeClass("hide");
-		$(".parentCollection-display-null").addClass("hide");
-	} else {
-		$(".parentCollection-display").addClass("hide");
-		$(".parentCollection-display-null").removeClass("hide");
-	}
 };
 
 CollectionEditor.prototype.handleAccessTypeChange = function(select) {

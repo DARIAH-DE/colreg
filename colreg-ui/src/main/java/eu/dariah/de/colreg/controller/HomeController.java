@@ -199,7 +199,10 @@ public class HomeController extends VersionedEntityController {
 		
 		// Edges
 		for (Collection c : collections) {
-			if (c.getParentCollectionId()!=null && !c.getParentCollectionId().isEmpty()) {
+			
+			// TODO: Migrate to CollectionRelations
+			
+			/*if (c.getParentCollectionId()!=null && !c.getParentCollectionId().isEmpty()) {
 				edge = new EdgePojo();
 				edge.setSource(c.getEntityId());
 				edge.setTarget(c.getParentCollectionId());
@@ -207,7 +210,7 @@ public class HomeController extends VersionedEntityController {
 				if (!edges.contains(edge) && nodeIds.contains(edge.getSource()) && nodeIds.contains(edge.getTarget())) {
 					edges.add(edge);
 				}
-			}
+			}*/
 			if (c.getAgentRelations()!=null && c.getAgentRelations().size()!=0) {
 				for (CollectionAgentRelation car : c.getAgentRelations()) {
 					edge = new EdgePojo();

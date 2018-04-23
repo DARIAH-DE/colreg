@@ -71,10 +71,6 @@ public class Collection extends VersionedEntityImpl {
 	private String accessRights;
 	private String itemRights;
 	
-	// Context	  
-	@Deprecated
-	private String parentCollectionId;
-	
 	private List<CollectionRelation> relations;
 	
 	
@@ -128,11 +124,6 @@ public class Collection extends VersionedEntityImpl {
 	
 	public String getItemRights() { return itemRights; }
 	public void setItemRights(String itemRights) { this.itemRights = itemRights; }
-	
-	@Deprecated
-	public String getParentCollectionId() { return parentCollectionId; }
-	@Deprecated
-	public void setParentCollectionId(String parentCollectionId) { this.parentCollectionId = parentCollectionId; }
 	
 	public List<CollectionRelation> getRelations() { return relations; }
 	public void setRelations(List<CollectionRelation> relations) { this.relations = relations; }
