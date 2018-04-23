@@ -65,6 +65,10 @@
 	<td colspan="${editMode ? 5 : 4}">
 	
 		<s:bind path="relations[${currIndex}].relationTypeId">
+		
+			<span class="attribute-name-helper">relations{}.id</span>
+			<sf:hidden cssClass="relation-direction-bidirectional" path="relations[${currIndex}].id"/>
+		
 			<div class="form-group${status.error ? ' has-error' : ' '}">
 				<label for="relationTypeId" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.relation_type" /></label>
 				<c:choose>

@@ -102,7 +102,7 @@ public class CollectionServiceImpl implements CollectionService {
 				cBase.and("entityId").ne(excl.get(0));
 			}
 		}
-		
+		cBase.and("deleted").is(false);
 		cBase.orOperator(Criteria.where("draftUserId").exists(false), Criteria.where("draftUserId").is(""));
 
 		// TODO: Include foreName for query

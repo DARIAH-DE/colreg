@@ -115,7 +115,7 @@ CollectionEditor.prototype.initEditorComponents = function() {
 		newRowUrl: __util.composeUrl("collections/includes/editRelation"),
 		newRowCallback: function(row) {
 			_this.registerFormControlSelectionEvents($(row));
-			_this.registerRelatedCollectionTypeahead($(row).find(".relationSourceEntityIdSelector"));
+			_this.registerRelatedCollectionTypeahead($(row).find(".relationCollectionEntityIdSelector"));
 			$("#chk-toggle-hints").trigger("change");
 		}
 	});
@@ -230,16 +230,18 @@ CollectionEditor.prototype.registerRelatedCollectionTypeahead = function(element
 						"</button>" + _this.renderCollectionSuggestion(suggestion) + "</a>");
 			}, null
 	);
-	element.closest(".relation-container").find(".collection-reset").on("click", function() { 
-		_this.handleRelatedCollectionSelection(element, false, "", "<span></span>"); 
+	element.closest("td").find(".collection-reset").on("click", function() { 
+		_this.handleRelatedCollectionSelection(element, false, "", ""); 
 	});
 };
 
 CollectionEditor.prototype.handleRelatedCollectionSelection = function(element, select, entityId, title, html) {
 	
-	var container = $(element).closest(".relation-container");
-	
+	var container = $(element).closest(".form-group");
 	$(container).find(".relation-collection-entityId").val(entityId);
+	
+	container = $(element).closest("td");
+	$(container).find(".relation-collection-entityId-placeholder").val(entityId);
 	$(container).find(".relation-collection-displayTitle").val(title);
 	$(container).find(".relation-collection-displayTitle").trigger('onchange');
 	
@@ -272,17 +274,22 @@ CollectionEditor.prototype.handleRelationDirectionRadioChange = function(element
 	$(element).closest(".form-group").find(".relation-direction-bidirectional").val(bidirectional);
 	
 	var container = $(element).closest("td");
+	var sourceContainer = $(container).find(".relation-collection-sourceEntityId"); 
+	var targetContainer = $(container).find(".relation-collection-targetEntityId");
 	
 	if ($(element).val()=="right" || $(element).val()=="bidirectional") {
-		$(container).find(".relation-collection-sourceEntityId").addClass("hide");
-		$(container).find(".relation-collection-targetEntityId").removeClass("hide");
+		$(sourceContainer).addClass("hide");
+		$(sourceContainer).find(".relation-collection-entityId").val("");
+		$(targetContainer).removeClass("hide");
+		$(targetContainer).find(".relation-collection-entityId").val($(targetContainer).find(".relation-collection-entityId-placeholder").val());
 	} else {
-		$(container).find(".relation-collection-sourceEntityId").removeClass("hide");
-		$(container).find(".relation-collection-targetEntityId").addClass("hide");
+		$(sourceContainer).removeClass("hide");
+		$(sourceContainer).find(".relation-collection-entityId").val($(targetContainer).find(".relation-collection-entityId-placeholder").val());
+		$(targetContainer).addClass("hide");
+		$(targetContainer).find(".relation-collection-entityId").val("");
 	}
 	$(container).find(".relation-collection-displayTitle").trigger('onchange');	
 }
-
 	
 CollectionEditor.prototype.registerAgentRelationTypeSelection = function(element) {
 	// Update displayed table list-row content based on AgentRelationType selection
