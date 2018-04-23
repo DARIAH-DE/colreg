@@ -154,7 +154,24 @@
 					<c:otherwise>
 						<div class="col-sm-9">
 							<label class="content-label">
-								<i class="fa ${currRelation.bidirectional ? 'fa-check-square-o' : 'fa-square-o'}" aria-hidden="true"></i>
+							
+								<c:choose>
+									<c:when test="${currDirection=='right'}">
+										<i class="fa fa-home" aria-hidden="true"></i> 
+								   	 	<i class="fa fa-long-arrow-right" aria-hidden="true"></i> 
+								    	<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									</c:when>
+									<c:when test="${currDirection=='left'}">
+										<i class="fa fa-home" aria-hidden="true"></i> 
+									    <i class="fa fa-long-arrow-left" aria-hidden="true"></i> 
+									    <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="fa fa-home" aria-hidden="true"></i> 
+									    <i class="fa fa-arrows-h" aria-hidden="true"></i> 
+									    <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									</c:otherwise>
+								</c:choose>
 							</label>
 						</div>
 					</c:otherwise>
@@ -171,13 +188,13 @@
 		</s:bind>
 	
 		<!-- Source collection block -->
-		<c:set var="displayCollectionBlock" value="true" scope="request" />
+		<c:set var="displayCollectionBlock" value="${currDirection=='left' ? true : false}" scope="request" />
 		<c:set var="displayCollectionFieldname" value="sourceEntityId" scope="request" />
 		<c:set var="relatedCollectionPojo" value="${currRelation.source}" scope="request" />
 		<jsp:include page="edit_relation_collection.jsp" />
 		
 		<!-- Target collection block -->
-		<c:set var="displayCollectionBlock" value="true" scope="request" />
+		<c:set var="displayCollectionBlock" value="${currDirection!='left' ? true : false}" scope="request" />
 		<c:set var="displayCollectionFieldname" value="targetEntityId" scope="request" />
 		<c:set var="relatedCollectionPojo" value="${currRelation.target}" scope="request" />
 		<jsp:include page="edit_relation_collection.jsp" />

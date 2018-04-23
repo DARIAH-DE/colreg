@@ -3,8 +3,8 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <s:bind path="relations[${currIndex}].${displayCollectionFieldname}">
-	<div class="form-group${status.error ? ' has-error' : ''}${displayCollectionBlock ? '' : ' hide'}">
-		<label for="${displayCollectionFieldname}" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.related_collection" /></label>
+	<div class="form-group relation-collection-${displayCollectionFieldname}${status.error ? ' has-error' : ''}${displayCollectionBlock ? '' : ' hide'}">
+		<label for="${displayCollectionFieldname}" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.related_collection" /> ${displayCollectionFieldname}</label>
 		<div class="col-sm-9 relation-container">
 			<c:if test="${editMode}">
 				<div class="row">
@@ -31,11 +31,11 @@
 					</div>
 					<div class="relatedCollection-display-null <c:if test="${relatedCollectionPojo!=null}">hide</c:if>">
 						<label class="control-label" style="text-align: left;">
-							<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_parent_collection_set" /></em></a>
+							<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_related_collection_set" /></em></a>
 						</label>
 					</div>
 				
-					<sf:errors element="div" cssClass="validation-error" path="parentCollectionId" />
+					<sf:errors element="div" cssClass="validation-error" path="relations[${currIndex}]" />
 				
 					<div class="editor-hint">
 						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 

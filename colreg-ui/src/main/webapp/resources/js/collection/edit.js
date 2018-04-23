@@ -270,6 +270,17 @@ CollectionEditor.prototype.handleRelationDirectionRadioChange = function(element
 	}
 	editor.tables['relationTable'].handleInputChange(element, 'relationTable_direction', value, true);
 	$(element).closest(".form-group").find(".relation-direction-bidirectional").val(bidirectional);
+	
+	var container = $(element).closest("td");
+	
+	if ($(element).val()=="right" || $(element).val()=="bidirectional") {
+		$(container).find(".relation-collection-sourceEntityId").addClass("hide");
+		$(container).find(".relation-collection-targetEntityId").removeClass("hide");
+	} else {
+		$(container).find(".relation-collection-sourceEntityId").removeClass("hide");
+		$(container).find(".relation-collection-targetEntityId").addClass("hide");
+	}
+	$(container).find(".relation-collection-displayTitle").trigger('onchange');	
 }
 
 	

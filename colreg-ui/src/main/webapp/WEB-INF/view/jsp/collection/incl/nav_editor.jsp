@@ -77,10 +77,9 @@
 		</li>
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></a>
 			<ul class="nav">
-				<s:bind path="collection.parentCollectionId">
-					<li ${status.error ? 'class="has-error"' : ' '}><a href="#parentCollectionIdSelector"><s:message code="~eu.dariah.de.colreg.model.collection.parent_collection" /></a></li>
+				<s:bind path="collection.relations">
+					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-relations"><s:message code="~eu.dariah.de.colreg.model.collection.relations" /></a></li>
 				</s:bind>
-				<li><a href="#lst-child-collections"><s:message code="~eu.dariah.de.colreg.model.collection.child_collections" /></a></li>
 				<s:bind path="collection.providedIdentifier*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#lst-collection-provided-identifiers"><s:message code="~eu.dariah.de.colreg.model.collection.provided_identifiers" /></a></li>
 				</s:bind>
