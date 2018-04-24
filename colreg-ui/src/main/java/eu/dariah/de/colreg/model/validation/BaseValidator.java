@@ -59,16 +59,6 @@ public abstract class BaseValidator<T extends BaseIdentifiable> implements Valid
 		}
 		errors.rejectValue(property, messageCode);
 	}
-	
-	protected boolean areStringsSame(String s1, String s2) {
-		if (s1==null && s2==null) {
-			return true;
-		} else if (s1==null && s2==null) {
-			return false;
-		} else {
-			return s1.equals(s2);
-		}
-	}
-	
+		
 	public abstract void innerValidate (T object, Errors errors);
 }

@@ -1,6 +1,7 @@
 package eu.dariah.de.colreg.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -8,20 +9,37 @@ import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.model.CollectionRelation;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
+	protected static Logger logger = LoggerFactory.getLogger(CollectionServiceImpl.class);
+	private enum CollectionRelationActionTypes { DELETE, SET }
+	
+	private class CollectionRelationAction {
+		private final CollectionRelationActionTypes type;
+		private final CollectionRelation relation;
+		
+		public CollectionRelationAction(CollectionRelationActionTypes type, CollectionRelation relation) {
+			this.type = type;
+			this.relation = relation;
+		}
+	}
+	
 	@Autowired private CollectionDao collectionDao;
 	@Autowired private AgentDao agentDao;
 
@@ -232,4 +250,103 @@ public class CollectionServiceImpl implements CollectionService {
 	public List<Collection> findCurrentByCollectionIds(List<String> collectionIds) {
 		return collectionDao.findCurrentById(collectionIds);
 	}
+
+	@Override
+	public void updateRelatedCollections(Collection collection, String userId) {
+		// Load current version to compare
+		Collection dbCollection = this.findCurrentByCollectionId(collection.getEntityId());
+
+		// Collect related collections that need to be saved
+		Map<String, Collection> saveCollections = new HashMap<String, Collection>();
+				
+		// Collect deleted and updated collection relations
+		List<CollectionRelationAction> modifiedRelations = new ArrayList<CollectionRelationAction>();
+		if (dbCollection.getRelations()!=null) {
+			String relatedEntityId, relatedEntityIdDb;
+			for (CollectionRelation dbCr : dbCollection.getRelations()) {
+				boolean deleted = true;
+				if (collection.getRelations()!=null) {
+					for (CollectionRelation cr : collection.getRelations()) {
+						if (cr.getId()!=null && cr.getId().equals(dbCr.getId())) {
+							if (!cr.isSame(dbCr)) {
+								relatedEntityId = cr.getSourceEntityId().equals(collection.getEntityId()) ? cr.getTargetEntityId() : cr.getSourceEntityId();
+								relatedEntityIdDb = dbCr.getSourceEntityId().equals(collection.getEntityId()) ? dbCr.getTargetEntityId() : dbCr.getSourceEntityId();
+								
+								// Delete at old relation collection if related collection changed
+								if (!relatedEntityId.equals(relatedEntityIdDb)) {
+									modifiedRelations.add(new CollectionRelationAction(CollectionRelationActionTypes.DELETE, dbCr));
+								} 
+								modifiedRelations.add(new CollectionRelationAction(CollectionRelationActionTypes.SET, cr));	
+							}
+							deleted = false;
+							break;
+						}
+					}
+				}
+				if (deleted) {
+					modifiedRelations.add(new CollectionRelationAction(CollectionRelationActionTypes.DELETE, dbCr));
+				}
+			}
+		}
+		// Collect deleted and updated collection relations
+		if (collection.getRelations()!=null) {
+			for (CollectionRelation cr : collection.getRelations()) {
+				if (cr.getId()==null || cr.getId().trim().isEmpty()) {
+					cr.setId(null);
+					modifiedRelations.add(new CollectionRelationAction(CollectionRelationActionTypes.SET, cr));
+				}
+			}
+		}		
+		
+		Collection saveCollection;
+		String relatedEntityId;
+		// Iterate actions and update related collections accordingly
+		for (CollectionRelationAction modifiedRelation : modifiedRelations) {
+			relatedEntityId = modifiedRelation.relation.getSourceEntityId().equals(collection.getEntityId()) ? modifiedRelation.relation.getTargetEntityId() : modifiedRelation.relation.getSourceEntityId();
+			if (saveCollections.containsKey(relatedEntityId)) {
+				saveCollection = saveCollections.get(relatedEntityId);
+			} else {			
+				saveCollection = this.findCurrentByCollectionId(relatedEntityId);
+				saveCollections.put(relatedEntityId, saveCollection);
+			}
+			
+			if (modifiedRelation.type.equals(CollectionRelationActionTypes.SET) && modifiedRelation.relation.getId()==null) {
+				modifiedRelation.relation.setId(new ObjectId().toString());
+			}
+			
+			boolean processed = false;
+			if (saveCollection.getRelations()!=null) {
+				for (int i=0; i<saveCollection.getRelations().size(); i++) { 
+					CollectionRelation relatedDbRelation = saveCollection.getRelations().get(i);
+					if (relatedDbRelation.getId().equals(modifiedRelation.relation.getId())) {
+						if (modifiedRelation.type.equals(CollectionRelationActionTypes.DELETE)) {
+							saveCollection.getRelations().remove(relatedDbRelation);
+							processed = true;
+						} else {
+							saveCollection.getRelations().set(i, modifiedRelation.relation);
+							processed = true;
+						}
+						if (saveCollection.getRelations().size()==0) {
+							saveCollection.setRelations(null);
+						}
+						break;
+					}	
+				}
+			}
+			// New
+			if (!processed && modifiedRelation.type.equals(CollectionRelationActionTypes.SET)) {
+				if (saveCollection.getRelations()==null) {
+					saveCollection.setRelations(new ArrayList<CollectionRelation>());
+				}
+				saveCollection.getRelations().add(modifiedRelation.relation);
+			}
+			
+		}
+		for (String collectionId : saveCollections.keySet()) {
+			logger.info(String.format("Saving collection [%s] due to altered relation with collection [%s]", collectionId, collection.getEntityId()));
+			this.save(saveCollections.get(collectionId), userId);
+		}
+				
+	}
+	
 }

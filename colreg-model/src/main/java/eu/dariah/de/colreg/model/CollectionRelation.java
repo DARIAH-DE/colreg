@@ -33,4 +33,11 @@ public class CollectionRelation extends BaseIdentifiable {
 	
 	public String getDescription() { return description; }
 	public void setDescription(String description) { this.description = description; }
+	
+	public boolean isSame(CollectionRelation relation) {
+		return this.getRelationTypeId().equals(relation.getRelationTypeId()) &&
+				this.areStringsSame(this.getSourceEntityId(), relation.getSourceEntityId()) && 
+				this.areStringsSame(this.getTargetEntityId(), relation.getTargetEntityId()) &&
+				this.isBidirectional()==relation.isBidirectional();
+	}
 }

@@ -192,8 +192,16 @@
 		</s:bind>
 	
 		<!-- Related collection block -->
-		<c:set var="displayCollectionFieldname" value="${currDirection!='left' ? 'targetEntityId' : 'sourceEntityId'}" scope="request" />
-		<c:set var="relatedCollectionPojo" value="${currDirection!='left' ? currRelation.target : currRelation.source}" scope="request" />
+		<c:choose>
+			<c:when test="${currRelation.target.id==collection.entityId}">
+				<c:set var="displayCollectionFieldname" value="sourceEntityId" scope="request" />
+				<c:set var="relatedCollectionPojo" value="${currRelation.source}" scope="request" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="displayCollectionFieldname" value="targetEntityId" scope="request" />
+				<c:set var="relatedCollectionPojo" value="${currRelation.target}" scope="request" />
+			</c:otherwise>
+		</c:choose>
 		<jsp:include page="edit_relation_collection.jsp" />
 			
 	</td>

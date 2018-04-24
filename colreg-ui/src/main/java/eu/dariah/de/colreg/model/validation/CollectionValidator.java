@@ -160,7 +160,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			collection.getAgentRelations().removeAll(emptyRelations);
 		}
 		
-		// Remove empty agent relations
+		// Remove empty relations
 		if (collection.getRelations()!=null) {
 			for (CollectionRelation relation : collection.getRelations()) {				
 				if (relation.getSourceEntityId()==null || relation.getSourceEntityId().trim().isEmpty()) {
@@ -238,16 +238,19 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	        }
 	        
 	        CollectionRelation compRel1 = collection.getRelations().get(i);
+	        if (compRel1.getSourceEntityId().equals(compRel1.getTargetEntityId())) {
+	        	errors.rejectValue("relations[" + i + "].sourceEntityId", "~eu.dariah.de.colreg.validation.collection_relation.duplicates");
+	        	errors.rejectValue("relations[" + i + "].targetEntityId", "~eu.dariah.de.colreg.validation.collection_relation.inconsistent_relation_ids");
+	        }
+	        
+	        
 	        CollectionRelation compRel2;
 	        for (int j=0; j<collection.getRelations().size(); j++) {
 	        	if (i==j) {
 	        		continue;
 	        	}
 	        	compRel2 = collection.getRelations().get(j);
-	        	if (compRel1.getRelationTypeId().equals(compRel2.getRelationTypeId()) &&
-	        			this.areStringsSame(compRel1.getSourceEntityId(), compRel2.getSourceEntityId()) && 
-	        			this.areStringsSame(compRel1.getTargetEntityId(), compRel2.getTargetEntityId()) &&
-	        			compRel1.isBidirectional()==compRel2.isBidirectional()) {
+	        	if (compRel1.isSame(compRel2)) {	        		
 	        		errors.rejectValue("relations[" + i + "]", "~eu.dariah.de.colreg.validation.collection_relation.duplicates");
 	        	}		
 	        }

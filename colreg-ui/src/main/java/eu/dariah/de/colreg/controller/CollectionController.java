@@ -216,7 +216,10 @@ public class CollectionController extends VersionedEntityController {
 				collection.setDraftUserId(cCurrent.getDraftUserId());
 			}
 		}
-		//collectionService.save(collection, auth.getUserId());
+		
+		collectionService.updateRelatedCollections(collection, auth.getUserId());
+		
+		collectionService.save(collection, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", collection.getId());
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", collection.getVersionTimestamp());
 		return "redirect:/collections/" + collection.getEntityId();
@@ -413,6 +416,7 @@ public class CollectionController extends VersionedEntityController {
 	public String getEditRelationForm(Model model, Locale locale) {
 		model.addAttribute("currIndex", -1);
 		model.addAttribute("currRelation", new CollectionRelationViewPojo());
+		model.addAttribute("relations[-1]*", new CollectionRelation());
 		model.addAttribute("relations[-1]", new CollectionRelation());
 		
 		List<VocabularyItem> collectionRelationTypes = vocabularyItemService.findVocabularyItems(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
