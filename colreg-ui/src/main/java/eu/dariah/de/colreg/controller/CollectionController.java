@@ -411,9 +411,9 @@ public class CollectionController extends VersionedEntityController {
 	
 	@RequestMapping(method=GET, value={"/includes/editRelation"})
 	public String getEditRelationForm(Model model, Locale locale) {
-		model.addAttribute("currIndex", 0);
+		model.addAttribute("currIndex", -1);
 		model.addAttribute("currRelation", new CollectionRelationViewPojo());
-		model.addAttribute("relations[0]", new CollectionRelation());
+		model.addAttribute("relations[-1]", new CollectionRelation());
 		
 		List<VocabularyItem> collectionRelationTypes = vocabularyItemService.findVocabularyItems(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
 		List<VocabularyItemViewPojo> collectionRelationTypePojos = vocabularyItemConverter.convertToPojos(collectionRelationTypes, locale);

@@ -273,22 +273,13 @@ CollectionEditor.prototype.handleRelationDirectionRadioChange = function(element
 	editor.tables['relationTable'].handleInputChange(element, 'relationTable_direction', value, true);
 	$(element).closest(".form-group").find(".relation-direction-bidirectional").val(bidirectional);
 	
-	var container = $(element).closest("td");
-	
-	var relatedCollectionContainer = $(container).find(".relation-collection-container"); 
-	
-	
+	var relatedCollectionContainer = $(element).closest("td").find(".relation-collection-container"); 	
 	if ($(element).val()=="right" || $(element).val()=="bidirectional") {
 		$(relatedCollectionContainer).find(".attribute-name-helper").text("relations{}.targetEntityId");
-		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("id", "relations0.targetEntityId");
-		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("name", "relations[0].targetEntityId");
 	} else {
 		$(relatedCollectionContainer).find(".attribute-name-helper").text("relations{}.sourceEntityId");
-		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("id", "relations0.sourceEntityId");
-		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("name", "relations[0].sourceEntityId");
 	}
-	editor.tables['relationTable'].sort();
-	$(container).find(".relation-collection-displayTitle").trigger('onchange');	
+	editor.tables['relationTable'].sort();	
 }
 	
 CollectionEditor.prototype.registerAgentRelationTypeSelection = function(element) {
