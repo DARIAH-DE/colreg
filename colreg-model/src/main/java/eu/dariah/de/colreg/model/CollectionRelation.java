@@ -1,5 +1,7 @@
 package eu.dariah.de.colreg.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
 
 public class CollectionRelation extends BaseIdentifiable {
@@ -7,10 +9,14 @@ public class CollectionRelation extends BaseIdentifiable {
 
 	public static final String COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER = "collectionRelationTypes";
 	
+	@NotEmpty(message="{~eu.dariah.de.colreg.validation.collection_relation.related_collection}")
 	private String sourceEntityId;
+	
+	@NotEmpty(message="{~eu.dariah.de.colreg.validation.collection_relation.related_collection}")
 	private String targetEntityId;
 	private boolean bidirectional;
 	private String relationTypeId;
+	private String description;
 	
 	
 	public String getSourceEntityId() { return sourceEntityId; }
@@ -24,4 +30,7 @@ public class CollectionRelation extends BaseIdentifiable {
 	
 	public String getRelationTypeId() { return relationTypeId; }
 	public void setRelationTypeId(String relationTypeId) { this.relationTypeId = relationTypeId; }
+	
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
 }

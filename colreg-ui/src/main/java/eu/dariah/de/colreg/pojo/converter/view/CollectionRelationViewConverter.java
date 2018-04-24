@@ -36,6 +36,7 @@ public class CollectionRelationViewConverter extends BaseConverter<CollectionRel
 		pojo.setId(relation.getId());
 		pojo.setBidirectional(relation.isBidirectional());
 		pojo.setRelationTypeId(relation.getRelationTypeId());
+		pojo.setDescription(relation.getDescription());
 		if (collectionEntityIdViewPojoMap!=null) {
 			pojo.setSource(collectionEntityIdViewPojoMap.get(relation.getSourceEntityId()));
 			pojo.setTarget(collectionEntityIdViewPojoMap.get(relation.getTargetEntityId()));

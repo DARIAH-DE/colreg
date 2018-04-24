@@ -3,7 +3,10 @@ package eu.dariah.de.colreg.model.validation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,7 @@ import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.model.CollectionRelation;
 import eu.dariah.de.colreg.model.LocalizedDescription;
 import eu.dariah.de.colreg.model.vocabulary.AccessType;
 import eu.dariah.de.colreg.service.AccessTypeService;
@@ -156,6 +160,26 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			collection.getAgentRelations().removeAll(emptyRelations);
 		}
 		
+		// Remove empty agent relations
+		if (collection.getRelations()!=null) {
+			for (CollectionRelation relation : collection.getRelations()) {				
+				if (relation.getSourceEntityId()==null || relation.getSourceEntityId().trim().isEmpty()) {
+					relation.setSourceEntityId(null);
+				}
+				if (relation.getTargetEntityId()==null || relation.getTargetEntityId().trim().isEmpty()) {
+					relation.setTargetEntityId(null);
+				}
+				
+				if (relation.getSourceEntityId()==null && relation.getTargetEntityId()==null) {
+					// Nothing to do, related collection unset -> raise validation error
+				} else if (relation.getSourceEntityId()==null) {
+					relation.setSourceEntityId(collection.getEntityId());
+				} else if (relation.getTargetEntityId()==null) {
+					relation.setTargetEntityId(collection.getEntityId());
+				}
+			}
+		}
+		
 		// Access
 		if (collection.getAccessMethods()!=null && collection.getAccessMethods().size()>0) {
 			Access acc;
@@ -197,6 +221,37 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 		this.validateAccess(collection, errors);
 		this.validateImage(collection, errors);
 		this.validateCollectionTypes(collection, errors);
+		this.validateRelations(collection, errors);
+	}
+
+	private void validateRelations(Collection collection, Errors errors) {
+		if (collection.getRelations()==null || collection.getRelations().size()==0) {
+			return;
+		}
+		Validator validator = this.createValidator();
+        Set<ConstraintViolation<CollectionRelation>> violations;
+        
+        for (int i=0; i<collection.getRelations().size(); i++) {
+        	violations = validator.validate(collection.getRelations().get(i));
+	        for (ConstraintViolation<CollectionRelation> v : violations) {
+	        	this.rejectValue(errors, v, "relations[%s].%s", i, v.getPropertyPath().toString());
+	        }
+	        
+	        CollectionRelation compRel1 = collection.getRelations().get(i);
+	        CollectionRelation compRel2;
+	        for (int j=0; j<collection.getRelations().size(); j++) {
+	        	if (i==j) {
+	        		continue;
+	        	}
+	        	compRel2 = collection.getRelations().get(j);
+	        	if (compRel1.getRelationTypeId().equals(compRel2.getRelationTypeId()) &&
+	        			this.areStringsSame(compRel1.getSourceEntityId(), compRel2.getSourceEntityId()) && 
+	        			this.areStringsSame(compRel1.getTargetEntityId(), compRel2.getTargetEntityId()) &&
+	        			compRel1.isBidirectional()==compRel2.isBidirectional()) {
+	        		errors.rejectValue("relations[" + i + "]", "~eu.dariah.de.colreg.validation.collection_relation.duplicates");
+	        	}		
+	        }
+        }
 	}
 	
 	private void validateCollectionTypes(Collection collection, Errors errors) {

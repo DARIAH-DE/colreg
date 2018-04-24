@@ -737,7 +737,7 @@
 			
 			<!-- Collection Relations -->
 			<s:bind path="relations*">
-				<div class="form-group${status.error ? ' has-error' : ' '}">
+				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.view.collection_relation.labels.relations_to_other_collections" /></label>
 					<div class="col-sm-9">
 						<table id="tbl-collection-relations" class="collection-editor-table">

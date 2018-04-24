@@ -9,6 +9,7 @@ public class CollectionRelationViewPojo extends BaseIdentifiable {
 	private CollectionViewPojo target;
 	private boolean bidirectional;
 	private String relationTypeId;
+	private String description;
 	
 	
 	public CollectionViewPojo getSource() { return source; }
@@ -22,4 +23,7 @@ public class CollectionRelationViewPojo extends BaseIdentifiable {
 	
 	public String getRelationTypeId() { return relationTypeId; }
 	public void setRelationTypeId(String relationTypeId) { this.relationTypeId = relationTypeId; }	
+	
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
 }

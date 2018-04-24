@@ -185,6 +185,7 @@ public class MigrationServiceImpl implements MigrationService {
 				relationNode.put("sourceEntityId", collectionId);
 				relationNode.put("targetEntityId", parentCollectionId);
 				relationNode.put("relationTypeId", "childOf");
+				relationNode.put("bidirectional", false);
 				
 				this.appendRelationToCollection(objectNode, relationNode);
 				mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));

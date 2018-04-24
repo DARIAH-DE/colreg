@@ -77,7 +77,7 @@
 		</li>
 		<li><a href="#"><s:message code="~eu.dariah.de.colreg.model.collection.groups.contextual" /></a>
 			<ul class="nav">
-				<s:bind path="collection.relations">
+				<s:bind path="collection.relations*">
 					<li ${status.error ? 'class="has-error"' : ' '}><a href="#tbl-collection-relations"><s:message code="~eu.dariah.de.colreg.model.collection.relations" /></a></li>
 				</s:bind>
 				<s:bind path="collection.providedIdentifier*">

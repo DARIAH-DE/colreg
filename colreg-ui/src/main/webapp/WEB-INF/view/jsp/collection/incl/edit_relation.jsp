@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
-<s:bind path="relations[${currIndex}].*">
+<s:bind path="relations[${currIndex}]*">
 	<tr class="list${status.error ? ' has-error' : ' '}">
 		<td onclick="editor.tables['relationTable'].editEntry(this); return false;">
 			<i class="fa fa-home" aria-hidden="true"></i>
