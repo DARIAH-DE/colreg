@@ -166,8 +166,7 @@ public class MigrationServiceImpl implements MigrationService {
 		}
 		
 		String parentCollectionId;		
-		ObjectNode targetNode;
-		CollectionRelation relation;
+		ObjectNode targetNode, relationNode, idNode;
 		try {
 			for (String collectionId : rawCollectionsIdMap.keySet()) {
 				objectNode = rawCollectionsIdMap.get(collectionId);
@@ -179,18 +178,21 @@ public class MigrationServiceImpl implements MigrationService {
 					continue;
 				}
 				objectNode.remove("parentCollectionId");
-								
-				relation = new CollectionRelation();
-				relation.setId(new ObjectId().toString());
-				relation.setSourceEntityId(collectionId);
-				relation.setTargetEntityId(parentCollectionId);
-				relation.setRelationTypeId("childOf");
 				
-				this.appendRelationToCollection(objectNode, relation);
+				idNode = objectMapper.createObjectNode();
+				idNode.put("$oid", new ObjectId().toString());
+				
+				relationNode = objectMapper.createObjectNode();
+				relationNode.set("_id", idNode);
+				relationNode.put("sourceEntityId", collectionId);
+				relationNode.put("targetEntityId", parentCollectionId);
+				relationNode.put("relationTypeId", "childOf");
+				
+				this.appendRelationToCollection(objectNode, relationNode);
 				mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
 				
 				targetNode = rawCollectionsIdMap.get(parentCollectionId);
-				this.appendRelationToCollection(targetNode, relation);
+				this.appendRelationToCollection(targetNode, relationNode);
 				mongoTemplate.save(targetNode.toString(), DaoImpl.getCollectionName(Collection.class));
 			}
 			logger.info("Collection Relation Types migration completed WITHOUT errors (version: 3.9.2)");
@@ -199,14 +201,14 @@ public class MigrationServiceImpl implements MigrationService {
 		}
 	}
 	
-	private void appendRelationToCollection(ObjectNode collectionNode, CollectionRelation relation) {
+	private void appendRelationToCollection(ObjectNode collectionNode, ObjectNode relationNode) {
 		ArrayNode relationsNode;
 		if (collectionNode.get("relations")!=null && !collectionNode.get("relations").isMissingNode()) {
 			relationsNode = (ArrayNode)collectionNode.get("relations");
 		} else {
 			relationsNode = objectMapper.createArrayNode();
 		}
-		relationsNode.add(objectMapper.valueToTree(relation));
+		relationsNode.add(relationNode);
 		collectionNode.set("relations", relationsNode);
 	}
 

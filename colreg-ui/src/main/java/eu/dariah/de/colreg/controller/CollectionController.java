@@ -216,7 +216,7 @@ public class CollectionController extends VersionedEntityController {
 				collection.setDraftUserId(cCurrent.getDraftUserId());
 			}
 		}
-		collectionService.save(collection, auth.getUserId());
+		//collectionService.save(collection, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", collection.getId());
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", collection.getVersionTimestamp());
 		return "redirect:/collections/" + collection.getEntityId();

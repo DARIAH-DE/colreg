@@ -3,15 +3,14 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <s:bind path="relations[${currIndex}].${displayCollectionFieldname}">
-	<div class="form-group relation-collection-${displayCollectionFieldname}${status.error ? ' has-error' : ''}${displayCollectionBlock ? '' : ' hide'}">
-		<label for="${displayCollectionFieldname}" class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.related_collection" /></label>
+	<div class="form-group relation-collection-container${status.error ? ' has-error' : ''}">
+		<label class="col-sm-3 control-label mandatory"><s:message code="~eu.dariah.de.colreg.model.collection_relation.related_collection" /></label>
 		<div class="col-sm-9">
 			<c:if test="${editMode}">
 				<div class="row">
 					<div class="col-sm-7">
 						<span class="attribute-name-helper">relations{}.${displayCollectionFieldname}</span>
 						<sf:hidden cssClass="relation-collection-entityId" path="relations[${currIndex}].${displayCollectionFieldname}" />
-						<input type="hidden" class="relation-collection-entityId-placeholder" value="${relatedCollectionPojo.id}" />
 						<input type="hidden" class="relation-collection-displayTitle" onchange="editor.tables['relationTable'].handleInputChange(this, 'relationTable_collection');"  />
 						<input type="text" class="form-control relationCollectionEntityIdSelector" placeholder="<s:message code="~eu.dariah.de.colreg.view.collection.labels.search_by_id_name" />" />
 					</div>

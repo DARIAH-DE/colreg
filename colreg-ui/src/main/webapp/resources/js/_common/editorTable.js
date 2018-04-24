@@ -111,7 +111,7 @@ CollectionEditorTable.prototype.sort = function() {
 			var id = $(this).text().replace("{}", index);
 			
 			var next = $(this).next();
-			if (next.hasClass("form-control") || next.prop("type")=="radio") {
+			if (next.hasClass("form-control") || next.prop("type")=="radio" || next.prop("type")=="hidden") {
 				next.prop("id", id).prop("name", name);
 			} else {
 				next.find(".form-control").not(".tt-hint").first().prop("id", id).prop("name", name);

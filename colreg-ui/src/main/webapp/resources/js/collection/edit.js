@@ -241,7 +241,7 @@ CollectionEditor.prototype.handleRelatedCollectionSelection = function(element, 
 	$(container).find(".relation-collection-entityId").val(entityId);
 	
 	container = $(element).closest("td");
-	$(container).find(".relation-collection-entityId-placeholder").val(entityId);
+	$(container).find(".relation-collection-entityId").val(entityId);
 	$(container).find(".relation-collection-displayTitle").val(title);
 	$(container).find(".relation-collection-displayTitle").trigger('onchange');
 	
@@ -274,20 +274,20 @@ CollectionEditor.prototype.handleRelationDirectionRadioChange = function(element
 	$(element).closest(".form-group").find(".relation-direction-bidirectional").val(bidirectional);
 	
 	var container = $(element).closest("td");
-	var sourceContainer = $(container).find(".relation-collection-sourceEntityId"); 
-	var targetContainer = $(container).find(".relation-collection-targetEntityId");
+	
+	var relatedCollectionContainer = $(container).find(".relation-collection-container"); 
+	
 	
 	if ($(element).val()=="right" || $(element).val()=="bidirectional") {
-		$(sourceContainer).addClass("hide");
-		$(sourceContainer).find(".relation-collection-entityId").val("");
-		$(targetContainer).removeClass("hide");
-		$(targetContainer).find(".relation-collection-entityId").val($(targetContainer).find(".relation-collection-entityId-placeholder").val());
+		$(relatedCollectionContainer).find(".attribute-name-helper").text("relations{}.targetEntityId");
+		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("id", "relations0.targetEntityId");
+		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("name", "relations[0].targetEntityId");
 	} else {
-		$(sourceContainer).removeClass("hide");
-		$(sourceContainer).find(".relation-collection-entityId").val($(targetContainer).find(".relation-collection-entityId-placeholder").val());
-		$(targetContainer).addClass("hide");
-		$(targetContainer).find(".relation-collection-entityId").val("");
+		$(relatedCollectionContainer).find(".attribute-name-helper").text("relations{}.sourceEntityId");
+		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("id", "relations0.sourceEntityId");
+		//$(relatedCollectionContainer).find(".relation-collection-entityId").prop("name", "relations[0].sourceEntityId");
 	}
+	editor.tables['relationTable'].sort();
 	$(container).find(".relation-collection-displayTitle").trigger('onchange');	
 }
 	
