@@ -28,6 +28,7 @@ import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
+import eu.dariah.de.colreg.model.CollectionRelation;
 import eu.dariah.de.colreg.model.base.VersionedEntityImpl;
 import eu.dariah.de.colreg.pojo.view.EdgePojo;
 import eu.dariah.de.colreg.pojo.view.GraphPojo;
@@ -199,18 +200,17 @@ public class HomeController extends VersionedEntityController {
 		
 		// Edges
 		for (Collection c : collections) {
-			
-			// TODO: Migrate to CollectionRelations
-			
-			/*if (c.getParentCollectionId()!=null && !c.getParentCollectionId().isEmpty()) {
-				edge = new EdgePojo();
-				edge.setSource(c.getEntityId());
-				edge.setTarget(c.getParentCollectionId());
-				
-				if (!edges.contains(edge) && nodeIds.contains(edge.getSource()) && nodeIds.contains(edge.getTarget())) {
-					edges.add(edge);
+			if (c.getRelations()!=null) {
+				for (CollectionRelation cr : c.getRelations()) {
+					edge = new EdgePojo();
+					edge.setSource(cr.getSourceEntityId());
+					edge.setTarget(cr.getTargetEntityId());
+					
+					if (!edges.contains(edge) && nodeIds.contains(edge.getSource()) && nodeIds.contains(edge.getTarget())) {
+						edges.add(edge);
+					}
 				}
-			}*/
+			}
 			if (c.getAgentRelations()!=null && c.getAgentRelations().size()!=0) {
 				for (CollectionAgentRelation car : c.getAgentRelations()) {
 					edge = new EdgePojo();
