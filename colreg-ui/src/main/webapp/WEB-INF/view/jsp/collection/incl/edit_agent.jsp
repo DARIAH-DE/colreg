@@ -12,16 +12,16 @@
 				<c:otherwise><s:message code="~eu.dariah.de.colreg.common.labels.new_entry" /></c:otherwise>
 			</c:choose>
 		</td>
-		<td class="agentRelationTable_agentType" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">
+		<td class="agentRelationTable_agentType" onclick="editor.tables['agentRelationTable'].editEntry(this); return false;">		
 			<c:if test="${currAgentRelation!=null}">
 				<c:forEach items="${agentRelationTypes}" var="type">
 					<c:set var="contains" value="false" />
 					<c:forEach items="${currAgentRelation.typeIds}" var="typeId">
-						<c:if test="${typeId==type.id}">
+						<c:if test="${typeId==type.identifier}">
 							<c:set var="contains" value="true" />
 						</c:if>
 					</c:forEach>
-					<c:if test="${contains}">${type.label} </c:if>
+					<c:if test="${contains}">${type.displayLabel} </c:if>
 				</c:forEach>
 			</c:if>
 		</td>
@@ -47,13 +47,13 @@
 								<c:forEach items="${agentRelationTypes}" var="type">
 									<c:set var="contains" value="false" />
 									<c:forEach items="${currAgentRelation.typeIds}" var="typeId">
-										<c:if test="${typeId==type.id}">
+										<c:if test="${typeId==type.identifier}">
 											<c:set var="contains" value="true" />
 										</c:if>
 									</c:forEach>
 									<c:set var="selected"></c:set>
 									<c:if test="${contains}"><c:set var="selected">selected="selected"</c:set></c:if>
-									<option ${selected} value="${type.id}">${type.label}</option>
+									<option ${selected} value="${type.identifier}">${type.displayLabel}</option>
 								</c:forEach>
 							</select>
 							<input type="hidden" class="agent-type-display-helper" onchange="editor.tables['agentRelationTable'].handleInputChange(this, 'agentRelationTable_agentType');" />
@@ -64,7 +64,7 @@
 							<label class="content-label">
 								<c:forEach items="${agentRelationTypes}" var="type">
 									<c:forEach items="${currAgentRelation.typeIds}" var="typeId">
-										<c:if test="${typeId==type.id}">${type.label}<br /></c:if>
+										<c:if test="${typeId==type.identifier}">${type.displayLabel}<br /></c:if>
 									</c:forEach>
 								</c:forEach>
 							</label>
@@ -80,7 +80,7 @@
 						<s:message code="~eu.dariah.de.colreg.editorhint.agent_relation.relation" />
 					</div>
 				</div>
-			</div>
+			</div>			
 		</s:bind>
 		<s:bind path="agentRelations[${currIndex}].agentId">
 			<div class="form-group${status.error ? ' has-error' : ' '}">
