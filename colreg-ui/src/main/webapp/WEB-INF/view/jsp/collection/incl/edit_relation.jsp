@@ -203,6 +203,29 @@
 			</c:otherwise>
 		</c:choose>
 		<jsp:include page="edit_relation_collection.jsp" />
+		
+		<s:bind path="relations[${currIndex}].description">
+			<div class="form-group${status.error ? ' has-error' : ' '}">
+				<label for="description" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection_relation.description" /></label>
+				<div class="col-sm-9">
+					<c:choose>
+						<c:when test="${editMode}">
+							<span class="attribute-name-helper">relations{}.description</span>
+							<textarea class="form-control" rows="3" id="relations${currIndex}.description" name="relations[${currIndex}].description">${currRelation.description}</textarea>
+						</c:when>
+						<c:otherwise>
+							<label class="content-label">${currRelation.description}</label>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.collection_relation.description" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
 			
 	</td>
 </tr>
