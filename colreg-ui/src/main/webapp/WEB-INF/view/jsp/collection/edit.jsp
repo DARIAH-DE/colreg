@@ -412,7 +412,7 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<c:forEach items="${collection.itemLanguages}" var="lang" varStatus="status" >
 										<a href="javascript:void(0)">${lang}</a><br/>
 									</c:forEach>
@@ -456,7 +456,7 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<c:forEach items="${collection.subjects}" var="subj" varStatus="status" >
 										<a href="javascript:void(0)">${subj}</a><br/>
 									</c:forEach>
@@ -500,7 +500,7 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<c:forEach items="${collection.temporals}" var="subj" varStatus="status" >
 										<a href="javascript:void(0)">${temp}</a><br/>
 									</c:forEach>
@@ -544,7 +544,7 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<c:forEach items="${collection.spatials}" var="spatial" varStatus="status" >
 										<a href="javascript:void(0)">${spatial}</a><br/>
 									</c:forEach>
@@ -572,7 +572,7 @@
 								<sf:input path="collectionCreated" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<a href="javascript:void(0)">${collection.collectionCreated}</a>
 								</label>
 							</c:otherwise>
@@ -598,7 +598,7 @@
 								<sf:input path="itemsCreated" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<a href="javascript:void(0)">${collection.itemsCreated}</a>
 								</label>
 							</c:otherwise>
@@ -634,7 +634,7 @@
 								<input type="number" id="size" name="size" value="${collection.size}" class="form-control" />								
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<a href="javascript:void(0)">${collection.size}</a> 
 									
 									<c:set var="uomCode">~eu.dariah.de.colreg.model.vocabulary.uom.not_specified</c:set>
@@ -711,7 +711,7 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<label class="control-label" style="text-align: left;">
+							<label class="content-label" style="text-align: left;">
 								<c:if test="${collection.researchDriven}"><i class="fa fa-check" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.model.collection.research_driven" /></c:if> 
 								<c:if test="${collection.curationDriven}"><i class="fa fa-check" aria-hidden="true"></i> <s:message code="~eu.dariah.de.colreg.model.collection.curation_driven" /></c:if>
 								<c:if test="${collection.accrualDescription!=null && fn:length(collection.accrualDescription)>0}">
@@ -829,7 +829,7 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<c:forEach items="${collection.providedIdentifier}" var="ident" varStatus="status" >
 										<a href="javascript:void(0)">${ident}</a><br/>
 									</c:forEach>
@@ -874,7 +874,7 @@
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<c:forEach items="${collection.audiences}" var="audience" varStatus="status" >
 										<a href="javascript:void(0)">${audience}</a><br/>
 									</c:forEach>
@@ -902,7 +902,7 @@
 								<sf:input path="provenanceInfo" class="form-control" />
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<a href="javascript:void(0)">${collection.provenanceInfo}</a> 
 								</label>
 							</c:otherwise>
@@ -930,7 +930,7 @@
 								<sf:textarea class="form-control" rows="3" path="associatedProject"></sf:textarea>
 							</c:when>
 							<c:otherwise>
-								<label class="control-label">
+								<label class="content-label">
 									<a href="javascript:void(0)">${collection.associatedProject}</a> 
 								</label>
 							</c:otherwise>
@@ -1189,7 +1189,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.current_version" /></label>
 					<div id="current-version" class="col-sm-9">
-						<label class="control-label">
+						<label class="content-label">
 							<a href="javascript:void(0)"><joda:format value="${collection.versionTimestamp}" style="LM" /> (${collection.versionCreator})</a> 
 						</label>
 					</div>
@@ -1205,7 +1205,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.collection.created" /></label>
 					<div id="initially-created" class="col-sm-9">
-						<label class="control-label">
+						<label class="content-label">
 							<a href="javascript:void(0)"><joda:format value="${collection.entityTimestamp}" style="LM" /> (${collection.entityCreator})</a> 
 						</label>
 					</div>

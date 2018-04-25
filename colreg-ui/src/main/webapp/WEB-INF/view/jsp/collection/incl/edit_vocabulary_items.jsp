@@ -36,7 +36,7 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach items="${vocabularyModelItems}" var="vocabularyModelItem" varStatus="status" >
-						<label class="control-label">
+						<label class="content-label">
 							<c:forEach items="${availableVocabularyItems}" var="availableVocabularyItem">
 								<c:if test="${availableVocabularyItem.identifier==vocabularyModelItem}">
 									<a href="javascript:void(0)">${availableVocabularyItem.displayLabel}</a>

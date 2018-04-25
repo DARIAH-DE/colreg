@@ -37,7 +37,7 @@
 					</div>
 					
 					<div class="relatedCollection-display-null <c:if test="${relatedCollectionPojo!=null}">hide</c:if>">
-						<label class="control-label" style="text-align: left;">
+						<label class="content-label" style="text-align: left;">
 							<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_related_collection_set" /></em></a>
 						</label>
 					</div>

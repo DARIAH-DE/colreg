@@ -703,7 +703,17 @@ a.control-link:active {
 	margin-bottom: 0;
     padding-top: 7px;
     font-weight: normal;
-	font-style: 
+	font-style: italic;
+}
+
+.content-label a,
+.content-label a:link,
+.content-label a:visited,
+.content-label a:hover, 
+.content-label a:active {
+	color: inherit;
+	cursor: default;
+	text-decoration: none;
 }
 
 .editor-section {

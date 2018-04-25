@@ -43,7 +43,7 @@
 	</c:when>
 	<c:otherwise>
 		<div id="${currRightsName}" class="col-sm-9">
-			<label class="control-label">
+			<label class="content-label">
 				<a href="javascript:void(0)">
 					<c:choose>
 						<c:when test="${currRightsLicenseId}">

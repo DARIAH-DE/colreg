@@ -111,7 +111,7 @@
 								</p>
 							</div>
 							<div class="agent-display-null <c:if test="${currAgentRelation.agent!=null}">hide</c:if>">
-								<label class="control-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_agent_set" /></em></label><br />
+								<label class="content-label"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_agent_set" /></em></label><br />
 							</div>
 						
 							<sf:errors element="div" cssClass="validation-error" path="agentRelations[${currIndex}].agentId" />
