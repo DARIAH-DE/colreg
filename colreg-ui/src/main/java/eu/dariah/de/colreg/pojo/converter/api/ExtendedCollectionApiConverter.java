@@ -45,7 +45,7 @@ public class ExtendedCollectionApiConverter extends BaseCollectionApiConverter<E
 		if (locale!=null) {
 			pojo.setLocalizedDescription(this.getLocalizedOrDefaultDescription(collection, locale));
 		} else {
-			pojo.setTitles(this.getLanguageIdDescriptionMap(collection));
+			pojo.setDecriptions(this.getLanguageIdDescriptionMap(collection));
 		}
 		return pojo;
 	}
