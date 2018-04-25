@@ -8,6 +8,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CollectionAgentRelation {
+	public static final String AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER = "agentRelationTypes";
+	
 	@NotEmpty(message="{~eu.dariah.de.colreg.validation.agent_relation.type_ids}")
 	private List<String> typeIds;
 	

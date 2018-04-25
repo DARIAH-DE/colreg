@@ -39,6 +39,7 @@ import eu.dariah.de.colreg.dao.base.DaoImpl;
 import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyDao;
 import eu.dariah.de.colreg.dao.vocabulary.generic.VocabularyItemDao;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.model.CollectionAgentRelation;
 import eu.dariah.de.colreg.model.CollectionRelation;
 import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
@@ -128,8 +129,80 @@ public class MigrationServiceImpl implements MigrationService {
 			}
 			this.migrateCollectionRelations();
 		}
+		if (!existingVersions.contains("3.9.3")) {
+			if (!backedUp) {
+				this.backupDb();
+				backedUp = true;
+			}
+			this.migrateAgentRelationTypes();
+		}
 	}
 	
+	private void migrateAgentRelationTypes() {
+		this.createVocabulary(CollectionAgentRelation.AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER, "Agent Relation Types", "3.9.3");
+				
+		VocabularyItem vi = new VocabularyItem();
+		vi.setIdentifier("owner");
+		vi.setDefaultName("Owner");
+		vi.setVocabularyIdentifier(CollectionAgentRelation.AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		vocabularyItemDao.save(vi);
+		
+		vi = new VocabularyItem();
+		vi.setIdentifier("creator");
+		vi.setDefaultName("Creator");
+		vi.setVocabularyIdentifier(CollectionAgentRelation.AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		vocabularyItemDao.save(vi);
+		
+		vi = new VocabularyItem();
+		vi.setIdentifier("sponsor");
+		vi.setDefaultName("Sponsor");
+		vi.setVocabularyIdentifier(CollectionAgentRelation.AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		vocabularyItemDao.save(vi);
+		
+		
+		ObjectNode objectNode;
+		ArrayNode relationsNode, relationTypesNode, setRelationTypesNode;
+		for (String rawCollection : this.getObjectsAsString("collection")) {
+			try {
+ 				objectNode = (ObjectNode)objectMapper.readTree(rawCollection);
+				if (objectNode.get("agentRelations")==null || objectNode.get("agentRelations").isMissingNode()) {
+					continue;
+				}
+				boolean save = false;
+				relationsNode = (ArrayNode)objectNode.get("agentRelations");
+				for (JsonNode relationNode : relationsNode) {
+					if (relationNode.get("typeIds")==null || relationNode.get("typeIds").isMissingNode()) {
+						continue;
+					}
+					relationTypesNode = (ArrayNode)relationNode.get("typeIds");
+					setRelationTypesNode = objectMapper.createArrayNode();
+					for (JsonNode relationTypeNode : relationTypesNode) {
+						if (relationTypeNode.asText().equals("56bf6c17e4b0750deb67b1f8")) {
+							setRelationTypesNode.add("owner");
+						} else if (relationTypeNode.asText().equals("56bf6c17e4b0750deb67b1ff")) {
+							setRelationTypesNode.add("creator");
+						} else if (relationTypeNode.asText().equals("5a37c39cff239628221ba091")) {
+							setRelationTypesNode.add("sponsor");
+						} else {
+							throw new Exception("Unknown agent relation type id; migrate manually");
+						}
+					}
+					save = true;
+					((ObjectNode)relationNode).set("typeIds", setRelationTypesNode);
+				}
+				if (save) {
+					mongoTemplate.save(objectNode.toString(), DaoImpl.getCollectionName(Collection.class));
+				}
+			} catch (Exception e) {
+				logger.error("Failed to update database to version 3.9.3", e);
+				return;
+			}
+		}
+		
+		mongoTemplate.dropCollection("agentRelationType");
+		logger.info("Collection Relation Types migration completed WITHOUT errors (version: 3.9.3)");  
+	}
+
 	private void migrateCollectionRelations() {
 		this.createVocabulary(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER, "Collection Relation Types", "3.9.2");
 		

@@ -51,7 +51,6 @@ import eu.dariah.de.colreg.service.AccessTypeService;
 import eu.dariah.de.colreg.service.AccrualMethodService;
 import eu.dariah.de.colreg.service.AccrualPeriodicityService;
 import eu.dariah.de.colreg.service.AccrualPolicyService;
-import eu.dariah.de.colreg.service.AgentRelationTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
 import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.colreg.service.SchemaService;
@@ -78,7 +77,6 @@ public class CollectionController extends VersionedEntityController {
 	@Autowired protected VocabularyItemService vocabularyItemService;
 	@Autowired protected VocabularyItemViewConverter vocabularyItemConverter;
 	
-	@Autowired private AgentRelationTypeService agentRelationTypeService;
 	@Autowired private AccessTypeService accessTypeService;
 	@Autowired private AccrualMethodService accrualMethodService;
 	@Autowired private AccrualPolicyService accrualPolicyService;
@@ -261,7 +259,6 @@ public class CollectionController extends VersionedEntityController {
 		
 		model.addAttribute("selectedVersionId", c.getId());
 		
-		model.addAttribute("agentRelationTypes", agentRelationTypeService.findAllAgentRelationTypes());
 		model.addAttribute("accessTypes", accessTypeService.findAllAccessTypes());
 		model.addAttribute("accrualMethods", accrualMethodService.findAllAccrualMethods());
 		model.addAttribute("accrualPolicies", accrualPolicyService.findAllAccrualPolicies());
@@ -341,6 +338,13 @@ public class CollectionController extends VersionedEntityController {
 		model.addAttribute("availableCollectionRelationTypes", collectionRelationTypePojos);
 		
 		
+		List<VocabularyItem> agentRelationTypes = vocabularyItemService.findVocabularyItems(CollectionAgentRelation.AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		List<VocabularyItemViewPojo> agentRelationTypePojos = vocabularyItemConverter.convertToPojos(agentRelationTypes, locale);
+		Collections.sort(agentRelationTypePojos);
+		
+		model.addAttribute("agentRelationTypes", agentRelationTypePojos);
+		
+		
 		this.setUsers(c);
 		
 		return "collection/edit";
@@ -399,13 +403,17 @@ public class CollectionController extends VersionedEntityController {
 	}
 	
 	@RequestMapping(method=GET, value={"/includes/editAgent"})
-	public String getEditAgentForm(Model model) {
+	public String getEditAgentForm(Model model, Locale locale) {
 		CollectionAgentRelation ar = new CollectionAgentRelation();
 		model.addAttribute("currIndex", 0);
 		model.addAttribute("currAgentRelation", ar);
 		model.addAttribute("agentRelations[0]", ar);
 				
-		model.addAttribute("agentRelationTypes", agentRelationTypeService.findAllAgentRelationTypes());
+		List<VocabularyItem> agentRelationTypes = vocabularyItemService.findVocabularyItems(CollectionAgentRelation.AGENT_RELATION_TYPES_VOCABULARY_IDENTIFIER);
+		List<VocabularyItemViewPojo> agentRelationTypePojos = vocabularyItemConverter.convertToPojos(agentRelationTypes, locale);
+		Collections.sort(agentRelationTypePojos);
+		
+		model.addAttribute("agentRelationTypes", agentRelationTypePojos);
 		model.addAttribute("editMode", true);
 		return "collection/edit/incl/edit_agent";
 	}
