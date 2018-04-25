@@ -217,8 +217,6 @@ public class CollectionController extends VersionedEntityController {
 			}
 		}
 		
-		collectionService.updateRelatedCollections(collection, auth.getUserId());
-		
 		collectionService.save(collection, auth.getUserId());
 		redirectAttributes.addFlashAttribute("lastSavedVersion", collection.getId());
 		redirectAttributes.addFlashAttribute("lastSavedTimestamp", collection.getVersionTimestamp());
@@ -283,7 +281,7 @@ public class CollectionController extends VersionedEntityController {
 					relatedCollectionIds.add(cr.getTargetEntityId());
 				}
 			}
-			List<Collection> relatedCollections = collectionService.findCurrentByCollectionIds(relatedCollectionIds);
+			List<Collection> relatedCollections = collectionService.findCurrentByCollectionIdsAndUserId(relatedCollectionIds, auth.getUserId());
 			Map<String, CollectionViewPojo> relatedCollectionEntityIdPojoMap = new HashMap<String, CollectionViewPojo>(relatedCollections.size()); 
 			for (CollectionViewPojo pojo : collectionPojoConverter.convertToPojos(relatedCollections, locale)) {
 				relatedCollectionEntityIdPojoMap.put(pojo.getId(), pojo);
@@ -416,8 +414,12 @@ public class CollectionController extends VersionedEntityController {
 	public String getEditRelationForm(Model model, Locale locale) {
 		model.addAttribute("currIndex", -1);
 		model.addAttribute("currRelation", new CollectionRelationViewPojo());
+		model.addAttribute("displayCollectionFieldname", "targetEntityId");
 		model.addAttribute("relations[-1]*", new CollectionRelation());
 		model.addAttribute("relations[-1]", new CollectionRelation());
+		
+		/*displayCollectionFieldname" value="sourceEntityId" scope="request" />
+													<c:set var="relatedCollectionPojo*/
 		
 		List<VocabularyItem> collectionRelationTypes = vocabularyItemService.findVocabularyItems(CollectionRelation.COLLECTION_RELATION_TYPES_VOCABULARY_IDENTIFIER);
 		List<VocabularyItemViewPojo> collectionRelationTypePojos = vocabularyItemConverter.convertToPojos(collectionRelationTypes, locale);

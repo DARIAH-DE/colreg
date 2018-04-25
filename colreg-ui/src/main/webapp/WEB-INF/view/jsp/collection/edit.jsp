@@ -754,7 +754,30 @@
 										<c:forEach items="${relations}" var="relation" varStatus="status" >
 											<c:set var="currRelation" value="${relation}" scope="request" />
 											<c:set var="currIndex" value="${status.index}" scope="request" />
-											<jsp:include page="incl/edit_relation.jsp" />
+											<c:choose>
+												<c:when test="${currRelation.target.id==collection.entityId}">
+													<c:set var="displayCollectionFieldname" value="sourceEntityId" scope="request" />
+													<c:set var="relatedCollectionPojo" value="${currRelation.source}" scope="request" />
+												</c:when>
+												<c:otherwise>
+													<c:set var="displayCollectionFieldname" value="targetEntityId" scope="request" />
+													<c:set var="relatedCollectionPojo" value="${currRelation.target}" scope="request" />
+												</c:otherwise>
+											</c:choose>
+											
+											
+											<c:choose>
+												<%-- Is the case if the collection was to be saved but no related collection 
+													was provided (validation error) --%>
+												<c:when test="${currRelation.source==null && currRelation.target==null}">
+													<jsp:include page="incl/edit_relation.jsp" />
+												</c:when>
+												<%-- Is the case if the related collection is deleted or a draft that 
+													is not visible to the current user --%>
+												<c:when test="${relatedCollectionPojo!=null}">
+													<jsp:include page="incl/edit_relation.jsp" />
+												</c:when>
+											</c:choose>
 										</c:forEach>
 										<c:remove var="currRelation" />	
 									</c:when>

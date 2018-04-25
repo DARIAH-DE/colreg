@@ -24,7 +24,9 @@ var CollectionEditor = function() {
 		"~eu.dariah.de.colreg.view.collection.labels.add_uom",
 		"~eu.dariah.de.colreg.view.collection.labels.no_image",
 		"~eu.dariah.de.colreg.view.collection.labels.image_not_an_image",
-		"~eu.dariah.de.colreg.view.collection.labels.image_too_large"
+		"~eu.dariah.de.colreg.view.collection.labels.image_too_large",
+		"~eu.dariah.de.colreg.common.labels.draft",
+        "~eu.dariah.de.colreg.common.labels.published"
 	]);
 	this.initVocabularySources();
 	this.initEditorComponents();
@@ -337,8 +339,14 @@ CollectionEditor.prototype.handleAgentSelection = function(select, control, sugg
 };
 
 CollectionEditor.prototype.renderCollectionSuggestion = function(collection) {
-	return  "<strong>" + collection.localizedDescriptions[0].title + "</strong><br />" +
+	var result = "<strong>" + collection.localizedDescriptions[0].title + "</strong><br />" +
 			"<small><em>ID:" + collection.entityId + "</em></small>";
+	
+	if (collection.draftUser!=null && collection.draftUser!=undefined) {
+		result += "<span class='label label-warning'>" + __translator.translate("~eu.dariah.de.colreg.common.labels.draft") + "</span>";
+	}
+	
+	return result;
 };
 
 CollectionEditor.prototype.renderAgentSuggestion = function(agent) {

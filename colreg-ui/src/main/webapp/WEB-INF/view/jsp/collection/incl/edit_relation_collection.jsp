@@ -25,10 +25,17 @@
 						<p>
 							<c:if test="${relatedCollectionPojo!=null}">
 								<a href="<s:url value="${relatedCollectionPojo.id}" />" target="_blank"><button type="button" class="btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-link" aria-hidden="true"></span></button><strong>${relatedCollectionPojo.displayTitle}</strong><br />
-								<small><em>ID: ${relatedCollectionPojo.id}</em></small></a>
+								<small><em>ID: ${relatedCollectionPojo.id}</em></small></a><br />
+								<c:if test="${relatedCollectionPojo.draft}">
+									<span class="label label-warning"><s:message code="~eu.dariah.de.colreg.common.labels.draft" /></span>
+								</c:if>
 							</c:if>	
 						</p>
 					</div>
+					<div class="alert alert-sm alert-warning relatedCollection-draft-hint ${relatedCollectionPojo.draft ? '' : 'hide'}">
+						<s:message code="~eu.dariah.de.colreg.editorhint.collection_relation.draft_relation" />
+					</div>
+					
 					<div class="relatedCollection-display-null <c:if test="${relatedCollectionPojo!=null}">hide</c:if>">
 						<label class="control-label" style="text-align: left;">
 							<a href="javascript:void(0)"><em><s:message code="~eu.dariah.de.colreg.view.collection.labels.no_related_collection_set" /></em></a>

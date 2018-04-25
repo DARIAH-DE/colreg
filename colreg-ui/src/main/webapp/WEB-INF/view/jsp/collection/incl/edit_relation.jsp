@@ -39,18 +39,11 @@
 		</td>
 		
 		<td onclick="editor.tables['relationTable'].editEntry(this); return false;">
-			<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+			<i class="fa fa-dot-circle-o fa-color-${relatedCollectionPojo.draft ? 'warning' : 'info'}" aria-hidden="true"></i>
 		</td>
 			
 		<td class="relationTable_collection explode" onclick="editor.tables['relationTable'].editEntry(this); return false;">
-			<c:choose>
-				<c:when test="${currRelation.source.id==collection.entityId}">
-					<a class="control-link" href="javascript:void(0);">${currRelation.target.displayTitle}</a>
-				</c:when>
-				<c:otherwise>
-					<a class="control-link" href="javascript:void(0);">${currRelation.source.displayTitle}</a>
-				</c:otherwise>
-			</c:choose>
+			<a class="control-link" href="javascript:void(0);">${relatedCollectionPojo.displayTitle}</a>
 		</td>
 		<c:if test="${editMode}">
 			<td class="nowrap">
@@ -192,16 +185,6 @@
 		</s:bind>
 	
 		<!-- Related collection block -->
-		<c:choose>
-			<c:when test="${currRelation.target.id==collection.entityId}">
-				<c:set var="displayCollectionFieldname" value="sourceEntityId" scope="request" />
-				<c:set var="relatedCollectionPojo" value="${currRelation.source}" scope="request" />
-			</c:when>
-			<c:otherwise>
-				<c:set var="displayCollectionFieldname" value="targetEntityId" scope="request" />
-				<c:set var="relatedCollectionPojo" value="${currRelation.target}" scope="request" />
-			</c:otherwise>
-		</c:choose>
 		<jsp:include page="edit_relation_collection.jsp" />
 		
 		<s:bind path="relations[${currIndex}].description">

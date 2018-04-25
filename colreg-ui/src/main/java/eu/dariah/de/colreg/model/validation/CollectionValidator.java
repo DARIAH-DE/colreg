@@ -163,18 +163,12 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 		// Remove empty relations
 		if (collection.getRelations()!=null) {
 			for (CollectionRelation relation : collection.getRelations()) {				
-				if (relation.getSourceEntityId()==null || relation.getSourceEntityId().trim().isEmpty()) {
-					relation.setSourceEntityId(null);
-				}
-				if (relation.getTargetEntityId()==null || relation.getTargetEntityId().trim().isEmpty()) {
-					relation.setTargetEntityId(null);
-				}
-				
-				if (relation.getSourceEntityId()==null && relation.getTargetEntityId()==null) {
+				if ((relation.getSourceEntityId()==null || relation.getSourceEntityId().trim().isEmpty()) && 
+						(relation.getTargetEntityId()==null || relation.getTargetEntityId().trim().isEmpty())) {
 					// Nothing to do, related collection unset -> raise validation error
-				} else if (relation.getSourceEntityId()==null) {
+				} else if (relation.getSourceEntityId()==null || relation.getSourceEntityId().trim().isEmpty()) {
 					relation.setSourceEntityId(collection.getEntityId());
-				} else if (relation.getTargetEntityId()==null) {
+				} else if (relation.getTargetEntityId()==null || relation.getTargetEntityId().trim().isEmpty()) {
 					relation.setTargetEntityId(collection.getEntityId());
 				}
 			}
@@ -232,18 +226,21 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
         Set<ConstraintViolation<CollectionRelation>> violations;
         
         for (int i=0; i<collection.getRelations().size(); i++) {
+        	boolean invalid = false;
         	violations = validator.validate(collection.getRelations().get(i));
 	        for (ConstraintViolation<CollectionRelation> v : violations) {
 	        	this.rejectValue(errors, v, "relations[%s].%s", i, v.getPropertyPath().toString());
+	        	invalid = true;
+	        }
+	        if (invalid) {
+	        	continue;
 	        }
 	        
 	        CollectionRelation compRel1 = collection.getRelations().get(i);
 	        if (compRel1.getSourceEntityId().equals(compRel1.getTargetEntityId())) {
-	        	errors.rejectValue("relations[" + i + "].sourceEntityId", "~eu.dariah.de.colreg.validation.collection_relation.duplicates");
+	        	errors.rejectValue("relations[" + i + "].sourceEntityId", "~eu.dariah.de.colreg.validation.collection_relation.inconsistent_relation_ids");
 	        	errors.rejectValue("relations[" + i + "].targetEntityId", "~eu.dariah.de.colreg.validation.collection_relation.inconsistent_relation_ids");
 	        }
-	        
-	        
 	        CollectionRelation compRel2;
 	        for (int j=0; j<collection.getRelations().size(); j++) {
 	        	if (i==j) {

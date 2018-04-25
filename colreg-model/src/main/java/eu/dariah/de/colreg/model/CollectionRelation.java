@@ -38,6 +38,7 @@ public class CollectionRelation extends BaseIdentifiable {
 		return this.getRelationTypeId().equals(relation.getRelationTypeId()) &&
 				this.areStringsSame(this.getSourceEntityId(), relation.getSourceEntityId()) && 
 				this.areStringsSame(this.getTargetEntityId(), relation.getTargetEntityId()) &&
+				this.areStringsSame(this.getDescription(), relation.getDescription()) &&
 				this.isBidirectional()==relation.isBidirectional();
 	}
 }

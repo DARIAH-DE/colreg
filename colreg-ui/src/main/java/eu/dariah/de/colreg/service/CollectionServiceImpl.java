@@ -16,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.CollectionDao;
@@ -57,33 +56,10 @@ public class CollectionServiceImpl implements CollectionService {
 	public void save(Collection c, String userId) {
 		Collection prev = this.findCurrentByCollectionId(c.getEntityId());
 		
-		c.setId(null);
-		if (c.getEntityId()==null || c.getEntityId().isEmpty() || c.getEntityId().equals("new")) {
-			c.setEntityId(new ObjectId().toString());
-		}
-		c.setSucceedingVersionId(null);
-		c.setVersionCreator(userId);
-		c.setVersionTimestamp(DateTime.now());
-		
-		if (prev!=null) {
-			c.setEntityCreator(prev.getEntityCreator());
-			c.setEntityTimestamp(prev.getEntityTimestamp());
-		} else {
-			c.setEntityCreator(c.getVersionCreator());
-			c.setEntityTimestamp(c.getVersionTimestamp());
-		}
-		
-		c.setCollectionImages(this.getOrderedImageMap(c.getCollectionImages()));
-
-		// Save new object first...just to be sure
-		collectionDao.save(c);
-		
-		if (prev!=null) {
-			prev.setSucceedingVersionId(c.getId());
-			collectionDao.save(prev);
-		}		
+		this.updateRelatedCollections(c, prev, userId);
+		this.innerSave(c, prev, userId);
 	}
-	
+		
 	@Override
 	public Collection findCurrentByCollectionId(String id) {
 		return collectionDao.findCurrentById(id);
@@ -247,23 +223,54 @@ public class CollectionServiceImpl implements CollectionService {
 	}
 
 	@Override
-	public List<Collection> findCurrentByCollectionIds(List<String> collectionIds) {
-		return collectionDao.findCurrentById(collectionIds);
+	public List<Collection> findCurrentByCollectionIdsAndUserId(List<String> collectionIds, String userId) {
+		List<Collection> collections = new ArrayList<Collection>(); 
+		for (Collection c : collectionDao.findCurrentById(collectionIds)) {
+			if (this.isCollectionUserAccessible(c, userId)) {
+				collections.add(c);
+			}
+		}
+		return collections;
 	}
+	
 
-	@Override
-	public void updateRelatedCollections(Collection collection, String userId) {
-		// Load current version to compare
-		Collection dbCollection = this.findCurrentByCollectionId(collection.getEntityId());
+	private void innerSave(Collection c, Collection prev, String userId) {
+		c.setId(null);
+		if (c.getEntityId()==null || c.getEntityId().isEmpty() || c.getEntityId().equals("new")) {
+			c.setEntityId(new ObjectId().toString());
+		}
+		c.setSucceedingVersionId(null);
+		c.setVersionCreator(userId);
+		c.setVersionTimestamp(DateTime.now());
+		
+		if (prev!=null) {
+			c.setEntityCreator(prev.getEntityCreator());
+			c.setEntityTimestamp(prev.getEntityTimestamp());
+		} else {
+			c.setEntityCreator(c.getVersionCreator());
+			c.setEntityTimestamp(c.getVersionTimestamp());
+		}
+		
+		c.setCollectionImages(this.getOrderedImageMap(c.getCollectionImages()));
 
+		// Save new object first...just to be sure
+		collectionDao.save(c);
+		
+		if (prev!=null) {
+			prev.setSucceedingVersionId(c.getId());
+			collectionDao.save(prev);
+		}		
+	}
+	
+	private void updateRelatedCollections(Collection collection, Collection prevCollection, String userId) {
 		// Collect related collections that need to be saved
 		Map<String, Collection> saveCollections = new HashMap<String, Collection>();
 				
 		// Collect deleted and updated collection relations
 		List<CollectionRelationAction> modifiedRelations = new ArrayList<CollectionRelationAction>();
-		if (dbCollection.getRelations()!=null) {
+		if (prevCollection.getRelations()!=null) {
 			String relatedEntityId, relatedEntityIdDb;
-			for (CollectionRelation dbCr : dbCollection.getRelations()) {
+			for (CollectionRelation dbCr : prevCollection.getRelations()) {
 				boolean deleted = true;
 				if (collection.getRelations()!=null) {
 					for (CollectionRelation cr : collection.getRelations()) {
@@ -319,7 +326,13 @@ public class CollectionServiceImpl implements CollectionService {
 				for (int i=0; i<saveCollection.getRelations().size(); i++) { 
 					CollectionRelation relatedDbRelation = saveCollection.getRelations().get(i);
 					if (relatedDbRelation.getId().equals(modifiedRelation.relation.getId())) {
-						if (modifiedRelation.type.equals(CollectionRelationActionTypes.DELETE)) {
+						if (modifiedRelation.type.equals(CollectionRelationActionTypes.DELETE) 
+								&& !this.isCollectionUserAccessible(saveCollection, userId)) {
+							// Not a real deletion - the current user just could not see (and hence include) relation to draft -> reattach  
+							collection.getRelations().add(relatedDbRelation);
+							processed = true;
+						} else if (modifiedRelation.type.equals(CollectionRelationActionTypes.DELETE)) {
+							// Actual delete...
 							saveCollection.getRelations().remove(relatedDbRelation);
 							processed = true;
 						} else {
@@ -344,9 +357,16 @@ public class CollectionServiceImpl implements CollectionService {
 		}
 		for (String collectionId : saveCollections.keySet()) {
 			logger.info(String.format("Saving collection [%s] due to altered relation with collection [%s]", collectionId, collection.getEntityId()));
-			this.save(saveCollections.get(collectionId), userId);
+			saveCollection = saveCollections.get(collectionId);
+			if (this.isCollectionUserAccessible(saveCollection, userId)) {
+				this.innerSave(saveCollection, this.findCurrentByCollectionId(collectionId), userId);
+			}
 		}
 				
 	}
 	
+	
+	private boolean isCollectionUserAccessible(Collection c, String userId) {
+		return c.getDraftUserId()==null || (userId!=null && c.getDraftUserId().equals(userId));
+	}
 }
