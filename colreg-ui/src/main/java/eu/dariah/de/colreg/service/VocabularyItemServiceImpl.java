@@ -27,7 +27,9 @@ public class VocabularyItemServiceImpl implements VocabularyItemService {
 	
 	@Override
 	public List<VocabularyItem> findVocabularyItems(String vocabularyIdentifier) {
-		return vocabularyItemDao.find(Query.query(Criteria.where("vocabularyIdentifier").is(vocabularyIdentifier)));
+		return vocabularyItemDao.find(Query.query(Criteria
+				.where("vocabularyIdentifier").is(vocabularyIdentifier)
+				.and("deleted").is(false)));
 	}
 
 	@Override
