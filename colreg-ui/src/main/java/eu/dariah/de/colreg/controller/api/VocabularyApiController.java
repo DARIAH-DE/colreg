@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +32,8 @@ public class VocabularyApiController extends BaseApiController {
 	
 	@Autowired private VocabularyItemApiConverter vocabularyItemConverter;
 	
-	@RequestMapping(value={"", "/"}, method=RequestMethod.GET)
-	public @ResponseBody ApiResultPojo<List<VocabularyItemApiPojo>> getItems(@RequestParam(required=false) String vocabularyId,  @RequestParam(required=false) String locale) {
+	@RequestMapping(value={"/{vocabularyId}", "/{vocabularyId}/"}, method=RequestMethod.GET)
+	public @ResponseBody ApiResultPojo<List<VocabularyItemApiPojo>> getItems(@PathVariable String vocabularyId,  @RequestParam(required=false) String locale) {
 		ApiResultPojo<List<VocabularyItemApiPojo>> result = new ApiResultPojo<List<VocabularyItemApiPojo>>("listVocabularyItems");
 		if (vocabularyId==null || vocabularyId.isEmpty()) {
 			result.setMessage("No vocabulary specified");
