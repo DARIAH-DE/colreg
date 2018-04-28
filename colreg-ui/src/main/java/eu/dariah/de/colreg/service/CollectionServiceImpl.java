@@ -268,7 +268,7 @@ public class CollectionServiceImpl implements CollectionService {
 				
 		// Collect deleted and updated collection relations
 		List<CollectionRelationAction> modifiedRelations = new ArrayList<CollectionRelationAction>();
-		if (prevCollection.getRelations()!=null) {
+		if (prevCollection!=null && prevCollection.getRelations()!=null) {
 			String relatedEntityId, relatedEntityIdDb;
 			for (CollectionRelation dbCr : prevCollection.getRelations()) {
 				boolean deleted = true;
