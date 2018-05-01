@@ -310,10 +310,18 @@ CollectionEditor.prototype.initRightsContainer = function() {
 
 CollectionEditor.prototype.handleAccessTypeChange = function(select) {
 	var editField = $(select).closest("td");
+	
+	console.log($(select).find(":selected").val());
+	
 	if ($(select).find(":selected").text()==="OAI-PMH") {
 		editField.find(".oaiset").show();
+		editField.find(".subtype").hide();
+	} else if ($(select).find(":selected").val()==="5808ae19c3c6002a42867d09") {
+		editField.find(".oaiset").hide();
+		editField.find(".subtype").show();
 	} else {
 		editField.find(".oaiset").hide();
+		editField.find(".subtype").hide();
 	}
 };
 

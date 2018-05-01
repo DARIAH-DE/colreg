@@ -58,7 +58,7 @@
 			"$oid": "5808ae19c3c6002a42867d09"
 		},
 		"identifier": "onlinefile",
-		"label": "XML/Text file (online)",
+		"label": "Online file",
 		"description": "A URL to a web accessible file",
 		"machineAccessible": false
 	}

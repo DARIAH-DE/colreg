@@ -99,9 +99,13 @@
 		</s:bind>
 		
 		<c:set var="isOaiPMH" value="false" />
+		<c:set var="isFile" value="false" />
 		<c:forEach items="${accessTypes}" var="accessType">
 			<c:if test="${currMethod.type==accessType.id && accessType.identifier=='oaipmh'}">
 				<c:set var="isOaiPMH" value="true" />
+			</c:if>
+			<c:if test="${currMethod.type==accessType.id && accessType.identifier=='onlinefile'}">
+				<c:set var="isFile" value="true" />
 			</c:if>
 		</c:forEach>
 		
@@ -133,6 +137,42 @@
 				</div>
 			</div>
 		</s:bind>
+		
+		<s:bind path="accessMethods[${currIndex}].subtype">
+			<div class="form-group subtype${status.error ? ' has-error' : ''}" ${isFile ? '' : 'style="display: none;"'}>
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.access.subtype" />${accessMethods[currIndex].subtype}</label>
+				<div class="col-sm-9">
+					<c:choose>
+						<c:when test="${editMode}">
+							<label>
+								<span class="attribute-name-helper">accessMethods{}.subtype</span>
+								<input ${collection.accessMethods[currIndex].subtype=="XML" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="XML" type="radio" />XML
+							</label>
+							<label>
+								<span class="attribute-name-helper">accessMethods{}.subtype</span>
+								<input ${collection.accessMethods[currIndex].subtype=="CSV" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="CSV" type="radio" />CSV
+							</label>
+							<label>
+								<span class="attribute-name-helper">accessMethods{}.subtype</span>
+								<input ${collection.accessMethods[currIndex].subtype=="Text" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="Text" type="radio" />Text
+							</label>
+						</c:when>
+						<c:otherwise>
+							<label class="content-label">${currMethod!=null ? currMethod.subtype : ''}</label>
+						</c:otherwise>
+					</c:choose>	
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="accessMethods[${currIndex}].subtype" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.access.file_subtype" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
 		<s:bind path="accessMethods[${currIndex}].schemeIds*">
 			<div class="form-group">
 				<label for="title" class="col-sm-3 control-label${status.error ? ' container-error' : ' '}"><s:message code="~eu.dariah.de.colreg.model.access.encoding_schemes" /></label>

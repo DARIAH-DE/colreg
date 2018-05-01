@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Access {
 	@NotBlank
 	private String type;
+	private String subtype;
 	
 	@NotBlank(message="{~eu.dariah.de.colreg.validation.access.uri}")
 	private String uri;
@@ -16,6 +17,9 @@ public class Access {
 	
 	public String getType() { return type; }
 	public void setType(String type) { this.type = type; }
+	
+	public String getSubtype() { return subtype; }
+	public void setSubtype(String subtype) { this.subtype = subtype; }
 	
 	public String getUri() { return uri; }
 	public void setUri(String uri) { this.uri = uri; }

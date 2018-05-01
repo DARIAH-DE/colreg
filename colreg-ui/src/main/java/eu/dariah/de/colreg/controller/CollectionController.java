@@ -343,8 +343,7 @@ public class CollectionController extends VersionedEntityController {
 		Collections.sort(agentRelationTypePojos);
 		
 		model.addAttribute("agentRelationTypes", agentRelationTypePojos);
-		
-		
+				
 		this.setUsers(c);
 		
 		return "collection/edit";

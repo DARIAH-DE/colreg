@@ -41,6 +41,7 @@ public class AccessConverter extends BaseConverter<Access, AccessPojo> {
 			if (accessTypeIdLabelMap!=null) {
 				pojo.setType(accessTypeIdLabelMap.get(access.getType()));
 			}
+			pojo.setSubtype(access.getSubtype());
 			pojo.setUri(access.getUri());
 		}
 		return pojo;

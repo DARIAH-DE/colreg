@@ -33,6 +33,7 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	@Autowired private AccessTypeService accessTypeService;
 	
 	private String oaiTypeId;
+	private String fileTypeId;
 	
 	public CollectionValidator() {
 		super(Collection.class);
@@ -42,6 +43,9 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 	public void afterPropertiesSet() throws Exception {
 		AccessType oaiType = accessTypeService.findAccessTypeByIdentfier("oaipmh");
 		oaiTypeId = oaiType==null ? "" : oaiType.getId();
+		
+		AccessType fileType = accessTypeService.findAccessTypeByIdentfier("onlinefile");
+		fileTypeId = fileType==null ? "" : fileType.getId();
 	}
 
 	@Override
@@ -184,6 +188,11 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 				if (acc.getType()!=null && !acc.getType().equals(oaiTypeId)) {
 					acc.setOaiSet(null);
 				}
+				if (acc.getType()!=null && !acc.getType().equals(fileTypeId)) {
+					acc.setSubtype(null);
+				} else if (acc.getType()!=null && acc.getType().equals(fileTypeId) && acc.getSubtype()==null) {
+					acc.setSubtype("XML");
+				}
 				
 				// Remove empty encoding schemes
 				if (acc.getSchemeIds()!=null && acc.getSchemeIds().size()>0) {
@@ -317,6 +326,11 @@ public class CollectionValidator extends BaseValidator<Collection> implements In
 			Access acc;
 			for (int i=0; i<collection.getAccessMethods().size(); i++) {
 				acc = collection.getAccessMethods().get(i);
+				
+				/*if (acc.getType().equals(fileTypeId) && (acc.getSubtype()==null || acc.getSubtype().isEmpty())) {
+					errors.rejectValue("accessMethods[" + i + "].subtype", "~eu.dariah.de.colreg.validation.collection.fileaccess.subtype_missing");
+				}*/
+				
 				if (acc.getSchemeIds()!=null && acc.getSchemeIds().size()>0) {
 					// TODO: Static list -> nothing to do
 					for (int j=0; j<acc.getSchemeIds().size(); j++) {
