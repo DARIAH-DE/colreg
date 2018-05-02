@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @XmlRootElement(name="result")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResultPojo<T> {
-	private final String apiMethod;
+	private String apiMethod;
 	private boolean success;
 	private String message;
 	private T content;
@@ -16,9 +16,11 @@ public class ApiResultPojo<T> {
 		this.apiMethod = apiMethod;
 	}
 	
+	public ApiResultPojo() { }
 	
 	public String getApiMethod() { return apiMethod; }
-	
+	public void setApiMethod(String apiMethod) { this.apiMethod = apiMethod; }
+
 	public boolean isSuccess() { return success; }
 	public void setSuccess(boolean success) { this.success = success; }
 	
