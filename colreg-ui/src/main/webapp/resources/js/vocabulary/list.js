@@ -108,7 +108,7 @@ VocabularyTable.prototype.triggerEditVocabularyItem = function(itemId) {
 	var form_identifier = this.vocabularyId + "-new-item";
 	
 	modalFormHandler = new ModalFormHandler({
-		formUrl: __util.composeUrl(itemId + "/forms/edit"),
+		formFullUrl: __util.composeUrl("vocabularies/" + _this.vocabularyId + "/" + itemId + "/forms/edit"),
 		identifier: form_identifier,
 		additionalModalClasses: "wide-modal",
 		completeCallback: function(container) { 
