@@ -15,14 +15,9 @@
 	        <!-- Top Navigation -->
 	        <%@ include file="incl/topNav.jsp" %>
 			
-			
-			
 			<main class="main">
-				<div class="main_content">
-					<!-- Content -->
-					<tiles:insertAttribute name="content"/>
-		
-				</div>
+				<!-- Content -->
+				<tiles:insertAttribute name="content"/>
 			</main>
 		
 		</div>
