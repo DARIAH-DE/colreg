@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
-import eu.dariah.de.colreg.pojo.api.ExtendedCollectionApiPojo;
+import eu.dariah.de.colreg.pojo.ExtendedCollectionApiPojo;
 import eu.dariah.de.colreg.pojo.converter.AccessConverter;
 import eu.dariah.de.colreg.pojo.converter.AccrualConverter;
 import eu.dariah.de.colreg.pojo.converter.base.BaseCollectionApiConverter;

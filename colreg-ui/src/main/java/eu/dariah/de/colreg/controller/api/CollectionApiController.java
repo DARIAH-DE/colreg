@@ -1,5 +1,6 @@
 package eu.dariah.de.colreg.controller.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import eu.dariah.de.colreg.controller.base.BaseApiController;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.pojo.CollectionApiPojo;
+import eu.dariah.de.colreg.pojo.ExtendedCollectionApiPojo;
 import eu.dariah.de.colreg.pojo.api.ApiResultPojo;
-import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
-import eu.dariah.de.colreg.pojo.api.ExtendedCollectionApiPojo;
 import eu.dariah.de.colreg.pojo.converter.api.CollectionApiConverter;
 import eu.dariah.de.colreg.pojo.converter.api.ExtendedCollectionApiConverter;
 import eu.dariah.de.colreg.service.AccessTypeService;
@@ -44,8 +45,8 @@ public class CollectionApiController extends BaseApiController {
 	@Autowired private AgentService agentService;
 	
 	@RequestMapping(value={"", "/"}, method=RequestMethod.GET)
-	public @ResponseBody ApiResultPojo<List<CollectionApiPojo>> getAllPublic(@RequestParam(required=false) String locale) {
-		ApiResultPojo<List<CollectionApiPojo>> result = new ApiResultPojo<List<CollectionApiPojo>>("listCollections");
+	public @ResponseBody ApiResultPojo<CollectionApiPojo> getAllPublic(@RequestParam(required=false) String locale) {
+		ApiResultPojo<CollectionApiPojo> result = new ApiResultPojo<CollectionApiPojo>("listCollections");
 		Locale l = this.handleLocale(result, locale);
 		if (!result.isSuccess()) {
 			return result;
@@ -85,7 +86,10 @@ public class CollectionApiController extends BaseApiController {
 		
 		Map<String, Agent> agentIdMap = this.getAgentIdMap();
 
-		result.setContent(extendedCollectionApiConverter.convertToPojo(c, l, agentIdMap, agentTypeIdLabelMap, accessTypeIdLabelMap, accrualMethodIdIdentifierMap, accrualPolicyIdIdentifierMap, accrualPeriodicityIdIdentifierMap));
+		List<ExtendedCollectionApiPojo> contents = new ArrayList<ExtendedCollectionApiPojo>();
+		contents.add(extendedCollectionApiConverter.convertToPojo(c, l, agentIdMap, agentTypeIdLabelMap, accessTypeIdLabelMap, accrualMethodIdIdentifierMap, accrualPolicyIdIdentifierMap, accrualPeriodicityIdIdentifierMap));
+		
+		result.setContent(contents);
 		return result;
 	}
 	

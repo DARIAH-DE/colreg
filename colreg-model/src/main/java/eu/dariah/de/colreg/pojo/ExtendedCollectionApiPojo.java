@@ -1,4 +1,4 @@
-package eu.dariah.de.colreg.pojo.api;
+package eu.dariah.de.colreg.pojo;
 
 import java.util.List;
 import java.util.Map;
@@ -6,10 +6,6 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import eu.dariah.de.colreg.pojo.AccessPojo;
-import eu.dariah.de.colreg.pojo.AccrualPojo;
-import eu.dariah.de.colreg.pojo.ImagePojo;
 
 @XmlRootElement(name="collection")
 @JsonInclude(JsonInclude.Include.NON_NULL)
