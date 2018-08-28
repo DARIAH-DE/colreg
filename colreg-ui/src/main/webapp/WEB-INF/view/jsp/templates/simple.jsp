@@ -7,23 +7,29 @@
 <!DOCTYPE html>
 <html lang="${pageContext.response.locale}">
 	<%@ include file="incl/head.jsp" %>
-	<body>
-        <tiles:importAttribute name="navbarInverse" />
-        <tiles:importAttribute name="fluidLayout" />
-        
-        <!-- Top Navigation -->
-        <%@ include file="incl/topNav.jsp" %>
+	<body class="site">
+		<div class="site_wrap">
+	        <tiles:importAttribute name="navbarInverse" />
+	        <tiles:importAttribute name="fluidLayout" />
+		        
+	        <!-- Top Navigation -->
+	        <%@ include file="incl/topNav.jsp" %>
+			
+			
+			
+			<main class="main">
+				<div class="main_content">
+					<!-- Content -->
+					<tiles:insertAttribute name="content"/>
 		
-		<!-- Content -->
-		<tiles:insertAttribute name="content"/>
+				</div>
+			</main>
+		
+		</div>
 		
 		<!-- Footer -->
-		<div class="container<c:if test="${fluidLayout==true}">-fluid</c:if>">
-			<div class="row">
-				<div class="col-xs-12 col-sm-10 col-sm-offset-1">
-					<%@ include file="incl/footer.jsp" %>
-				</div>
-			</div>
+		<div>
+			<%@ include file="incl/footer.jsp" %>
 		</div>
 		
 		<noscript>

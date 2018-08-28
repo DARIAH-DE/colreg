@@ -23,7 +23,6 @@
         </c:if>
         
         <div id="sb-site">
-			
 			<div class="container<c:if test="${fluidLayout==true}">-fluid</c:if>">
 				<div id="primary-content-area" class="row">
 					<!-- Notifications -->

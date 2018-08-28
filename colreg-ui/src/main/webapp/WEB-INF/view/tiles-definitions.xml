@@ -8,20 +8,26 @@
 		<put-attribute name="sideNav" cascade="true" value="false" />
 		<put-attribute name="fluidLayout" cascade="true" value="false" />
 		<put-list-attribute name="styles">
-			<add-attribute type="string" value="bootstrap/bootstrap.min.css" />
-			<add-attribute type="string" value="bootstrap/bootstrap-theme.min.css" />
-			<add-attribute type="string" value="bootstrap/bootstrap-customization.css" />
-			<add-attribute type="string" value="bootstrap/bootstrap-modal-bs3patch.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap-grid.css" />
+			<add-attribute type="string" value="bootstrap/bootstrap-reboot.css" />
+			<add-attribute type="string" value="fontawesome/all.css" />
+			<!-- <add-attribute type="string" value="bootstrap/bootstrap-modal-bs3patch.css" />
 			<add-attribute type="string" value="bootstrap/bootstrap-modal.css" />
-			<add-attribute type="string" value="font-awesome.min.css" />
-			<add-attribute type="string" value="application.css" />
+			<add-attribute type="string" value="font-awesome.min.css" /> -->
+			<add-attribute type="string" value="styleguide.css" />
+			<!-- <add-attribute type="string" value="application.css" /> -->
         </put-list-attribute>
 		<put-list-attribute name="scripts">
-			<add-attribute type="string" value="jquery/jquery.js" />
-			<add-attribute type="string" value="bootstrap/bootstrap.js" />
-			<add-attribute type="string" value="bootstrap/bootbox.min.js" />
-			<add-attribute type="string" value="bootstrap/bootstrap-modalmanager.js" />
-			<add-attribute type="string" value="bootstrap/bootstrap-modal.js" />
+			<add-attribute type="string" value="_lib/jquery/jquery.js" />
+			<add-attribute type="string" value="_lib/popper/popper.js" />
+			<add-attribute type="string" value="_lib/bootstrap/bootstrap.js" />
+			<add-attribute type="string" value="_lib/bootstrap/bootstrap.bundle.js" />
+			<!-- <add-attribute type="string" value="bootstrap/bootstrap-modalmanager.js" />
+			<add-attribute type="string" value="bootstrap/bootstrap-modal.js" /> -->
+			
+			<add-attribute type="string" value="styleguide.js" />
+			
 			<add-attribute type="string" value="_common/appProperties.js" />
 			<add-attribute type="string" value="_common/translator.js" />
 			<add-attribute type="string" value="_common/util.js" />
@@ -51,9 +57,9 @@
 			<add-attribute type="string" value="slidebars.css" />
         </put-list-attribute>
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
+			<!-- <add-attribute type="string" value="jquery/typeahead.bundle.min.js" />
 			<add-attribute type="string" value="jquery/jquery.scrollTo.js" />
-			<add-attribute type="string" value="jquery/slidebars.js" />
+			<add-attribute type="string" value="jquery/slidebars.js" /> -->
 			<add-attribute type="string" value="_common/editorTable.js" />
 			<add-attribute type="string" value="_common/editorList.js" />
 			<add-attribute type="string" value="_common/baseEditor.js" />
@@ -64,11 +70,11 @@
 	<definition name="home" extends="template_simple">
 		<put-attribute name="content" value="/WEB-INF/view/jsp/home/home.jsp" />
 		<put-list-attribute name="scripts" inherit="true">
-			<add-attribute type="string" value="sigma/sigma.min.js" />
-			<add-attribute type="string" value="sigma/plugins/sigma.layout.forceAtlas2.min.js" />
-			<add-attribute type="string" value="sigma/plugins/sigma.renderers.customShapes.min.js" />
-			<add-attribute type="string" value="sigma/plugins/sigma.plugins.dragNodes.min.js" />
-			<add-attribute type="string" value="sigma/plugins/sigma.exporters.svg.min.js" />
+			<add-attribute type="string" value="_lib/sigma/sigma.min.js" />
+			<add-attribute type="string" value="_lib/sigma/plugins/sigma.layout.forceAtlas2.min.js" />
+			<add-attribute type="string" value="_lib/sigma/plugins/sigma.renderers.customShapes.min.js" />
+			<add-attribute type="string" value="_lib/sigma/plugins/sigma.plugins.dragNodes.min.js" />
+			<add-attribute type="string" value="_lib/sigma/plugins/sigma.exporters.svg.min.js" />
 			<add-attribute type="string" value="home.js" />
 		</put-list-attribute>
 	</definition>
