@@ -4,6 +4,17 @@
 
 <tiles:importAttribute name="fluidLayout" />
 
+<div class="main_content container<c:if test="${fluidLayout==true}">-fluid</c:if>">
+
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  </ol>
+</nav>
+
+<h1><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></h1>
+
 <div class="jumbotron jumbotron-small">
 	 <div class="container<c:if test="${fluidLayout==true}">-fluid</c:if>">
 		<div class="row">
@@ -13,7 +24,7 @@
 				<div class="pull-right dariah-flower-white-45"><s:message code="~eu.dariah.de.colreg.titles.colreg" /></div>
 			</div>
 			<div class="col-sm-6 col-lg-7 col-sm-offset-1">
-				<h1><s:message code="~eu.dariah.de.colreg.titles.collection_registry" /></h1>
+				
 			</div>
 		</div>
 	</div>
@@ -66,4 +77,6 @@
 			</div>
 		</div>
 	</div>
+</div>
+
 </div>
