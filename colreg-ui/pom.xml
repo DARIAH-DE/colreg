@@ -6,7 +6,7 @@
 		<version>3.9.0</version>
     </parent>
 	<artifactId>colreg-ui</artifactId>
-	<version>3.9.2-RELEASE</version>
+	<version>3.9.3</version>
 	<packaging>war</packaging>
 	<name>DARIAH-DE Collection Registry - UI</name>
 	<description>DARIAH-DE Collection Registry - UI</description>
@@ -248,6 +248,40 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.5.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<nosuffix>true</nosuffix>
+					<webappDirectory>${project.build.directory}/min</webappDirectory>
+					<excludes>
+			            <exclude>**/*.min.js</exclude>
+			        </excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>${project.build.directory}/min</directory>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<profiles>
 		<profile>

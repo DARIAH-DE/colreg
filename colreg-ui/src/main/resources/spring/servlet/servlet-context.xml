@@ -10,7 +10,19 @@
 	<import resource="../common-config.xml"/>
 	
 	<mvc:annotation-driven />
-	<mvc:resources location="/resources/" mapping="/resources/**" cache-period="31556926"/>
+	<mvc:resources mapping="/resources/**" location="/resources/">
+	    <mvc:resource-chain resource-cache="true">
+	        <mvc:resolvers>
+	            <mvc:version-resolver>
+	                <mvc:content-version-strategy patterns="/**"/>
+	            </mvc:version-resolver>
+	        </mvc:resolvers>
+	        <mvc:transformers>
+	        	<bean class="org.springframework.web.servlet.resource.CssLinkResourceTransformer" />
+	        </mvc:transformers>
+	    </mvc:resource-chain>
+	</mvc:resources>
+
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	
