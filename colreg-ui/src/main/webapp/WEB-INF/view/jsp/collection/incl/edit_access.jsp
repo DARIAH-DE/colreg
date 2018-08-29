@@ -138,23 +138,56 @@
 			</div>
 		</s:bind>
 		
+		<s:bind path="accessMethods[${currIndex}].metadataPrefix">
+			<div class="form-group metadataPrefix${status.error ? ' has-error' : ''}" ${isOaiPMH ? '' : 'style="display: none;"'}>
+				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.access.oaipmh_prefix" /></label>
+				<div class="col-sm-9">
+					<c:choose>
+						<c:when test="${editMode}">
+							<span class="attribute-name-helper">accessMethods{}.metadataPrefix</span>
+							<input type="text" 
+								onchange="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_metadataPrefix');" 
+								onkeyup="editor.tables['accessMethodTable'].handleInputChange(this, 'accessMethodTable_metadataPrefix');" 
+								class="form-control" id="accessMethods${currIndex}.metadataPrefix" name="accessMethods[${currIndex}].metadataPrefix" 
+								value="<c:if test="${currMethod!=null}">${currMethod.metadataPrefix}</c:if>">
+						</c:when>
+						<c:otherwise>
+							<label class="content-label">${currMethod!=null ? currMethod.metadataPrefix : ''}</label>
+						</c:otherwise>
+					</c:choose>	
+				</div>
+				<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" 
+					path="accessMethods[${currIndex}].metadataPrefix" />
+				<div class="col-sm-9 col-sm-offset-3">
+					<div class="editor-hint">
+						<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+						<s:message code="~eu.dariah.de.colreg.editorhint.access.oaipmh_prefix" />
+					</div>
+				</div>
+			</div>
+		</s:bind>
+		
 		<s:bind path="accessMethods[${currIndex}].subtype">
 			<div class="form-group subtype${status.error ? ' has-error' : ''}" ${isFile ? '' : 'style="display: none;"'}>
 				<label for="title" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.access.subtype" />${accessMethods[currIndex].subtype}</label>
 				<div class="col-sm-9">
 					<c:choose>
 						<c:when test="${editMode}">
-							<label>
-								<span class="attribute-name-helper">accessMethods{}.subtype</span>
-								<input ${collection.accessMethods[currIndex].subtype=="XML" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="XML" type="radio" />XML
-							</label>
-							<label>
-								<span class="attribute-name-helper">accessMethods{}.subtype</span>
-								<input ${collection.accessMethods[currIndex].subtype=="CSV" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="CSV" type="radio" />CSV
-							</label>
-							<label>
-								<span class="attribute-name-helper">accessMethods{}.subtype</span>
-								<input ${collection.accessMethods[currIndex].subtype=="Text" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="Text" type="radio" />Text
+							<label class="content-label">
+								<span class="attribute-name-helper">accessMethods{}.subtype</span> 
+								<input ${collection.accessMethods[currIndex].subtype=="XML" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="XML" type="radio" />XML&nbsp;
+							</label> 
+							<label class="content-label">
+								<span class="attribute-name-helper">accessMethods{}.subtype</span> 
+								<input ${collection.accessMethods[currIndex].subtype=="CSV" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="CSV" type="radio" />CSV&nbsp;
+							</label> 
+							<label class="content-label">
+								<span class="attribute-name-helper">accessMethods{}.subtype</span> 
+								<input ${collection.accessMethods[currIndex].subtype=="TSV" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="TSV" type="radio" />TSV&nbsp;
+							</label> 
+							<label class="content-label">
+								<span class="attribute-name-helper">accessMethods{}.subtype</span> 
+								<input ${collection.accessMethods[currIndex].subtype=="Text" ? 'checked="checked"' : ''} name="accessMethods[${currIndex}].subtype" value="Text" type="radio" />Text&nbsp;
 							</label>
 						</c:when>
 						<c:otherwise>

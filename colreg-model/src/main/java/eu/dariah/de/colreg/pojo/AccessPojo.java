@@ -11,6 +11,7 @@ public class AccessPojo {
 	private String uri;
 	private List<String> schemeIds;
 	private String set;
+	private String prefix;
 	
 	
 	public String getType() { return type; }
@@ -26,5 +27,8 @@ public class AccessPojo {
 	public void setSchemeIds(List<String> schemeIds) { this.schemeIds = schemeIds; }
 	
 	public String getSet() { return set; }
-	public void setSet(String set) { this.set = set; }	
+	public void setSet(String set) { this.set = set; }
+	
+	public String getPrefix() { return prefix; }
+	public void setPrefix(String prefix) { this.prefix = prefix; }
 }

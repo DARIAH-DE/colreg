@@ -43,6 +43,7 @@ public class AccessConverter extends BaseConverter<Access, AccessPojo> {
 			}
 			pojo.setSubtype(access.getSubtype());
 			pojo.setUri(access.getUri());
+			pojo.setPrefix(access.getMetadataPrefix());
 		}
 		return pojo;
 	}
