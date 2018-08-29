@@ -18,6 +18,7 @@ import eu.dariah.de.colreg.model.vocabulary.generic.Vocabulary;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
 import eu.dariah.de.colreg.pojo.VocabularyItemApiPojo;
 import eu.dariah.de.colreg.pojo.api.ApiResultPojo;
+import eu.dariah.de.colreg.pojo.api.VocabularyApiResultPojo;
 import eu.dariah.de.colreg.pojo.converter.api.VocabularyItemApiConverter;
 import eu.dariah.de.colreg.service.VocabularyItemService;
 import eu.dariah.de.colreg.service.VocabularyService;
@@ -33,14 +34,14 @@ public class VocabularyApiController extends BaseApiController {
 	@Autowired private VocabularyItemApiConverter vocabularyItemConverter;
 	
 	@RequestMapping(value={"/{vocabularyId}", "/{vocabularyId}/"}, method=RequestMethod.GET)
-	public @ResponseBody ApiResultPojo<VocabularyItemApiPojo> getItems(@PathVariable String vocabularyId,  @RequestParam(required=false) String locale) {
-		ApiResultPojo<VocabularyItemApiPojo> result = new ApiResultPojo<VocabularyItemApiPojo>("listVocabularyItems");
+	public @ResponseBody VocabularyApiResultPojo getItems(@PathVariable String vocabularyId,  @RequestParam(required=false) String locale) {
+		VocabularyApiResultPojo result = new VocabularyApiResultPojo("listVocabularyItems");
 		if (vocabularyId==null || vocabularyId.isEmpty()) {
 			result.setMessage("No vocabulary specified");
 			result.setSuccess(false);
 			return result;
 		}
-		result = new ApiResultPojo<VocabularyItemApiPojo>("listVocabularyItems: " + vocabularyId);
+		result = new VocabularyApiResultPojo("listVocabularyItems: " + vocabularyId);
 		
 		Vocabulary v = vocabularyService.findVocabulary(vocabularyId);
 		if (v==null) {

@@ -19,7 +19,7 @@ import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.pojo.CollectionApiPojo;
 import eu.dariah.de.colreg.pojo.ExtendedCollectionApiPojo;
-import eu.dariah.de.colreg.pojo.api.ApiResultPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiResultPojo;
 import eu.dariah.de.colreg.pojo.converter.api.CollectionApiConverter;
 import eu.dariah.de.colreg.pojo.converter.api.ExtendedCollectionApiConverter;
 import eu.dariah.de.colreg.service.AccessTypeService;
@@ -45,8 +45,8 @@ public class CollectionApiController extends BaseApiController {
 	@Autowired private AgentService agentService;
 	
 	@RequestMapping(value={"", "/"}, method=RequestMethod.GET)
-	public @ResponseBody ApiResultPojo<CollectionApiPojo> getAllPublic(@RequestParam(required=false) String locale) {
-		ApiResultPojo<CollectionApiPojo> result = new ApiResultPojo<CollectionApiPojo>("listCollections");
+	public @ResponseBody CollectionApiResultPojo<CollectionApiPojo> getAllPublic(@RequestParam(required=false) String locale) {
+		CollectionApiResultPojo<CollectionApiPojo> result = new CollectionApiResultPojo<CollectionApiPojo>("listCollections");
 		Locale l = this.handleLocale(result, locale);
 		if (!result.isSuccess()) {
 			return result;
@@ -64,8 +64,8 @@ public class CollectionApiController extends BaseApiController {
 	}
 	
 	@RequestMapping(value="/{collectionId}", method=RequestMethod.GET)
-	public @ResponseBody ApiResultPojo<ExtendedCollectionApiPojo> getCollection(@PathVariable String collectionId, @RequestParam(required=false) String locale) {
-		ApiResultPojo<ExtendedCollectionApiPojo> result = new ApiResultPojo<ExtendedCollectionApiPojo>("getCollection");
+	public @ResponseBody CollectionApiResultPojo<ExtendedCollectionApiPojo> getCollection(@PathVariable String collectionId, @RequestParam(required=false) String locale) {
+		CollectionApiResultPojo<ExtendedCollectionApiPojo> result = new CollectionApiResultPojo<ExtendedCollectionApiPojo>("getCollection");
 		Locale l = this.handleLocale(result, locale);
 		if (!result.isSuccess()) {
 			return result;

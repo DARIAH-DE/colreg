@@ -1,7 +1,7 @@
 @javax.xml.bind.annotation.XmlSchema(
-		namespace = "schema::api", 
+		namespace = "https://colreg.de.dariah.eu/schemas/API/1.0/", 
 		elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED,
-		xmlns={ @XmlNs(prefix="cr_api", namespaceURI="schema::api") }
+		xmlns={ @XmlNs(prefix="api", namespaceURI="https://colreg.de.dariah.eu/schemas/API/1.0/") }
 )
 package eu.dariah.de.colreg.pojo.api;
 

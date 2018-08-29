@@ -10,7 +10,7 @@ import eu.dariah.de.colreg.pojo.api.ApiResultPojo;
 public class BaseApiController {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	protected Locale handleLocale(ApiResultPojo<?> result, String locale) {
+	protected Locale handleLocale(ApiResultPojo result, String locale) {
 		if (locale!=null && !locale.isEmpty()) {
 			Locale l = new Locale(locale);
 						
