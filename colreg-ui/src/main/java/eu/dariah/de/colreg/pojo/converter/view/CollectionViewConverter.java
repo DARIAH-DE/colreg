@@ -50,6 +50,12 @@ public class CollectionViewConverter extends BaseCollectionConverter<CollectionV
 		}
 
 		pojo.setDisplayTitle(this.getLocalizedOrDefaultTitle(collection, locale));
+		String acronym = this.getLocalizedOrDefaultAcronym(collection, locale);
+		if (acronym!=null && !acronym.trim().isEmpty()) {
+			pojo.setDisplayTitle(pojo.getDisplayTitle() + " [" + acronym + "]");
+		}
+		
+		
 		pojo.setPrimaryImage(this.getPrimaryImage(collection));
 		
 		return pojo;
