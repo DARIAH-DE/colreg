@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import de.unibamberg.minf.core.web.init.LocaleAwareInitializationService;
 import eu.dariah.de.colreg.model.vocabulary.generic.VocabularyItem;
-import eu.dariah.de.colreg.pojo.VocabularyItemApiPojo;
+import eu.dariah.de.colreg.pojo.api.VocabularyItemApiPojo;
 import eu.dariah.de.colreg.pojo.converter.base.BaseConverter;
 
 @Component

@@ -1,11 +1,17 @@
 package eu.dariah.de.colreg.pojo;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.pojo.base.BaseApiPojo;
 
+@XmlRootElement(name="image")
+@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ImagePojo extends BaseIdentifiable {
+public class ImagePojo extends BaseApiPojo {
 	private static final long serialVersionUID = 3821489866959703563L;
 	
 	private int index;

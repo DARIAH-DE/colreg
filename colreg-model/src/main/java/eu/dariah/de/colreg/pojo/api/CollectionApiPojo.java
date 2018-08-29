@@ -1,18 +1,23 @@
-package eu.dariah.de.colreg.pojo;
+package eu.dariah.de.colreg.pojo.api;
 
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.pojo.ImagePojo;
+import eu.dariah.de.colreg.pojo.base.BaseApiPojo;
 
 @XmlRootElement(name="collection")
+@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CollectionApiPojo extends BaseIdentifiable {
+public class CollectionApiPojo extends BaseApiPojo {
 	private static final long serialVersionUID = -5544026876984535637L;
 
 	private String versionId;
@@ -34,13 +39,15 @@ public class CollectionApiPojo extends BaseIdentifiable {
 	private Map<String, String> titles;
 	private Map<String, String> acronyms;
 	
+	@XmlElementWrapper(name="agents")
+	@XmlElement(name="agent")
 	private List<AgentApiPojo> agents;
+	
+	@XmlElementWrapper(name="collection_types")
+	@XmlElement(name="type")
 	private List<String> collectionTypes;
 	
-	@XmlElement(name="id")
-	@Override
-	public String getId() { return super.getId(); }
-
+	
 	public String getVersionId() { return versionId; }
 	public void setVersionId(String versionId) { this.versionId = versionId; }
 

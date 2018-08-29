@@ -2,7 +2,7 @@ package eu.dariah.de.colreg.pojo.converter.api;
 
 import org.springframework.stereotype.Component;
 
-import eu.dariah.de.colreg.pojo.CollectionApiPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
 import eu.dariah.de.colreg.pojo.converter.base.BaseCollectionApiConverter;
 
 @Component

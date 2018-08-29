@@ -1,12 +1,19 @@
-package eu.dariah.de.colreg.pojo;
+package eu.dariah.de.colreg.pojo.api;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.pojo.base.BaseApiPojo;
 
-public class VocabularyItemApiPojo extends BaseIdentifiable {
+@XmlRootElement(name="vocabulary_item")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class VocabularyItemApiPojo extends BaseApiPojo {
 	private static final long serialVersionUID = -7649200109797919221L;
 	private String identifier;
 	

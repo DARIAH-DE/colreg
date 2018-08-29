@@ -1,11 +1,17 @@
-package eu.dariah.de.colreg.pojo;
+package eu.dariah.de.colreg.pojo.api;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import de.unibamberg.minf.dme.model.base.BaseIdentifiable;
+import eu.dariah.de.colreg.pojo.base.BaseApiPojo;
 
+@XmlRootElement(name="agent")
+@XmlAccessorType(XmlAccessType.FIELD)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AgentApiPojo extends BaseIdentifiable {
+public class AgentApiPojo extends BaseApiPojo {
 	private static final long serialVersionUID = -5544026876984535637L;
 
 	private String versionId;

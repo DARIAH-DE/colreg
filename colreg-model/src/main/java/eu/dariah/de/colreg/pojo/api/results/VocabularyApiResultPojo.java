@@ -1,14 +1,20 @@
-package eu.dariah.de.colreg.pojo.api;
+package eu.dariah.de.colreg.pojo.api.results;
 
 import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import eu.dariah.de.colreg.pojo.VocabularyItemApiPojo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import eu.dariah.de.colreg.pojo.api.VocabularyItemApiPojo;
 
 @XmlRootElement(name="result")
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class VocabularyApiResultPojo extends ApiResultPojo {
 	
 	@XmlElementWrapper(name="contents")

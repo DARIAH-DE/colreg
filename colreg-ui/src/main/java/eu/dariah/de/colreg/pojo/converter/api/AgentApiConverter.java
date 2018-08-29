@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import eu.dariah.de.colreg.model.Agent;
-import eu.dariah.de.colreg.pojo.AgentApiPojo;
+import eu.dariah.de.colreg.pojo.api.AgentApiPojo;
 import eu.dariah.de.colreg.pojo.converter.base.BaseAgentConverter;
 
 @Component

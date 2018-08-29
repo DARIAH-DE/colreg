@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.CollectionAgentRelation;
-import eu.dariah.de.colreg.pojo.AgentApiPojo;
-import eu.dariah.de.colreg.pojo.CollectionApiPojo;
+import eu.dariah.de.colreg.pojo.api.AgentApiPojo;
+import eu.dariah.de.colreg.pojo.api.CollectionApiPojo;
 import eu.dariah.de.colreg.pojo.converter.api.AgentApiConverter;
 
 public abstract class BaseCollectionApiConverter<TPojo extends CollectionApiPojo> extends BaseCollectionConverter<TPojo> {
