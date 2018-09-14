@@ -309,6 +309,63 @@
 					</div>
 				</div>
 			</s:bind>
+			
+			<!-- Agent images* -->
+			<s:bind path="agentImages*">
+				<div class="form-group${status.error ? ' container-error' : ' '}">
+					<label for="lst-agent-images" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.agent_images" /></label>
+					<div id="lst-agent-images-container" class="col-sm-9">
+						<ul id="lst-agent-images" class="collection-editor-list">
+							<c:if test="${fn:length(agentImages)>0}">
+								<c:forEach var="image" items="${agentImages}" varStatus="status">
+									<c:set var="currImage" value="${image}" scope="request" />
+									<c:set var="currIndex" value="${status.index}" scope="request" />
+									<jsp:include page="incl/edit_image.jsp" />
+								</c:forEach>
+								<c:remove var="currImage" />	
+							</c:if>
+							<c:if test="${editMode}">
+								<li class="collection-editor-list-buttons">
+									<div class="col-sm-12">
+										<input id="upload-agent-image-file" onchange="editor.triggerUploadImage(event, this);" type="file" style="visibility: hidden; height: 0px; position: absolute;" />	
+										<button onclick="$('#upload-agent-image-file').click();" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.agent.actions.add_image" /></button>
+										
+										<div class="image-hint alert alert-warn">
+										
+										</div>
+										
+									</div>
+								</li>
+							</c:if>
+						</ul>
+					</div>					
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.agent_image" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
+			<!-- Image rights -->
+			<s:bind path="agentImageRights">
+				<div class="form-group${status.error ? ' has-error' : ' '}">
+					<label for="agentImageRights" class="col-sm-3 control-label"><s:message code="~eu.dariah.de.colreg.model.agent.agent_image_rights" /></label>
+					<c:set var="currRightsLicenseId" value="${agentImageRightsIsLicenseId}" scope="request" />
+					<c:set var="currRightsName" value="agentImageRights" scope="request" />
+					<c:set var="currRightsValue" value="${agent.agentImageRights}" scope="request" />
+					<jsp:include page="incl/edit_rights.jsp" />	
+					<sf:errors element="div" cssClass="validation-error col-sm-9 col-sm-offset-3" path="agentImageRights" />
+					<div class="col-sm-9 col-sm-offset-3">
+						<div class="editor-hint">
+							<span class="glyphicon glyphicon-info-sign glyphicon-color-info" aria-hidden="true"></span> 
+							<s:message code="~eu.dariah.de.colreg.editorhint.agent.agent_image_rights" />
+						</div>
+					</div>
+				</div>
+			</s:bind>
+			
 		</div>
 		
 		<div class="editor-section">

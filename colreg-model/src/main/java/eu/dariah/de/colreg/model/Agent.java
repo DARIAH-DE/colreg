@@ -1,6 +1,7 @@
 package eu.dariah.de.colreg.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,6 +40,9 @@ public class Agent extends VersionedEntityImpl {
 	private String parentAgentId;
 	private boolean deleted;
 	
+	private Map<Integer, String> agentImages;
+	private String agentImageRights;
+	
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
 	
@@ -71,4 +75,10 @@ public class Agent extends VersionedEntityImpl {
 	
 	public boolean isDeleted() { return deleted; }
 	public void setDeleted(boolean deleted) { this.deleted = deleted; }
+	
+	public Map<Integer, String> getAgentImages() { return agentImages; }
+	public void setAgentImages(Map<Integer, String> agentImages) { this.agentImages = agentImages; }
+	
+	public String getAgentImageRights() { return agentImageRights; }
+	public void setAgentImageRights(String agentImageRights) { this.agentImageRights = agentImageRights; }
 }

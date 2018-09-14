@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import eu.dariah.de.colreg.pojo.ImagePojo;
 import eu.dariah.de.colreg.pojo.base.BaseApiPojo;
 
 @XmlRootElement(name="agent")
@@ -22,6 +23,7 @@ public class AgentApiPojo extends BaseApiPojo {
 	private String type;
 	private String name;
 	private String lastChanged;
+	private ImagePojo primaryImage;
 	
 	private String localizedTimestamp;
 	
@@ -31,7 +33,10 @@ public class AgentApiPojo extends BaseApiPojo {
 	
 	public Long getTimestamp() { return timestamp; }
 	public void setTimestamp(Long timestamp) { this.timestamp = timestamp; }
-	
+
+	public ImagePojo getPrimaryImage() { return primaryImage; }
+	public void setPrimaryImage(ImagePojo primaryImage) { this.primaryImage = primaryImage; }
+
 	public String getLocalizedTimestamp() { return localizedTimestamp; }
 	public void setLocalizedTimestamp(String localizedTimestamp) { this.localizedTimestamp = localizedTimestamp; }
 	

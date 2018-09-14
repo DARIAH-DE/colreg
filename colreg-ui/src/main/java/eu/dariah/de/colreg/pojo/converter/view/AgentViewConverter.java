@@ -37,6 +37,8 @@ public class AgentViewConverter extends BaseAgentConverter<AgentViewPojo> {
 		pojo.setDisplayTimestamp(this.getDisplayTimestamp(agent.getVersionTimestamp(), locale));
 		pojo.setName(this.getDisplayName(agent));
 		pojo.setTimestamp(agent.getVersionTimestamp().toInstant().getMillis());
+		pojo.setPrimaryImage(this.getPrimaryImage(agent));
+		
 		if (agentTypeIdLabelMap!=null) {
 			pojo.setType(agentTypeIdLabelMap.get(agent.getAgentTypeId()));
 		}

@@ -4,8 +4,9 @@ import java.util.List;
 
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
+import eu.dariah.de.colreg.service.base.EntityService;
 
-public interface AgentService {
+public interface AgentService extends EntityService {
 	public List<Agent> findAllCurrent();
 	public Agent createAgent();
 	public Agent findCurrentByAgentId(String id);

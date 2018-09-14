@@ -37,6 +37,15 @@ var AgentEditor = function() {
 		}
 	});
 	
+	this.lists["images"] = new CollectionEditorList({
+		listSelector: "#lst-agent-images",
+		newRowUrl: __util.composeUrl("agents/includes/editImage"),
+		newRowCallback: function(row) {
+			_this.registerFormControlSelectionEvents($(row));
+		}
+	});
+	
+	this.initRightsContainer();
 	this.registerNavFormControlEvents();
 	this.registerFormControlSelectionEvents($("form"));
 };

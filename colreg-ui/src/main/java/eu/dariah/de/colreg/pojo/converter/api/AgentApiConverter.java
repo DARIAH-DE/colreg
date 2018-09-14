@@ -37,6 +37,7 @@ public class AgentApiConverter extends BaseAgentConverter<AgentApiPojo> {
 		pojo.setTimestamp(agent.getVersionTimestamp().toInstant().getMillis());
 		pojo.setDeleted(agent.isDeleted());
 		pojo.setName(this.getDisplayName(agent));
+		pojo.setPrimaryImage(this.getPrimaryImage(agent));
 		
 		if (locale!=null) {
 			pojo.setLocalizedTimestamp(this.getDisplayTimestamp(agent.getVersionTimestamp(), locale));

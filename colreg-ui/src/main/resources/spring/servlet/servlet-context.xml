@@ -52,7 +52,7 @@
 	<!-- i18n -->
 	<bean id="messageSource" class="de.unibamberg.minf.core.web.localization.MessageSource">
 	    <property name="basename" value="classpath:i18n/messages" />
-	    <property name="loggingMode" value="true" />
+	    <property name="loggingMode" value="${debug.messages:#{false}}" />
 	    <property name="cacheSeconds" value="10" />
 	</bean>
 	

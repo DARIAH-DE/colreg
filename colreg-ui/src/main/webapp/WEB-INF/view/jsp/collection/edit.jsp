@@ -966,7 +966,7 @@
 										<input id="upload-collection-image-file" onchange="editor.triggerUploadImage(event, this);" type="file" style="visibility: hidden; height: 0px; position: absolute;" />	
 										<button onclick="$('#upload-collection-image-file').click();" class="btn btn-xs btn-link btn-collection-editor-add"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><s:message code="~eu.dariah.de.colreg.view.collection.actions.add_image" /></button>
 										
-										<div id="collection-image-hint" class="alert alert-warn">
+										<div class="alert alert-warn image-hint">
 										
 										</div>
 										

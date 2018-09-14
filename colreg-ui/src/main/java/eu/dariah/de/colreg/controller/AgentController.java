@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,18 +24,23 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import de.unibamberg.minf.core.web.controller.ResourceNotFoundException;
 import de.unibamberg.minf.core.web.pojo.ModelActionPojo;
+import de.unibamberg.minf.core.web.service.ImageService;
+import de.unibamberg.minf.core.web.service.ImageServiceImpl.ImageTypes;
 import eu.dariah.de.colreg.controller.base.VersionedEntityController;
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.model.validation.AgentValidator;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
+import eu.dariah.de.colreg.pojo.ImagePojo;
+import eu.dariah.de.colreg.pojo.converter.ImageConverter;
 import eu.dariah.de.colreg.pojo.converter.view.AgentViewConverter;
 import eu.dariah.de.colreg.pojo.view.AgentViewPojo;
 import eu.dariah.de.colreg.pojo.view.TableListPojo;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.AgentTypeService;
 import eu.dariah.de.colreg.service.CollectionService;
+import eu.dariah.de.colreg.service.LicenseService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
 @Controller
@@ -47,6 +53,10 @@ public class AgentController extends VersionedEntityController {
 	@Autowired private AgentViewConverter agentConverter;
 	
 	@Autowired private AgentTypeService agentTypeService;
+	
+	@Autowired private ImageService imageService;
+	@Autowired private ImageConverter imageConverter;
+	@Autowired private LicenseService licenseService;
 	
 	public AgentController() {
 		super("agents");
@@ -101,6 +111,21 @@ public class AgentController extends VersionedEntityController {
 		return this.fillAgentEditorModel(a.getEntityId(), a, auth, model);
 	}
 	
+	@RequestMapping(method=GET, value={"/includes/editImage"})
+	public String getImageForm(Model model, @RequestParam(name="q") String imageId) {
+		
+		ImagePojo p = new ImagePojo();
+		p.setId(imageId);
+		p.setThumbnailUrl((imageService.getImageURI(p.getId(), ImageTypes.THUMBNAIL)));
+		p.setImageUrl((imageService.getImageURI(p.getId(), null)));
+		
+		model.addAttribute("currIndex", 0);
+		model.addAttribute("currImage", p);
+		model.addAttribute("agentImages[0]", p);
+		model.addAttribute("editMode", true);
+		return "agent/edit/incl/edit_image";
+	}
+	
 	private String fillAgentEditorModel(String entityId, Agent a, AuthPojo auth, Model model) {
 		model.addAttribute("agent", a);
 		model.addAttribute("selectedVersionId", a.getId());
@@ -116,6 +141,7 @@ public class AgentController extends VersionedEntityController {
 		}
 		
 		model.addAttribute("parentAgent", a.getParentAgentId()!=null ? agentService.findCurrentByAgentId(a.getParentAgentId()) : null);
+		model.addAttribute("agentImages", imageConverter.convertToPojos(a.getAgentImages()));
 		
 		List<Agent> children = agentService.findCurrentByParentAgentId(entityId);
 		model.addAttribute("childAgents", children);
@@ -130,6 +156,14 @@ public class AgentController extends VersionedEntityController {
 		model.addAttribute("versions", versions);
 		
 		model.addAttribute("isNew", a.getId().equals("new"));
+		
+		model.addAttribute("licenseGroups", licenseService.findAllLicenseGroups());
+		
+		if (a.getAgentImageRights()==null || ObjectId.isValid(a.getAgentImageRights())) {
+			model.addAttribute("agentImageRightsIsLicenseId", true);
+		} else {
+			model.addAttribute("agentImageRightsIsLicenseId", false);
+		}
 		
 		if (a.getSucceedingVersionId()==null) {
 			model.addAttribute("isDeleted", a.isDeleted());

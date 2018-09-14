@@ -1,3 +1,6 @@
+debug:
+  messages: false
+
 paths:
   main: /etc/dfa/colreg
   data: /var/lib/dfa/colreg

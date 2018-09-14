@@ -15,9 +15,10 @@ import eu.dariah.de.colreg.dao.AgentDao;
 import eu.dariah.de.colreg.dao.vocabulary.AgentTypeDao;
 import eu.dariah.de.colreg.model.Agent;
 import eu.dariah.de.colreg.model.vocabulary.AgentType;
+import eu.dariah.de.colreg.service.base.BaseEntityService;
 
 @Service
-public class AgentServiceImpl implements AgentService {
+public class AgentServiceImpl extends BaseEntityService implements AgentService {
 	@Autowired private AgentDao agentDao;
 	@Autowired private AgentTypeDao agentTypeDao;
 	

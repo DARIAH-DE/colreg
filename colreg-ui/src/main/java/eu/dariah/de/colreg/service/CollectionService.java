@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import eu.dariah.de.colreg.model.Collection;
+import eu.dariah.de.colreg.service.base.EntityService;
 import eu.dariah.de.dariahsp.model.web.AuthPojo;
 
-public interface CollectionService {
+public interface CollectionService extends EntityService {
 	public Collection createCollection(String userId);
 	public Collection findCurrentByCollectionId(String id);
 	public List<Collection> findAllCurrent();

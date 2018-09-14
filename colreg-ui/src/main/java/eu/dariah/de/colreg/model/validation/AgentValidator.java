@@ -2,6 +2,7 @@ package eu.dariah.de.colreg.model.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.validation.Errors;
 
 import eu.dariah.de.colreg.model.Address;
 import eu.dariah.de.colreg.model.Agent;
+import eu.dariah.de.colreg.model.Collection;
 import eu.dariah.de.colreg.service.AgentService;
 import eu.dariah.de.colreg.service.AgentTypeService;
 
@@ -87,6 +89,18 @@ public class AgentValidator extends BaseValidator<Agent> {
 					!agentService.findAgentTypeById(agent.getAgentTypeId()).isNaturalPerson()) {
 				errors.rejectValue("name", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
 				errors.rejectValue("foreName", "~eu.dariah.de.colreg.validation.agent.name_not_unique");
+			}
+		}
+		this.validateImage(agent, errors);
+	}
+	
+	private void validateImage(Agent agent, Errors errors) {
+		Map<Integer, String> imageMap = agentService.getOrderedImageMap(agent.getAgentImages());
+		
+		// If an image is set, we need a image rights specification
+		if (imageMap!=null && !imageMap.isEmpty()) {
+			if (agent.getAgentImageRights()==null || agent.getAgentImageRights().trim().isEmpty()) {
+				errors.rejectValue("agentImageRights", "~eu.dariah.de.colreg.validation.collection.need_image_rights");
 			}
 		}
 	}

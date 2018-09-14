@@ -127,12 +127,17 @@
 		<put-attribute name="content" value="/WEB-INF/view/jsp/agent/edit.jsp" />
 		<put-attribute name="collapsePanel" value="/WEB-INF/view/jsp/agent/incl/nav_versionPanel.jsp" />
 		<put-attribute name="sideOpts" value="/WEB-INF/view/jsp/agent/incl/nav_editor.jsp" />
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute type="string" value="lightbox2/lightbox.min.css" />
+        </put-list-attribute>
 		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute type="string" value="lightbox2/lightbox.min.js" />
 			<add-attribute type="string" value="agent/edit.js" />
 		</put-list-attribute>
 	</definition>
 	<definition name="agent/edit/incl/edit_identifier" template="/WEB-INF/view/jsp/agent/incl/edit_identifier.jsp" />
 	<definition name="agent/edit/incl/edit_address" template="/WEB-INF/view/jsp/agent/incl/edit_address.jsp" />
+	<definition name="agent/edit/incl/edit_image" template="/WEB-INF/view/jsp/agent/incl/edit_image.jsp" />
 	
 	<!-- Vocabulary -->
 	<definition name="vocabulary/list" extends="template_tables">

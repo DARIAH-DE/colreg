@@ -3,11 +3,13 @@
 	width: 100%;
 }
 
-.collection-list-thumb {
+.collection-list-thumb, 
+.agent-list-thumb {
 	border: 1px solid #999;
 }
 
-.collection-image-container {
+.collection-image-container,
+.agent-image-container {
 	float: left;
     margin: 5px;
     border: 1px solid #DDD;
@@ -19,11 +21,13 @@
     border-radius: 5px;
 }
 
-#lst-collection-images {
+#lst-collection-images,
+#lst-agent-images {
 	padding-left: 15px;
 }
 
-.collection-list-thumb-nopreview  {
+.collection-list-thumb-nopreview,
+.agent-list-thumb-nopreview  {
   margin: 5px;
   width: 100%;
   height: 106px;
@@ -33,6 +37,7 @@
   position: relative;
 }
 
+.agent-list-thumb-nopreview h4,
 .collection-list-thumb-nopreview h4 {
   position: absolute;
   bottom: 10px;
@@ -516,11 +521,14 @@ body .modal.modal450 {
 }
 
 /* List */
+.agent-editor-list,
 .collection-editor-list {
 	list-style: none;
 	padding-left: 0;
 }
 
+.agent-editor-list-item,
+.agent-editor-list-buttons,
 .collection-editor-list-item,
 .collection-editor-list-buttons {
 	margin-left: -15px;
@@ -738,6 +746,7 @@ a.control-link:active {
 }
 
 .collection-editor-list-buttons .btn-collection-editor-add,
+.agent-editor-list-buttons .btn-agent-editor-add,
 .collection-editor-list-buttons .btn-collection-editor-add-scheme {
 	padding-top: 8px;
 }
