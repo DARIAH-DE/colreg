@@ -6,7 +6,7 @@
 
     <groupId>eu.dariah.de</groupId>
 	<artifactId>colreg-parent</artifactId>
-	<version>3.9.0</version>
+	<version>${revision}</version>
     <packaging>pom</packaging>
     <name>DARIAH-DE Collection Registry Parent Project</name>
 
@@ -16,14 +16,14 @@
     </modules>
 
 	<properties>
+		<revision>3.10.0-RELEASE</revision>
+		
 		<java-version>1.7</java-version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		
-		<eu.dariah.de.colreg.colreg-model>3.9.3</eu.dariah.de.colreg.colreg-model>
-
 		<de.unibamberg.minf.core.core-metamodel.version>4.2.7-SNAPSHOT</de.unibamberg.minf.core.core-metamodel.version>
 		<de.unibamberg.minf.core.core-util.version>2.0.0-SNAPSHOT</de.unibamberg.minf.core.core-util.version>
 		<de.unibamberg.minf.core.core-web.version>2.0.9-SNAPSHOT</de.unibamberg.minf.core.core-web.version>

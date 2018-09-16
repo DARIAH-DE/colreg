@@ -3,10 +3,9 @@
  	<parent>
 		<groupId>eu.dariah.de</groupId>
 		<artifactId>colreg-parent</artifactId>
-		<version>3.9.0</version>
+		<version>${revision}</version>
     </parent>
 	<artifactId>colreg-ui</artifactId>
-	<version>3.9.7-RELEASE</version>
 	<packaging>war</packaging>
 	<name>DARIAH-DE Collection Registry - UI</name>
 	<description>DARIAH-DE Collection Registry - UI</description>
@@ -16,7 +15,7 @@
 		<dependency>
 			<groupId>eu.dariah.de</groupId>
   			<artifactId>colreg-model</artifactId>
-  			<version>${eu.dariah.de.colreg.colreg-model}</version>
+  			<version>${revision}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.unibamberg.minf.core</groupId>

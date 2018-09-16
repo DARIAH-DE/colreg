@@ -24,12 +24,25 @@ test:
   script:
     - mvn $MAVEN_CLI_OPTS test
     
-deploy:
+model:
+  stage: deploy
+  script:
+    - |
+      if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
+        echo "Deploying ColReg-Model"
+        cd colreg-model
+        mvn $MAVEN_CLI_OPTS deploy
+      fi
+  only:
+    - master
+
+ui:
   stage: deploy
   script:
     - |
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
         echo "Building Debian package for $VERSION"
+        cd colreg-ui
         mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
       fi
   only:
@@ -77,7 +90,7 @@ docs:
       fi
 
 after_script:
-  - echo "Deploying Debian packages if applicable for $ARTIFACT $VERSION"
+  - echo "Deploying Debian packages if applicable"
   - |
     cd target
     for f in *.deb; do
@@ -94,7 +107,7 @@ after_script:
         codename="stable"
       fi
       REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
-      if [ -z "$REPPACKAGE" ]; then
+      if [ ! -z "$REPPACKAGE" ]; then
         echo "Pushing new package to Debian repository: $package $debversion"
         reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
       fi
