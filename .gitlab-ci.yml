@@ -44,6 +44,27 @@ ui:
         echo "Building Debian package for $VERSION"
         cd colreg-ui
         mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
+
+        cd target
+        for f in *.deb; do
+          if [[ ! -e "$f" ]]; then continue; fi
+
+          debversion="$(dpkg-deb -f $f Version)"
+          package="$(dpkg-deb -f $f Package)"
+
+          if [[ $debversion = *"SNAPSHOT" ]]; then
+            component="snapshot"
+            codename="testing"
+          else 
+            component="main"
+            codename="stable"
+          fi
+          REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
+          if [ ! -z "$REPPACKAGE" ]; then
+            echo "Pushing new package to Debian repository: $package $debversion"
+            reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
+          fi
+        done
       fi
   only:
     - master
@@ -85,30 +106,24 @@ docs:
                               --prefix /var/www/doc/colreg \
                               -C _build/html .
 
-        mv *.deb ../target
+        for f in *.deb; do
+          if [[ ! -e "$f" ]]; then continue; fi
+
+          debversion="$(dpkg-deb -f $f Version)"
+          package="$(dpkg-deb -f $f Package)"
+
+          if [[ $debversion = *"SNAPSHOT" ]]; then
+            component="snapshot"
+            codename="testing"
+          else 
+            component="main"
+            codename="stable"
+          fi
+          REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
+          if [ ! -z "$REPPACKAGE" ]; then
+            echo "Pushing new package to Debian repository: $package $debversion"
+            reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
+          fi
+        done
 
       fi
-
-after_script:
-  - echo "Deploying Debian packages if applicable"
-  - |
-    cd target
-    for f in *.deb; do
-      if [[ ! -e "$f" ]]; then continue; fi
-
-      debversion="$(dpkg-deb -f $f Version)"
-      package="$(dpkg-deb -f $f Package)"
-
-      if [[ $debversion = *"SNAPSHOT" ]]; then
-        component="snapshot"
-        codename="testing"
-      else 
-        component="main"
-        codename="stable"
-      fi
-      REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
-      if [ ! -z "$REPPACKAGE" ]; then
-        echo "Pushing new package to Debian repository: $package $debversion"
-        reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
-      fi
-    done
