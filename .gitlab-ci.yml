@@ -1,0 +1,101 @@
+image: maven:latest
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  REPREPRO_BASE: "/srv/repository/ubuntu"
+
+before_script:
+  - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+  - ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+
+test:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+    
+deploy:
+  stage: deploy
+  script:
+    - |
+      if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
+        echo "Building Debian package for $VERSION"
+        mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
+      fi
+  only:
+    - master
+
+docs:
+  stage: deploy
+  only:
+    - master
+  script: 
+    - |
+      if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
+        echo "Building documentation for $ARTIFACT $VERSION"
+        cd docs
+
+        echo "-- Setting up Virtualenv"
+        virtualenv venv
+        pwd
+        . venv/bin/activate
+
+        echo "-- Installing requirements"
+        pip install -r requirements.txt
+
+        echo "-- Building HTML version within $(pwd)"
+        make clean html
+
+        echo "-- Creating package"
+        fpm -t deb -a noarch -s dir --name dme-doc \
+                              --description='DARIAH-DE ColReg Documentation' \
+                              --maintainer='DARIAH-DE <info@de.dariah.eu>' \
+                              --vendor='DARIAH-DE' \
+                              --url='https://colreg.de.dariah.eu' \
+                              --version $VERSION \
+                              -x ".git**" \
+                              -x "**/.git**" \
+                              -x "**/.hg**" \
+                              -x "**/.svn**" \
+                              -x ".buildinfo" \
+                              -x "**/*.deb" \
+                              --prefix /var/www/doc/colreg \
+                              -C _build/html .
+
+        mv *.deb ../target
+
+      fi
+
+after_script:
+  - echo "Deploying Debian packages if applicable for $ARTIFACT $VERSION"
+  - |
+    cd target
+    for f in *.deb; do
+      if [[ ! -e "$f" ]]; then continue; fi
+
+      debversion="$(dpkg-deb -f $f Version)"
+      package="$(dpkg-deb -f $f Package)"
+
+      if [[ $debversion = *"SNAPSHOT" ]]; then
+        component="snapshot"
+        codename="testing"
+      else 
+        component="main"
+        codename="stable"
+      fi
+      REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
+      if [ -z "$REPPACKAGE" ]; then
+        echo "Pushing new package to Debian repository: $package $debversion"
+        reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
+      fi
+    done
