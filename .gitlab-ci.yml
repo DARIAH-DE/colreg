@@ -1,7 +1,6 @@
 image: maven:latest
 
 variables:
-  MAVEN_CLI_OPTS: "-s ../.m2/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   REPREPRO_BASE: "/srv/repository/ubuntu"
 
@@ -17,19 +16,19 @@ cache:
 build:
   stage: build
   script:
-    - mvn compile
+    - mvn -s .m2/settings.xml --batch-mode compile
 
 test:
   stage: test
   script:
-    - mvn test
+    - mvn -s .m2/settings.xml --batch-mode test
     
 deploy:
   stage: deploy
   script:
     - |
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
-        mvn $MAVEN_CLI_OPTS deploy
+        mvn -s .m2/settings.xml --batch-mode deploy
       fi
   only:
     - master
@@ -41,7 +40,7 @@ ui:
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
         echo "Building Debian package for $VERSION"
         cd colreg-ui
-        mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
+        mvn -s ../.m2/settings.xml --batch-mode -U -Pdariah.deb -Dmaven.test.failure.ignore package
 
         cd target
         for f in *.deb; do
