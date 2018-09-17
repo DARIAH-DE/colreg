@@ -8,7 +8,6 @@ variables:
 before_script:
   - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
   - ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
-  - mkdir target
 
 cache:
   paths:
