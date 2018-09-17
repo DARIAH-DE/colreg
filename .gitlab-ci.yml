@@ -24,13 +24,11 @@ test:
   script:
     - mvn test
     
-model:
+deploy:
   stage: deploy
   script:
     - |
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
-        echo "Deploying ColReg-Model"
-        cd colreg-model
         mvn $MAVEN_CLI_OPTS deploy
       fi
   only:
