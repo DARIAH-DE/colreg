@@ -17,7 +17,7 @@ cache:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn $MAVEN_CLI_OPTS clean compile
 
 test:
   stage: test
@@ -29,23 +29,14 @@ deploy:
   script:
     - |
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
-        echo "Building Debian package for $VERSION"
         mvn $MAVEN_CLI_OPTS deploy
+        
+        echo "Building Debian package for $VERSION"
         mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
         
         mv colreg-ui/target/*.deb target/
-      fi
-  only:
-    - master
 
-docs:
-  stage: deploy
-  only:
-    - master
-  script: 
-    - |
-      if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
-        echo "Building documentation for $ARTIFACT $VERSION"
+        echo "Building documentation"
         cd docs
 
         echo "-- Setting up Virtualenv"
@@ -60,7 +51,7 @@ docs:
         make clean html
 
         echo "-- Creating package"
-        fpm -t deb -a noarch -s dir --name dme-doc \
+        fpm -t deb -a noarch -s dir --name colreg-doc \
                               --description='DARIAH-DE ColReg Documentation' \
                               --maintainer='DARIAH-DE <info@de.dariah.eu>' \
                               --vendor='DARIAH-DE' \
@@ -77,33 +68,6 @@ docs:
 
         mv *.deb ../target
         
+        ~/push_deb_packages.sh ../target
+        
       fi
-
-after_script:
-  - echo "Deploying Debian packages if applicable"
-  - |
-    cd target
-    for f in *.deb; do
-      if [[ ! -e "$f" ]]; then continue; fi
-
-      debversion="$(dpkg-deb -f $f Version)"
-      package="$(dpkg-deb -f $f Package)"
-
-      if [[ $debversion = *"RELEASE" ]]; then
-        component="main"
-        codename="stable"
-      else 
-        component="snapshot"
-        codename="testing"
-      fi
-      
-      echo "Found built package $package $debversion -> $codename/$component"
-      
-      reppkg="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
-      if [[ $reppkg = *"$debversion"* ]]; then
-        echo "Repository already containing package $package $debversion"
-      else
-        echo "Pushing new package to Debian repository: $package $debversion"
-        reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
-      fi
-    done
