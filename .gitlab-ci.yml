@@ -29,18 +29,10 @@ deploy:
     - |
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
         mvn -s .m2/settings.xml --batch-mode deploy
-      fi
-  only:
-    - master
-
-ui:
-  stage: deploy
-  script:
-    - |
-      if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
+        
         echo "Building Debian package for $VERSION"
         cd colreg-ui
-        mvn -s ../.m2/settings.xml --batch-mode -U -Pdariah.deb -Dmaven.test.failure.ignore package
+        mvn -s -Dmaven.repo.local=../.m2/repository ../.m2/settings.xml --batch-mode -U -Pdariah.deb -Dmaven.test.failure.ignore package
 
         cd target
         for f in *.deb; do
