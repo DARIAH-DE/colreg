@@ -32,7 +32,7 @@ deploy:
         
         echo "Building Debian package for $VERSION"
         cd colreg-ui
-        mvn -s -Dmaven.repo.local=../.m2/repository ../.m2/settings.xml --batch-mode -U -Pdariah.deb -Dmaven.test.failure.ignore package
+        mvn -s .m2/settings.xml -Dmaven.repo.local=../.m2/repository --batch-mode -U -Pdariah.deb -Dmaven.test.failure.ignore package
 
         cd target
         for f in *.deb; do
@@ -73,8 +73,8 @@ docs:
         pwd
         . venv/bin/activate
 
-        echo "-- Installing requirements"
-        pip install -r requirements.txt
+        #echo "-- Installing requirements"
+        #pip install -r requirements.txt
 
         echo "-- Building HTML version within $(pwd)"
         make clean html
