@@ -8,6 +8,7 @@ variables:
 before_script:
   - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
   - ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+  - mkdir target
 
 cache:
   paths:
@@ -32,6 +33,8 @@ deploy:
         echo "Building Debian package for $VERSION"
         mvn $MAVEN_CLI_OPTS deploy
         mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
+        
+        mv colreg-ui/target/*.deb target/
       fi
   only:
     - master
@@ -87,12 +90,12 @@ after_script:
       debversion="$(dpkg-deb -f $f Version)"
       package="$(dpkg-deb -f $f Package)"
 
-      if [[ $debversion = *"SNAPSHOT" ]]; then
-        component="snapshot"
-        codename="testing"
-      else 
+      if [[ $debversion = *"RELEASE" ]]; then
         component="main"
         codename="stable"
+      else 
+        component="snapshot"
+        codename="testing"
       fi
       
       echo "Found built package $package $debversion -> $codename/$component"
