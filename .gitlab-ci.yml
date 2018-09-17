@@ -1,6 +1,7 @@
 image: maven:latest
 
 variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   REPREPRO_BASE: "/srv/repository/ubuntu"
 
@@ -16,44 +17,21 @@ cache:
 build:
   stage: build
   script:
-    - mvn -s .m2/settings.xml --batch-mode compile
+    - mvn $MAVEN_CLI_OPTS compile
 
 test:
   stage: test
   script:
-    - mvn -s .m2/settings.xml --batch-mode test
+    - mvn $MAVEN_CLI_OPTS test
     
 deploy:
   stage: deploy
   script:
     - |
       if [[ $VERSION = *"SNAPSHOT" || $VERSION = *"RELEASE" ]]; then
-        mvn -s .m2/settings.xml --batch-mode deploy
-        
         echo "Building Debian package for $VERSION"
-        cd colreg-ui
-        mvn -s ../.m2/settings.xml -Dmaven.repo.local=../.m2/repository --batch-mode -U -Pdariah.deb -Dmaven.test.failure.ignore package
-
-        cd target
-        for f in *.deb; do
-          if [[ ! -e "$f" ]]; then continue; fi
-
-          debversion="$(dpkg-deb -f $f Version)"
-          package="$(dpkg-deb -f $f Package)"
-
-          if [[ $debversion = *"SNAPSHOT" ]]; then
-            component="snapshot"
-            codename="testing"
-          else 
-            component="main"
-            codename="stable"
-          fi
-          REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
-          if [ ! -z "$REPPACKAGE" ]; then
-            echo "Pushing new package to Debian repository: $package $debversion"
-            reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
-          fi
-        done
+        mvn $MAVEN_CLI_OPTS deploy
+        mvn $MAVEN_CLI_OPTS -U -Pdariah.deb -Dmaven.test.failure.ignore package
       fi
   only:
     - master
@@ -95,24 +73,35 @@ docs:
                               --prefix /var/www/doc/colreg \
                               -C _build/html .
 
-        for f in *.deb; do
-          if [[ ! -e "$f" ]]; then continue; fi
-
-          debversion="$(dpkg-deb -f $f Version)"
-          package="$(dpkg-deb -f $f Package)"
-
-          if [[ $debversion = *"SNAPSHOT" ]]; then
-            component="snapshot"
-            codename="testing"
-          else 
-            component="main"
-            codename="stable"
-          fi
-          REPPACKAGE="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
-          if [ ! -z "$REPPACKAGE" ]; then
-            echo "Pushing new package to Debian repository: $package $debversion"
-            reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
-          fi
-        done
-
+        mv *.deb ../target
+        
       fi
+
+after_script:
+  - echo "Deploying Debian packages if applicable"
+  - |
+    cd target
+    for f in *.deb; do
+      if [[ ! -e "$f" ]]; then continue; fi
+
+      debversion="$(dpkg-deb -f $f Version)"
+      package="$(dpkg-deb -f $f Package)"
+
+      if [[ $debversion = *"SNAPSHOT" ]]; then
+        component="snapshot"
+        codename="testing"
+      else 
+        component="main"
+        codename="stable"
+      fi
+      
+      echo "Found built package $package $debversion -> $codename/$component"
+      
+      reppkg="$(reprepro -b $REPREPRO_BASE -C $component listfilter $codename 'Package (==$package), Version (==$debversion)')"
+      if [[ $reppkg = *"$debversion"* ]]; then
+        echo "Repository already containing package $package $debversion"
+      else
+        echo "Pushing new package to Debian repository: $package $debversion"
+        reprepro -b $REPREPRO_BASE -C $component includedeb $codename $f
+      fi
+    done
