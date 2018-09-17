@@ -1,0 +1,13 @@
+@import url("./css/theme.css"); 
+
+.wy-side-nav-search {
+    background-color:#CCCCCC;
+}
+.wy-dropdown > a {
+    color:#222222;
+}
+.wy-side-nav-search > a,
+.wy-side-nav-search .wy-dropdown > a,
+.wy-side-nav-search > div.version {
+    color:#222222;
+}
