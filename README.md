@@ -1,10 +1,12 @@
 # colreg
 
+**Activity on this project has moved to: https://gitlab.com/DARIAH-DE/colreg**
+
 The DARIAH-DE Collection Registry (CR) is a web application that serves as central component in the DARIAH-DE Data Federation Architecture (DFA) software stack. Its primary purpose consists in providing means to register, store and access descriptions of research data collections.
 
 Further information on the concept of the Collection Registry can be accessed following https://de.dariah.eu/collection-registry.
 
-Bugs are tracked at: https://minfba.de.dariah.eu/mantisbt/set_project.php?project_id=21
+Bugs are tracked at: https://pm.winseda.de/projects/collection-registry
 
 ## Prerequisites
 
